@@ -5,8 +5,8 @@ using System.Text;
 
 namespace Protell.Model.IRepository
 {
-    interface IFactoryDownload
+    public interface IFactoryDownload
     {
-        public bool Download();
+         bool Download();
     }
 }
