@@ -75,7 +75,7 @@
     <Compile Include="GdDatosEstructurasModel.cs" />
     <Compile Include="GDFRegistroModel.cs" />
     <Compile Include="IRepository\IEvidenceSync.cs" />
-    <Compile Include="IRepository\IFactoryDownload.cs" />
+    <Compile Include="IRepository\IServiceFactory.cs" />
     <Compile Include="IRepository\IGdDatosEstructurasRepository.cs" />
     <Compile Include="IRepository\IGDFRegistro.cs" />
     <Compile Include="IRepository\IGnfSettingRepository.cs" />

@@ -299,6 +299,10 @@ namespace Protell.DAL
             }
             return base.ExecuteFunction<Nullable<long>>("spGetFechaNumericaMinima", idPuntoMedicionParameter);
         }
+        public ObjectResult<spGetMaxTableCiRegistroRecurrent_Result> spGetMaxTableCiRegistroRecurrent()
+        {
+            return base.ExecuteFunction<spGetMaxTableCiRegistroRecurrent_Result>("spGetMaxTableCiRegistroRecurrent");
+        }
 
         #endregion
 

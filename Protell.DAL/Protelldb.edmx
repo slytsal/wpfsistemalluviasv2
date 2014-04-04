@@ -557,6 +557,7 @@
         <Function Name="spGetMaxTableCiRegistro" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdPuntoMedicion" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="spGetMaxTableCiRegistroRecurrent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="UDF_NewUnid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar" />
         <EntityContainer Name="db_SeguimientoProtocolo_r2ModelStoreContainer">
           <EntitySet Name="APP_BITACORA" EntityType="Self.APP_BITACORA" Schema="dbo" store:Type="Tables" />
@@ -788,6 +789,7 @@
           <Parameter Name="idPuntoMedicion" Mode="In" Type="Int64" />
           </FunctionImport>
           <EntitySet Name="APP_BITACORA" EntityType="db_SeguimientoProtocolo_r2Model.APP_BITACORA" />
+          <FunctionImport Name="spGetMaxTableCiRegistroRecurrent" ReturnType="Collection(db_SeguimientoProtocolo_r2Model.spGetMaxTableCiRegistroRecurrent_Result)" />
         </EntityContainer>
         <EntityType Name="APP_ROL">
           <Key>
@@ -1387,6 +1389,12 @@
           <Property Name="Metodo" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="Mensaje" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
+        <ComplexType Name="spGetMaxTableCiRegistroRecurrent_Result">
+          <Property Type="Int64" Name="LastModifiedDate" Nullable="true" />
+          <Property Type="Int64" Name="ServerLastModifiedDate" Nullable="true" />
+          <Property Type="Int64" Name="FechaInicio" Nullable="true" />
+          <Property Type="Int64" Name="FechaFin" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1763,6 +1771,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spGetMaxTableCiRegistroRecurrent" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spGetMaxTableCiRegistroRecurrent">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="db_SeguimientoProtocolo_r2Model.spGetMaxTableCiRegistroRecurrent_Result">
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="ServerLastModifiedDate" ColumnName="ServerLastModifiedDate" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

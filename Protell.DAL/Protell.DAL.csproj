@@ -206,6 +206,9 @@
     <Compile Include="spAutoLogin_Result.cs">
       <DependentUpon>Protelldb.tt</DependentUpon>
     </Compile>
+    <Compile Include="spGetMaxTableCiRegistroRecurrent_Result.cs">
+      <DependentUpon>Protelldb.tt</DependentUpon>
+    </Compile>
     <Compile Include="spGetMaxTableCiRegistro_Result.cs">
       <DependentUpon>Protelldb.tt</DependentUpon>
     </Compile>
