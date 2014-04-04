@@ -9,6 +9,7 @@ using Protell.Model.SyncModels;
 using System.Text;
 using System.Configuration;
 using RestSharp;
+using Protell.DAL.Factory;
 
 namespace Protell.DAL.Repository.v2
 {
@@ -79,28 +80,29 @@ namespace Protell.DAL.Repository.v2
             string tableName = "APP_ROL";
             try
             {
-                var client = new RestClient(SyncProperties.routeDownload);
-                var request = new RestRequest(Method.POST);
-                request.Resource = webMethodName;
-                request.RequestFormat = RestSharp.DataFormat.Json;
-                request.AddHeader("Content-type", "application/json");
-                MaxTableModel maximos = new MaxTableModel();
-                IRestResponse response= null;
-                using(var repository = new SyncRepository())
-                {
-                    maximos = repository.GetMaxTable(tableName);
-                    if (maximos != null)
-                    {
-                        request.AddBody(new
-                        {
-                            LastModifiedDate = maximos.LastModifiedDate,
-                            ServerLastModifiedDate = maximos.ServerLastModifiedDate
-                        });
-                        response = client.Execute(request);
-                    }
-                }                
+                //var client = new RestClient(SyncProperties.routeDownload);
+                //var request = new RestRequest(Method.POST);
+                //request.Resource = webMethodName;
+                //request.RequestFormat = RestSharp.DataFormat.Json;
+                //request.AddHeader("Content-type", "application/json");
+                //MaxTableModel maximos = new MaxTableModel();
+                //IRestResponse response= null;
+                //using(var repository = new SyncRepository())
+                //{
+                //    maximos = repository.GetMaxTable(tableName);
+                //    if (maximos != null)
+                //    {
+                //        request.AddBody(new
+                //        {
+                //            LastModifiedDate = maximos.LastModifiedDate,
+                //            ServerLastModifiedDate = maximos.ServerLastModifiedDate
+                //        });
+                //        response = client.Execute(request);
+                //    }
+                //}  
+                string res = DownloadFactory.Instance.CallWebService(webMethodName, tableName);
                 AppRolResultModel model = new AppRolResultModel();
-                model = new JavaScriptSerializer().Deserialize<AppRolResultModel>(response.Content);
+                model = new JavaScriptSerializer().Deserialize<AppRolResultModel>(res);
                 if(model.Download_AppRolResult!=null && model.Download_AppRolResult.Count>0)
                 {
                     Upsert(model.Download_AppRolResult);
