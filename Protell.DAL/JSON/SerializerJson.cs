@@ -14,7 +14,7 @@ namespace Protell.DAL.JSON
         /// <returns></returns>
         public static string SerializeParametros(object parametros)
         {
-
+            //comentario sdfasd
             try
             {
                 string json = JsonConvert.SerializeObject(parametros);
