@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="Protell.UI.Registro.ConSRegistroView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d"
+             d:DesignHeight="55" d:DesignWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/DictionaryTheme.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Column="1" Grid.Row="1" BorderThickness="1" BorderBrush="White" Background="#E6E6E6">
+            <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="35"/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock  HorizontalAlignment="Left" Margin="3,0"
+                            Name="tBFecha" Text="{Binding FechaCaptura,StringFormat={}{0:dd/MM/yyyy}}"
+                            VerticalAlignment="Center" Style="{StaticResource textBockConsultaRegistroFecha}" />
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="25"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock  HorizontalAlignment="Right" Margin="1,0"
+                            Name="tBHOra" Text="{Binding HoraMilitar}" VerticalAlignment="Center" 
+                            Style="{StaticResource textBockConsultaRegistroHora}" />
+                        <TextBlock  HorizontalAlignment="Left" Grid.Column="1"
+                            Name="tBH" Text="hrs" VerticalAlignment="Center" 
+                            Style="{StaticResource textBockConsultaRegistroHora}" />
+                    </Grid>
+            </Grid>
+            <TextBlock Grid.Column="1" Height="23" HorizontalAlignment="Left" 
+                       Name="puntoMedicion" Text="{Binding PUNTOMEDICION.PuntoMedicionName}"
+                       VerticalAlignment="Center" Style="{StaticResource textBockConsultaRegistroPuntoMedicion}" />
+            <TextBlock Grid.Column="2" Height="23" HorizontalAlignment="Right" Margin="2,0" 
+                       Name="unidadMedida" Text="{Binding Valor}" VerticalAlignment="Center" 
+                       Style="{StaticResource textBockConsultaRegistroTipoMedicion}" />
+            <TextBlock Grid.Column="3" Height="23" HorizontalAlignment="Right" Name="unidadM" VerticalAlignment="Center" 
+                       Text="{Binding PUNTOMEDICION.UNIDADMEDIDA.UnidadMedidaShort, Mode=TwoWay}"
+                       Style="{StaticResource textBockConsultaRegistroTipoMedicion}" Margin="2,0" />
+            <Image Grid.Column="4" Name="lluvia" Stretch="Fill" Source="{Binding Condicion.PathCodicion}" HorizontalAlignment="Right" Width="35" />
+        </Grid>
+        </Border>
+    </Grid>
+</UserControl>

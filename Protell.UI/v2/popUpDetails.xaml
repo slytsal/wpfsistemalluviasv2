@@ -1,0 +1,82 @@
+﻿<Window x:Class="Protell.UI.v2.popUpDetails"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"        
+        Title="popUpDetails" Height="auto" Width="auto"
+            WindowStartupLocation="CenterScreen" WindowStyle="None" 
+            ResizeMode="NoResize" WindowState="Maximized"
+        Background="{x:Null}"
+        AllowsTransparency="True"
+        ShowInTaskbar="False" Keyboard.KeyDown="Window_KeyDown"
+        >
+    <Border > 
+        <Grid>
+            <Grid HorizontalAlignment="Stretch" Grid.Column="0" Grid.Row="0"              
+              VerticalAlignment="Stretch" Background="Black" Opacity=".5"></Grid>
+            <Grid HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0"
+              Width="auto" Height="500"
+              Margin="10"
+              VerticalAlignment="Center" Background="White" Opacity="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="AUTO"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="AUTO"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Background="SkyBlue">
+                    <TextBlock Text="Información Sincronización"
+                       Margin="5"
+                                               FontFamily="Calibri" FontSize="22"
+                       HorizontalAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="AUTO"/>
+                        <ColumnDefinition Width=".60*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="1" Grid.Row="0" Width="auto" Margin="5" Source="{Binding Conexion.Path }" />
+                    <TextBlock Grid.Column="0" Grid.Row="0" Margin="5"
+                           FontFamily="Calibri" FontSize="20"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Text="Estado de Conexión:"/>
+                    <TextBlock Grid.Column="0" Grid.Row="1" Margin="5"
+                           HorizontalAlignment="Right" VerticalAlignment="Center"
+                           Text="Ultima descarga de Información:" TextWrapping="Wrap" />
+                    <TextBlock Grid.Column="1" Grid.Row="1" Margin="5"
+                               FontFamily="Calibri" FontSize="20"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"                           
+                           Text="{Binding LastSync}"/>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="AUTO"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Margin="5"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Text="Ultimos eventos de sincronización:"
+                           FontFamily="Calibri" FontSize="15"/>
+                    <DataGrid Grid.Row="1" Margin="5" 
+                              Name="dtgLog"
+                          ItemsSource="{Binding Log,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{Binding SelectedItem}"
+                          IsReadOnly="True" CanUserAddRows="False" AutoGenerateColumns="False"                               
+                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                              MouseDoubleClick="dtgLog_MouseDoubleClick">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Fecha" Width="100" Binding="{Binding Fecha,StringFormat={}{0:dd/MM/yyyy}}"/>
+                            <DataGridTextColumn Header="Hora" Width="100" Binding="{Binding Hora}"/>
+                            <DataGridTextColumn Header="Mensaje" Width="300" Binding="{Binding Menssage}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+                <Button Grid.Row="3" Margin="5"
+                        Name="btnCerrar"
+                        FontFamily="Calibri" FontSize="20" Content="Cerrar" Click="btnCerrar_Click" />
+            </Grid>
+        </Grid>        
+    </Border>
+</Window>

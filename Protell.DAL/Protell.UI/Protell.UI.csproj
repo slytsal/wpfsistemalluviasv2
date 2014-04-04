@@ -1,0 +1,681 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3480443A-AFA6-441C-9454-FBCD5599FF3A}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Protell.UI</RootNamespace>
+    <AssemblyName>Protell.UI</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DotNetOpenAuth">
+      <HintPath>..\..\..\..\..\..\Desktop\Google API\DotNetOpenAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis">
+      <HintPath>..\..\..\..\..\..\Desktop\Google API\Google.Apis.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Authentication.OAuth2">
+      <HintPath>..\..\..\..\..\..\Desktop\Google API\Google.Apis.Authentication.OAuth2.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Drive.v2">
+      <HintPath>..\..\..\..\..\..\Desktop\Google API\Google.Apis.Drive.v2.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Oauth2.v2">
+      <HintPath>..\..\..\..\..\..\Desktop\Google API\Google.Apis.Oauth2.v2.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\..\..\..\Desktop\Google API\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json.Net35">
+      <HintPath>..\..\..\..\..\..\Desktop\Google API\Newtonsoft.Json.Net35.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="AccionProtocoloAddView.xaml.cs">
+      <DependentUpon>AccionProtocoloAddView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AccionProtocoloModView.xaml.cs">
+      <DependentUpon>AccionProtocoloModView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AccionProtocoloView.xaml.cs">
+      <DependentUpon>AccionProtocoloView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AccionProtocolo\AccionProtocoloAddView.xaml.cs">
+      <DependentUpon>AccionProtocoloAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AccionProtocolo\AccionProtocoloModView.xaml.cs">
+      <DependentUpon>AccionProtocoloModView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AccionProtocolo\AccionProtocoloView.xaml.cs">
+      <DependentUpon>AccionProtocoloView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CondProAddView.xaml.cs">
+      <DependentUpon>CondProAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CondProModView.xaml.cs">
+      <DependentUpon>CondProModView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CondProView.xaml.cs">
+      <DependentUpon>CondProView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CondPro\CondProAddView.xaml.cs">
+      <DependentUpon>CondProAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CondPro\CondProModView.xaml.cs">
+      <DependentUpon>CondProModView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CondPro\CondProView.xaml.cs">
+      <DependentUpon>CondProView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ConsideracionView.xaml.cs">
+      <DependentUpon>ConsideracionView.xaml</DependentUpon>
+    </Compile>
+<<<<<<< .mine
+    <Compile Include="Doc.xaml.cs">
+      <DependentUpon>Doc.xaml</DependentUpon>
+    </Compile>
+=======
+    <Compile Include="Consideracion\ConsideracionView.xaml.cs">
+      <DependentUpon>ConsideracionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dependencia\DependenciaAddView.xaml.cs">
+      <DependentUpon>DependenciaAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dependencia\DependenciaModView.xaml.cs">
+      <DependentUpon>DependenciaModView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dependencia\DependenciaView.xaml.cs">
+      <DependentUpon>DependenciaView.xaml</DependentUpon>
+    </Compile>
+>>>>>>> .r34
+    <Compile Include="EstPuntoMedAddView.xaml.cs">
+      <DependentUpon>EstPuntoMedAddView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EstPuntoMedModView.xaml.cs">
+      <DependentUpon>EstPuntoMedModView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EstPuntoMedView.xaml.cs">
+      <DependentUpon>EstPuntoMedView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EstPuntoMed\EstPuntoMedAddView.xaml.cs">
+      <DependentUpon>EstPuntoMedAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EstPuntoMed\EstPuntoMedModView.xaml.cs">
+      <DependentUpon>EstPuntoMedModView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EstPuntoMed\EstPuntoMedView.xaml.cs">
+      <DependentUpon>EstPuntoMedView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EstructuraDependenciaAddView.xaml.cs">
+      <DependentUpon>EstructuraDependenciaAddView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EstructuraDependenciaModView.xaml.cs">
+      <DependentUpon>EstructuraDependenciaModView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EstructuraDependenciaView.xaml.cs">
+      <DependentUpon>EstructuraDependenciaView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EstructuraDependencia\EstructuraDependenciaAddView.xaml.cs">
+      <DependentUpon>EstructuraDependenciaAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EstructuraDependencia\EstructuraDependenciaModView.xaml.cs">
+      <DependentUpon>EstructuraDependenciaModView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EstructuraDependencia\EstructuraDependenciaView.xaml.cs">
+      <DependentUpon>EstructuraDependenciaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Estructura\EstructuraAddView.xaml.cs">
+      <DependentUpon>EstructuraAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Estructura\EstructuraModView.xaml.cs">
+      <DependentUpon>EstructuraModView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Estructura\EstructuraView.xaml.cs">
+      <DependentUpon>EstructuraView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="IContentControl.cs" />
+    <Compile Include="Menus\MenuView.xaml.cs">
+      <DependentUpon>MenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\SubMenuView.xaml.cs">
+      <DependentUpon>SubMenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pruebas\MenuModel.cs" />
+    <Compile Include="Pruebas\MenuViewModel.cs" />
+    <Compile Include="PuntoMedicionAddView.xaml.cs">
+      <DependentUpon>PuntoMedicionAddView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PuntoMedicionModView.xaml.cs">
+      <DependentUpon>PuntoMedicionModView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PuntoMedicionView.xaml.cs">
+      <DependentUpon>PuntoMedicionView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PuntoMedicion\PuntoMedicionAddView.xaml.cs">
+      <DependentUpon>PuntoMedicionAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PuntoMedicion\PuntoMedicionModView.xaml.cs">
+      <DependentUpon>PuntoMedicionModView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PuntoMedicion\PuntoMedicionView.xaml.cs">
+      <DependentUpon>PuntoMedicionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RegistroAddView.xaml.cs">
+      <DependentUpon>RegistroAddView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RegistroModView.xaml.cs">
+      <DependentUpon>RegistroModView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RegistroView.xaml.cs">
+      <DependentUpon>RegistroView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Registro\RegistroAddView.xaml.cs">
+      <DependentUpon>RegistroAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Registro\RegistroModView.xaml.cs">
+      <DependentUpon>RegistroModView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Registro\RegistroView.xaml.cs">
+      <DependentUpon>RegistroView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sistema\SistemaAddView.xaml.cs">
+      <DependentUpon>SistemaAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sistema\SistemaModView.xaml.cs">
+      <DependentUpon>SistemaModView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sistema\SistemaView.xaml.cs">
+      <DependentUpon>SistemaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TipoPuntoMedicionAddView.xaml.cs">
+      <DependentUpon>TipoPuntoMedicionAddView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TipoPuntoMedicionModView.xaml.cs">
+      <DependentUpon>TipoPuntoMedicionModView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TipoPuntoMedicionView.xaml.cs">
+      <DependentUpon>TipoPuntoMedicionView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TipoPuntoMedicion\TipoPuntoMedicionAddView.xaml.cs">
+      <DependentUpon>TipoPuntoMedicionAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TipoPuntoMedicion\TipoPuntoMedicionModView.xaml.cs">
+      <DependentUpon>TipoPuntoMedicionModView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TipoPuntoMedicion\TipoPuntoMedicionView.xaml.cs">
+      <DependentUpon>TipoPuntoMedicionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UnidadMedidaAddView.xaml.cs">
+      <DependentUpon>UnidadMedidaAddView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UnidadMedidaModView.xaml.cs">
+      <DependentUpon>UnidadMedidaModView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UnidadMedidaView.xaml.cs">
+      <DependentUpon>UnidadMedidaView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UnidadMedida\UnidadMedidaAddView.xaml.cs">
+      <DependentUpon>UnidadMedidaAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UnidadMedida\UnidadMedidaModView.xaml.cs">
+      <DependentUpon>UnidadMedidaModView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UnidadMedida\UnidadMedidaView.xaml.cs">
+      <DependentUpon>UnidadMedidaView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AccionProtocoloAddView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AccionProtocoloModView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AccionProtocoloView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AccionProtocolo\AccionProtocoloAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AccionProtocolo\AccionProtocoloModView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AccionProtocolo\AccionProtocoloView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CondProAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CondProModView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CondProView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CondPro\CondProAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CondPro\CondProModView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CondPro\CondProView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ConsideracionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Consideracion\ConsideracionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DependenciaAddView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DependenciaModView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DependenciaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+<<<<<<< .mine
+    <Page Include="Doc.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+=======
+    <Page Include="Dependencia\DependenciaAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dependencia\DependenciaModView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dependencia\DependenciaView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+>>>>>>> .r34
+    <Page Include="EstPuntoMedAddView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EstPuntoMedModView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EstPuntoMedView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EstPuntoMed\EstPuntoMedAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EstPuntoMed\EstPuntoMedModView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EstPuntoMed\EstPuntoMedView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EstructuraAddView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EstructuraDependenciaAddView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EstructuraDependenciaModView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EstructuraDependenciaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EstructuraDependencia\EstructuraDependenciaAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EstructuraDependencia\EstructuraDependenciaModView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EstructuraDependencia\EstructuraDependenciaView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EstructuraModView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EstructuraView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Estructura\EstructuraAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Estructura\EstructuraModView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Estructura\EstructuraView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Menus\MenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Menus\SubMenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PuntoMedicionAddView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PuntoMedicionModView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PuntoMedicionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PuntoMedicion\PuntoMedicionAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PuntoMedicion\PuntoMedicionModView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PuntoMedicion\PuntoMedicionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="RegistroAddView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RegistroModView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RegistroView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Registro\RegistroAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Registro\RegistroModView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Registro\RegistroView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SistemaAddView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SistemaModView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SistemaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DependenciaAddView.xaml.cs">
+      <DependentUpon>DependenciaAddView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DependenciaModView.xaml.cs">
+      <DependentUpon>DependenciaModView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DependenciaView.xaml.cs">
+      <DependentUpon>DependenciaView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EstructuraAddView.xaml.cs">
+      <DependentUpon>EstructuraAddView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EstructuraModView.xaml.cs">
+      <DependentUpon>EstructuraModView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EstructuraView.xaml.cs">
+      <DependentUpon>EstructuraView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SistemaAddView.xaml.cs">
+      <DependentUpon>SistemaAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SistemaModView.xaml.cs">
+      <DependentUpon>SistemaModView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SistemaView.xaml.cs">
+      <DependentUpon>SistemaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Sistema\SistemaAddView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Sistema\SistemaModView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Sistema\SistemaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\DictionaryTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TipoPuntoMedicionAddView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TipoPuntoMedicionModView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TipoPuntoMedicionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TipoPuntoMedicion\TipoPuntoMedicionAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TipoPuntoMedicion\TipoPuntoMedicionModView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TipoPuntoMedicion\TipoPuntoMedicionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UnidadMedidaAddView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UnidadMedidaModView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UnidadMedidaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UnidadMedida\UnidadMedidaAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UnidadMedida\UnidadMedidaModView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UnidadMedida\UnidadMedidaView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="App.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Protell.Model\Protell.Model.csproj">
+      <Project>{AB66EDF0-BC58-42A8-9ABB-35BEFD6318B6}</Project>
+      <Name>Protell.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Protell.ViewModel\Protell.ViewModel.csproj">
+      <Project>{A294FF79-81CE-4198-BBD8-A299581C0350}</Project>
+      <Name>Protell.ViewModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\sync.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Folders-OS-Personal-Metro-icon.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

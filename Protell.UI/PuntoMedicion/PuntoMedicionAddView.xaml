@@ -1,0 +1,168 @@
+﻿<UserControl x:Class="Protell.UI.PuntoMedicion.PuntoMedicionAddView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="586" d:DesignWidth="465">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Name="btGuardar" Command="{Binding SaveCommand}" 
+                    Content="Guardar" Height="23" HorizontalAlignment="Right"
+                    VerticalAlignment="Center" Margin=" 10,0"
+                    Width="75" Click="btGuardar_Click" Grid.Column="1" />
+            <Button Name="btCancelar" HorizontalAlignment="Right"
+                    Content="Cancelar" Height="23"  Grid.Column="2"
+                    VerticalAlignment="Center" Margin=" 10,0"
+                    Width="75" Click="btCancelar_Click" />
+        </Grid>
+        <Separator Height="9" HorizontalAlignment="Stretch" 
+                   Name="separator2" VerticalAlignment="Center"
+                   Grid.Row="1"/>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/> <!-- -->
+                <RowDefinition Height="30"/> <!--Nuevo-->
+                <RowDefinition Height="10"/> <!-- -->
+                <RowDefinition Height="30"/> <!--PuntoMedicion-->
+                <RowDefinition Height="30"/> <!--UnidadMedida-->
+                <RowDefinition Height="30"/> <!--TipoPuntoMedicion-->
+                <RowDefinition Height="30"/> <!--ValorReferencia-->
+                <RowDefinition Height="30"/> <!--ParametroReferencia-->
+                <RowDefinition Height="30"/> <!--ElementExist-->
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="30"/> <!-- Botones -->
+                <RowDefinition Height="200"/> <!-- Grid -->
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="NUEVO: Punto de Medición." Height="23" HorizontalAlignment="Left" 
+                       Name="textBlock1" VerticalAlignment="Center"
+                       Grid.Row="1" Margin="10,0"/>
+
+            <Separator Height="7" HorizontalAlignment="Stretch" 
+                       Name="separator1" VerticalAlignment="Center"
+                       Grid.Row="2" Grid.ColumnSpan="2"/>
+
+            <TextBlock Text="Nombre del Punto de Medición:" Height="23" 
+                       HorizontalAlignment="Right" Grid.Row="3"  
+                       Name="TextBlockPuntoMedicionName" VerticalAlignment="Center"
+                       Margin="10,0"/>
+
+            <TextBox Text="{Binding PuntoMedicion.PuntoMedicionName, UpdateSourceTrigger=PropertyChanged}"
+                      Height="23" HorizontalAlignment="Left" Name="textBox1"
+                      VerticalAlignment="Center" Width="120" Grid.Row="3" Grid.Column="1" />
+
+            <TextBlock Text="Nombre de la Unidad de Medida:" Height="23" 
+                       HorizontalAlignment="Right" Grid.Row="4"  
+                       Name="TextBlockUnidadMedida" VerticalAlignment="Center"
+                       Margin="10,0"/>
+            
+            <ComboBox ItemsSource="{Binding UnidadMedidas}"
+                      SelectedItem="{Binding PuntoMedicion.UNIDADMEDIDA}"
+                      DisplayMemberPath="UnidadMedidaName" 
+                      Height="23" HorizontalAlignment="Left" Name="comboBox2" 
+                      VerticalAlignment="Center" Width="120" Grid.Row="4" Grid.Column="1" />
+
+            <TextBlock Text="Nombre del Tipo de Punto de Medición:" Height="23" 
+                       HorizontalAlignment="Right" Grid.Row="5"  
+                       Name="TextBlockTipoPuntoMedicion" VerticalAlignment="Center"
+                       Margin="10,0"/>
+
+            <ComboBox ItemsSource="{Binding TipoPuntoMedicions}"
+                      SelectedItem="{Binding PuntoMedicion.TIPOPUNTOMEDICION}"
+                      DisplayMemberPath="TipoPuntoMedicionName" 
+                      Height="23" HorizontalAlignment="Left" Name="comboBox1" 
+                      VerticalAlignment="Center" Width="120" Grid.Row="5" Grid.Column="1" />
+
+            <TextBlock Text="Valor de Referencia:" Height="23" 
+                       HorizontalAlignment="Right" Grid.Row="6"  
+                       Name="TextBlockValorReferencia" VerticalAlignment="Center"
+                       Margin="10,0"/>
+
+            <TextBox Text="{Binding PuntoMedicion.ValorReferencia, UpdateSourceTrigger=PropertyChanged}" 
+                     Height="23" HorizontalAlignment="Left" Name="textBox2"
+                     VerticalAlignment="Center" Width="120" Grid.Row="6" Grid.Column="1" />
+
+            <TextBlock Text="Parámetro de Referencia:" Height="23" 
+                       HorizontalAlignment="Right" Grid.Row="7"  
+                       Name="TextBlockParametroReferencia" VerticalAlignment="Center"
+                       Margin="10,0"/>
+
+            <TextBox Text="{Binding PuntoMedicion.ParametroReferencia, UpdateSourceTrigger=PropertyChanged}" 
+                     Height="23" HorizontalAlignment="Left" Name="textBox3" 
+                     VerticalAlignment="Center" Width="120" Grid.Row="7" Grid.Column="1" />
+
+            <TextBlock Text="{Binding ElementExists}" Height="23" 
+                       HorizontalAlignment="Center" Name="TextBlockElementExists" 
+                       VerticalAlignment="Center" Width="144"
+                       Grid.Row="8" Grid.ColumnSpan="2"/>
+            
+            <Separator Height="9" HorizontalAlignment="Stretch" 
+                   Name="separator3" VerticalAlignment="Center"
+                   Grid.Row="9" Grid.ColumnSpan="2"/>
+
+            <TextBlock Text="AGREGAR: Estructuras." Height="23" HorizontalAlignment="Left" 
+                       Name="textBlock2" VerticalAlignment="Center"
+                       Grid.Row="10" Margin="10,0"/>
+
+            <Separator Height="7" HorizontalAlignment="Stretch" 
+                       Name="separator4" VerticalAlignment="Center"
+                       Grid.Row="11" Grid.ColumnSpan="2"/>
+
+            <Grid Grid.ColumnSpan="2" Grid.Row="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Name="btAgregar" Command="{Binding AddCommand}" 
+                    Content="Agregar" Height="23" HorizontalAlignment="Right"
+                    VerticalAlignment="Center" Margin=" 10,0"
+                    Width="75" Grid.Column="1" Click="btAgregar_Click" />
+                <Button Name="btEliminar" Command="{Binding RemoveCommand}" 
+                    Content="Eliminar" Height="23" HorizontalAlignment="Right"
+                    VerticalAlignment="Center" Margin=" 10,0"
+                    Width="75" Grid.Column="2" Click="btEliminar_Click" />
+            </Grid>
+            
+            <DataGrid HorizontalAlignment="Stretch" Name="dataGrid1" VerticalAlignment="Stretch"
+                  CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False"
+                  ItemsSource="{Binding PuntoMedicionEstructura,Mode=TwoWay}"
+                  SelectedItem="{Binding SelectedPME,Mode=TwoWay}"  
+                  Grid.Row="13" Grid.ColumnSpan="2">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="" Width="40">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox HorizontalAlignment="Center"
+                              IsChecked="{Binding Path=IsChecked,UpdateSourceTrigger=PropertyChanged}"></CheckBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTextColumn IsReadOnly="True" Header="Nombre de la Estructura" Width="*" 
+                                Binding="{Binding Path=EstructuraName}"></DataGridTextColumn>
+                    
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
+    </Grid>
+</UserControl>

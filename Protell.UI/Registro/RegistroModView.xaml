@@ -1,0 +1,225 @@
+﻿<UserControl xmlns:my="clr-namespace:Protell.UI.Registro"  x:Class="Protell.UI.Registro.RegistroModView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" FocusManager.IsFocusScope="True"
+             FocusManager.FocusedElement="{Binding ElementName=txtValor}"
+             d:DesignHeight="600" d:DesignWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/DictionaryTheme.xaml"></ResourceDictionary>
+                <ResourceDictionary>
+                    <Style x:Key="TexBoxTeyle" TargetType="{x:Type  TextBox}">
+                        <Style.Triggers>
+                            <Trigger Property="Validation.HasError" Value="true">
+                                <Setter Property="ToolTip"
+                    Value="{Binding RelativeSource={RelativeSource Self},
+                    Path=(Validation.Errors)[0].ErrorContent}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="#FAFAFA" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="1" Background="White" Margin="10,0" BorderThickness="1" BorderBrush="Gainsboro">
+            <Border.Effect>
+                <DropShadowEffect Color="Black"  ShadowDepth="2" Opacity=".5"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Content="CANCELAR" Grid.Column="2"
+                        HorizontalAlignment="Stretch" 
+                        Name="btnCancelar" VerticalAlignment="Stretch"
+                        Style="{StaticResource bntBlue}"
+                        Visibility="Collapsed"/>
+                <StackPanel Orientation="Horizontal"  Grid.Column="1" >
+                    <Border BorderBrush="Silver" BorderThickness="0,0,1,0"/>
+                </StackPanel>
+                <Button Content="GUARDAR" TabIndex="2" 
+                        HorizontalAlignment="Stretch"
+                        Name="btnGuardar" VerticalAlignment="Stretch"
+                        Click="btGuardar_Click" Style="{StaticResource bntBlue}"
+                        Command="{Binding ValidarSaveCommand}" />
+            </Grid>
+        </Border>
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Column="1" Grid.Row="1"
+                    BorderThickness="1" BorderBrush="Gainsboro"
+                    Background="White">
+                <Border.BitmapEffect>
+                    <DropShadowBitmapEffect Color="Black" Opacity=".5"  ShadowDepth="2"/>
+                </Border.BitmapEffect>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="160"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="260"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock  Height="23" HorizontalAlignment="Right" Grid.Row="1"
+                            Name="tBFecha" Text="Fecha" VerticalAlignment="Center"
+                            Margin="10,0" Style="{StaticResource textBockRegistroVista}" />
+                        <DatePicker Grid.Column="1" Height="25" HorizontalAlignment="Left" 
+                            Name="datePFecha" VerticalAlignment="Center" Width="150" Grid.Row="1"
+                            SelectedDate="{Binding Registro.FechaCaptura, Mode=TwoWay}"/>
+
+                        <TextBlock  Height="23" HorizontalAlignment="Right"
+                            Name="tBHora" Text="Hora" VerticalAlignment="Center"
+                            Margin="10,0" Grid.Row="2" Style="{StaticResource textBockRegistroVista}"/>
+                        <TextBox Grid.Column="1" Grid.Row="2"
+                         Height="23" Width="150" MaxLength="5"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Left"
+                         Text="{Binding Registro.HoraMilitar,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True}"/>
+                        
+                        <TextBlock  Height="23" HorizontalAlignment="Right"
+                            Name="tBPuntoMedio" Text="Punto de Medición" VerticalAlignment="Center"
+                                    FontFamily="Calibri" FontWeight="Light" FontSize="18" Foreground="Black"
+                            Margin="10,0" Grid.Row="0" Style="{StaticResource textBockRegistroVista}"/>
+                        <TextBlock Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"
+                                   Text="{Binding Registro.PUNTOMEDICION.PuntoMedicionName, Mode=TwoWay}"
+                                   FontFamily="Calibri" FontWeight="Light" FontSize="18" Foreground="Black"
+                                   Style="{StaticResource textBockRegistroVista}" TextWrapping="WrapWithOverflow"/>
+                        
+                    </Grid>
+                    <Separator Height="7" HorizontalAlignment="Stretch" 
+                       Name="separator2" VerticalAlignment="Center"
+                       Grid.Row="1" 
+                       Background="Gainsboro"/>
+                    
+                    <Separator Height="7" HorizontalAlignment="Stretch" 
+                       Name="separator3" VerticalAlignment="Center"
+                       Grid.Row="3" 
+                       Background="Gainsboro"/>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock  Height="23" HorizontalAlignment="Right"
+                                    Name="tBUnidadMed" Text="Unidad de Medida" VerticalAlignment="Center"
+                                    Margin="10,0" Style="{StaticResource textBockRegistro}" 
+                                    Visibility="{Binding Registro.PUNTOMEDICION.UIVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock  Height="23" HorizontalAlignment="Left"
+                                    Name="tBUnidadMedida" Text="{Binding Registro.PUNTOMEDICION.UNIDADMEDIDA.UnidadMedidaName, Mode=TwoWay}"
+                                    VerticalAlignment="Center"
+                                    Grid.Column="1" Style="{StaticResource textBockRegistro}"
+                                    Visibility="{Binding Registro.PUNTOMEDICION.UIVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock  Height="23" HorizontalAlignment="Right"
+                                    Name="tBTipoPuntoMed" Text="Tipo punto de medición" VerticalAlignment="Center"
+                                    Margin="10,0" Grid.Row="1" Style="{StaticResource textBockRegistro}" 
+                                    Visibility="{Binding Registro.PUNTOMEDICION.UIVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock  Height="23" HorizontalAlignment="Left"
+                                    Name="tBTipoPuntoMedicion" Text="{Binding Registro.PUNTOMEDICION.TIPOPUNTOMEDICION.TipoPuntoMedicionName, Mode=TwoWay}"
+                                    VerticalAlignment="Center"
+                                    Grid.Column="1" Grid.Row="1" Style="{StaticResource textBockRegistro}"
+                                    Visibility="{Binding Registro.PUNTOMEDICION.UIVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
+                    
+                    <Grid Grid.Row="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="120"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="100"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock  Height="23" HorizontalAlignment="Right"
+                                    Name="tBCondicionPro" Text="Condición actual" VerticalAlignment="Top"
+                                    Margin="10,5" Style="{StaticResource textBockRegistroVista}"
+                                    Visibility="{Binding Registro.PUNTOMEDICION.UIVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                        <ListBox HorizontalContentAlignment="Stretch" Grid.Column="1" HorizontalAlignment="Stretch"
+                                 ItemsSource="{Binding Condicion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 SelectedItem="{Binding SelectedCondicion,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                 Name="ListCondicion" BorderBrush="Transparent"
+                                 Visibility="{Binding Registro.PUNTOMEDICION.UIVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <my:CondicionActualView />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <!--<ComboBox ItemsSource="{Binding Condicion}"
+                                  SelectedItem="{Binding Registro.Condicion, Mode=TwoWay}"
+                                  Text="{Binding Registro.Condicion.CondicionName, Mode=TwoWay}"
+                                  DisplayMemberPath="CondicionName" IsEditable="True"
+                                  Grid.Column="1" Height="23" HorizontalAlignment="Left"
+                                  Name="cBCondicionPro" VerticalAlignment="Center" Width="165"
+                                  Visibility="{Binding Registro.PUNTOMEDICION.UIVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>-->
+
+                        <TextBlock  Height="23" HorizontalAlignment="Right"
+                                    Name="tBValor" Text="Medición" VerticalAlignment="Center"
+                                    Margin="10,0" Grid.Row="1" Style="{StaticResource textBockRegistroVista}"
+                                    Visibility="{Binding Registro.PUNTOMEDICION.UIVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                        <Grid Grid.Row="1" Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="170"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Height="23" HorizontalAlignment="Left"  Name="txtValor" TabIndex="0" 
+                                     VerticalAlignment="Center" Width="165" GotFocus="txtValor_GotFocus"
+                                     Text="{Binding Registro.Valor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                     Visibility="{Binding Registro.PUNTOMEDICION.UIVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock  Height="23" HorizontalAlignment="Left" Name="tBM" VerticalAlignment="Center"
+                                        Text="{Binding Registro.PUNTOMEDICION.UNIDADMEDIDA.UnidadMedidaShort, Mode=TwoWay}"
+                                        Grid.Column="1" Style="{StaticResource textBockRegistroVista}" 
+                                        Visibility="{Binding Registro.PUNTOMEDICION.UIVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                        </Grid>
+                        <TextBlock  Height="23" HorizontalAlignment="Right"
+                            Name="tBT" Text="Acción actual" VerticalAlignment="Top"
+                            Margin="10,5" Grid.Row="2" Style="{StaticResource textBockRegistroVista}"/>
+                        <TextBox Grid.Column="1" Grid.Row="2" Height="80"
+                         HorizontalAlignment="Left"  Name="txtAccion" TabIndex="1"
+                         VerticalAlignment="Top" Width="165" Margin="0,5"
+                         Text="{Binding Registro.AccionActual,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                         TextWrapping="WrapWithOverflow" MaxLength="1000" VerticalScrollBarVisibility="Auto"/>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+
+    </Grid>
+</UserControl>

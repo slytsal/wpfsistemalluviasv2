@@ -1,0 +1,46 @@
+﻿<Window x:Class="Protell.UI.UnidadMedidaView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="UnidadMedidaView" Height="300" Width="460">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="232*" />
+            <ColumnDefinition Width="206*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="66*" />
+            <RowDefinition Height="195*" />
+        </Grid.RowDefinitions>
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,28,0,0" Name="textBlock1" Text="CATÁLOGO: UnidadMedida." VerticalAlignment="Top" />
+        <DataGrid Height="142" HorizontalAlignment="Stretch" Margin="0,18,0,0" Name="dataGrid1" VerticalAlignment="Top"
+                  CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False"
+                  ItemsSource="{Binding UnidadMedidas,Mode=TwoWay}"
+                  SelectedItem="{Binding SelectedUnidadMedida}"
+                   MouseDoubleClick="dataGrid1_MouseDoubleClick" Grid.Row="1" Grid.ColumnSpan="2">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="" Width="40">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox HorizontalAlignment="Center"
+                              IsChecked="{Binding Path=IsChecked,UpdateSourceTrigger=PropertyChanged}"></CheckBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn IsReadOnly="True" Header="Clave" Width="*" 
+                                Binding="{Binding Path=IdUnidadMedida}"></DataGridTextColumn>
+
+                <DataGridTextColumn IsReadOnly="True" Header="Descripcion" Width="*" 
+                                Binding="{Binding Path=UnidadMedidaName}"></DataGridTextColumn>
+
+                <DataGridTextColumn IsReadOnly="True" Header="Abreviatura" Width="*" 
+                                Binding="{Binding Path=UnidadMedidaShort}"></DataGridTextColumn>
+                
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+        <Button Command="{Binding NewCommand}"      Name="btNuevo"      Content="Nuevo"         Height="23" HorizontalAlignment="Left" Margin="24,28,0,0" VerticalAlignment="Top" Width="75" Click="btNuevo_Click" Grid.Column="1" />
+        <Button Command="{Binding DeleteCommand}"   Name="btEliminar"   Content="Eliminar"      Height="23" HorizontalAlignment="Left" Margin="119,28,0,15" Width="75" Grid.Column="1" />
+    </Grid>
+</Window>

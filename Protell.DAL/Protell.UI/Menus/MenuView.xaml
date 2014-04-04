@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="Protell.UI.Menus.MenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="160">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/DictionaryTheme.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="#2E2E2E">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="1"  Grid.ColumnSpan="3" Style="{StaticResource BorderBordeMenu}">
+        <TextBlock Text="Catalogos" VerticalAlignment="Center" 
+                   Style="{StaticResource textBockMenuCatalogo}"
+                   HorizontalAlignment="Center"/>
+        </Border>
+        <ListBox Background="#2E2E2E" Grid.Row="2"
+                 ItemsSource="{Binding Menu, Mode=TwoWay}"
+                 SelectedItem="{Binding SelectedMenu}"
+                 Name="ListSubMenu" SelectionChanged="ListSubMenu_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border Style="{StaticResource BorderMenu}">
+                        <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Text="{Binding MenuName}"
+                                       Style="{StaticResource textBockMenu}"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>

@@ -1,0 +1,8 @@
+﻿<Window x:Class="Protell.UI.Doc"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Doc" Height="300" Width="300">
+    <Grid>
+        <Button Content="Enviar Datos" Height="47" HorizontalAlignment="Left" Margin="61,66,0,0" Name="btnEnviar" VerticalAlignment="Top" Width="173" Click="btnEnviar_Click" />
+    </Grid>
+</Window>

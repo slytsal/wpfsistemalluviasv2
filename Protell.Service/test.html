@@ -1,0 +1,24 @@
+<html>
+	<head>
+		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	</head>
+	<body>
+		<script>
+		    $.ajax({
+		        url: "Services/Download.svc/Download_CIRegistroOnDemand",
+		        type: "POST",
+		        data: '{ "currentDate" :20140320,"idPuntoMedicion" : 1000 }',
+		        dataType: "json",
+		        contentType: "application/json",
+		        processdata: true,
+		        success: function (response) {
+		            console.log(response);
+		        },
+		        error: function (e) {		            
+		            alert(e);
+		        }
+		    });
+		</script>        
+        
+	</body>
+</html>

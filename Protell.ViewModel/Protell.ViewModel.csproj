@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A294FF79-81CE-4198-BBD8-A299581C0350}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Protell.ViewModel</RootNamespace>
+    <AssemblyName>Protell.ViewModel</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Google.GData.Client">
+      <HintPath>..\..\..\..\..\..\..\..\imcprotell\Google.GData.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Extensions">
+      <HintPath>..\..\..\..\..\..\..\..\imcprotell\Google.GData.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Spreadsheets">
+      <HintPath>..\..\..\..\..\..\..\..\imcprotell\Google.GData.Spreadsheets.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="RestSharp, Version=102.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dll\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CondProAddViewModel.cs" />
+    <Compile Include="CondProModViewModel.cs" />
+    <Compile Include="CondProViewModel.cs" />
+    <Compile Include="DependenciaAddViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DependenciaModViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DependenciaViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EstPuntoMedAddViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EstPuntoMedModViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EstPuntoMedViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EstructuraAddViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EstructuraDependenciaAddViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EstructuraDependenciaModViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EstructuraDependenciaViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EstructuraModViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EstructuraViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GDFRegistroViewModel.cs" />
+    <Compile Include="IConfirmation.cs" />
+    <Compile Include="PuntoMedicionAddViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PuntoMedicionEstructuraViewModel.cs" />
+    <Compile Include="PuntoMedicionModViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PuntoMedicionViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RegistroAddViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RegistroModViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RegistroViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SistemaViewSelectableModel.cs" />
+    <Compile Include="SistemaAddViewModel.cs" />
+    <Compile Include="SistemaModViewModel.cs" />
+    <Compile Include="SistemaViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RelayCommand.cs" />
+    <Compile Include="Sync\ContSettings.cs" />
+    <Compile Include="Sync\SyncViewModel.cs" />
+    <Compile Include="Sync\UploadProcessViewModel.cs" />
+    <Compile Include="TipoPuntoMedicionAddViewModel.cs" />
+    <Compile Include="TipoPuntoMedicionModViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TipoPuntoMedicionViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UnidadMedidaAddViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UnidadMedidaModViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UnidadMedidaViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="v2\CategoriasViewModel.cs" />
+    <Compile Include="v2\LoginViewModel.cs" />
+    <Compile Include="v2\PuntosMedicionViewModel.cs" />
+    <Compile Include="v2\SyncLogViewModel.cs" />
+    <Compile Include="v2\TableroViewModel.cs" />
+    <Compile Include="ViewModelBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Protell.DAL\Protell.DAL.csproj">
+      <Project>{E98518B0-8A0A-47B8-8905-7D765F0D2C88}</Project>
+      <Name>Protell.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Protell.Model\Protell.Model.csproj">
+      <Project>{AB66EDF0-BC58-42A8-9ABB-35BEFD6318B6}</Project>
+      <Name>Protell.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Protell.Server.DAL\Protell.Server.DAL.csproj">
+      <Project>{8D302A8D-50A9-488B-812D-77C96073EFC3}</Project>
+      <Name>Protell.Server.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Dll\RestSharp.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

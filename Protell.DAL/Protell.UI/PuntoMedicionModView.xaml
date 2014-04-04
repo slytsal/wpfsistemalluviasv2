@@ -1,0 +1,36 @@
+﻿<Window x:Class="Protell.UI.PuntoMedicionModView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="PuntoMedicionModView" Height="391" Width="339">
+    <Grid>
+        <TextBlock Text="NUEVO: PuntoMedicion." Height="23" HorizontalAlignment="Left" Margin="23,20,0,0" Name="textBlock1" VerticalAlignment="Top" />
+        <TextBlock Text="Descripcion:" Height="23" HorizontalAlignment="Left" Margin="23,74,0,0" Name="textBlock2" VerticalAlignment="Top" />
+        <TextBlock Text="Unidad de Medida" Height="23" HorizontalAlignment="Left" Margin="22,132,0,0" Name="textBlock5" VerticalAlignment="Top" />
+        <TextBlock Text="Tipo" Height="23" HorizontalAlignment="Left" Margin="23,103,0,0" Name="textBlock6" VerticalAlignment="Top" />
+        <TextBlock Text="Valor Referencia" Height="23" HorizontalAlignment="Left" Margin="22,161,0,0" Name="textBlock7" VerticalAlignment="Top" />
+        <TextBlock Text="Parametro de Referencia:" Height="23" HorizontalAlignment="Left" Margin="19,190,0,0" Name="textBlock8" VerticalAlignment="Top" />
+        <TextBlock Text="Activo" Height="23" HorizontalAlignment="Left" Margin="23,219,0,0" Name="textBlock9" VerticalAlignment="Top" />
+        <TextBlock Text="{Binding ElementExists}" Height="23" HorizontalAlignment="Left" Margin="23,312,0,0" Name="textBlock4" VerticalAlignment="Top" Width="144" />
+
+        <Separator Height="7" HorizontalAlignment="Left" Margin="22,52,0,0" Name="separator1" VerticalAlignment="Top" Width="275" />
+        <Separator Height="9" HorizontalAlignment="Left" Margin="22,248,0,0" Name="separator2" VerticalAlignment="Top" Width="275" />
+
+        <TextBox Text="{Binding PuntoMedicion.PuntoMedicionName, UpdateSourceTrigger=PropertyChanged}"  Height="23" HorizontalAlignment="Left" Margin="177,74,0,0" Name="textBox1" VerticalAlignment="Top" Width="120" />
+        <ComboBox ItemsSource="{Binding TipoPuntoMedicions}"
+                  SelectedItem="{Binding PuntoMedicion.TIPOPUNTOMEDICION}"
+                  DisplayMemberPath="TipoPuntoMedicionName" Height="23" HorizontalAlignment="Left" Margin="177,103,0,0" Name="comboBox1" VerticalAlignment="Top" Width="120" />
+
+        <ComboBox ItemsSource="{Binding UnidadMedidas}"
+                  SelectedItem="{Binding PuntoMedicion.UNIDADMEDIDA}"
+                  DisplayMemberPath="UnidadMedidaName" Height="23" HorizontalAlignment="Left" Margin="177,132,0,0" Name="comboBox2" VerticalAlignment="Top" Width="120" />
+
+        <TextBox Text="{Binding PuntoMedicion.ValorReferencia, UpdateSourceTrigger=PropertyChanged}" Height="23" HorizontalAlignment="Left" Margin="177,161,0,0" Name="textBox2" VerticalAlignment="Top" Width="120" />
+        <TextBox Text="{Binding PuntoMedicion.ParametroReferencia, UpdateSourceTrigger=PropertyChanged}" Height="23" HorizontalAlignment="Left" Margin="177,190,0,0" Name="textBox3" VerticalAlignment="Top" Width="120" />
+        <CheckBox IsChecked="{Binding PuntoMedicion.IsActive}" IsEnabled="False" Content="" Height="16" HorizontalAlignment="Left" Margin="177,219,0,0" Name="IsActiveCheckbox" VerticalAlignment="Top" />
+
+        <Button Name="btGuardar" Command="{Binding SaveCommand}" Content="Guardar" Height="23" HorizontalAlignment="Left" Margin="23,272,0,0" VerticalAlignment="Top" Width="75" Click="btGuardar_Click" />
+
+        <Button Name="btSalir" Content="Salir" Height="23" HorizontalAlignment="Left" Margin="139,272,0,0" VerticalAlignment="Top" Width="75" Click="btSalir_Click" />
+
+    </Grid>
+</Window>

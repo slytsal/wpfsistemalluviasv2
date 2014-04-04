@@ -1,0 +1,237 @@
+﻿<Window x:Class="Protell.UI.v2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Sistemas Lluvias 2013 (Beta..)" Height="700" Width="1200"
+        WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen" 
+        WindowState="Maximized"
+        Keyboard.KeyDown="Window_KeyDown"       
+        xmlns:my="clr-namespace:Protell.UI.v2" 
+        xmlns:my2="clr-namespace:Protell.UI.Registro"
+        Icon="/Protell.UI;component/Images/SistemasLLuvias_1.ico"
+        >
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/DictionaryTheme.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="AUTO" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <!--Barra de Titulo-->
+        <Grid Grid.Row="0">
+            <Border BorderBrush="#848181" BorderThickness="0,0,0,2" Background="Gainsboro">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="AUTO"/>
+                        <ColumnDefinition Width="220"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Width="100" Height="50" Name="Logo"
+                   Source="/Protell.UI;component/Images/Conagua.png"
+                   VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" 
+                               Text="ORGANISMO DE CUENCA AGUAS DEL VALLE DE MEXICO"
+                               FontFamily="Calibri" FontSize="18"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"                               
+                               TextWrapping="Wrap"/>
+                    <Grid Width="AUTO" Grid.Column="2" HorizontalAlignment="Right">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="1" Margin="5"
+                                BorderBrush="SkyBlue" BorderThickness="1" Cursor="Hand">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0" 
+                  HorizontalAlignment="Center" 
+                  VerticalAlignment="Stretch"
+                                      Background="#BB339239">
+                                    <Canvas Name="cnvTmpRot"  Visibility="Collapsed"  Height="30" Width="30"  Opacity="0.5" Panel.ZIndex="60" 
+                        VerticalAlignment="Center" HorizontalAlignment="Center" >
+                                        <Image Width="25" Height="25" HorizontalAlignment="Center" 
+                           Name="imgSyncFiles" Stretch="Fill" VerticalAlignment="Center" 
+                           Source="/Protell.UI;component/Images/sync.png" Visibility="Visible" 
+                           ToolTip="Listo" MouseUp="imgSyncFiles_MouseUp" Cursor="Hand">
+                                            <Image.RenderTransform>
+                                                <RotateTransform Angle="0" CenterX="12.5" CenterY="12.5" />
+                                            </Image.RenderTransform>
+                                        </Image>
+                                    </Canvas>
+                                    <Canvas Name="cnvTmpRot2" Height="30" Width="30"  Opacity="0.5" Panel.ZIndex="60" 
+                        VerticalAlignment="Center" HorizontalAlignment="Center" >
+                                        <Image Width="25" Height="25" Name="imgSyncFiles2" Stretch="Fill"
+                           Source="/Protell.UI;component/Images/sync.png" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Visibility="Visible" ToolTip="Listo" MouseUp="imgSyncFiles_MouseUp"
+                           >
+                                            <Image.RenderTransform>
+                                                <RotateTransform Angle="0" CenterX="12.5" CenterY="12.5" />
+                                            </Image.RenderTransform>
+                                        </Image>
+                                    </Canvas>
+                                </Grid>
+                                <Grid Grid.Column="1"  Background="#57339A1B" MouseDown="Image_MouseDown">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="AUTO"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0"  
+                                               Text="Información Actualizada" Margin="2"
+                                               HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Row="1"  
+                                               Name="txbMenssage"
+                                               Text="{Binding LastSync}" Margin="2"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Column="2" Margin="5"
+                                BorderBrush="SkyBlue" BorderThickness="1" Cursor="Hand">
+                            <Grid Background="#793397D6" MouseDown="Grid_MouseDown">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="AUTO"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Width="35" Height="35" Name="User"
+                                       Source="/Protell.UI;component/Images/Folders-OS-Personal-Metro-icon.png"
+                                       VerticalAlignment="Center"/>
+                                <Label Name="nameUser" Grid.Column="1" Foreground="Black"
+                                       Content="{Binding Usuario.UsuarioCorreo}"
+                                       Margin="5"
+                                       FontFamily ="Calibri" FontSize="13" FontWeight="SemiBold"
+                                       HorizontalAlignment="Left" VerticalAlignment="center"/>
+                                <Popup Name="puUserInformation" 
+                                       AllowDrop="False"                                       
+                                       PopupAnimation="Slide"                                     
+                                       AllowsTransparency="True"
+                                       Margin="5"
+                                       >
+                                    <Border 
+                                            BorderThickness="1" Cursor="Hand" Background="white">
+                                        <Grid  Background="#793397D6">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width=".20*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Image Grid.Column="0"
+                                                   Margin="5"
+                                                   Source="/Protell.UI;component/Images/Folders-OS-Personal-Metro-icon.png"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <StackPanel Grid.Column="1"
+                                                    Margin="5"
+                                                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                    Orientation="Vertical">
+                                                <StackPanel Margin="5"
+                                                            HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                            Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Usuario.Nombre}" 
+                                                                FontFamily="Calibri" FontSize="15"/>
+                                                    <TextBlock Text=" " 
+                                                                FontFamily="Calibri" FontSize="15"/>
+                                                    <TextBlock Text="{Binding Usuario.Apellido}" 
+                                                                FontFamily="Calibri" FontSize="15"/>
+                                                </StackPanel>
+                                                <TextBlock Text="{Binding Usuario.UsuarioCorreo}" 
+                                                           Margin="5"
+                                                           FontFamily="Calibri" FontSize="15"/>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Grid.Row="1">
+                                            <Button Content="Cerrar sesión"
+                                                    Margin="5"
+                                                    FontFamily="Calibri" FontSize="18"
+                                                    Command="{Binding CloseSesion}"/>
+                                        </Grid>
+                                    </Grid>
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </Border>
+                        <Image Grid.Column="3" Stretch="Fill" 
+                               Width="50" Visibility="Collapsed"
+                               Source="/Protell.UI;component/Images/appbar.lines.horizontal.4.png" MouseDown="Image_MouseDown" />
+                    </Grid >
+                </Grid>
+            </Border>
+        </Grid>
+        <!--Tabs-->
+        <Grid Grid.Row="1">
+            <TabControl Name="tcTablero" >
+                <TabControl.Resources>
+                    <Style TargetType="TabItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="TabItem">
+                                    <Grid Name="Panel">
+                                        <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="Panel" Property="Background" Value="LightSkyBlue" />
+                                            <Setter TargetName="Panel" Property="AllowDrop" Value="True"/>
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="False">
+                                            <Setter TargetName="Panel" Property="Background" Value="White" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TabControl.Resources>
+                <TabItem  Header="Punto Medición"
+                      FontSize="20" FontFamily="Calibri">
+                    <Grid Background="#73000000">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"/>
+                            <ColumnDefinition Width=".60*"/>
+                        </Grid.ColumnDefinitions>
+                        <my:CategoriaView  Grid.Column="0" x:Name="cPuntoMedicion" VerticalAlignment="Stretch" Margin="5" Background="White" TabIndex="1"/>
+                        <my:PuntosMedicionView x:Name="pmPuntoMedicion" Grid.Column="1" VerticalAlignment="Stretch" Margin="5" HorizontalAlignment="Stretch" Background="White" TabIndex="2"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Lumbreras"
+                     FontSize="20" FontFamily="Calibri">
+                    <Grid Background="#73000000">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"/>
+                            <ColumnDefinition Width=".60*"/>
+                        </Grid.ColumnDefinitions>
+                        <my:CategoriaView  Grid.Column="0" x:Name="cLumbreras" VerticalAlignment="Stretch" Margin="5" Background="White" />
+                        <my:PuntosMedicionView x:Name="pmLumbreras" Grid.Column="1" VerticalAlignment="Stretch" Margin="5" HorizontalAlignment="Stretch" Background="White"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Estaciones Pluviográficas"
+                     FontSize="20" FontFamily="Calibri">
+                    <Grid Background="#73000000">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".40*"/>
+                            <ColumnDefinition Width=".60*"/>
+                        </Grid.ColumnDefinitions>
+                        <my:CategoriaView  Grid.Column="0" x:Name="cEstPluviograficas" VerticalAlignment="Stretch" Margin="5" Background="White"/>
+                        <my:PuntosMedicionView x:Name="pmEstPluviograficas" Grid.Column="1" VerticalAlignment="Stretch" Margin="5" HorizontalAlignment="Stretch" Background="White"/>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Grid>
+</Window>

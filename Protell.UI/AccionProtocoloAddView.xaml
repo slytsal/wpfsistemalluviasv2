@@ -1,0 +1,29 @@
+﻿<Window x:Class="Protell.UI.AccionProtocoloAddView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="AccionProtocoloAddView" Height="337" Width="300">    
+    <Grid>
+        <TextBlock Text="EDITAR: AccionProtocolo." Height="23" HorizontalAlignment="Left" Margin="23,20,0,0" Name="textBlock1" VerticalAlignment="Top" />
+        <TextBlock Text="Descripcion:" Height="23" HorizontalAlignment="Left" Margin="23,74,0,0" Name="textBlock2" VerticalAlignment="Top" />
+        <TextBlock Text="Activo:" Height="23" HorizontalAlignment="Left" Margin="23,161,0,0" Name="textBlock3" VerticalAlignment="Top" />
+        <TextBlock Text="{Binding ElementExists}" Height="23" HorizontalAlignment="Left" Margin="21,249,0,0" Name="textBlock4" VerticalAlignment="Top" Width="144" />
+
+        <Separator Height="7" HorizontalAlignment="Left" Margin="22,52,0,0" Name="separator1" VerticalAlignment="Top" Width="244" />
+        <Separator Height="9" HorizontalAlignment="Left" Margin="21,193,0,0" Name="separator2" VerticalAlignment="Top" Width="244" />
+
+        <TextBox  Text="{Binding AccionProtocolo.AccionProtocoloDesc, UpdateSourceTrigger=PropertyChanged}"  Height="23" HorizontalAlignment="Left" Margin="114,73,0,0" Name="textBox1" VerticalAlignment="Top" Width="120" />
+        <CheckBox IsChecked="{Binding AccionProtocolo.IsActive}" Content="" Height="16" HorizontalAlignment="Left" Margin="114,161,0,0" Name="IsActiveCheckbox" VerticalAlignment="Top" />
+
+        <Button Name="btGuardar" Command="{Binding SaveCommand}" Content="Guardar" Height="23" HorizontalAlignment="Left" Margin="21,208,0,0" VerticalAlignment="Top" Width="75" Click="btGuardar_Click" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="23,103,0,0" Name="textBlock5" Text="Condicion:" VerticalAlignment="Top" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="23,132,0,0" Name="textBlock6" Text="Estructura:" VerticalAlignment="Top" />
+
+        <ComboBox  ItemsSource="{Binding CondPros}"
+                  SelectedItem="{Binding AccionProtocolo.CONDPRO}"
+                  DisplayMemberPath="CondicionName" Height="23" HorizontalAlignment="Left" Margin="114,103,0,0" Name="comboBox1" VerticalAlignment="Top" Width="120" />
+
+        <ComboBox  ItemsSource="{Binding Estructuras}"
+                  SelectedItem="{Binding AccionProtocolo.ESTRUCTURA}"
+                  DisplayMemberPath="EstructuraName" Height="23" HorizontalAlignment="Left" Margin="114,132,0,0" Name="comboBox2" VerticalAlignment="Top" Width="120" />
+    </Grid>
+</Window>

@@ -1,0 +1,73 @@
+﻿<Window xmlns:my1="clr-namespace:Protell.UI.Sistema"  x:Class="Protell.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="600" Width="1000" WindowStyle="SingleBorderWindow" 
+        xmlns:my="clr-namespace:Protell.UI.Menus">
+    <Window.Resources>
+        <Storyboard x:Key="rotateImg" >
+            <DoubleAnimation Storyboard.TargetName="imgSyncFiles" 
+                             Storyboard.TargetProperty="(RenderTransform).(RotateTransform.Angle)"
+                             From="0" To="360" Duration="0:0:1" 
+                             AutoReverse="False" RepeatBehavior="Forever" />
+        </Storyboard>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="160"/>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.ColumnSpan="3" BorderBrush="#848181" BorderThickness="0,0,0,2" Background="Gainsboro">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Width="25" Height="25" Name="User"
+                   Source="./Images/Folders-OS-Personal-Metro-icon.png"
+                   VerticalAlignment="Center"/>
+            <Label Content="ing.cisnecar@gmail.com" Name="label1" Grid.Column="1"
+                   HorizontalAlignment="Left" VerticalAlignment="center"/>
+            <StackPanel Grid.Column="2" Orientation="Horizontal"
+                        HorizontalAlignment="Right"  Name="stackPanel2"
+                        VerticalAlignment="Stretch">
+                <Canvas Name="cnvTmpRot"  Visibility="Collapsed"  Height="28" Width="50"  Opacity="0.5" Panel.ZIndex="60" 
+                        Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                    <Image Width="18" Height="18" HorizontalAlignment="Center" Margin="17,5,10,0" 
+                           Name="imgSyncFiles" Stretch="Fill" VerticalAlignment="Center" 
+                           Grid.Column="1" Grid.Row="0" Source="./Images/sync.png" Visibility="Visible" 
+                           ToolTip="Listo" MouseUp="imgSyncFiles_MouseUp" Cursor="Hand"
+                           >
+                        <Image.RenderTransform>
+                            <RotateTransform Angle="0" CenterX="9" CenterY="9" />
+                        </Image.RenderTransform>
+                    </Image>
+                </Canvas>
+                <Canvas Name="cnvTmpRot2"    Height="28" Width="50"  Opacity="0.5" Panel.ZIndex="60" 
+                        Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                    <Image Width="18" Height="18" HorizontalAlignment="Center" Margin="17,5,10,0" 
+                           Name="imgSyncFiles2" Stretch="Fill" VerticalAlignment="Center" 
+                           Grid.Column="1" Grid.Row="0" Source="./Images/sync.png" Visibility="Visible" 
+                           ToolTip="Listo" MouseUp="imgSyncFiles_MouseUp" Cursor="Hand"
+                           >
+                        <Image.RenderTransform>
+                            <RotateTransform Angle="0" CenterX="9" CenterY="9" />
+                        </Image.RenderTransform>
+                    </Image>
+                </Canvas>
+            </StackPanel>
+        </Grid>
+        </Border>
+        <ContentControl Grid.Row="1">
+            <my:MenuView x:Name="menuView1" />
+        </ContentControl>
+        <ContentControl Name="ContentPaneSubMenu" Grid.Row="1" Grid.Column="1"/>
+        <ContentControl Name="ContentPane" Grid.Row="1" Grid.Column="2"/>
+    </Grid>
+</Window>

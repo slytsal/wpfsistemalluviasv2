@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="Protell.UI.Menus.SubMenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/DictionaryTheme.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="LightGray">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Nuevo" Height="23"
+                    HorizontalAlignment="Center" 
+                     Name="btnNuevo" 
+                    VerticalAlignment="Center" Width="60" />
+            <Button Content="Eliminar" Height="23"
+                    HorizontalAlignment="Center" 
+                     Name="btnEliminar" Grid.Column="1" 
+                    VerticalAlignment="Center" Width="60" />
+            <Button Content="Buscar" Height="23"
+                    HorizontalAlignment="Center" 
+                     Name="btnBuscar" Grid.Column="2" 
+                    VerticalAlignment="Center" Width="60" />
+        </Grid>
+        <DataGrid Height="auto" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
+                  HorizontalAlignment="Stretch" Name="dtGridRegistro"
+                  SelectedItem="{Binding CatalogBancoModel.SelectedBanco, Mode=TwoWay}"
+                  VerticalAlignment="Stretch" ItemsSource="{Binding CatalogBancoModel.Banco}" 
+                  MouseDoubleClick="dtGridRegistro_MouseDoubleClick" Grid.Row="1" 
+                  RowStyle="{StaticResource RowStyle}"
+                  Style="{StaticResource GridStyle}" 
+                  ColumnHeaderStyle="{StaticResource DatagridColumnHeaderStyle_Effects}">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="" Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox HorizontalAlignment="Center" x:Name="RowCheckBox" IsChecked="{Binding Path=IsChecked,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Captura" Width="*" x:Name="fechaCaptura" Binding="{Binding Path=BANCO_NAME}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Registro" Width="*" x:Name="fechaRegristro" Binding="{Binding Path=BANCO_NAME}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Medición " Width="*" x:Name="puntoMedicion" Binding="{Binding Path=BANCO_NAME}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Valor " Width="*" x:Name="valor" Binding="{Binding Path=BANCO_NAME}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

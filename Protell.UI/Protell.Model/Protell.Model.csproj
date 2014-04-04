@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AB66EDF0-BC58-42A8-9ABB-35BEFD6318B6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Protell.Model</RootNamespace>
+    <AssemblyName>Protell.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccionProtocoloModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CondProModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ConsideracionModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DependenciaModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EstPuntoMedModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EstructuraDependenciaModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EstructuraModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EvidenceSyncModel.cs" />
+    <Compile Include="IRepository\IEvidenceSync.cs" />
+    <Compile Include="IRepository\IListUnids.cs" />
+    <Compile Include="IRepository\IAccionProtocolo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IRepository\ICondPro.cs" />
+    <Compile Include="IRepository\IConsideracion.cs" />
+    <Compile Include="IRepository\IDependencia.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IRepository\IEstPuntoMed.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IRepository\IEstructura.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IRepository\IEstructuraDependencia.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IRepository\IMenu.cs" />
+    <Compile Include="IRepository\IPuntoMedicion.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IRepository\IRegistro.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IRepository\ITipoPuntoMedicion.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IRepository\IUnidadMedida.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IRepository\IServerLastData.cs" />
+    <Compile Include="IRepository\ISync.cs" />
+    <Compile Include="IRepository\IUploadLog.cs" />
+    <Compile Include="ListUnidsModel.cs" />
+    <Compile Include="MenuModel.cs" />
+    <Compile Include="ModelBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PuntoMedicionModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RegistroModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ServerLastDataModel.cs" />
+    <Compile Include="SistemaModel.cs" />
+    <Compile Include="IRepository\ISistema.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SyncModel.cs" />
+    <Compile Include="TipoPuntoMedicionModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UnidadMedidaModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UploadLogModel.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

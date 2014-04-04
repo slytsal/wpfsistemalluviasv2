@@ -1,0 +1,81 @@
+﻿<UserControl x:Class="Protell.UI.Menus.MenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="310">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/DictionaryTheme.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="#2E2E2E">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Style="{StaticResource BorderBordeMenu}" MouseUp="Border_MouseUp" >
+            <TextBlock Text="Punto de Medición" VerticalAlignment="Center" 
+                   Style="{StaticResource textBockMenuCatalogo}"
+                   HorizontalAlignment="Center"/>
+        </Border>
+        <ListBox Grid.Row="1" Style="{StaticResource ListBoxStyle}" 
+                 ItemsSource="{Binding PuntoMedicions, Mode=TwoWay}"
+                 SelectedItem="{Binding SelectedPuntoMedicion,Mode=TwoWay}"
+                 Name="ListPuntoMedicion" SelectionChanged="ListPuntoMedicion_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <TextBlock Name="txtmenu" Text="{Binding PuntoMedicionName}"
+                                    Style="{StaticResource textBockMenu}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Border Grid.Row="2" Style="{StaticResource BorderBordeMenu}">
+            <TextBlock Text="Lumbreras" VerticalAlignment="Center" 
+                   Style="{StaticResource textBockMenuCatalogo}"
+                   HorizontalAlignment="Center"/>
+        </Border>
+        <ListBox Grid.Row="3" ItemsSource="{Binding LumbrerasPuntoMedicions, Mode=TwoWay}"
+                 SelectedItem="{Binding SelectedLumbrera,Mode=TwoWay}"
+                 Name="ListLumbreras" SelectionChanged="ListPuntoMedicion_SelectionChanged" 
+                 Style="{StaticResource ListBoxStyle}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <TextBlock Text="{Binding PuntoMedicionName}"
+                                    Style="{StaticResource textBockMenu}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Border Grid.Row="4" Style="{StaticResource BorderBordeMenu}">
+            <TextBlock Text="Estaciones Pluviográficas" VerticalAlignment="Center" 
+                   Style="{StaticResource textBockMenuCatalogo}"
+                   HorizontalAlignment="Center"/>
+        </Border>
+        <ListBox Grid.Row="5" ItemsSource="{Binding EstacionesPuntoMedicions, Mode=TwoWay}"
+                 SelectedItem="{Binding SelectedEstacion,Mode=TwoWay}"
+                 Name="ListEstacionesPluvi" SelectionChanged="ListPuntoMedicion_SelectionChanged"
+                 Style="{StaticResource ListBoxStyle}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <TextBlock Text="{Binding PuntoMedicionName}"
+                                    Style="{StaticResource textBockMenu}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>

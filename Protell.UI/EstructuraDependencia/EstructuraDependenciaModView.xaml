@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="Protell.UI.EstructuraDependencia.EstructuraDependenciaModView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+<Grid>
+        <TextBlock Text="NUEVO: EstructuraDependencia." Height="23" HorizontalAlignment="Left" Margin="23,20,0,0" Name="textBlock1" VerticalAlignment="Top" />
+        <TextBlock Text="Activo:" Height="23" HorizontalAlignment="Left" Margin="25,123,0,0" Name="textBlock3" VerticalAlignment="Top" />
+        <TextBlock Text="{Binding ElementExists}" Height="23" HorizontalAlignment="Left" Margin="25,233,0,0" Name="textBlock4" VerticalAlignment="Top" Width="144" />
+
+        <Separator Height="7" HorizontalAlignment="Left" Margin="22,52,0,0" Name="separator1" VerticalAlignment="Top" Width="244" />
+        <Separator Height="9" HorizontalAlignment="Left" Margin="25,174,0,0" Name="separator2" VerticalAlignment="Top" Width="244" />
+        <CheckBox IsChecked="{Binding EstructuraDependencia.IsActive}" IsEnabled="False" Content="" Height="16" HorizontalAlignment="Left" Margin="114,130,0,0" Name="IsActiveCheckbox" VerticalAlignment="Top" />
+
+        <Button Name="btGuardar" Command="{Binding SaveCommand}" Content="Guardar" Height="23" HorizontalAlignment="Left" Margin="25,194,0,0" VerticalAlignment="Top" Width="75" Click="btGuardar_Click" />
+        <TextBlock HorizontalAlignment="Left" Margin="25,65,0,205" Name="textBlock5" Text="Dependencia:" />
+        <ComboBox ItemsSource="{Binding Dependencias}"
+                  SelectedItem="{Binding EstructuraDependencia.DEPENDENCIA}"
+                  DisplayMemberPath="DependenciaName" Height="23" HorizontalAlignment="Left" Margin="114,65,0,0" Name="comboBox1" VerticalAlignment="Top" Width="120" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="25,94,0,0" Name="textBlock2" Text="Estructura" VerticalAlignment="Top" />
+        <ComboBox ItemsSource="{Binding Estructuras}"
+                  SelectedItem="{Binding EstructuraDependencia.ESTRUCTURA}"
+                  DisplayMemberPath="EstructuraName" Height="23" HorizontalAlignment="Left" Margin="114,94,0,0" Name="comboBox2" VerticalAlignment="Top" Width="120" />
+        <Button Content="Salir" Height="23" HorizontalAlignment="Left" Margin="119,194,0,0" Name="btSalir" VerticalAlignment="Top" Width="75" Click="btSalir_Click" />
+    </Grid>
+</UserControl>
