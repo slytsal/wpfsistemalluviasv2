@@ -16,6 +16,7 @@ namespace Protell.DAL.JSON
         {
             //comentario sdfasd
             //sdfsdf
+            //castillo
             try
             {
                 string json = JsonConvert.SerializeObject(parametros);
