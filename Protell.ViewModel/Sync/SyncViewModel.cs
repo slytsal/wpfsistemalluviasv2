@@ -53,12 +53,16 @@ namespace Protell.ViewModel.Sync
             try
             {
                 ModifiedDataRepository modifiedDataRepository = new ModifiedDataRepository();
-                ObservableCollection<string> tablesName = modifiedDataRepository.DownloadModifiedData();
-                foreach (var item in tablesName)
+                ObservableCollection<ModifiedDataModel> tablesName = modifiedDataRepository.DownloadModifiedData();
+                foreach (ModifiedDataModel item in tablesName)
                 {
                     bool x = false;
-                    IServiceFactory factory = ServiceFactory.Instance.getClass(item);
-                    x = factory.Download();
+                    IServiceFactory factory = ServiceFactory.Instance.getClass(item.SYNCTABLE.SyncTableName);
+                    if( factory.Download())
+                    {
+                        modifiedDataRepository.UpdateServerModifiedDate(item);
+                    }
+                    
                 }
             }
             catch (Exception ex)
@@ -68,53 +72,7 @@ namespace Protell.ViewModel.Sync
 
         }
 
-        public string CallDownloadCondicion()
-        {
-            bool responseService = false;
-            string webMethodName = "Download_CondPro";
-            string tableName = "CAT_CONDPRO";
-            string res = "";
-            try
-            {
-                var client = new RestClient(routeDownload);
-                //client.Authenticator = new HttpBasicAuthenticator(basicAuthUser, basicAuthPass);
-                var request = new RestRequest(Method.POST);
-                request.Resource = webMethodName;
-                request.RequestFormat = RestSharp.DataFormat.Json;
-                request.AddHeader("Content-type", "application/json");
-                //Body                
-                MaxTableModel maximos= new MaxTableModel();
-                IRestResponse response = null;
-                CondProRepository condProRepository = new CondProRepository();        
-                using (var repository = new SyncRepository())
-                {                    
-                    try
-                    {                        
-                        maximos = repository.GetMaxTable(tableName);
-                        request.AddBody(new { LastModifiedDate = maximos.LastModifiedDate, ServerLastModifiedDate = maximos.ServerLastModifiedDate });
-                    }
-                    catch (Exception)
-                    {
-                        maximos = null;       
-                    }                     
-                }                                 
-                //                                
-                if (maximos != null)
-                {
-                    response = client.Execute(request);
-                    res = response.Content;
-                    //ObservableCollection<CondProModel> list = new JavaScriptSerializer().Deserialize < ObservableCollection<CondProModel>>(response.Content);
-                    //Dictionary<string, string> res = condProRepository.GetResponseDictionaryCondPro(response.Content);
-                    //ObservableCollection<CondProModel> list = condProRepository.GetDeserializeCondPro(res["Download_CondProResult"]);
-                    //if (list != null)
-                      //  condProRepository.LoadSyncLocal(list);
-                }
-            }
-            catch (Exception ex){
-                InsertLog(ex.Source.ToString(), ex.Message);
-            }
-            return res;
-        }
+        
 
         public void CallDownloadCiRegistroOnDemand(long idPuntoMedicion, long lastModifiedDate, long serverLastModifiedDate)
         {
@@ -128,12 +86,7 @@ namespace Protell.ViewModel.Sync
             DownloadRepository res = new DownloadRepository();
             res.CallDownloadCiRegistroRecurrent(fechaActual, fechaFin, LastModifiedDate, ServerLastModifiedDate);
         }
-
-        public void CallUploadAppRol()
-        {
-            UploadRepository res = new UploadRepository();
-            res.CallUploadAppRol();
-        }
+        
 
 
 

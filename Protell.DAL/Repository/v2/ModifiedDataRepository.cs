@@ -10,10 +10,10 @@ namespace Protell.DAL.Repository.v2
 {
     public class ModifiedDataRepository
     {
-        public ObservableCollection<string> DownloadModifiedData()
+        public ObservableCollection<ModifiedDataModel> DownloadModifiedData()
         {
-            ObservableCollection<ModifiedDataModel> res = new ObservableCollection<ModifiedDataModel>();
-            ObservableCollection<string> lstTableNames = new ObservableCollection<string>();
+            ObservableCollection<ModifiedDataModel> modifiedServer = new ObservableCollection<ModifiedDataModel>();
+            ObservableCollection<ModifiedDataModel> lstTableNames = new ObservableCollection<ModifiedDataModel>();
             try
             {
                 string webMethod = "Download_ModifiedData";
@@ -28,19 +28,30 @@ namespace Protell.DAL.Repository.v2
                     response = client.Execute(request);
                     ModifiedDataResultModel model = new ModifiedDataResultModel();
                     model = new JavaScriptSerializer().Deserialize<ModifiedDataResultModel>(response.Content);
-                    res = model.Download_ModifiedDataResult;                    
+                    modifiedServer = model.Download_ModifiedDataResult;                    
                     using(var entity= new db_SeguimientoProtocolo_r2Entities())
                     {
-                        (from server in res
+                        (from server in modifiedServer
                          join local in entity.MODIFIEDDATAs
                              on server.IdModifiedData equals (local.IdModifiedData)
                          join tables in entity.SYNCTABLEs
                              on local.IdSyncTable equals tables.IdSyncTable
                          orderby tables.OrderTable ascending
-                         where local.ServerModifiedDate<server.ServerModifiedDate
-                         select new { TableName = tables.SyncTableName }).ToList().ForEach(row =>
+                         where local.ServerModifiedDate < server.ServerModifiedDate
+                         select new
                          {
-                             lstTableNames.Add(row.TableName);
+                             IdModifiedData = server.IdModifiedData,
+                             ServerModifiedDate = server.ServerModifiedDate,
+                             TableName = tables.SyncTableName
+                         }).ToList().ForEach(row =>
+                         {
+                             lstTableNames.Add(new ModifiedDataModel()
+                             {
+                                 IdModifiedData = row.IdModifiedData,
+                                 ServerModifiedDate = row.ServerModifiedDate,
+                                 SYNCTABLE = new SyncTableModel() { SyncTableName = row.TableName }
+
+                             });
                          });
                     }
                 }
@@ -51,9 +62,45 @@ namespace Protell.DAL.Repository.v2
             }
             catch (Exception ex)
             {
-                
+                AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });
             }
             return lstTableNames;
+        }
+
+        public bool UpdateServerModifiedDate(ModifiedDataModel model)
+        {
+            bool x = false;
+            MODIFIEDDATA res = null;
+            try
+            {
+                using(var entity=new db_SeguimientoProtocolo_r2Entities())
+                {
+                    try
+                    {
+                        res = (from result in entity.MODIFIEDDATAs
+                               where result.IdModifiedData == model.IdModifiedData
+                               select result).First();
+                    }
+                    catch (Exception)
+                    {
+                        res =(from result in entity.MODIFIEDDATAs
+                               where result.SYNCTABLE.SyncTableName == model.SYNCTABLE.SyncTableName
+                               select result).First();
+                    }
+                    if(res!=null)
+                    {
+                        res.ServerModifiedDate = model.ServerModifiedDate;
+                        entity.SaveChanges();
+                    }
+                    
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });          
+            }
+            return x;
         }
     }
 }

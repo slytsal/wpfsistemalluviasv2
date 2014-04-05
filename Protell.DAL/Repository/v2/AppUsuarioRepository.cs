@@ -1,4 +1,5 @@
-﻿using Protell.Model;
+﻿using Protell.DAL.Factory;
+using Protell.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace Protell.DAL.Repository.v2
 {
-    public class AppUsuarioRepository:IDisposable
+    public class AppUsuarioRepository : IDisposable, IServiceFactory
     {
         public ObservableCollection<UsuarioModel> GetIsModified()
         {
@@ -48,6 +49,11 @@ namespace Protell.DAL.Repository.v2
         public void Dispose()
         {
             return;
+        }
+
+        public bool Download()
+        {
+            throw new NotImplementedException();
         }
     }
 }

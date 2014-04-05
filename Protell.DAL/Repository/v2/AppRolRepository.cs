@@ -143,7 +143,7 @@ namespace Protell.DAL.Repository.v2
                 }
                 catch (Exception ex)
                 {
-                                        
+                    AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });                
                 }
                 
             }
