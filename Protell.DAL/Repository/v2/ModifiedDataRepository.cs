@@ -62,7 +62,7 @@ namespace Protell.DAL.Repository.v2
             }
             catch (Exception ex)
             {
-                
+                AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });
             }
             return lstTableNames;
         }
@@ -70,20 +70,35 @@ namespace Protell.DAL.Repository.v2
         public bool UpdateServerModifiedDate(ModifiedDataModel model)
         {
             bool x = false;
-           
+            MODIFIEDDATA res = null;
             try
             {
                 using(var entity=new db_SeguimientoProtocolo_r2Entities())
                 {
-                   var res = (from result in entity.MODIFIEDDATAs
-                           where result.IdModifiedData == model.IdModifiedData
-                           select result);
+                    try
+                    {
+                        res = (from result in entity.MODIFIEDDATAs
+                               where result.IdModifiedData == model.IdModifiedData
+                               select result).First();
+                    }
+                    catch (Exception)
+                    {
+                        res =(from result in entity.MODIFIEDDATAs
+                               where result.SYNCTABLE.SyncTableName == model.SYNCTABLE.SyncTableName
+                               select result).First();
+                    }
+                    if(res!=null)
+                    {
+                        res.ServerModifiedDate = model.ServerModifiedDate;
+                        entity.SaveChanges();
+                    }
+                    
                 }
                 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                                
+                AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });          
             }
             return x;
         }
