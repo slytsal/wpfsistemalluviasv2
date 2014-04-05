@@ -814,13 +814,13 @@
           <EntitySet Name="APP_BITACORA" EntityType="db_SeguimientoProtocolo_r2Model.APP_BITACORA" />
           <FunctionImport Name="spGetMaxTableCiRegistroRecurrent" ReturnType="Collection(db_SeguimientoProtocolo_r2Model.spGetMaxTableCiRegistroRecurrent_Result)" />
           <FunctionImport Name="spCommitCiRegistroDataTemp">
-            <Parameter Name="sessionUnid" Mode="In" Type="Int64" />
+          <Parameter Name="sessionUnid" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="spCreateCiRegistroDataTemp" ReturnType="Collection(Int64)" />
           <FunctionImport Name="spFinishCiRegistroDataTemp">
-            <Parameter Name="sessionUnid" Mode="In" Type="Int64" />
+          <Parameter Name="sessionUnid" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="spInsertCiRegistroDataTemp">
+          <FunctionImport Name="spInsertCiRegistroDataTemp" ReturnType="Collection(Boolean)">
             <Parameter Name="IdRegistro" Mode="In" Type="Int64" />
             <Parameter Name="IdPuntoMedicion" Mode="In" Type="Int64" />
             <Parameter Name="FechaCaptura" Mode="In" Type="DateTime" />

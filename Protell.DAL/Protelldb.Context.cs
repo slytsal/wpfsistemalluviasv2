@@ -307,6 +307,164 @@ namespace Protell.DAL
         {
             return base.ExecuteFunction<Nullable<long>>("spCreateCiRegistroDataTemp");
         }
+        public ObjectResult<Nullable<bool>> spInsertCiRegistroDataTemp(Nullable<long> idRegistro, Nullable<long> idPuntoMedicion, Nullable<System.DateTime> fechaCaptura, Nullable<int> horaRegistro, Nullable<int> diaRegistro, Nullable<double> valor, string accionActual, Nullable<bool> isActive, Nullable<bool> isModified, Nullable<long> lastModifiedDate, Nullable<long> idCondicion, Nullable<long> serverLastModifiedDate, Nullable<long> fechaNumerica, Nullable<long> sessionUnid)
+        {
+    
+            ObjectParameter idRegistroParameter;
+    
+            if (idRegistro.HasValue)
+            {
+                idRegistroParameter = new ObjectParameter("IdRegistro", idRegistro);
+            }
+            else
+            {
+                idRegistroParameter = new ObjectParameter("IdRegistro", typeof(long));
+            }
+    
+            ObjectParameter idPuntoMedicionParameter;
+    
+            if (idPuntoMedicion.HasValue)
+            {
+                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", idPuntoMedicion);
+            }
+            else
+            {
+                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", typeof(long));
+            }
+    
+            ObjectParameter fechaCapturaParameter;
+    
+            if (fechaCaptura.HasValue)
+            {
+                fechaCapturaParameter = new ObjectParameter("FechaCaptura", fechaCaptura);
+            }
+            else
+            {
+                fechaCapturaParameter = new ObjectParameter("FechaCaptura", typeof(System.DateTime));
+            }
+    
+            ObjectParameter horaRegistroParameter;
+    
+            if (horaRegistro.HasValue)
+            {
+                horaRegistroParameter = new ObjectParameter("HoraRegistro", horaRegistro);
+            }
+            else
+            {
+                horaRegistroParameter = new ObjectParameter("HoraRegistro", typeof(int));
+            }
+    
+            ObjectParameter diaRegistroParameter;
+    
+            if (diaRegistro.HasValue)
+            {
+                diaRegistroParameter = new ObjectParameter("DiaRegistro", diaRegistro);
+            }
+            else
+            {
+                diaRegistroParameter = new ObjectParameter("DiaRegistro", typeof(int));
+            }
+    
+            ObjectParameter valorParameter;
+    
+            if (valor.HasValue)
+            {
+                valorParameter = new ObjectParameter("Valor", valor);
+            }
+            else
+            {
+                valorParameter = new ObjectParameter("Valor", typeof(double));
+            }
+    
+            ObjectParameter accionActualParameter;
+    
+            if (accionActual != null)
+            {
+                accionActualParameter = new ObjectParameter("AccionActual", accionActual);
+            }
+            else
+            {
+                accionActualParameter = new ObjectParameter("AccionActual", typeof(string));
+            }
+    
+            ObjectParameter isActiveParameter;
+    
+            if (isActive.HasValue)
+            {
+                isActiveParameter = new ObjectParameter("IsActive", isActive);
+            }
+            else
+            {
+                isActiveParameter = new ObjectParameter("IsActive", typeof(bool));
+            }
+    
+            ObjectParameter isModifiedParameter;
+    
+            if (isModified.HasValue)
+            {
+                isModifiedParameter = new ObjectParameter("IsModified", isModified);
+            }
+            else
+            {
+                isModifiedParameter = new ObjectParameter("IsModified", typeof(bool));
+            }
+    
+            ObjectParameter lastModifiedDateParameter;
+    
+            if (lastModifiedDate.HasValue)
+            {
+                lastModifiedDateParameter = new ObjectParameter("LastModifiedDate", lastModifiedDate);
+            }
+            else
+            {
+                lastModifiedDateParameter = new ObjectParameter("LastModifiedDate", typeof(long));
+            }
+    
+            ObjectParameter idCondicionParameter;
+    
+            if (idCondicion.HasValue)
+            {
+                idCondicionParameter = new ObjectParameter("IdCondicion", idCondicion);
+            }
+            else
+            {
+                idCondicionParameter = new ObjectParameter("IdCondicion", typeof(long));
+            }
+    
+            ObjectParameter serverLastModifiedDateParameter;
+    
+            if (serverLastModifiedDate.HasValue)
+            {
+                serverLastModifiedDateParameter = new ObjectParameter("ServerLastModifiedDate", serverLastModifiedDate);
+            }
+            else
+            {
+                serverLastModifiedDateParameter = new ObjectParameter("ServerLastModifiedDate", typeof(long));
+            }
+    
+            ObjectParameter fechaNumericaParameter;
+    
+            if (fechaNumerica.HasValue)
+            {
+                fechaNumericaParameter = new ObjectParameter("FechaNumerica", fechaNumerica);
+            }
+            else
+            {
+                fechaNumericaParameter = new ObjectParameter("FechaNumerica", typeof(long));
+            }
+    
+            ObjectParameter sessionUnidParameter;
+    
+            if (sessionUnid.HasValue)
+            {
+                sessionUnidParameter = new ObjectParameter("SessionUnid", sessionUnid);
+            }
+            else
+            {
+                sessionUnidParameter = new ObjectParameter("SessionUnid", typeof(long));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("spInsertCiRegistroDataTemp", idRegistroParameter, idPuntoMedicionParameter, fechaCapturaParameter, horaRegistroParameter, diaRegistroParameter, valorParameter, accionActualParameter, isActiveParameter, isModifiedParameter, lastModifiedDateParameter, idCondicionParameter, serverLastModifiedDateParameter, fechaNumericaParameter, sessionUnidParameter);
+        }
 
         #endregion
 
