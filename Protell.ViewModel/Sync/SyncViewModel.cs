@@ -58,7 +58,7 @@ namespace Protell.ViewModel.Sync
                 {
                     bool x = false;
                     IServiceFactory factory = ServiceFactory.Instance.getClass(item.SYNCTABLE.SyncTableName);
-                    if( factory.Download())
+                    if(factory.Download())
                     {
                         modifiedDataRepository.UpdateServerModifiedDate(item);
                     }
