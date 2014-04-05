@@ -1,11 +1,12 @@
-﻿using Protell.Model;
+﻿using Protell.DAL.Factory;
+using Protell.Model;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Protell.DAL.Repository.v2
 {
-    public class CatUnidadMedidaRepository:IDisposable
+    public class CatUnidadMedidaRepository : IDisposable, IServiceFactory
     {
         public ObservableCollection<UnidadMedidaModel> GetIsModified()
         {
@@ -39,6 +40,11 @@ namespace Protell.DAL.Repository.v2
         public void Dispose()
         {
             return;
+        }
+
+        public bool Download()
+        {
+            throw new NotImplementedException();
         }
     }
 }

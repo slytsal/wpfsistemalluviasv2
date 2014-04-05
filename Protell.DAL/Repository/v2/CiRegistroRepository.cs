@@ -1,13 +1,11 @@
 ﻿using Protell.Model;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 
 namespace Protell.DAL.Repository.v2
 {
-    public class CiRegistroRepository:IDisposable
+    public class CiRegistroRepository : IDisposable
     {
         public ObservableCollection<RegistroModel> GetIsModified()
         {
@@ -48,5 +46,6 @@ namespace Protell.DAL.Repository.v2
         {
             return;
         }
+        
     }
 }

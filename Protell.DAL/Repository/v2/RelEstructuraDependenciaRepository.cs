@@ -1,4 +1,5 @@
-﻿using Protell.Model;
+﻿using Protell.DAL.Factory;
+using Protell.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace Protell.DAL.Repository.v2
 {
-   public class RelEstructuraDependenciaRepository:IDisposable
+    public class RelEstructuraDependenciaRepository : IDisposable, IServiceFactory
     {
        public ObservableCollection<EstructuraDependenciaModel> GetIsModified()
        {
@@ -41,6 +42,11 @@ namespace Protell.DAL.Repository.v2
        public void Dispose()
        {
            return;
+       }
+
+       public bool Download()
+       {
+           throw new NotImplementedException();
        }
     }
 }
