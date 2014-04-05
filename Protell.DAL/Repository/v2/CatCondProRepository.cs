@@ -1,10 +1,10 @@
 ﻿using Protell.DAL.Factory;
 using Protell.Model;
+using Protell.Model.SyncModels;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
+using System.Web.Script.Serialization;
 
 namespace Protell.DAL.Repository.v2
 {
@@ -46,7 +46,80 @@ namespace Protell.DAL.Repository.v2
 
         public bool Download()
         {
-            throw new NotImplementedException();
+            bool x = false;
+            string webMethodName = "Download_CondPro";
+            string tableName = "CAT_CONDPRO";
+            try
+            {
+                string res = DownloadFactory.Instance.CallWebService(webMethodName, tableName);
+                CondProdResultModel model = new CondProdResultModel();
+                model = new JavaScriptSerializer().Deserialize<CondProdResultModel>(res);
+                if (model.Download_CondProResult != null && model.Download_CondProResult.Count > 0)
+                {
+                    Upsert(model.Download_CondProResult);
+                }
+                x = true;
+            }
+            catch (Exception ex)
+            {
+                x = false;
+                AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });
+            }
+            return x;
+        }
+
+
+        public void Upsert(ObservableCollection<CondProModel> items)
+        {
+            using (var entity = new db_SeguimientoProtocolo_r2Entities())
+            {
+                try
+                {
+                    foreach (CondProModel row in items)
+                    {
+                        CAT_CONDPRO result = null;
+                        try
+                        {
+                            result = (from s in entity.CAT_CONDPRO
+                                      where s.IdCondicion == row.IdCondicion
+                                      select s).First();
+                        }
+                        catch (Exception)
+                        {
+                            ;
+                        }
+                        if (result == null)
+                        {
+                            entity.CAT_CONDPRO.AddObject(
+                                new CAT_CONDPRO()
+                                {
+                                    IdCondicion = row.IdCondicion,
+                                    CondicionName = row.CondicionName,
+                                    PathCodicion = row.PathCodicion,
+                                    IsActive = row.IsActive,
+                                    IsModified = row.IsModified,
+                                    LastModifiedDate = row.LastModifiedDate,
+                                    ServerLastModifiedDate = row.ServerLastModifiedDate
+                                });
+                        }
+                        if (result != null && result.LastModifiedDate < row.LastModifiedDate)
+                        {                            
+                            result.CondicionName = row.CondicionName;
+                            result.PathCodicion = row.PathCodicion;
+                            result.IsActive = row.IsActive;
+                            result.IsModified = row.IsModified;
+                            result.LastModifiedDate = row.LastModifiedDate;
+                            result.ServerLastModifiedDate = row.ServerLastModifiedDate;
+                        }
+                    }
+                    entity.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });
+                }
+
+            }
         }
     }
 }

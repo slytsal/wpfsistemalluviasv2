@@ -151,7 +151,7 @@ namespace Protell.UI.v2
             try
             {
                 SyncViewModel svm = new SyncViewModel();
-                CondProdResultModel model = new CondProdResultModel();    
+                //CondProdResultModel model = new CondProdResultModel();    
                            
                 //string res = svm.CallDownloadCondicion();             
                 //model = new JavaScriptSerializer().Deserialize<CondProdResultModel>(res);

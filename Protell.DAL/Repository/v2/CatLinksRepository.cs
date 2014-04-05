@@ -1,10 +1,12 @@
 ﻿using Protell.DAL.Factory;
 using Protell.Model;
+using Protell.Model.SyncModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Web.Script.Serialization;
 
 namespace Protell.DAL.Repository.v2
 {
@@ -46,7 +48,68 @@ namespace Protell.DAL.Repository.v2
 
         public bool Download()
         {
-            throw new NotImplementedException();
+            bool x = false;
+            string webMethodName = "Download_Links";
+            string tableName = "CAT_LINKS";
+            try
+            {
+                string res = DownloadFactory.Instance.CallWebService(webMethodName, tableName);
+                CatLinkResultModel model = new CatLinkResultModel();
+                model = new JavaScriptSerializer().Deserialize<CatLinkResultModel>(res);
+                if (model.Download_LinksResult != null && model.Download_LinksResult.Count > 0)
+                {
+                    Upsert(model.Download_LinksResult);
+                }
+                x = true;
+            }
+            catch (Exception ex)
+            {
+                x = false;
+                AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });
+            }
+            return x;
+        }
+
+        public void Upsert(ObservableCollection<LinksModel> items)
+        {
+            using (var entity = new db_SeguimientoProtocolo_r2Entities())
+            {
+                try
+                {
+                    foreach (LinksModel row in items)
+                    {
+                        CAT_LINKS result = null;
+                        try
+                        {
+                            result = (from s in entity.CAT_LINKS
+                                      where s.IdLink == row.IdLink
+                                      select s).First();
+                        }
+                        catch (Exception)
+                        {
+                            ;
+                        }
+                        if (result == null)
+                        {
+                            entity.CAT_LINKS.AddObject(
+                                new CAT_LINKS()
+                                {
+                                    
+                                });
+                        }
+                        if (result != null && result.LastModifiedDate < row.LastModifiedDate)
+                        {
+                            
+                        }
+                    }
+                    entity.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });
+                }
+
+            }
         }
     }
 }

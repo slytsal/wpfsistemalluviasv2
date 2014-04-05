@@ -303,6 +303,10 @@ namespace Protell.DAL
         {
             return base.ExecuteFunction<spGetMaxTableCiRegistroRecurrent_Result>("spGetMaxTableCiRegistroRecurrent");
         }
+        public ObjectResult<Nullable<long>> spCreateCiRegistroDataTemp()
+        {
+            return base.ExecuteFunction<Nullable<long>>("spCreateCiRegistroDataTemp");
+        }
 
         #endregion
 
