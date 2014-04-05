@@ -93,7 +93,7 @@ namespace Protell.DAL.Repository.v2
         {
             bool responseService = false;
 
-            string webMethodName = "Download_CIRegistroOnDemand";
+            string webMethodName = "Download_CIRegistroRecurrent";
             CiRegistroResultModel list = new CiRegistroResultModel();
             RegistroRepository registroRepository = new RegistroRepository();
             long requestedFechaFin = 0;

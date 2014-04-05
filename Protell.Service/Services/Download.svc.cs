@@ -345,9 +345,6 @@ namespace Protell.Service.Services
             return result;
         }
 
-        string IDownload.Download()
-        {
-            return "ok";
-        }
+        
     }
 }

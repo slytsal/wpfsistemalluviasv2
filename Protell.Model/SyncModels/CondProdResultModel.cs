@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 
 
-namespace Protell.Model
+namespace Protell.Model.SyncModels
 {
     [DataContract]
     public class CondProdResultModel:ModelBase

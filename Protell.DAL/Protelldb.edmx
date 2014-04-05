@@ -539,9 +539,16 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="spAutoLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spCommitCiRegistroDataTemp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="sessionUnid" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="spCreateCiRegistroDataTemp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spCurrentUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdUsuario" Type="bigint" Mode="In" />
           <Parameter Name="IsSveSesion" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="spFinishCiRegistroDataTemp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="sessionUnid" Type="bigint" Mode="In" />
         </Function>
         <Function Name="spGetDateTimeLastSync" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spGetDaysToSync" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -558,6 +565,22 @@
           <Parameter Name="IdPuntoMedicion" Type="bigint" Mode="In" />
         </Function>
         <Function Name="spGetMaxTableCiRegistroRecurrent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spInsertCiRegistroDataTemp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdRegistro" Type="bigint" Mode="In" />
+          <Parameter Name="IdPuntoMedicion" Type="bigint" Mode="In" />
+          <Parameter Name="FechaCaptura" Type="datetime" Mode="In" />
+          <Parameter Name="HoraRegistro" Type="int" Mode="In" />
+          <Parameter Name="DiaRegistro" Type="int" Mode="In" />
+          <Parameter Name="Valor" Type="float" Mode="In" />
+          <Parameter Name="AccionActual" Type="nvarchar" Mode="In" />
+          <Parameter Name="IsActive" Type="bit" Mode="In" />
+          <Parameter Name="IsModified" Type="bit" Mode="In" />
+          <Parameter Name="LastModifiedDate" Type="bigint" Mode="In" />
+          <Parameter Name="IdCondicion" Type="bigint" Mode="In" />
+          <Parameter Name="ServerLastModifiedDate" Type="bigint" Mode="In" />
+          <Parameter Name="FechaNumerica" Type="bigint" Mode="In" />
+          <Parameter Name="SessionUnid" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="UDF_NewUnid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar" />
         <EntityContainer Name="db_SeguimientoProtocolo_r2ModelStoreContainer">
           <EntitySet Name="APP_BITACORA" EntityType="Self.APP_BITACORA" Schema="dbo" store:Type="Tables" />
@@ -790,6 +813,29 @@
           </FunctionImport>
           <EntitySet Name="APP_BITACORA" EntityType="db_SeguimientoProtocolo_r2Model.APP_BITACORA" />
           <FunctionImport Name="spGetMaxTableCiRegistroRecurrent" ReturnType="Collection(db_SeguimientoProtocolo_r2Model.spGetMaxTableCiRegistroRecurrent_Result)" />
+          <FunctionImport Name="spCommitCiRegistroDataTemp">
+            <Parameter Name="sessionUnid" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="spCreateCiRegistroDataTemp" ReturnType="Collection(Int64)" />
+          <FunctionImport Name="spFinishCiRegistroDataTemp">
+            <Parameter Name="sessionUnid" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="spInsertCiRegistroDataTemp">
+            <Parameter Name="IdRegistro" Mode="In" Type="Int64" />
+            <Parameter Name="IdPuntoMedicion" Mode="In" Type="Int64" />
+            <Parameter Name="FechaCaptura" Mode="In" Type="DateTime" />
+            <Parameter Name="HoraRegistro" Mode="In" Type="Int32" />
+            <Parameter Name="DiaRegistro" Mode="In" Type="Int32" />
+            <Parameter Name="Valor" Mode="In" Type="Double" />
+            <Parameter Name="AccionActual" Mode="In" Type="String" />
+            <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+            <Parameter Name="IsModified" Mode="In" Type="Boolean" />
+            <Parameter Name="LastModifiedDate" Mode="In" Type="Int64" />
+            <Parameter Name="IdCondicion" Mode="In" Type="Int64" />
+            <Parameter Name="ServerLastModifiedDate" Mode="In" Type="Int64" />
+            <Parameter Name="FechaNumerica" Mode="In" Type="Int64" />
+            <Parameter Name="SessionUnid" Mode="In" Type="Int64" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="APP_ROL">
           <Key>
@@ -1781,6 +1827,10 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spCommitCiRegistroDataTemp" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spCommitCiRegistroDataTemp" />
+          <FunctionImportMapping FunctionImportName="spCreateCiRegistroDataTemp" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spCreateCiRegistroDataTemp" />
+          <FunctionImportMapping FunctionImportName="spFinishCiRegistroDataTemp" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spFinishCiRegistroDataTemp" />
+          <FunctionImportMapping FunctionImportName="spInsertCiRegistroDataTemp" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spInsertCiRegistroDataTemp" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
