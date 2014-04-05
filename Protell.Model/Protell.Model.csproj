@@ -140,6 +140,7 @@
     <Compile Include="SyncModel.cs" />
     <Compile Include="SyncModels\AppRolResultModel.cs" />
     <Compile Include="SyncModels\AppUsuarioRolResultModel.cs" />
+    <Compile Include="SyncModels\CiRegistroRecurrentResultModel.cs" />
     <Compile Include="SyncModels\CiRegistroResultModel.cs" />
     <Compile Include="SyncModels\ModifiedDataResultModel.cs" />
     <Compile Include="SyncProperties.cs" />
