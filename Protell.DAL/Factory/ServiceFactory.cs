@@ -1,5 +1,5 @@
-﻿using Protell.Model.IRepository;
-using System;
+﻿using System;
+using System.Configuration;
 
 namespace Protell.DAL.Factory
 {
@@ -11,10 +11,18 @@ namespace Protell.DAL.Factory
         public IServiceFactory getClass(string tableName)
         {
             IServiceFactory retorno = null;
-            
-            Type t = Type.GetType("Protell.DAL.Repository.v2." + tableName, false, true);
-            if (t != null)
-                retorno = (IServiceFactory)Activator.CreateInstance(t);
+            try
+            {                
+                string dClass = ConfigurationManager.AppSettings[tableName].ToString(); ;
+                Type t = Type.GetType("Protell.DAL.Repository.v2." + dClass, false, true);
+                if (t != null)
+                    retorno = (IServiceFactory)Activator.CreateInstance(t);
+               
+            }
+            catch (Exception)
+            {
+
+            }
             return retorno;
         }
 

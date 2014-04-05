@@ -118,6 +118,7 @@
       <DependentUpon>Protelldb.tt</DependentUpon>
     </Compile>
     <Compile Include="Factory\DownloadFactory.cs" />
+    <Compile Include="Factory\IServiceFactory.cs" />
     <Compile Include="Factory\ServiceFactory.cs" />
     <Compile Include="JSON\SerializerJson.cs" />
     <Compile Include="MODIFIEDDATA.cs">

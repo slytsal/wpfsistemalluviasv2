@@ -6,7 +6,6 @@ using Protell.Model;
 using System.Configuration;
 using System.Collections.ObjectModel;
 using Protell.DAL.Factory;
-using Protell.Model.IRepository;
 
 
 namespace Protell.ViewModel.Sync
@@ -51,18 +50,22 @@ namespace Protell.ViewModel.Sync
 
         public void DownloadData()
         {
-            ModifiedDataRepository modifiedDataRepository = new ModifiedDataRepository();            
-            ObservableCollection<string> tablesName = modifiedDataRepository.DownloadModifiedData();
-            foreach (var item in tablesName)
+            try
             {
-                bool x = false;
-                IServiceFactory factory = ServiceFactory.Instance.getClass(item);
-                x=factory.Download();
+                ModifiedDataRepository modifiedDataRepository = new ModifiedDataRepository();
+                ObservableCollection<string> tablesName = modifiedDataRepository.DownloadModifiedData();
+                foreach (var item in tablesName)
+                {
+                    bool x = false;
+                    IServiceFactory factory = ServiceFactory.Instance.getClass(item);
+                    x = factory.Download();
+                }
+            }
+            catch (Exception ex)
+            {
                 
             }
 
-            
-            
         }
 
         public string CallDownloadCondicion()

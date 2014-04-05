@@ -66,5 +66,20 @@ namespace Protell.Model
         }
         private Nullable<long> _ServerModifiedDate;
         public const string ServerModifiedDatePropertyName = "ServerModifiedDate";
+
+        public SyncTableModel SYNCTABLE
+        {
+            get { return _SYNCTABLE; }
+            set
+            {
+                if (_SYNCTABLE != value)
+                {
+                    _SYNCTABLE = value;
+                    OnPropertyChanged(SYNCTABLEPropertyName);
+                }
+            }
+        }
+        private SyncTableModel _SYNCTABLE;
+        public const string SYNCTABLEPropertyName = "SYNCTABLE";
 	}
 }

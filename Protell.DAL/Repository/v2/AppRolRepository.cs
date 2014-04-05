@@ -13,7 +13,7 @@ using Protell.DAL.Factory;
 
 namespace Protell.DAL.Repository.v2
 {
-    public class AppRolRepository:IDisposable
+    public class AppRolRepository : IDisposable, IServiceFactory
     {
         public ObservableCollection<AppRolModel> GetIsModified()
         {
@@ -79,27 +79,7 @@ namespace Protell.DAL.Repository.v2
             string webMethodName = "Download_AppRol";
             string tableName = "APP_ROL";
             try
-            {
-                //var client = new RestClient(SyncProperties.routeDownload);
-                //var request = new RestRequest(Method.POST);
-                //request.Resource = webMethodName;
-                //request.RequestFormat = RestSharp.DataFormat.Json;
-                //request.AddHeader("Content-type", "application/json");
-                //MaxTableModel maximos = new MaxTableModel();
-                //IRestResponse response= null;
-                //using(var repository = new SyncRepository())
-                //{
-                //    maximos = repository.GetMaxTable(tableName);
-                //    if (maximos != null)
-                //    {
-                //        request.AddBody(new
-                //        {
-                //            LastModifiedDate = maximos.LastModifiedDate,
-                //            ServerLastModifiedDate = maximos.ServerLastModifiedDate
-                //        });
-                //        response = client.Execute(request);
-                //    }
-                //}  
+            {                
                 string res = DownloadFactory.Instance.CallWebService(webMethodName, tableName);
                 AppRolResultModel model = new AppRolResultModel();
                 model = new JavaScriptSerializer().Deserialize<AppRolResultModel>(res);
@@ -168,8 +148,6 @@ namespace Protell.DAL.Repository.v2
                 
             }
         }
-
-
         
         public void Dispose()
         {
