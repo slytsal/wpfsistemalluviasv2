@@ -451,27 +451,52 @@ namespace Protell.DAL.Repository
                             {
                                 result = ( from o in entity.CI_REGISTRO
                                            where o.IdPuntoMedicion == item.PUNTOMEDICION.IdPuntoMedicion &&
-                                                 o.HoraRegistro == item.HoraRegistro &&
-                                                 ( o.FechaCaptura.Month == item.FechaCaptura.Month &&
-                                                  o.FechaCaptura.Day == item.FechaCaptura.Day &&
-                                                  o.FechaCaptura.Year == item.FechaCaptura.Year )
+                                                 o.FechaNumerica == item.FechaNumerica
                                            select o ).First();
                             }
                             catch (Exception)
                             {
                                 ;
                             }
-                        }
+                        }//endcatch
+
                         //nuevo registro
                         if (result == null)
                         {
-                            InsertRegistroSyncLocal(item, entity);
+                            //El registro es nuevo y hay que insertarlo
+                            entity.CI_REGISTRO.AddObject(
+                                new CI_REGISTRO()
+                                {
+                                    IdRegistro = item.IdRegistro,
+                                    IdPuntoMedicion = item.IdPuntoMedicion,
+                                    DiaRegistro = item.DiaRegistro,
+                                    FechaCaptura = item.FechaCaptura,
+                                    Valor = item.Valor,
+                                    AccionActual = item.AccionActual,
+                                    HoraRegistro = item.HoraRegistro,
+                                    IsActive = item.IsActive,
+                                    IsModified = item.IsModified,
+                                    LastModifiedDate = item.LastModifiedDate,
+                                    IdCondicion = item.IdCondicion,
+                                    ServerLastModifiedDate = item.ServerLastModifiedDate,
+                                    FechaNumerica = item.FechaNumerica
+                                }
+                            );
                         }
-                        if (result != null)
+                        else if (result.LastModifiedDate < item.LastModifiedDate)
                         {
-                            var local = result.LastModifiedDate;
-                            if (local < item.LastModifiedDate)
-                                UpdateRegistroSyncLocal(item, entity);
+                            //El registro ya existe; lógica de actualización
+                            result.DiaRegistro = item.DiaRegistro;
+                            result.FechaCaptura = item.FechaCaptura;
+                            result.Valor = item.Valor;
+                            result.AccionActual = item.AccionActual;
+                            result.HoraRegistro = item.HoraRegistro;
+                            result.IsActive = item.IsActive;
+                            result.IsModified = item.IsModified; //Del servidor debe venir = 0
+                            result.LastModifiedDate = item.LastModifiedDate;
+                            result.IdCondicion = item.IdCondicion;
+                            result.ServerLastModifiedDate = item.ServerLastModifiedDate;
+                            result.FechaNumerica = item.FechaNumerica;
                         }
 
                         //Termina modificación
@@ -487,7 +512,7 @@ namespace Protell.DAL.Repository
                         //    if (local.LastModifiedDate < item.LastModifiedDate)                                
                         //}                        
                             
-                    }
+                    }//endforeach
                     entity.SaveChanges();
                 }
             }
