@@ -435,6 +435,72 @@ namespace Protell.DAL.Repository
             {
                 using (var entity = new db_SeguimientoProtocolo_r2Entities())
                 {
+
+                    //Inserter nuevos
+                    var query = (from r in registros
+                                 join o in entity.CI_REGISTRO
+                                 on r.FechaNumerica equals o.FechaNumerica
+                                     into t
+                                 from rt in t.DefaultIfEmpty()
+                                 where rt == null
+                                 select r).ToList();
+
+                    if (query != null && query.Count > 0)
+                    {
+                        foreach (Model.RegistroModel item in query)
+                        {
+                            entity.CI_REGISTRO.AddObject(new CI_REGISTRO()
+                            {
+                                IdRegistro = item.IdRegistro,
+                                IdPuntoMedicion = item.IdPuntoMedicion,
+                                DiaRegistro = item.DiaRegistro,
+                                FechaCaptura = item.FechaCaptura,
+                                Valor = item.Valor,
+                                AccionActual = item.AccionActual,
+                                HoraRegistro = item.HoraRegistro,
+                                IsActive = item.IsActive,
+                                IsModified = item.IsModified,
+                                LastModifiedDate = item.LastModifiedDate,
+                                IdCondicion = item.IdCondicion,
+                                ServerLastModifiedDate = item.ServerLastModifiedDate,
+                                FechaNumerica = item.FechaNumerica
+                            });
+                        }
+                    }
+
+                    //Mismo id registro y fecha numerica
+                    try
+                    {
+                        var queryUpdate=(from o in ((from c in entity.CI_REGISTRO select c).ToList())
+                         from r in registros
+                         where o.FechaNumerica == r.FechaNumerica
+                             && o.LastModifiedDate < r.LastModifiedDate
+                        select r).ToList();
+
+                        foreach(Model.RegistroModel item in queryUpdate){
+                            entity.CI_REGISTRO.Where(o => item.FechaNumerica == o.FechaNumerica).ToList().ForEach(c =>
+                            {
+                                c.DiaRegistro = item.DiaRegistro;
+                                c.FechaCaptura = item.FechaCaptura;
+                                c.Valor = item.Valor;
+                                c.AccionActual = item.AccionActual;
+                                c.HoraRegistro = item.HoraRegistro;
+                                c.IsActive = item.IsActive;
+                                c.IsModified = item.IsModified;
+                                c.LastModifiedDate = item.LastModifiedDate;
+                                c.IdCondicion = item.IdCondicion;
+                                c.ServerLastModifiedDate = item.ServerLastModifiedDate;
+                            });
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        ;
+                    }
+
+                    entity.SaveChanges();
+
+                    /*
                     foreach (Model.RegistroModel item in registros)
                     {
                         ////Modificado ICA
@@ -514,8 +580,9 @@ namespace Protell.DAL.Repository
                             
                     }//endforeach
                     entity.SaveChanges();
-                }
-            }
+                     * */
+                }//endusing
+            }//endif
         }
 
         public void UpdateRegistroSyncLocal(Model.RegistroModel registro, System.Data.Objects.ObjectContext context)

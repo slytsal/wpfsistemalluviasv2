@@ -20,5 +20,16 @@ namespace Protell.DAL.Repository.v2.Tests
             int l = minFechaNumerica.ToString().Length;
             
         }
+
+        [TestMethod()]
+        public void DownloadTest()
+        {
+
+
+            CiRegistroRepository ci = new CiRegistroRepository();
+                bool res=ci.Download();
+
+        }
+
     }
 }
