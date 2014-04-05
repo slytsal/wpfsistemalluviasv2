@@ -813,11 +813,11 @@
           </FunctionImport>
           <EntitySet Name="APP_BITACORA" EntityType="db_SeguimientoProtocolo_r2Model.APP_BITACORA" />
           <FunctionImport Name="spGetMaxTableCiRegistroRecurrent" ReturnType="Collection(db_SeguimientoProtocolo_r2Model.spGetMaxTableCiRegistroRecurrent_Result)" />
-          <FunctionImport Name="spCommitCiRegistroDataTemp">
+          <FunctionImport Name="spCommitCiRegistroDataTemp" ReturnType="Collection(Boolean)">
           <Parameter Name="sessionUnid" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="spCreateCiRegistroDataTemp" ReturnType="Collection(Int64)" />
-          <FunctionImport Name="spFinishCiRegistroDataTemp">
+          <FunctionImport Name="spFinishCiRegistroDataTemp" ReturnType="Collection(Boolean)">
           <Parameter Name="sessionUnid" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="spInsertCiRegistroDataTemp" ReturnType="Collection(Boolean)">

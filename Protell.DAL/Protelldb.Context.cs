@@ -303,9 +303,39 @@ namespace Protell.DAL
         {
             return base.ExecuteFunction<spGetMaxTableCiRegistroRecurrent_Result>("spGetMaxTableCiRegistroRecurrent");
         }
+        public ObjectResult<Nullable<bool>> spCommitCiRegistroDataTemp(Nullable<long> sessionUnid)
+        {
+    
+            ObjectParameter sessionUnidParameter;
+    
+            if (sessionUnid.HasValue)
+            {
+                sessionUnidParameter = new ObjectParameter("sessionUnid", sessionUnid);
+            }
+            else
+            {
+                sessionUnidParameter = new ObjectParameter("sessionUnid", typeof(long));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("spCommitCiRegistroDataTemp", sessionUnidParameter);
+        }
         public ObjectResult<Nullable<long>> spCreateCiRegistroDataTemp()
         {
             return base.ExecuteFunction<Nullable<long>>("spCreateCiRegistroDataTemp");
+        }
+        public ObjectResult<Nullable<bool>> spFinishCiRegistroDataTemp(Nullable<long> sessionUnid)
+        {
+    
+            ObjectParameter sessionUnidParameter;
+    
+            if (sessionUnid.HasValue)
+            {
+                sessionUnidParameter = new ObjectParameter("sessionUnid", sessionUnid);
+            }
+            else
+            {
+                sessionUnidParameter = new ObjectParameter("sessionUnid", typeof(long));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("spFinishCiRegistroDataTemp", sessionUnidParameter);
         }
         public ObjectResult<Nullable<bool>> spInsertCiRegistroDataTemp(Nullable<long> idRegistro, Nullable<long> idPuntoMedicion, Nullable<System.DateTime> fechaCaptura, Nullable<int> horaRegistro, Nullable<int> diaRegistro, Nullable<double> valor, string accionActual, Nullable<bool> isActive, Nullable<bool> isModified, Nullable<long> lastModifiedDate, Nullable<long> idCondicion, Nullable<long> serverLastModifiedDate, Nullable<long> fechaNumerica, Nullable<long> sessionUnid)
         {
