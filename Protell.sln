@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C33B2BF5-4233-4D91-9609-6026C17F808C}"
 	ProjectSection(SolutionItems) = preProject
@@ -29,6 +29,8 @@ EndProject
 Project("{6141683F-8A12-4E36-9623-2EB02B2C2303}") = "SistemaLluvias2.0.0", "SistemaLluvias2.0.0\SistemaLluvias2.0.0.isproj", "{AC5F277C-347A-45C8-A526-F9B102A7245C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protell.Server.DALTests", "Protell.Server.DALTests\Protell.Server.DALTests.csproj", "{1D07606E-D726-45B9-8725-41125C6571A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protell.DALTests1", "Protell.DALTests1\Protell.DALTests1.csproj", "{F1FCDB69-9866-46FA-89B6-1DEF114AB708}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -284,6 +286,31 @@ Global
 		{1D07606E-D726-45B9-8725-41125C6571A1}.SingleImage|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{1D07606E-D726-45B9-8725-41125C6571A1}.SingleImage|Mixed Platforms.Build.0 = Release|Any CPU
 		{1D07606E-D726-45B9-8725-41125C6571A1}.SingleImage|x86.ActiveCfg = Release|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.CD_ROM|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.CD_ROM|Mixed Platforms.Build.0 = Release|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.CD_ROM|x86.ActiveCfg = Release|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.DVD-5|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.DVD-5|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.DVD-5|x86.ActiveCfg = Debug|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.Release|x86.ActiveCfg = Release|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.SingleImage|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.SingleImage|Mixed Platforms.Build.0 = Release|Any CPU
+		{F1FCDB69-9866-46FA-89B6-1DEF114AB708}.SingleImage|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
