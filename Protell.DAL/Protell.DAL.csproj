@@ -222,6 +222,9 @@
     <Compile Include="SYNCTABLE.cs">
       <DependentUpon>Protelldb.tt</DependentUpon>
     </Compile>
+    <Compile Include="TMP_CI_REGISTRO_ONDEMAND.cs">
+      <DependentUpon>Protelldb.tt</DependentUpon>
+    </Compile>
     <Compile Include="TMP_CI_REGISTRO_RECURRENTE.cs">
       <DependentUpon>Protelldb.tt</DependentUpon>
     </Compile>

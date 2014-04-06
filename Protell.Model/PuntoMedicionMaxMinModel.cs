@@ -104,5 +104,20 @@ namespace Protell.Model
         private Nullable<long> _ServerLastModifiedDate;
         public const string ServerLastModifiedDatePropertyName = "ServerLastModifiedDate";
 
+        public bool IsModified
+        {
+            get { return _IsModified; }
+            set
+            {
+                if (_IsModified != value)
+                {
+                    _IsModified = value;
+                    OnPropertyChanged(IsModifiedPropertyName);
+                }
+            }
+        }
+        private bool _IsModified;
+        public const string IsModifiedPropertyName = "IsModified";
+
     }
 }

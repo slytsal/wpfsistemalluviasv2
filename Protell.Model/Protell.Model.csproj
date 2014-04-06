@@ -54,11 +54,15 @@
     <Compile Include="CnfSettingModel.cs" />
     <Compile Include="SyncModels\CatAgrupadorIsoyetasResultModel.cs" />
     <Compile Include="SyncModels\CatDependenciaResultModel.cs" />
+    <Compile Include="SyncModels\CatEstructuraResultModel.cs" />
     <Compile Include="SyncModels\CatLinkResultModel.cs" />
+    <Compile Include="SyncModels\CatOperacionEstructuraResultModel.cs" />
+    <Compile Include="SyncModels\CatPuntoMedicionMaxMinResultModel.cs" />
     <Compile Include="SyncModels\CatPuntoMedicionResultModel.cs" />
     <Compile Include="SyncModels\CatSistemaResultModel.cs" />
     <Compile Include="SyncModels\CatTipoPuntoMedicionResultModel.cs" />
     <Compile Include="SyncModels\CatUnidadMedidaResultModel.cs" />
+    <Compile Include="SyncModels\CiTrackingResultModel.cs" />
     <Compile Include="SyncModels\CondProdResultModel.cs" />
     <Compile Include="CondProModel.cs">
       <SubType>Code</SubType>
@@ -150,6 +154,8 @@
     <Compile Include="SyncModels\CiRegistroRecurrentResultModel.cs" />
     <Compile Include="SyncModels\CiRegistroResultModel.cs" />
     <Compile Include="SyncModels\ModifiedDataResultModel.cs" />
+    <Compile Include="SyncModels\RelEstPuntoMedResultModel.cs" />
+    <Compile Include="SyncModels\RelEstructuraDependenciaResultModel.cs" />
     <Compile Include="SyncProperties.cs" />
     <Compile Include="SyncTableModel.cs" />
     <Compile Include="TipoPuntoMedicionModel.cs">

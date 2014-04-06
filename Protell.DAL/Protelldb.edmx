@@ -310,6 +310,24 @@
           <Property Name="SyncTableName" Type="nvarchar(max)" />
           <Property Name="OrderTable" Type="int" />
         </EntityType>
+        <EntityType Name="TMP_CI_REGISTRO_ONDEMAND">
+          <Key>
+            <PropertyRef Name="IdRegistro" />
+          </Key>
+          <Property Name="IdRegistro" Type="bigint" Nullable="false" />
+          <Property Name="IdPuntoMedicion" Type="bigint" Nullable="false" />
+          <Property Name="FechaCaptura" Type="datetime" Nullable="false" />
+          <Property Name="HoraRegistro" Type="int" Nullable="false" />
+          <Property Name="DiaRegistro" Type="int" Nullable="false" />
+          <Property Name="Valor" Type="float" Nullable="false" />
+          <Property Name="AccionActual" Type="nvarchar" MaxLength="1000" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsModified" Type="bit" Nullable="false" />
+          <Property Name="LastModifiedDate" Type="bigint" Nullable="false" />
+          <Property Name="IdCondicion" Type="bigint" Nullable="false" />
+          <Property Name="ServerLastModifiedDate" Type="bigint" />
+          <Property Name="FechaNumerica" Type="bigint" />
+        </EntityType>
         <EntityType Name="TMP_CI_REGISTRO_RECURRENTE">
           <Key>
             <PropertyRef Name="IdRegistro" />
@@ -557,6 +575,8 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="spAutoLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spCommitBulkUpsertCiRegistroOnDemand" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spCommitBulkUpsertCiRegistroRecurrent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spCommitCiRegistroDataTemp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="sessionUnid" Type="bigint" Mode="In" />
         </Function>
@@ -599,6 +619,8 @@
           <Parameter Name="FechaNumerica" Type="bigint" Mode="In" />
           <Parameter Name="SessionUnid" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="spPrepareBulkUpsertCiRegistroOnDemand" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spPrepareBulkUpsertCiRegistroRecurrent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="UDF_NewUnid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar" />
         <EntityContainer Name="db_SeguimientoProtocolo_r2ModelStoreContainer">
           <EntitySet Name="APP_BITACORA" EntityType="Self.APP_BITACORA" Schema="dbo" store:Type="Tables" />
@@ -627,6 +649,7 @@
           <EntitySet Name="REL_EST_PUNTOMED" EntityType="Self.REL_EST_PUNTOMED" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="REL_ESTRUCTURA_DEPENDENCIA" EntityType="Self.REL_ESTRUCTURA_DEPENDENCIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYNCTABLE" EntityType="Self.SYNCTABLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TMP_CI_REGISTRO_ONDEMAND" EntityType="Self.TMP_CI_REGISTRO_ONDEMAND" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TMP_CI_REGISTRO_RECURRENTE" EntityType="Self.TMP_CI_REGISTRO_RECURRENTE" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="APP_ROL_APP_USUARIO_ROL_FK1" Association="Self.APP_ROL_APP_USUARIO_ROL_FK1">
             <End Role="APP_ROL" EntitySet="APP_ROL" />
@@ -856,6 +879,11 @@
             <Parameter Name="SessionUnid" Mode="In" Type="Int64" />
           </FunctionImport>
           <EntitySet Name="TMP_CI_REGISTRO_RECURRENTE" EntityType="db_SeguimientoProtocolo_r2Model.TMP_CI_REGISTRO_RECURRENTE" />
+          <EntitySet Name="TMP_CI_REGISTRO_ONDEMAND" EntityType="db_SeguimientoProtocolo_r2Model.TMP_CI_REGISTRO_ONDEMAND" />
+          <FunctionImport Name="spCommitBulkUpsertCiRegistroOnDemand" ReturnType="Collection(Boolean)" />
+          <FunctionImport Name="spCommitBulkUpsertCiRegistroRecurrent" ReturnType="Collection(Boolean)" />
+          <FunctionImport Name="spPrepareBulkUpsertCiRegistroOnDemand" ReturnType="Collection(Boolean)" />
+          <FunctionImport Name="spPrepareBulkUpsertCiRegistroRecurrent" ReturnType="Collection(Boolean)" />
         </EntityContainer>
         <EntityType Name="APP_ROL">
           <Key>
@@ -1479,6 +1507,24 @@
           <Property Name="ServerLastModifiedDate" Type="Int64" />
           <Property Name="FechaNumerica" Type="Int64" />
         </EntityType>
+        <EntityType Name="TMP_CI_REGISTRO_ONDEMAND">
+          <Key>
+            <PropertyRef Name="IdRegistro" />
+          </Key>
+          <Property Name="IdRegistro" Type="Int64" Nullable="false" />
+          <Property Name="IdPuntoMedicion" Type="Int64" Nullable="false" />
+          <Property Name="FechaCaptura" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="HoraRegistro" Type="Int32" Nullable="false" />
+          <Property Name="DiaRegistro" Type="Int32" Nullable="false" />
+          <Property Name="Valor" Type="Double" Nullable="false" />
+          <Property Name="AccionActual" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsModified" Type="Boolean" Nullable="false" />
+          <Property Name="LastModifiedDate" Type="Int64" Nullable="false" />
+          <Property Name="IdCondicion" Type="Int64" Nullable="false" />
+          <Property Name="ServerLastModifiedDate" Type="Int64" />
+          <Property Name="FechaNumerica" Type="Int64" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1888,6 +1934,29 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TMP_CI_REGISTRO_ONDEMAND">
+            <EntityTypeMapping TypeName="db_SeguimientoProtocolo_r2Model.TMP_CI_REGISTRO_ONDEMAND">
+              <MappingFragment StoreEntitySet="TMP_CI_REGISTRO_ONDEMAND">
+                <ScalarProperty Name="FechaNumerica" ColumnName="FechaNumerica" />
+                <ScalarProperty Name="ServerLastModifiedDate" ColumnName="ServerLastModifiedDate" />
+                <ScalarProperty Name="IdCondicion" ColumnName="IdCondicion" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="IsModified" ColumnName="IsModified" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="AccionActual" ColumnName="AccionActual" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="DiaRegistro" ColumnName="DiaRegistro" />
+                <ScalarProperty Name="HoraRegistro" ColumnName="HoraRegistro" />
+                <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
+                <ScalarProperty Name="IdPuntoMedicion" ColumnName="IdPuntoMedicion" />
+                <ScalarProperty Name="IdRegistro" ColumnName="IdRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spCommitBulkUpsertCiRegistroOnDemand" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spCommitBulkUpsertCiRegistroOnDemand" />
+          <FunctionImportMapping FunctionImportName="spCommitBulkUpsertCiRegistroRecurrent" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spCommitBulkUpsertCiRegistroRecurrent" />
+          <FunctionImportMapping FunctionImportName="spPrepareBulkUpsertCiRegistroOnDemand" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spPrepareBulkUpsertCiRegistroOnDemand" />
+          <FunctionImportMapping FunctionImportName="spPrepareBulkUpsertCiRegistroRecurrent" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spPrepareBulkUpsertCiRegistroRecurrent" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2060,6 +2129,7 @@
         </AssociationConnector>
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.APP_BITACORA" Width="1.5" PointX="15.375" PointY="12.75" />
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.TMP_CI_REGISTRO_RECURRENTE" Width="1.5" PointX="16.375" PointY="0.75" />
+        <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.TMP_CI_REGISTRO_ONDEMAND" Width="1.5" PointX="16.375" PointY="5.75" />
       </Diagram>
     </Diagrams>
   </Designer>

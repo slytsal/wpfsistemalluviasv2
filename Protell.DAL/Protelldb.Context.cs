@@ -203,6 +203,12 @@ namespace Protell.DAL
             get { return _tMP_CI_REGISTRO_RECURRENTE  ?? (_tMP_CI_REGISTRO_RECURRENTE = CreateObjectSet<TMP_CI_REGISTRO_RECURRENTE>("TMP_CI_REGISTRO_RECURRENTE")); }
         }
         private ObjectSet<TMP_CI_REGISTRO_RECURRENTE> _tMP_CI_REGISTRO_RECURRENTE;
+    
+        public ObjectSet<TMP_CI_REGISTRO_ONDEMAND> TMP_CI_REGISTRO_ONDEMAND
+        {
+            get { return _tMP_CI_REGISTRO_ONDEMAND  ?? (_tMP_CI_REGISTRO_ONDEMAND = CreateObjectSet<TMP_CI_REGISTRO_ONDEMAND>("TMP_CI_REGISTRO_ONDEMAND")); }
+        }
+        private ObjectSet<TMP_CI_REGISTRO_ONDEMAND> _tMP_CI_REGISTRO_ONDEMAND;
 
         #endregion
 
@@ -500,6 +506,22 @@ namespace Protell.DAL
                 sessionUnidParameter = new ObjectParameter("SessionUnid", typeof(long));
             }
             return base.ExecuteFunction<Nullable<bool>>("spInsertCiRegistroDataTemp", idRegistroParameter, idPuntoMedicionParameter, fechaCapturaParameter, horaRegistroParameter, diaRegistroParameter, valorParameter, accionActualParameter, isActiveParameter, isModifiedParameter, lastModifiedDateParameter, idCondicionParameter, serverLastModifiedDateParameter, fechaNumericaParameter, sessionUnidParameter);
+        }
+        public ObjectResult<Nullable<bool>> spCommitBulkUpsertCiRegistroOnDemand()
+        {
+            return base.ExecuteFunction<Nullable<bool>>("spCommitBulkUpsertCiRegistroOnDemand");
+        }
+        public ObjectResult<Nullable<bool>> spCommitBulkUpsertCiRegistroRecurrent()
+        {
+            return base.ExecuteFunction<Nullable<bool>>("spCommitBulkUpsertCiRegistroRecurrent");
+        }
+        public ObjectResult<Nullable<bool>> spPrepareBulkUpsertCiRegistroOnDemand()
+        {
+            return base.ExecuteFunction<Nullable<bool>>("spPrepareBulkUpsertCiRegistroOnDemand");
+        }
+        public ObjectResult<Nullable<bool>> spPrepareBulkUpsertCiRegistroRecurrent()
+        {
+            return base.ExecuteFunction<Nullable<bool>>("spPrepareBulkUpsertCiRegistroRecurrent");
         }
 
         #endregion

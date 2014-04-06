@@ -94,12 +94,24 @@ namespace Protell.DAL.Repository.v2
                             entity.CAT_LINKS.AddObject(
                                 new CAT_LINKS()
                                 {
-                                    
+                                    IdLink = row.IdLink,
+                                    LinkUrl = row.LinkUrl,
+                                    LinkName = row.LinkName,
+                                    IsActive = row.IsActive,
+                                    IsModified = row.IsModified,
+                                    LastModifiedDate = row.LastModifiedDate,
+                                    ServerLastModifiedDate = row.ServerLastModifiedDate
                                 });
                         }
                         if (result != null && result.LastModifiedDate < row.LastModifiedDate)
                         {
                             
+                            result.LinkUrl = row.LinkUrl;
+                            result.LinkName = row.LinkName;
+                            result.IsActive = row.IsActive;
+                            result.IsModified = row.IsModified;
+                            result.LastModifiedDate = row.LastModifiedDate;
+                            result.ServerLastModifiedDate = row.ServerLastModifiedDate;
                         }
                     }
                     entity.SaveChanges();
