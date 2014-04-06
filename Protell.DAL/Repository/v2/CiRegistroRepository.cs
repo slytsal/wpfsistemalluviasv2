@@ -10,8 +10,23 @@ using System.Web.Script.Serialization;
 
 namespace Protell.DAL.Repository.v2
 {
+    public delegate void DidCiRegistroRecurrentDataChanged(object o, CiRegistroRecurrentDataChangedArgs e);
+
+    public class CiRegistroRecurrentDataChangedArgs : EventArgs
+    {
+        public readonly bool DataChanged;
+
+        public CiRegistroRecurrentDataChangedArgs(bool dataChanged)
+        {
+            DataChanged = dataChanged;
+        }
+
+    }
+
     public class CiRegistroRepository : IDisposable, IServiceFactory
     {
+        public event DidCiRegistroRecurrentDataChanged DidCiRegistroRecurrentDataChangedHandler; 
+
         private class RequestBodyContent
         {
             public long fechaActual;
@@ -20,6 +35,10 @@ namespace Protell.DAL.Repository.v2
             public long ServerLastModifiedDate;
         }
 
+        /// <summary>
+        /// Obtiene de la bd los parámetros para el servicio
+        /// </summary>
+        /// <returns></returns>
         private RequestBodyContent GetBodyContent()
         {
             RequestBodyContent _GetBodyContent = null;
@@ -49,103 +68,91 @@ namespace Protell.DAL.Repository.v2
             return _GetBodyContent;
         }
 
-        public void InsertServerData(ObservableCollection<Model.RegistroModel> registros)
+        /// <summary>
+        /// Borra la tabla temporal de TMP_CI_REGISTRO_RECURRENT
+        /// </summary>
+        private void PrepareRecurrentBulkUpsert()
         {
-            if (registros != null)
+            bool _PrepareRecurrentBulkUpsert = false;
+            try
             {
                 using (var entity = new db_SeguimientoProtocolo_r2Entities())
                 {
+                    entity.spPrepareBulkUpsertCiRegistroRecurrent();
+                    _PrepareRecurrentBulkUpsert = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
-                    //Inserter nuevos
-                    var query = (from r in registros
-                                 join o in entity.CI_REGISTRO
-                                 on r.FechaNumerica equals o.FechaNumerica
-                                     into t
-                                 from rt in t.DefaultIfEmpty()
-                                 where rt == null
-                                 select r).ToList();
+            //return _PrepareRecurrentBulkUpsert;
+        }
 
-                    if (query != null && query.Count > 0)
+        /// <summary>
+        /// Ejecuta el upsert de la tabla temporal CI_REGISTRO a la tabla final.
+        /// </summary>
+        /// <returns></returns>
+        private bool CommitBulkUpsertRecurrent()
+        {
+            //TODO: Este es un fix para pasar forzosamente un parámetro al stored. No debe ser necesario recibir un parámetro.
+            bool _CommitBulkUpsertRecurrent = false;
+
+            try
+            {
+                using (var entity = new db_SeguimientoProtocolo_r2Entities())
+                {
+                    _CommitBulkUpsertRecurrent = (bool)entity.spCommitBulkUpsertCiRegistroRecurrent().FirstOrDefault();
+                    entity.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return _CommitBulkUpsertRecurrent;
+        }
+
+        /// <summary>
+        /// Inserta los registros descargados del servidor en tabla temporal TMP_CI_REGISTRO_RECURRENT
+        /// </summary>
+        /// <param name="registros"></param>
+        private void BulkUpsertRecurrent(ObservableCollection<Model.RegistroModel> registros)
+        {
+            try
+            {
+                using (var entity = new db_SeguimientoProtocolo_r2Entities())
+                {
+                    foreach (var reg in registros)
                     {
-                        foreach (Model.RegistroModel item in query)
+                        //Insertar en stored
+                        entity.TMP_CI_REGISTRO_RECURRENTE.AddObject(new TMP_CI_REGISTRO_RECURRENTE()
                         {
-                            entity.CI_REGISTRO.AddObject(new CI_REGISTRO()
-                            {
-                                IdRegistro = item.IdRegistro,
-                                IdPuntoMedicion = item.IdPuntoMedicion,
-                                DiaRegistro = item.DiaRegistro,
-                                FechaCaptura = item.FechaCaptura,
-                                Valor = item.Valor,
-                                AccionActual = item.AccionActual,
-                                HoraRegistro = item.HoraRegistro,
-                                IsActive = item.IsActive,
-                                IsModified = item.IsModified,
-                                LastModifiedDate = item.LastModifiedDate,
-                                IdCondicion = item.IdCondicion,
-                                ServerLastModifiedDate = item.ServerLastModifiedDate,
-                                FechaNumerica = item.FechaNumerica
-                            });
-                        }
-                    }
-
-                    //Mismo id registro y fecha numerica
-                    try
-                    {
-                        /*var queryUpdate = (from o in
-                                               ((from c in entity.CI_REGISTRO select c).ToList())
-                                           from r in registros
-                                           where o.FechaNumerica == r.FechaNumerica
-                                               && o.LastModifiedDate < r.LastModifiedDate
-                                           select r).ToList();
-                        */
-                        var queryUpdate = (from r in registros
-                                             join o in entity.CI_REGISTRO
-                                             on r.FechaNumerica equals o.FechaNumerica
-                                             where o.LastModifiedDate < r.LastModifiedDate
-                                             select r).ToList();
-
-                        (from r in registros
-                                           join o in entity.CI_REGISTRO
-                                           on r.FechaNumerica equals o.FechaNumerica
-                                           where o.LastModifiedDate < r.LastModifiedDate
-                                           select new { c=o,item=r}).ToList().ForEach(r=>{
-                                               r.c.DiaRegistro = r.item.DiaRegistro;
-                                               r.c.FechaCaptura = r.item.FechaCaptura;
-                                               r.c.Valor = r.item.Valor;
-                                               r.c.AccionActual = r.item.AccionActual;
-                                               r.c.HoraRegistro = r.item.HoraRegistro;
-                                               r.c.IsActive = r.item.IsActive;
-                                               r.c.IsModified = r.item.IsModified;
-                                               r.c.LastModifiedDate = r.item.LastModifiedDate;
-                                               r.c.IdCondicion = r.item.IdCondicion;
-                                               r.c.ServerLastModifiedDate = r.item.ServerLastModifiedDate;
-                                           });
-
-                        foreach (Model.RegistroModel item in queryUpdate)
-                        {
-                            entity.CI_REGISTRO.Where(o => item.FechaNumerica == o.FechaNumerica).ToList().ForEach(c =>
-                            {
-                                c.DiaRegistro = item.DiaRegistro;
-                                c.FechaCaptura = item.FechaCaptura;
-                                c.Valor = item.Valor;
-                                c.AccionActual = item.AccionActual;
-                                c.HoraRegistro = item.HoraRegistro;
-                                c.IsActive = item.IsActive;
-                                c.IsModified = item.IsModified;
-                                c.LastModifiedDate = item.LastModifiedDate;
-                                c.IdCondicion = item.IdCondicion;
-                                c.ServerLastModifiedDate = item.ServerLastModifiedDate;
-                            });
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        ;
+                            IdRegistro = reg.IdRegistro,
+                            IdPuntoMedicion = reg.IdPuntoMedicion,
+                            DiaRegistro = reg.DiaRegistro,
+                            FechaCaptura = reg.FechaCaptura,
+                            Valor = reg.Valor,
+                            AccionActual = reg.AccionActual,
+                            HoraRegistro = reg.HoraRegistro,
+                            IsActive = reg.IsActive,
+                            IsModified = reg.IsModified,
+                            LastModifiedDate = reg.LastModifiedDate,
+                            IdCondicion = reg.IdCondicion,
+                            ServerLastModifiedDate = reg.ServerLastModifiedDate,
+                            FechaNumerica = reg.FechaNumerica
+                        });
                     }
 
                     entity.SaveChanges();
                 }//endusing
-            }//endif
+            }//endtry
+            catch (Exception ex)
+            {
+                throw ex;
+            }//endcatch
         }
 
         public ObservableCollection<RegistroModel> GetIsModified()
@@ -188,6 +195,10 @@ namespace Protell.DAL.Repository.v2
             return;
         }
 
+        /// <summary>
+        /// Logica de descarga e inserción de registros de servidor en base local
+        /// </summary>
+        /// <returns></returns>
         public bool Download()
         {
             bool responseService = false;
@@ -205,6 +216,9 @@ namespace Protell.DAL.Repository.v2
                 requestedFechaFin = bodyContent.fechaFin;
                 minFechaNumerica=requestedFechaFin;
 
+                //Preparacion para bulk upsert
+                this.PrepareRecurrentBulkUpsert();
+
                 while (requestedFechaFin <= minFechaNumerica)
                 {
                     //Desearilizar la respuestas
@@ -213,18 +227,18 @@ namespace Protell.DAL.Repository.v2
                     js.MaxJsonLength = Int32.MaxValue;
                     list = js.Deserialize<CiRegistroRecurrentResultModel>(jsonResponse);
 
-                    //Insertar lista de archvios a base de datos local
-                    this.InsertServerData(list.Download_CIRegistroRecurrentResult);
-
                     //Obtener la fecha mas antigua de los datos recibidos
                     if (list.Download_CIRegistroRecurrentResult != null && list.Download_CIRegistroRecurrentResult.Count > 0)
                     {
+                        //Insertar datos del servidor
+                        this.BulkUpsertRecurrent(list.Download_CIRegistroRecurrentResult);
+
                         minFechaNumerica = Int64.Parse( list.Download_CIRegistroRecurrentResult.Min(p => p.FechaNumerica).ToString().Substring(0,8) );
 
                         //Restar un día a la fecha minima
                         if(minFechaNumerica.ToString().Length==8){
                             DateTime dt = new DateTime(Int32.Parse(minFechaNumerica.ToString().Substring(0, 4)), Int32.Parse(minFechaNumerica.ToString().Substring(4, 2)), Int32.Parse(minFechaNumerica.ToString().Substring(6, 2)));
-                            dt.AddDays(-1);
+                            dt=dt.AddDays(-1);
                             minFechaNumerica= Int64.Parse( String.Format("{0:yyyyMMdd}",dt) );
                             bodyContent = this.GetBodyContent();
                             bodyContent.fechaActual = minFechaNumerica;
@@ -240,6 +254,12 @@ namespace Protell.DAL.Repository.v2
                     }
                 }
 
+                bool DataChanged=this.CommitBulkUpsertRecurrent();
+                if (DataChanged)
+                {
+                    this.RaiseDidCiRegistroRecurrentDataChanged(DataChanged);
+                }
+
                 responseService = true;
             }
             catch (Exception ex)
@@ -248,7 +268,20 @@ namespace Protell.DAL.Repository.v2
                 //Implementar bitácora
                 throw ex;
             }
+
             return responseService;
+        }
+
+        /// <summary>
+        /// Dispara event que indica si los datos en la base en CI_REGISTRO sufrieron algun cambio por medio de la descarga recurrente
+        /// </summary>
+        /// <param name="dataChanged"></param>
+        private void RaiseDidCiRegistroRecurrentDataChanged(bool dataChanged)
+        {
+            if (DidCiRegistroRecurrentDataChangedHandler != null)
+            {
+                DidCiRegistroRecurrentDataChangedHandler(this, new CiRegistroRecurrentDataChangedArgs(dataChanged));
+            }
         }
     }
 }
