@@ -310,6 +310,24 @@
           <Property Name="SyncTableName" Type="nvarchar(max)" />
           <Property Name="OrderTable" Type="int" />
         </EntityType>
+        <EntityType Name="TMP_CI_REGISTRO_RECURRENTE">
+          <Key>
+            <PropertyRef Name="IdRegistro" />
+          </Key>
+          <Property Name="IdRegistro" Type="bigint" Nullable="false" />
+          <Property Name="IdPuntoMedicion" Type="bigint" Nullable="false" />
+          <Property Name="FechaCaptura" Type="datetime" Nullable="false" />
+          <Property Name="HoraRegistro" Type="int" Nullable="false" />
+          <Property Name="DiaRegistro" Type="int" Nullable="false" />
+          <Property Name="Valor" Type="float" Nullable="false" />
+          <Property Name="AccionActual" Type="nvarchar" MaxLength="1000" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsModified" Type="bit" Nullable="false" />
+          <Property Name="LastModifiedDate" Type="bigint" Nullable="false" />
+          <Property Name="IdCondicion" Type="bigint" Nullable="false" />
+          <Property Name="ServerLastModifiedDate" Type="bigint" />
+          <Property Name="FechaNumerica" Type="bigint" />
+        </EntityType>
         <Association Name="APP_ROL_APP_USUARIO_ROL_FK1">
           <End Role="APP_ROL" Type="Self.APP_ROL" Multiplicity="1" />
           <End Role="APP_USUARIO_ROL" Type="Self.APP_USUARIO_ROL" Multiplicity="*" />
@@ -609,6 +627,7 @@
           <EntitySet Name="REL_EST_PUNTOMED" EntityType="Self.REL_EST_PUNTOMED" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="REL_ESTRUCTURA_DEPENDENCIA" EntityType="Self.REL_ESTRUCTURA_DEPENDENCIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYNCTABLE" EntityType="Self.SYNCTABLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TMP_CI_REGISTRO_RECURRENTE" EntityType="Self.TMP_CI_REGISTRO_RECURRENTE" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="APP_ROL_APP_USUARIO_ROL_FK1" Association="Self.APP_ROL_APP_USUARIO_ROL_FK1">
             <End Role="APP_ROL" EntitySet="APP_ROL" />
             <End Role="APP_USUARIO_ROL" EntitySet="APP_USUARIO_ROL" />
@@ -836,6 +855,7 @@
             <Parameter Name="FechaNumerica" Mode="In" Type="Int64" />
             <Parameter Name="SessionUnid" Mode="In" Type="Int64" />
           </FunctionImport>
+          <EntitySet Name="TMP_CI_REGISTRO_RECURRENTE" EntityType="db_SeguimientoProtocolo_r2Model.TMP_CI_REGISTRO_RECURRENTE" />
         </EntityContainer>
         <EntityType Name="APP_ROL">
           <Key>
@@ -1441,6 +1461,24 @@
           <Property Type="Int64" Name="FechaInicio" Nullable="true" />
           <Property Type="Int64" Name="FechaFin" Nullable="true" />
         </ComplexType>
+        <EntityType Name="TMP_CI_REGISTRO_RECURRENTE">
+          <Key>
+            <PropertyRef Name="IdRegistro" />
+          </Key>
+          <Property Name="IdRegistro" Type="Int64" Nullable="false" />
+          <Property Name="IdPuntoMedicion" Type="Int64" Nullable="false" />
+          <Property Name="FechaCaptura" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="HoraRegistro" Type="Int32" Nullable="false" />
+          <Property Name="DiaRegistro" Type="Int32" Nullable="false" />
+          <Property Name="Valor" Type="Double" Nullable="false" />
+          <Property Name="AccionActual" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsModified" Type="Boolean" Nullable="false" />
+          <Property Name="LastModifiedDate" Type="Int64" Nullable="false" />
+          <Property Name="IdCondicion" Type="Int64" Nullable="false" />
+          <Property Name="ServerLastModifiedDate" Type="Int64" />
+          <Property Name="FechaNumerica" Type="Int64" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1831,6 +1869,25 @@
           <FunctionImportMapping FunctionImportName="spCreateCiRegistroDataTemp" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spCreateCiRegistroDataTemp" />
           <FunctionImportMapping FunctionImportName="spFinishCiRegistroDataTemp" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spFinishCiRegistroDataTemp" />
           <FunctionImportMapping FunctionImportName="spInsertCiRegistroDataTemp" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spInsertCiRegistroDataTemp" />
+          <EntitySetMapping Name="TMP_CI_REGISTRO_RECURRENTE">
+            <EntityTypeMapping TypeName="db_SeguimientoProtocolo_r2Model.TMP_CI_REGISTRO_RECURRENTE">
+              <MappingFragment StoreEntitySet="TMP_CI_REGISTRO_RECURRENTE">
+                <ScalarProperty Name="FechaNumerica" ColumnName="FechaNumerica" />
+                <ScalarProperty Name="ServerLastModifiedDate" ColumnName="ServerLastModifiedDate" />
+                <ScalarProperty Name="IdCondicion" ColumnName="IdCondicion" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="IsModified" ColumnName="IsModified" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="AccionActual" ColumnName="AccionActual" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="DiaRegistro" ColumnName="DiaRegistro" />
+                <ScalarProperty Name="HoraRegistro" ColumnName="HoraRegistro" />
+                <ScalarProperty Name="FechaCaptura" ColumnName="FechaCaptura" />
+                <ScalarProperty Name="IdPuntoMedicion" ColumnName="IdPuntoMedicion" />
+                <ScalarProperty Name="IdRegistro" ColumnName="IdRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2002,6 +2059,7 @@
           <ConnectorPoint PointX="12.2968725" PointY="10.24949218750001" />
         </AssociationConnector>
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.APP_BITACORA" Width="1.5" PointX="15.375" PointY="12.75" />
+        <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.TMP_CI_REGISTRO_RECURRENTE" Width="1.5" PointX="16.375" PointY="0.75" />
       </Diagram>
     </Diagrams>
   </Designer>

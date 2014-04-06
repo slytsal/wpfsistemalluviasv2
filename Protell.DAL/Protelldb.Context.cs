@@ -197,6 +197,12 @@ namespace Protell.DAL
             get { return _aPP_BITACORA  ?? (_aPP_BITACORA = CreateObjectSet<APP_BITACORA>("APP_BITACORA")); }
         }
         private ObjectSet<APP_BITACORA> _aPP_BITACORA;
+    
+        public ObjectSet<TMP_CI_REGISTRO_RECURRENTE> TMP_CI_REGISTRO_RECURRENTE
+        {
+            get { return _tMP_CI_REGISTRO_RECURRENTE  ?? (_tMP_CI_REGISTRO_RECURRENTE = CreateObjectSet<TMP_CI_REGISTRO_RECURRENTE>("TMP_CI_REGISTRO_RECURRENTE")); }
+        }
+        private ObjectSet<TMP_CI_REGISTRO_RECURRENTE> _tMP_CI_REGISTRO_RECURRENTE;
 
         #endregion
 
