@@ -20,10 +20,39 @@ namespace Protell.UI.v2
     /// </summary>
     public partial class CategoriaView : UserControl
     {
-
+        MainWindow parent;
+        TableroViewModel vm;
         public CategoriaView()
         {
             InitializeComponent();            
+        }
+
+
+        public void init(MainWindow mw, TableroViewModel viewModel)
+        {
+            this.vm = viewModel;
+            this.parent = mw;
+        }
+
+        private void ListPuntoMedicion_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var v = ((TabItem)parent.tcTablero.SelectedItem).Header;
+            if (v.ToString() == "Punto Medición")
+            {
+                vm.SelectedItemTabControl = (vm.cPuntosMedicion.SelectedItem != null) ? vm.cPuntosMedicion.SelectedItem : vm.cPuntosMedicion.SelectedItemAux;
+            }
+            if (v.ToString() == "Lumbreras")
+            {
+                vm.SelectedItemTabControl = (vm.cLumbreras.SelectedItem != null) ? vm.cLumbreras.SelectedItem : vm.cLumbreras.SelectedItemAux;
+            }
+            if (v.ToString() == "Estaciones Pluviográficas")
+            {
+                vm.SelectedItemTabControl = (vm.cEstPluviograficas.SelectedItem != null) ? vm.cEstPluviograficas.SelectedItem : vm.cPuntosMedicion.SelectedItemAux;
+            }
+            NuevoPuntoMedicion npmv = new NuevoPuntoMedicion(vm);
+            npmv.txbTitulo.Text = "Nueva Captura";
+            npmv.Owner = parent;
+            npmv.ShowDialog();
         }        
     }
 }

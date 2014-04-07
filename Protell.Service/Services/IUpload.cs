@@ -16,5 +16,9 @@ namespace Protell.Service.Services
         [OperationContract]
         [WebInvoke(Method = "POST",RequestFormat = WebMessageFormat.Json,ResponseFormat = WebMessageFormat.Json,BodyStyle = WebMessageBodyStyle.Wrapped)]
         AppRolResultModel Upload_AppRol(AppRolResultModel param);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        bool Upload_CiRegistro(CiRegistroResultModel param);
     }
 }

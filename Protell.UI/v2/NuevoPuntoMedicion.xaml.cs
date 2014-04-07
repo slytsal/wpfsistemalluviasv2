@@ -1,15 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Protell.ViewModel.v2;
 using System.Timers;
 
@@ -27,18 +18,18 @@ namespace Protell.UI.v2
             InitializeComponent();
             viewModel = new TableroViewModel(c);
             dtpFecha.Focus();
-            Timer tm = new Timer();            
-            tm.Interval = 1000;
-            tm.Enabled = true;
-            tm.Elapsed += new ElapsedEventHandler(tm_Elapsed);
-            tm.Start();
+            //Timer tm = new Timer();            
+            //tm.Interval = 1000;
+            //tm.Enabled = true;
+            //tm.Elapsed += new ElapsedEventHandler(tm_Elapsed);
+            //tm.Start();
         }
 
         void tm_Elapsed(object sender, ElapsedEventArgs e)
         {
-            btnGuardar_Click(sender,null);
-            Timer tm = (Timer) sender;
-            tm.Enabled = false;
+            //btnGuardar_Click(sender,null);
+            //Timer tm = (Timer) sender;
+            //tm.Enabled = false;
         }
 
 

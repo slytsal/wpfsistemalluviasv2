@@ -50,9 +50,11 @@ namespace Protell.UI.v2
             this.DataContext = vm;
             vm.Usuario = usuarioModel;
             cPuntoMedicion.DataContext = vm.cPuntosMedicion;
+            cPuntoMedicion.init(this, vm);
             cLumbreras.DataContext = vm.cLumbreras;
+            cLumbreras.init(this,vm);
             cEstPluviograficas.DataContext = vm.cEstPluviograficas;
-            
+            cEstPluviograficas.init(this, vm);
             pmPuntoMedicion.DataContext = vm.pmPuntosMedicion;
             pmPuntoMedicion.init(this,vm);
 

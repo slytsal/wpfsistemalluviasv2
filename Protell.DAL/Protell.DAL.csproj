@@ -63,6 +63,9 @@
     <Compile Include="APP_USUARIO_ROL.cs">
       <DependentUpon>Protelldb.tt</DependentUpon>
     </Compile>
+    <Compile Include="CAT_ACCION_ACTUAL.cs">
+      <DependentUpon>Protelldb.tt</DependentUpon>
+    </Compile>
     <Compile Include="CAT_AGRUPADOR_ISOYETA.cs">
       <DependentUpon>Protelldb.tt</DependentUpon>
     </Compile>
@@ -187,6 +190,7 @@
     <Compile Include="Repository\v2\AppRolRepository.cs" />
     <Compile Include="Repository\v2\AppUsuarioRepository.cs" />
     <Compile Include="Repository\v2\AppUsuarioRolRepository.cs" />
+    <Compile Include="Repository\v2\CatAccionActualRepository.cs" />
     <Compile Include="Repository\v2\CatAgrupadorIsoyetasRepository.cs" />
     <Compile Include="Repository\v2\CatCondProRepository.cs" />
     <Compile Include="Repository\v2\CatDependenciaRepository.cs" />

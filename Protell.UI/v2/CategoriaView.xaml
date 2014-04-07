@@ -30,7 +30,7 @@
         <ListBox Grid.Row="1" Margin="5" FontSize="15" Background="#73000000"
                  ItemsSource="{Binding PuntosMedicion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  SelectedItem="{Binding SelectedItem,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                 Name="ListPuntoMedicion" >
+                 Name="ListPuntoMedicion" MouseDoubleClick="ListPuntoMedicion_MouseDoubleClick">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid VerticalAlignment="Center" HorizontalAlignment="Left">

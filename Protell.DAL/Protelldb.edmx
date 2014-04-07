@@ -56,6 +56,17 @@
           <Property Name="IsModified" Type="bit" Nullable="false" />
           <Property Name="ServerLastModifiedDate" Type="bigint" />
         </EntityType>
+        <EntityType Name="CAT_ACCION_ACTUAL">
+          <Key>
+            <PropertyRef Name="IdAccionActual" />
+          </Key>
+          <Property Name="IdAccionActual" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccionAcualName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="IsModified" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="LastModifiedDate" Type="bigint" Nullable="false" />
+          <Property Name="ServerLastModifiedDate" Type="bigint" />
+        </EntityType>
         <EntityType Name="CAT_AGRUPADOR_ISOYETA">
           <Key>
             <PropertyRef Name="IdAgrupadorIsoyeta" />
@@ -146,6 +157,7 @@
           <Property Name="vCondicion" Type="bit" />
           <Property Name="latiitud" Type="float" />
           <Property Name="longitud" Type="float" />
+          <Property Name="IdAccionActual" Type="bigint" />
         </EntityType>
         <EntityType Name="CAT_PUNTO_MEDICION_MAX_MIN">
           <Key>
@@ -627,6 +639,7 @@
           <EntitySet Name="APP_ROL" EntityType="Self.APP_ROL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="APP_USUARIO" EntityType="Self.APP_USUARIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="APP_USUARIO_ROL" EntityType="Self.APP_USUARIO_ROL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CAT_ACCION_ACTUAL" EntityType="Self.CAT_ACCION_ACTUAL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_AGRUPADOR_ISOYETA" EntityType="Self.CAT_AGRUPADOR_ISOYETA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_CONDPRO" EntityType="Self.CAT_CONDPRO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_DEPENDENCIA" EntityType="Self.CAT_DEPENDENCIA" Schema="dbo" store:Type="Tables" />
@@ -884,6 +897,7 @@
           <FunctionImport Name="spCommitBulkUpsertCiRegistroRecurrent" ReturnType="Collection(Boolean)" />
           <FunctionImport Name="spPrepareBulkUpsertCiRegistroOnDemand" ReturnType="Collection(Boolean)" />
           <FunctionImport Name="spPrepareBulkUpsertCiRegistroRecurrent" ReturnType="Collection(Boolean)" />
+          <EntitySet Name="CAT_ACCION_ACTUAL" EntityType="db_SeguimientoProtocolo_r2Model.CAT_ACCION_ACTUAL" />
         </EntityContainer>
         <EntityType Name="APP_ROL">
           <Key>
@@ -1000,6 +1014,7 @@
           <Property Name="vCondicion" Type="Boolean" />
           <Property Name="latiitud" Type="Double" />
           <Property Name="longitud" Type="Double" />
+          <Property Name="IdAccionActual" Type="Int64" />
         </EntityType>
         <EntityType Name="CAT_PUNTO_MEDICION_MAX_MIN">
           <Key>
@@ -1525,6 +1540,17 @@
           <Property Name="ServerLastModifiedDate" Type="Int64" />
           <Property Name="FechaNumerica" Type="Int64" />
         </EntityType>
+        <EntityType Name="CAT_ACCION_ACTUAL">
+          <Key>
+            <PropertyRef Name="IdAccionActual" />
+          </Key>
+          <Property Name="IdAccionActual" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccionAcualName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IsModified" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="LastModifiedDate" Type="Int64" Nullable="false" />
+          <Property Name="ServerLastModifiedDate" Type="Int64" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1616,6 +1642,7 @@
           <EntitySetMapping Name="CAT_PUNTO_MEDICION">
             <EntityTypeMapping TypeName="db_SeguimientoProtocolo_r2Model.CAT_PUNTO_MEDICION">
               <MappingFragment StoreEntitySet="CAT_PUNTO_MEDICION">
+                <ScalarProperty Name="IdAccionActual" ColumnName="IdAccionActual" />
                 <ScalarProperty Name="longitud" ColumnName="longitud" />
                 <ScalarProperty Name="latiitud" ColumnName="latiitud" />
                 <ScalarProperty Name="vCondicion" ColumnName="vCondicion" />
@@ -1957,6 +1984,18 @@
           <FunctionImportMapping FunctionImportName="spCommitBulkUpsertCiRegistroRecurrent" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spCommitBulkUpsertCiRegistroRecurrent" />
           <FunctionImportMapping FunctionImportName="spPrepareBulkUpsertCiRegistroOnDemand" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spPrepareBulkUpsertCiRegistroOnDemand" />
           <FunctionImportMapping FunctionImportName="spPrepareBulkUpsertCiRegistroRecurrent" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spPrepareBulkUpsertCiRegistroRecurrent" />
+          <EntitySetMapping Name="CAT_ACCION_ACTUAL">
+            <EntityTypeMapping TypeName="db_SeguimientoProtocolo_r2Model.CAT_ACCION_ACTUAL">
+              <MappingFragment StoreEntitySet="CAT_ACCION_ACTUAL">
+                <ScalarProperty Name="ServerLastModifiedDate" ColumnName="ServerLastModifiedDate" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsModified" ColumnName="IsModified" />
+                <ScalarProperty Name="AccionAcualName" ColumnName="AccionAcualName" />
+                <ScalarProperty Name="IdAccionActual" ColumnName="IdAccionActual" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2130,6 +2169,7 @@
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.APP_BITACORA" Width="1.5" PointX="15.375" PointY="12.75" />
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.TMP_CI_REGISTRO_RECURRENTE" Width="1.5" PointX="16.375" PointY="0.75" />
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.TMP_CI_REGISTRO_ONDEMAND" Width="1.5" PointX="16.375" PointY="5.75" />
+        <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.CAT_ACCION_ACTUAL" Width="1.5" PointX="16.375" PointY="15.75" />
       </Diagram>
     </Diagrams>
   </Designer>

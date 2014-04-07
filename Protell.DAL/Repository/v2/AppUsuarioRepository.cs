@@ -53,7 +53,7 @@ namespace Protell.DAL.Repository.v2
 
         public bool Download()
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }

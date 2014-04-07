@@ -209,6 +209,12 @@ namespace Protell.DAL
             get { return _tMP_CI_REGISTRO_ONDEMAND  ?? (_tMP_CI_REGISTRO_ONDEMAND = CreateObjectSet<TMP_CI_REGISTRO_ONDEMAND>("TMP_CI_REGISTRO_ONDEMAND")); }
         }
         private ObjectSet<TMP_CI_REGISTRO_ONDEMAND> _tMP_CI_REGISTRO_ONDEMAND;
+    
+        public ObjectSet<CAT_ACCION_ACTUAL> CAT_ACCION_ACTUAL
+        {
+            get { return _cAT_ACCION_ACTUAL  ?? (_cAT_ACCION_ACTUAL = CreateObjectSet<CAT_ACCION_ACTUAL>("CAT_ACCION_ACTUAL")); }
+        }
+        private ObjectSet<CAT_ACCION_ACTUAL> _cAT_ACCION_ACTUAL;
 
         #endregion
 
