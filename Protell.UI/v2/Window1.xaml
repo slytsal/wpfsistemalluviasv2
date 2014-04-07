@@ -3,11 +3,37 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Window1" Height="AUTO" Width="AUTO"
         WindowStartupLocation="CenterScreen"
-        WindowState="Maximized"
+        WindowState="Normal"
         WindowStyle="None"
         >
-    <Grid Background="#793397D6">
-        <Grid.RowDefinitions>
+    <Grid>
+        <StackPanel>
+            <RadioButton  Name="r1">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Protell.UI;component/Images/heavy rain.png"  Width="50" ></Image>
+                    <TextBlock FontSize="24" Height="35" Width="150">A</TextBlock>
+                </StackPanel>
+            </RadioButton>
+            <RadioButton  Name="r2">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Protell.UI;component/Images/rainstorm.png"  ></Image>
+                    <TextBlock FontSize="24" Height="35" Width="150"></TextBlock>
+                </StackPanel>
+            </RadioButton>
+            <RadioButton  Name="r3">
+                <StackPanel Orientation="Horizontal">
+                    <Image  Height="200" Width="256" Source="/Protell.UI;component/Images/sunny.png"></Image>
+                    <TextBlock FontSize="24" Height="35" Width="150">C</TextBlock>
+                </StackPanel>
+            </RadioButton>
+            <RadioButton Content="Va 1">
+                <RadioButton.Background>
+                    <ImageBrush ImageSource="/Protell.UI;component/Images/heavy rain.png" Stretch="UniformToFill" TileMode="FlipY"/>
+                </RadioButton.Background>
+
+            </RadioButton>
+        </StackPanel>
+        <!--<Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>        
@@ -43,7 +69,7 @@
             <Button Content="Cerrar sesión"
                     Margin="5"
                     FontFamily="Calibri" FontSize="18"/>
-        </Grid>
+        </Grid>-->
     </Grid>
     <!--<Border BorderBrush="SkyBlue" BorderThickness="4" Background="White">
         <Grid HorizontalAlignment="Stretch" 

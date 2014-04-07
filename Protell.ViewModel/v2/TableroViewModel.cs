@@ -517,8 +517,8 @@ namespace Protell.ViewModel.v2
             this.cEstPluviograficas.GetPuntosMedicion("EstPluviograficas");
             this.Condicion = this._CondProRepository.GetCondPros() as ObservableCollection<CondProModel>;
             this.PuntoMedicionsMaxMin = this._PuntoMedicionMaxMinRepository.GetPuntoMedicionsMaxMin() as ObservableCollection<PuntoMedicionMaxMinModel>;
-            //this.SelectedCondicion = ( from o in this.Condicion
-            //                           select o ).First();
+            this.SelectedCondicion = ( from o in this.Condicion
+                                       select o ).First();
             GetHours();
             //GetSyncLog();
         }

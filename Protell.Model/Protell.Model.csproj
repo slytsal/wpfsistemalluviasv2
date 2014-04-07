@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccionActualModel.cs" />
     <Compile Include="AccionProtocoloModel.cs">
       <SubType>Code</SubType>
     </Compile>

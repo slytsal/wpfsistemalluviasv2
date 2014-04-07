@@ -130,6 +130,12 @@ namespace Protell.DAL
             get;
             set;
         }
+    
+        public virtual Nullable<long> IdAccionActual
+        {
+            get;
+            set;
+        }
 
         #endregion
 

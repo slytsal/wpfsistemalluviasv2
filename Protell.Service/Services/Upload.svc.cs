@@ -25,5 +25,21 @@ namespace Protell.Service.Services
             }
             return param;
         }
+
+
+        public bool Upload_CiRegistro(CiRegistroResultModel param)
+        {
+            bool x = false;
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {                
+                throw;
+            }
+            return x;
+
+        }
     }
 }
