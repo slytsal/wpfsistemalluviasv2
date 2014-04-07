@@ -502,6 +502,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__CAT_PUNTO__IdAcc__1EA48E88">
+          <End Role="CAT_ACCION_ACTUAL" Type="Self.CAT_ACCION_ACTUAL" Multiplicity="0..1" />
+          <End Role="CAT_PUNTO_MEDICION" Type="Self.CAT_PUNTO_MEDICION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_ACCION_ACTUAL">
+              <PropertyRef Name="IdAccionActual" />
+            </Principal>
+            <Dependent Role="CAT_PUNTO_MEDICION">
+              <PropertyRef Name="IdAccionActual" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__CAT_SESIO__IdUsu__4D94879B">
           <End Role="APP_USUARIO" Type="Self.APP_USUARIO" Multiplicity="0..1" />
           <End Role="CAT_SESION" Type="Self.CAT_SESION" Multiplicity="*" />
@@ -712,6 +724,10 @@
             <End Role="CAT_UNIDAD_MEDIDA" EntitySet="CAT_UNIDAD_MEDIDA" />
             <End Role="CAT_PUNTO_MEDICION" EntitySet="CAT_PUNTO_MEDICION" />
           </AssociationSet>
+          <AssociationSet Name="FK__CAT_PUNTO__IdAcc__1EA48E88" Association="Self.FK__CAT_PUNTO__IdAcc__1EA48E88">
+            <End Role="CAT_ACCION_ACTUAL" EntitySet="CAT_ACCION_ACTUAL" />
+            <End Role="CAT_PUNTO_MEDICION" EntitySet="CAT_PUNTO_MEDICION" />
+          </AssociationSet>
           <AssociationSet Name="FK__CAT_SESIO__IdUsu__4D94879B" Association="Self.FK__CAT_SESIO__IdUsu__4D94879B">
             <End Role="APP_USUARIO" EntitySet="APP_USUARIO" />
             <End Role="CAT_SESION" EntitySet="CAT_SESION" />
@@ -898,6 +914,10 @@
           <FunctionImport Name="spPrepareBulkUpsertCiRegistroOnDemand" ReturnType="Collection(Boolean)" />
           <FunctionImport Name="spPrepareBulkUpsertCiRegistroRecurrent" ReturnType="Collection(Boolean)" />
           <EntitySet Name="CAT_ACCION_ACTUAL" EntityType="db_SeguimientoProtocolo_r2Model.CAT_ACCION_ACTUAL" />
+          <AssociationSet Name="FK__CAT_PUNTO__IdAcc__1EA48E88" Association="db_SeguimientoProtocolo_r2Model.FK__CAT_PUNTO__IdAcc__1EA48E88">
+            <End Role="CAT_ACCION_ACTUAL" EntitySet="CAT_ACCION_ACTUAL" />
+            <End Role="CAT_PUNTO_MEDICION" EntitySet="CAT_PUNTO_MEDICION" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="APP_ROL">
           <Key>
@@ -1015,6 +1035,7 @@
           <Property Name="latiitud" Type="Double" />
           <Property Name="longitud" Type="Double" />
           <Property Name="IdAccionActual" Type="Int64" />
+          <NavigationProperty Name="CAT_ACCION_ACTUAL" Relationship="db_SeguimientoProtocolo_r2Model.FK__CAT_PUNTO__IdAcc__1EA48E88" FromRole="CAT_PUNTO_MEDICION" ToRole="CAT_ACCION_ACTUAL" />
         </EntityType>
         <EntityType Name="CAT_PUNTO_MEDICION_MAX_MIN">
           <Key>
@@ -1550,7 +1571,20 @@
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="LastModifiedDate" Type="Int64" Nullable="false" />
           <Property Name="ServerLastModifiedDate" Type="Int64" />
+          <NavigationProperty Name="CAT_PUNTO_MEDICION" Relationship="db_SeguimientoProtocolo_r2Model.FK__CAT_PUNTO__IdAcc__1EA48E88" FromRole="CAT_ACCION_ACTUAL" ToRole="CAT_PUNTO_MEDICION" />
         </EntityType>
+        <Association Name="FK__CAT_PUNTO__IdAcc__1EA48E88">
+          <End Type="db_SeguimientoProtocolo_r2Model.CAT_ACCION_ACTUAL" Role="CAT_ACCION_ACTUAL" Multiplicity="0..1" />
+          <End Type="db_SeguimientoProtocolo_r2Model.CAT_PUNTO_MEDICION" Role="CAT_PUNTO_MEDICION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_ACCION_ACTUAL">
+              <PropertyRef Name="IdAccionActual" />
+            </Principal>
+            <Dependent Role="CAT_PUNTO_MEDICION">
+              <PropertyRef Name="IdAccionActual" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2170,6 +2204,7 @@
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.TMP_CI_REGISTRO_RECURRENTE" Width="1.5" PointX="16.375" PointY="0.75" />
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.TMP_CI_REGISTRO_ONDEMAND" Width="1.5" PointX="16.375" PointY="5.75" />
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.CAT_ACCION_ACTUAL" Width="1.5" PointX="16.375" PointY="15.75" />
+        <AssociationConnector Association="db_SeguimientoProtocolo_r2Model.FK__CAT_PUNTO__IdAcc__1EA48E88" />
       </Diagram>
     </Diagrams>
   </Designer>

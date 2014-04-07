@@ -36,13 +36,21 @@ namespace Protell.DAL
             get { return _idUnidadMedida; }
             set
             {
-                if (_idUnidadMedida != value)
+                try
                 {
-                    if (CAT_UNIDAD_MEDIDA != null && CAT_UNIDAD_MEDIDA.IdUnidadMedida != value)
+                    _settingFK = true;
+                    if (_idUnidadMedida != value)
                     {
-                        CAT_UNIDAD_MEDIDA = null;
+                        if (CAT_UNIDAD_MEDIDA != null && CAT_UNIDAD_MEDIDA.IdUnidadMedida != value)
+                        {
+                            CAT_UNIDAD_MEDIDA = null;
+                        }
+                        _idUnidadMedida = value;
                     }
-                    _idUnidadMedida = value;
+                }
+                finally
+                {
+                    _settingFK = false;
                 }
             }
         }
@@ -53,13 +61,21 @@ namespace Protell.DAL
             get { return _idTipoPuntoMedicion; }
             set
             {
-                if (_idTipoPuntoMedicion != value)
+                try
                 {
-                    if (CAT_TIPO_PUNTO_MEDICION != null && CAT_TIPO_PUNTO_MEDICION.IdTipoPuntoMedicion != value)
+                    _settingFK = true;
+                    if (_idTipoPuntoMedicion != value)
                     {
-                        CAT_TIPO_PUNTO_MEDICION = null;
+                        if (CAT_TIPO_PUNTO_MEDICION != null && CAT_TIPO_PUNTO_MEDICION.IdTipoPuntoMedicion != value)
+                        {
+                            CAT_TIPO_PUNTO_MEDICION = null;
+                        }
+                        _idTipoPuntoMedicion = value;
                     }
-                    _idTipoPuntoMedicion = value;
+                }
+                finally
+                {
+                    _settingFK = false;
                 }
             }
         }
@@ -133,9 +149,28 @@ namespace Protell.DAL
     
         public virtual Nullable<long> IdAccionActual
         {
-            get;
-            set;
+            get { return _idAccionActual; }
+            set
+            {
+                try
+                {
+                    _settingFK = true;
+                    if (_idAccionActual != value)
+                    {
+                        if (CAT_ACCION_ACTUAL != null && CAT_ACCION_ACTUAL.IdAccionActual != value)
+                        {
+                            CAT_ACCION_ACTUAL = null;
+                        }
+                        _idAccionActual = value;
+                    }
+                }
+                finally
+                {
+                    _settingFK = false;
+                }
+            }
         }
+        private Nullable<long> _idAccionActual;
 
         #endregion
 
@@ -266,10 +301,27 @@ namespace Protell.DAL
             }
         }
         private ICollection<CAT_PUNTO_MEDICION_MAX_MIN> _cAT_PUNTO_MEDICION_MAX_MIN;
+    
+        public virtual CAT_ACCION_ACTUAL CAT_ACCION_ACTUAL
+        {
+            get { return _cAT_ACCION_ACTUAL; }
+            set
+            {
+                if (!ReferenceEquals(_cAT_ACCION_ACTUAL, value))
+                {
+                    var previousValue = _cAT_ACCION_ACTUAL;
+                    _cAT_ACCION_ACTUAL = value;
+                    FixupCAT_ACCION_ACTUAL(previousValue);
+                }
+            }
+        }
+        private CAT_ACCION_ACTUAL _cAT_ACCION_ACTUAL;
 
         #endregion
 
         #region Association Fixup
+    
+        private bool _settingFK = false;
     
         private void FixupCAT_TIPO_PUNTO_MEDICION(CAT_TIPO_PUNTO_MEDICION previousValue)
         {
@@ -308,6 +360,30 @@ namespace Protell.DAL
                 {
                     IdUnidadMedida = CAT_UNIDAD_MEDIDA.IdUnidadMedida;
                 }
+            }
+        }
+    
+        private void FixupCAT_ACCION_ACTUAL(CAT_ACCION_ACTUAL previousValue)
+        {
+            if (previousValue != null && previousValue.CAT_PUNTO_MEDICION.Contains(this))
+            {
+                previousValue.CAT_PUNTO_MEDICION.Remove(this);
+            }
+    
+            if (CAT_ACCION_ACTUAL != null)
+            {
+                if (!CAT_ACCION_ACTUAL.CAT_PUNTO_MEDICION.Contains(this))
+                {
+                    CAT_ACCION_ACTUAL.CAT_PUNTO_MEDICION.Add(this);
+                }
+                if (IdAccionActual != CAT_ACCION_ACTUAL.IdAccionActual)
+                {
+                    IdAccionActual = CAT_ACCION_ACTUAL.IdAccionActual;
+                }
+            }
+            else if (!_settingFK)
+            {
+                IdAccionActual = null;
             }
         }
     

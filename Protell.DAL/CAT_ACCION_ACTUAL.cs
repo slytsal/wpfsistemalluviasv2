@@ -57,5 +57,67 @@ namespace Protell.DAL
 
         #endregion
 
+        #region Navigation Properties
+    
+        public virtual ICollection<CAT_PUNTO_MEDICION> CAT_PUNTO_MEDICION
+        {
+            get
+            {
+                if (_cAT_PUNTO_MEDICION == null)
+                {
+                    var newCollection = new FixupCollection<CAT_PUNTO_MEDICION>();
+                    newCollection.CollectionChanged += FixupCAT_PUNTO_MEDICION;
+                    _cAT_PUNTO_MEDICION = newCollection;
+                }
+                return _cAT_PUNTO_MEDICION;
+            }
+            set
+            {
+                if (!ReferenceEquals(_cAT_PUNTO_MEDICION, value))
+                {
+                    var previousValue = _cAT_PUNTO_MEDICION as FixupCollection<CAT_PUNTO_MEDICION>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupCAT_PUNTO_MEDICION;
+                    }
+                    _cAT_PUNTO_MEDICION = value;
+                    var newValue = value as FixupCollection<CAT_PUNTO_MEDICION>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupCAT_PUNTO_MEDICION;
+                    }
+                }
+            }
+        }
+        private ICollection<CAT_PUNTO_MEDICION> _cAT_PUNTO_MEDICION;
+
+        #endregion
+
+        #region Association Fixup
+    
+        private void FixupCAT_PUNTO_MEDICION(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach (CAT_PUNTO_MEDICION item in e.NewItems)
+                {
+                    item.CAT_ACCION_ACTUAL = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (CAT_PUNTO_MEDICION item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.CAT_ACCION_ACTUAL, this))
+                    {
+                        item.CAT_ACCION_ACTUAL = null;
+                    }
+                }
+            }
+        }
+
+        #endregion
+
     }
 }

@@ -39,11 +39,11 @@ namespace Protell.UI.v2
             InitializeComponent();
             viewModel = vm;
             dtpFecha.Focus();
-            Timer tm = new Timer();
-            tm.Interval = 1000;
-            tm.Enabled = true;
-            tm.Elapsed += new ElapsedEventHandler(tm_Elapsed);
-            tm.Start();
+            //Timer tm = new Timer();
+            //tm.Interval = 1000;
+            //tm.Enabled = true;
+            //tm.Elapsed += new ElapsedEventHandler(tm_Elapsed);
+            //tm.Start();
            
         }
 

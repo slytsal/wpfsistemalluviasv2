@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Protell.DAL;
 using Protell.DAL.Repository;
 using Protell.Model;
 using Protell.Model.IRepository;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Data;
+using Protell.DAL.Repository.v2;
 
 namespace Protell.ViewModel.v2
 {
@@ -148,23 +146,16 @@ namespace Protell.ViewModel.v2
                 {
                     case "PuntosMedicion":                        
                         this.PuntosMedicion = _PuntoMedicionRepository.GetPuntosMedicion() as ObservableCollection<PuntoMedicionModel>;
-                        //( from o in PuntosMedicion                          
-                        //  orderby o.PuntoMedicionName ascending
-                        //  select o ).Take(1).ToList().ForEach(p => this.SelectedItem = p);                        
+                                         
                         break;
 
                     case "Lumbreras":
-                        this.PuntosMedicion = _PuntoMedicionRepository.GetLumbreras() as ObservableCollection<PuntoMedicionModel>;
-                        //( from o in PuntosMedicion
-                        //  orderby o.PuntoMedicionName ascending                          
-                        //  select o ).Take(1).ToList().ForEach(p => this.SelectedItem = p);
+                        this.PuntosMedicion = _PuntoMedicionRepository.GetLumbreras() as ObservableCollection<PuntoMedicionModel>;                        
                         break;
 
                     case "EstPluviograficas":
                         this.PuntosMedicion = _PuntoMedicionRepository.GetEstPluviograficas() as ObservableCollection<PuntoMedicionModel>;
-                        //( from o in PuntosMedicion
-                        //  orderby o.PuntoMedicionName ascending                          
-                        //  select o ).Take(1).ToList().ForEach(p => this.SelectedItem = p);
+                        
                         break;
                     
                     default:
@@ -182,8 +173,8 @@ namespace Protell.ViewModel.v2
                 }
             }
             catch (Exception ex)
-            {                
-                throw;
+            {
+                AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });
             }
         }
 

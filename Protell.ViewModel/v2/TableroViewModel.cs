@@ -4,6 +4,7 @@ using Protell.Model;
 using System.Collections.ObjectModel;
 using Protell.Model.IRepository;
 using Protell.DAL.Repository;
+using Protell.DAL.Repository.v2;
 using System.Configuration;
 
 
@@ -19,6 +20,7 @@ namespace Protell.ViewModel.v2
         public IConfirmation _Confirmation;
         private SyncLogRepository syncRepository;
         UsuarioRepository usuarioRepository;
+        CatAccionActualRepository accionRepository;
         //Categorias
         public CategoriasViewModel cPuntosMedicion;
         public CategoriasViewModel cLumbreras;
@@ -36,6 +38,7 @@ namespace Protell.ViewModel.v2
         public TableroViewModel(IConfirmation con)
         {            
             syncRepository = new SyncLogRepository();
+            accionRepository = new CatAccionActualRepository();
             //Condicion
             this._CondProRepository = new Protell.DAL.Repository.CondProRepository();
             this._PuntoMedicionMaxMinRepository = new Protell.DAL.Repository.PuntoMedicionMaxMinRepository();
@@ -557,7 +560,7 @@ namespace Protell.ViewModel.v2
                 def.DiaRegistro = int.Parse(( String.Format("{0:dd}", dt) ).Replace(":", ""));
                 def.Valor = 0;
                 def.PUNTOMEDICION = SelectedItemTabControl;
-                def.AccionActual = "Abierta.";
+                def.AccionActual = accionRepository.GetAccionActual(def.IdPuntoMedicion);
                 def.FechaNumerica = ConvertFechaNumerica(def.FechaCaptura, def.HoraMilitar);
                 def.Condicion = ( from c in Condicion
                                   select c ).First();            
