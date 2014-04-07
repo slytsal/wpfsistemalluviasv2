@@ -401,7 +401,8 @@ namespace Protell.Model
             subCover2 = convert.Substring(2, 2);
             resHrs = subCover + ":" + subCover2;
             this.HoraMilitar = resHrs;
-            ConvertFechaNumerica();
+            
+            //ConvertFechaNumerica(); //Esto ocasiona que no se tome el valor de la columna de la db;
         }
 
         public string Error
