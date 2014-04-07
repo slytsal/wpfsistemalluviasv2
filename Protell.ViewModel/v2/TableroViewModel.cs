@@ -12,6 +12,9 @@ namespace Protell.ViewModel.v2
 {
     public class TableroViewModel:ViewModelBase
     {
+        private const string LUMBRERAS = "LUMBRERAS";
+        private const string PUNTOSMEDICION = "PUNTOSMEDICION";
+        private const string ESTPLUVIOGRAFICAS = "ESTPLUVIOGRAFICAS";
 
         int TopLog = 0;
         public bool IsSave = false;
@@ -74,7 +77,7 @@ namespace Protell.ViewModel.v2
         {
             if (e.PropertyName == "SelectedItem")
             {
-                pmEstPluviograficas.GetItemsPuntosMedicion(cEstPluviograficas.SelectedItem);
+                pmEstPluviograficas.GetItemsPuntosMedicion(cEstPluviograficas.SelectedItem,ESTPLUVIOGRAFICAS);//cEstPluviograficas.SelectedItem);
                 this.SelectedItemTabControl = cEstPluviograficas.SelectedItem;
             }
         }
@@ -83,7 +86,7 @@ namespace Protell.ViewModel.v2
         {
             if (e.PropertyName == "SelectedItem")
             {
-                pmLumbreras.GetItemsPuntosMedicion(cLumbreras.SelectedItem);
+                pmLumbreras.GetItemsPuntosMedicion(cLumbreras.SelectedItem,LUMBRERAS);
                 this.SelectedItemTabControl = cLumbreras.SelectedItem;
             }
         }
@@ -92,7 +95,7 @@ namespace Protell.ViewModel.v2
         {
             if (e.PropertyName == "SelectedItem")
             {                
-                pmPuntosMedicion.GetItemsPuntosMedicion(cPuntosMedicion.SelectedItem);
+                pmPuntosMedicion.GetItemsPuntosMedicion(cPuntosMedicion.SelectedItem,PUNTOSMEDICION);
                 this.SelectedItemTabControl = ( cPuntosMedicion.SelectedItem != null ) ? cPuntosMedicion.SelectedItem : cPuntosMedicion.SelectedItemAux;
                 if (cPuntosMedicion.SelectedItem == null)
                 {
@@ -527,8 +530,8 @@ namespace Protell.ViewModel.v2
             this.cEstPluviograficas.GetPuntosMedicion("EstPluviograficas");
             this.Condicion = this._CondProRepository.GetCondPros() as ObservableCollection<CondProModel>;
             this.PuntoMedicionsMaxMin = this._PuntoMedicionMaxMinRepository.GetPuntoMedicionsMaxMin() as ObservableCollection<PuntoMedicionMaxMinModel>;
-            this.SelectedCondicion = ( from o in this.Condicion
-                                       select o ).First();
+            //this.SelectedCondicion = ( from o in this.Condicion
+            //                           select o ).First();
             GetHours();
             //GetSyncLog();
         }

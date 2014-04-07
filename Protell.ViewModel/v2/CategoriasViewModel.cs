@@ -27,7 +27,7 @@ namespace Protell.ViewModel.v2
 
         #region Propiedades
 
-
+        
         public ICollectionView View
         {
             get { return _View; }

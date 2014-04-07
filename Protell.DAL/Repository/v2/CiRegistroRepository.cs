@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Script.Serialization;
 
+
 namespace Protell.DAL.Repository.v2
 {
     public delegate void DidCiRegistroRecurrentDataChanged(object o, CiRegistroRecurrentDataChangedArgs e);
@@ -274,39 +275,45 @@ namespace Protell.DAL.Repository.v2
             return result;
         }
 
+        public void Dispose()
+        {
+            return;
+        }
+
         public ObservableCollection<RegistroModel> GetCiRegistro(int Categoria)
         {
             Dictionary<string, ObservableCollection<RegistroModel>> AllRegistros = new Dictionary<string, ObservableCollection<RegistroModel>>();
-            ObservableCollection<RegistroModel> items = new ObservableCollection<RegistroModel>();
+            
+            ObservableCollection<RegistroModel> items;
             try
             {
-                using(var entity=new db_SeguimientoProtocolo_r2Entities())
+                using (var entity = new db_SeguimientoProtocolo_r2Entities())
                 {                    
-                    switch(Categoria)
-                    {
-                        case 1:
+
+                    items = new ObservableCollection<RegistroModel>();
                           (from result in entity.spGetCI_REGISTRO(20140407, PUNTOSMEDICION)
-                             select result).ToList().ForEach(row => {
+                     select result).ToList().ForEach(row =>
+                     {
                                  items.Add(new RegistroModel()
                                      {
-                                         IdRegistro=row.IdRegistro,
-                                         IdPuntoMedicion=row.IdPuntoMedicion, 
-                                         FechaCaptura=row.FechaCaptura, 
-                                         HoraRegistro=row.HoraRegistro,
-                                         DiaRegistro=row.DiaRegistro, 
-                                         Valor=row.Valor, 
-                                         AccionActual=row.AccionActual,
-                                         IsActive=row.IsActive,
-                                         IsModified=row.IsModified,
-                                         LastModifiedDate=row.LastModifiedDate, 
-                                         IdCondicion=row.IdCondicion,
-                                         ServerLastModifiedDate=row.ServerLastModifiedDate,
-                                         FechaNumerica=row.FechaNumerica
+                                 IdRegistro = row.IdRegistro,
+                                 IdPuntoMedicion = row.IdPuntoMedicion,
+                                 FechaCaptura = row.FechaCaptura,
+                                 HoraRegistro = row.HoraRegistro,
+                                 DiaRegistro = row.DiaRegistro,
+                                 Valor = row.Valor,
+                                 AccionActual = row.AccionActual,
+                                 IsActive = row.IsActive,
+                                 IsModified = row.IsModified,
+                                 LastModifiedDate = row.LastModifiedDate,
+                                 IdCondicion = row.IdCondicion,
+                                 ServerLastModifiedDate = row.ServerLastModifiedDate,
+                                 FechaNumerica = row.FechaNumerica
                                      });
                              });
-                          break;
+                    AllRegistros.Add(PUNTOSMEDICION, items);
 
-                        case 2:
+                    items = new ObservableCollection<RegistroModel>();
                           (from result in entity.spGetCI_REGISTRO(20140407, LUMBRERAS)
                            select result).ToList().ForEach(row =>
                            {
@@ -327,9 +334,9 @@ namespace Protell.DAL.Repository.v2
                                    FechaNumerica = row.FechaNumerica
                                });
                            });
-                          break;
+                    AllRegistros.Add(LUMBRERAS, items);
 
-                        case 3:
+                    items = new ObservableCollection<RegistroModel>();
                           (from result in entity.spGetCI_REGISTRO(20140407, ESTPLUVIOGRAFICAS)
                            select result).ToList().ForEach(row =>
                            {
@@ -350,8 +357,7 @@ namespace Protell.DAL.Repository.v2
                                    FechaNumerica = row.FechaNumerica
                                });
                            });
-                          break;
-                    }                        
+                    AllRegistros.Add(ESTPLUVIOGRAFICAS, items);
                    
                 }
             }
@@ -359,8 +365,13 @@ namespace Protell.DAL.Repository.v2
             {
 
             }
-            return items;
+            return AllRegistros;
         }
+
+
+        
+
+       
 
         /// <summary>
         /// Logica de descarga e inserción de registros de servidor en base local
@@ -484,7 +495,7 @@ namespace Protell.DAL.Repository.v2
             {
                 //no hay registros para subir al servidor
                 responseService = true;
-            }
+        }
 
             return responseService;
         }//endUpload()
@@ -499,11 +510,6 @@ namespace Protell.DAL.Repository.v2
             {
                 DidCiRegistroRecurrentDataChangedHandler(this, new CiRegistroRecurrentDataChangedArgs(dataChanged));
             }
-        }
-
-        public void Dispose()
-        {
-            return;
         }
     }
 }

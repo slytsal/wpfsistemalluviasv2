@@ -55,21 +55,14 @@ namespace Protell.UI.v2
             cLumbreras.init(this,vm);
             cEstPluviograficas.DataContext = vm.cEstPluviograficas;
             cEstPluviograficas.init(this, vm);
-            pmPuntoMedicion.DataContext = vm.pmPuntosMedicion;
-            pmPuntoMedicion.init(this,vm);
+            
 
-            pmLumbreras.DataContext = vm.pmLumbreras;
-            pmLumbreras.init(this,vm);
-
-            pmEstPluviograficas.DataContext = vm.pmEstPluviograficas;
-            pmEstPluviograficas.init(this,vm);
-
-            DTimerUploadProcess = new DispatcherTimer();
-            DTimerUploadProcess.Tick += new EventHandler(DTimerUploadProcess_Tick);
-            DTimerUploadProcess.Interval = new TimeSpan(0, 0, 60);
-            DTimerUploadProcess.Start();
+            //DTimerUploadProcess = new DispatcherTimer();
+            //DTimerUploadProcess.Tick += new EventHandler(DTimerUploadProcess_Tick);
+            //DTimerUploadProcess.Interval = new TimeSpan(0, 0, 60);
+            //DTimerUploadProcess.Start();
             GetAppTitle();
-            vm.PropertyChanged += new PropertyChangedEventHandler(vm_PropertyChanged);
+            //vm.PropertyChanged += new PropertyChangedEventHandler(vm_PropertyChanged);
 
             //TimerNuevo = new DispatcherTimer();
             //TimerNuevo.Tick += new EventHandler(TimerNuevo_Tick);
@@ -251,11 +244,52 @@ namespace Protell.UI.v2
             }
         }
 
-        //private void Window_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    //vm.init();
-        //}
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            vm.init();
+        }
 
+        private void tcTablero_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (e.Source is TabControl)
+                {
+                    if (((TabControl)e.Source).SelectedIndex == 0)
+                    {
+                        //pmPuntoMedicion.DataContext = vm.pmPuntosMedicion;
+                        //pmPuntoMedicion.init(this, vm);
+                        MessageBox.Show("we");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ;                
+            }
+        }
+
+        
+            //if (tcTablero.SelectedIndex == 0)
+            //{
+            //    pmPuntoMedicion.DataContext = vm.pmPuntosMedicion;
+            //    pmPuntoMedicion.init(this, vm);
+            //}
+
+            //if (tcTablero.SelectedIndex == 1)
+            //{
+            //    pmLumbreras.DataContext = vm.pmLumbreras;
+            //    pmLumbreras.init(this, vm);
+            //}
+
+            //if (tcTablero.SelectedIndex == 2)
+            //{
+            //    pmEstPluviograficas.DataContext = vm.pmEstPluviograficas;
+            //    pmEstPluviograficas.init(this, vm);
+            //}      
+        
+
+        
         //private void tcTablero_SelectionChanged(object sender, SelectionChangedEventArgs e)
         //{
         //    MessageBox.Show(e.AddedItems.ToString());

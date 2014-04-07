@@ -330,6 +330,21 @@ namespace Protell.Server.DAL.POCOS
             }
             return base.ExecuteFunction<spDownloadCiRegistroRecurrent_Result>("spDownloadCiRegistroRecurrent", fechaActualParameter, fechaFinParameter, sLMDParameter, lMDParameter);
         }
+        public ObjectResult<spCommitBulkUpsertCiRegistroUploaded_Result> spCommitBulkUpsertCiRegistroUploaded(Nullable<long> session)
+        {
+    
+            ObjectParameter sessionParameter;
+    
+            if (session.HasValue)
+            {
+                sessionParameter = new ObjectParameter("session", session);
+            }
+            else
+            {
+                sessionParameter = new ObjectParameter("session", typeof(long));
+            }
+            return base.ExecuteFunction<spCommitBulkUpsertCiRegistroUploaded_Result>("spCommitBulkUpsertCiRegistroUploaded", sessionParameter);
+        }
 
         #endregion
 
