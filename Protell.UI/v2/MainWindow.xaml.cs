@@ -257,8 +257,9 @@ namespace Protell.UI.v2
                 {
                     if (((TabControl)e.Source).SelectedIndex == 0)
                     {
-                        pmPuntoMedicion.DataContext = vm.pmPuntosMedicion;
-                        pmPuntoMedicion.init(this, vm);
+                        //pmPuntoMedicion.DataContext = vm.pmPuntosMedicion;
+                        //pmPuntoMedicion.init(this, vm);
+                        MessageBox.Show("we");
                     }
                 }
             }

@@ -786,8 +786,8 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
             <Parameter Name="SLMD" Mode="In" Type="Int64" />
             <Parameter Name="LMD" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="spCommitBulkUpsertCiRegistroUploaded">
-            <Parameter Name="session" Mode="In" Type="Int64" />
+          <FunctionImport Name="spCommitBulkUpsertCiRegistroUploaded" ReturnType="Collection(devinmr3Model.spCommitBulkUpsertCiRegistroUploaded_Result)">
+          <Parameter Name="session" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="C_CAT_PUNTO_MEDICION">
@@ -1411,6 +1411,12 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
           <Property Type="Int64" Name="ServerLastModifiedDate" Nullable="true" />
           <Property Type="Int64" Name="FechaNumerica" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="spCommitBulkUpsertCiRegistroUploaded_Result">
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="Int64" Name="FechaNumerica" Nullable="true" />
+          <Property Type="Int64" Name="LastModifiedDate" Nullable="false" />
+          <Property Type="Int64" Name="ServerLastModifiedDate" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1822,7 +1828,16 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="spCommitBulkUpsertCiRegistroUploaded" FunctionName="devinmr3Model.Store.spCommitBulkUpsertCiRegistroUploaded" />
+          <FunctionImportMapping FunctionImportName="spCommitBulkUpsertCiRegistroUploaded" FunctionName="devinmr3Model.Store.spCommitBulkUpsertCiRegistroUploaded" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="devinmr3Model.spCommitBulkUpsertCiRegistroUploaded_Result">
+                <ScalarProperty Name="IdPuntoMedicion" ColumnName="IdPuntoMedicion" />
+                <ScalarProperty Name="FechaNumerica" ColumnName="FechaNumerica" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="ServerLastModifiedDate" ColumnName="ServerLastModifiedDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
