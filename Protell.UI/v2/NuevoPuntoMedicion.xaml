@@ -175,12 +175,14 @@
                            Text="Acción actual:"
                            FontSize="20" FontFamily="Calibri"
                            HorizontalAlignment="Right" VerticalAlignment="Top"
+                                                           Visibility="{Binding SelectedItemPopUp.PUNTOMEDICION.VisivilityAccion,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                            />
 
                                                 <TextBox Grid.Column="1" Grid.Row="5" Height="80"
                                                          Name="txbAccionactual"
                                                          FocusVisualStyle="{DynamicResource MyFocusVisual}"
                                                          KeyDown="txbAccionactual_KeyDown"
+                                                         Visibility="{Binding SelectedItemPopUp.PUNTOMEDICION.VisivilityAccion,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                          FontSize="20" FontFamily="Calibri"
                          HorizontalAlignment="Left"                                     
                          VerticalAlignment="Top" Width="300" Margin="5"
@@ -198,14 +200,14 @@
                            FontSize="20" FontFamily="Calibri"
                            HorizontalAlignment="Left" VerticalAlignment="Center"
                            Text="Condición Actual:"
-                           Visibility="{Binding SelectedItemPopUp.PUNTOMEDICION.UIVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                           Visibility="{Binding SelectedItemPopUp.PUNTOMEDICION.VisibilityCondicion,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                                 <ListView Grid.Row="1" Margin="5"                                                          
                                                           Name="lstCondicion"
                           FontSize="20" FontFamily="Calibri"
                           HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Top"
                           ItemsSource="{Binding Condicion,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                           SelectedItem="{Binding SelectedCondicion,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                          Visibility="{Binding SelectedItemPopUp.PUNTOMEDICION.UIVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TabIndex="5">
+                          Visibility="{Binding SelectedItemPopUp.PUNTOMEDICION.VisibilityCondicion,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TabIndex="5">
                                                     <ListView.ItemTemplate>
                                                         <DataTemplate>
                                                             <Border BorderBrush="SkyBlue" BorderThickness="2" 
@@ -246,7 +248,7 @@
                                                     FocusVisualStyle="{DynamicResource MyFocusVisual}"
                     BorderBrush="Green"
                     Content="Guardar" Margin="5"
-                    FontSize="20" FontFamily="Calibri" TabIndex="7" Click="btnGuardar_Click" />
+                    FontSize="20" FontFamily="Calibri" TabIndex="7" Click="btnGuardar_Click"  ToolTip="Falta"/>
                                             <Button Grid.Column="1"
                                                     Name="btnCerrar"
                                                     FocusVisualStyle="{DynamicResource MyFocusVisual}"

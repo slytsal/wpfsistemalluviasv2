@@ -25,6 +25,10 @@ namespace Protell.DAL.Repository.v2
 
     public class CiRegistroRepository : IDisposable, IServiceFactory
     {
+        private const string LUMBRERAS = "LUMBRERAS";
+        private const string PUNTOSMEDICION = "PUNTOSMEDICION";
+        private const string ESTPLUVIOGRAFICAS = "ESTPLUVIOGRAFICAS";
+
         public event DidCiRegistroRecurrentDataChanged DidCiRegistroRecurrentDataChangedHandler; 
 
         private class RequestBodyContent
@@ -209,6 +213,94 @@ namespace Protell.DAL.Repository.v2
         public void Dispose()
         {
             return;
+        }
+
+        public ObservableCollection<RegistroModel> GetCiRegistro(int Categoria)
+        {
+            Dictionary<string, ObservableCollection<RegistroModel>> AllRegistros = new Dictionary<string, ObservableCollection<RegistroModel>>();
+            ObservableCollection<RegistroModel> items = new ObservableCollection<RegistroModel>();
+            try
+            {
+                using(var entity=new db_SeguimientoProtocolo_r2Entities())
+                {                    
+                    switch(Categoria)
+                    {
+                        case 1:
+                          (from result in entity.spGetCI_REGISTRO(20140407, PUNTOSMEDICION)
+                             select result).ToList().ForEach(row => {
+                                 items.Add(new RegistroModel()
+                                     {
+                                         IdRegistro=row.IdRegistro,
+                                         IdPuntoMedicion=row.IdPuntoMedicion, 
+                                         FechaCaptura=row.FechaCaptura, 
+                                         HoraRegistro=row.HoraRegistro,
+                                         DiaRegistro=row.DiaRegistro, 
+                                         Valor=row.Valor, 
+                                         AccionActual=row.AccionActual,
+                                         IsActive=row.IsActive,
+                                         IsModified=row.IsModified,
+                                         LastModifiedDate=row.LastModifiedDate, 
+                                         IdCondicion=row.IdCondicion,
+                                         ServerLastModifiedDate=row.ServerLastModifiedDate,
+                                         FechaNumerica=row.FechaNumerica
+                                     });
+                             });
+                          break;
+
+                        case 2:
+                          (from result in entity.spGetCI_REGISTRO(20140407, LUMBRERAS)
+                           select result).ToList().ForEach(row =>
+                           {
+                               items.Add(new RegistroModel()
+                               {
+                                   IdRegistro = row.IdRegistro,
+                                   IdPuntoMedicion = row.IdPuntoMedicion,
+                                   FechaCaptura = row.FechaCaptura,
+                                   HoraRegistro = row.HoraRegistro,
+                                   DiaRegistro = row.DiaRegistro,
+                                   Valor = row.Valor,
+                                   AccionActual = row.AccionActual,
+                                   IsActive = row.IsActive,
+                                   IsModified = row.IsModified,
+                                   LastModifiedDate = row.LastModifiedDate,
+                                   IdCondicion = row.IdCondicion,
+                                   ServerLastModifiedDate = row.ServerLastModifiedDate,
+                                   FechaNumerica = row.FechaNumerica
+                               });
+                           });
+                          break;
+
+                        case 3:
+                          (from result in entity.spGetCI_REGISTRO(20140407, ESTPLUVIOGRAFICAS)
+                           select result).ToList().ForEach(row =>
+                           {
+                               items.Add(new RegistroModel()
+                               {
+                                   IdRegistro = row.IdRegistro,
+                                   IdPuntoMedicion = row.IdPuntoMedicion,
+                                   FechaCaptura = row.FechaCaptura,
+                                   HoraRegistro = row.HoraRegistro,
+                                   DiaRegistro = row.DiaRegistro,
+                                   Valor = row.Valor,
+                                   AccionActual = row.AccionActual,
+                                   IsActive = row.IsActive,
+                                   IsModified = row.IsModified,
+                                   LastModifiedDate = row.LastModifiedDate,
+                                   IdCondicion = row.IdCondicion,
+                                   ServerLastModifiedDate = row.ServerLastModifiedDate,
+                                   FechaNumerica = row.FechaNumerica
+                               });
+                           });
+                          break;
+                    }                        
+                   
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return items;
         }
 
         /// <summary>

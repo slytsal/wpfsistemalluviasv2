@@ -14,6 +14,7 @@ namespace Protell.ViewModel.v2
     {
 
         int TopLog = 0;
+        public bool IsSave = false;
         #region Instancias
         private ICondPro _CondProRepository;
         private IRegistro _RegistroRepository;        
@@ -425,11 +426,17 @@ namespace Protell.ViewModel.v2
             if (GetValidarMedicion() && GetValidarFecha() && GetValidarHoraMilitar()) //&& GetValidarHoraMilitar()
             {
                 //Guardar el registro
-                this._RegistroRepository.InsertRegistro(this.SelectedItemPopUp,this.Usuario);
+                this._RegistroRepository.InsertRegistro(this.SelectedItemPopUp, this.Usuario);
+                this.IsSave = true;
                 //Refresca el grid
-                //this._ParentRegistro.LoadRegistroAdd();
+                //LoadRegistroAdd();
             }
+            else
+                this.IsSave = false;
         }
+
+        
+
         public RelayCommand ValidarSaveCommand
         {
             get
@@ -546,6 +553,10 @@ namespace Protell.ViewModel.v2
 
         public void DefaultValues()
         {
+            TimeZoneInfo mexZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time (Mexico)");
+            DateTime utc = DateTime.UtcNow;
+            DateTime convertMex = TimeZoneInfo.ConvertTimeFromUtc(utc, mexZone);
+
             DateTime dt = DateTime.Now;
             string Unid = (String.Format("{0:yyyy:MM:dd:HH:mm:ss:fff}", dt)).Replace(":","");
             string date = DateTime.Now.ToString();
@@ -628,13 +639,17 @@ namespace Protell.ViewModel.v2
 
         public bool GetValidarFecha()
         {
+            TimeZoneInfo mexZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time (Mexico)");
+            DateTime utc = DateTime.UtcNow;
+            DateTime convertMex = TimeZoneInfo.ConvertTimeFromUtc(utc, mexZone);
+
             bool res = true;
             this.ValideFechaCapturaActual = true;
             int horaActual = GetCovertHora();
             this.FechaCapturaActual=DateTime.Parse(string.Format("{0:dd/MM/yyyy}", DateTime.Now));
-            if (DateTime.Parse(string.Format("{0:dd/MM/yyyy}", this.SelectedItemPopUp.FechaCaptura)) > FechaCapturaActual)
+            if (DateTime.Parse(string.Format("{0:dd/MM/yyyy}", this.SelectedItemPopUp.FechaCaptura)) > convertMex)
             {
-                this._Confirmation.Msg = "No se pueden ingresar fechas posteriores  a : " + string.Format(( string.Format("{0:dd/MM/yyyy}", this.FechaCapturaActual) ));
+                this._Confirmation.Msg = "No se pueden ingresar fechas posteriores  a : " + string.Format((string.Format("{0:dd/MM/yyyy}", convertMex)));
                 this._Confirmation.ShowOk();
                 res = false;
                 this.ValideFechaCapturaActual = false;

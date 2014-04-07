@@ -74,12 +74,24 @@ namespace Protell.UI.v2
             try
             {
                 viewModel.SaveCommand.Execute(null);
-                Action a = () => this.Close();
+                Action a = () =>
+                {
+                    if (viewModel.IsSave)
+                    {
+                        this.Close();
+                    }
+                };
                 Application.Current.Dispatcher.BeginInvoke(a);                
             }
             catch (Exception)
             {
-                Action a = () => this.Close();
+                Action a = () =>
+                {
+                    if (viewModel.IsSave)
+                    {
+                        this.Close();
+                    }
+                };
                 Application.Current.Dispatcher.BeginInvoke(a);                
             }
             

@@ -61,8 +61,8 @@ namespace Protell.DAL.Repository.v2.Tests
         [TestMethod()]
         public void RegistroModelTest()
         {
-
-
+           
+            
 
             Model.RegistroModel r = new Model.RegistroModel()
             {

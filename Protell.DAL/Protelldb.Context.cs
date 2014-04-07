@@ -215,6 +215,12 @@ namespace Protell.DAL
             get { return _cAT_ACCION_ACTUAL  ?? (_cAT_ACCION_ACTUAL = CreateObjectSet<CAT_ACCION_ACTUAL>("CAT_ACCION_ACTUAL")); }
         }
         private ObjectSet<CAT_ACCION_ACTUAL> _cAT_ACCION_ACTUAL;
+    
+        public ObjectSet<TMP_CI_REGISTRO_CONFIRMATION> TMP_CI_REGISTRO_CONFIRMATION
+        {
+            get { return _tMP_CI_REGISTRO_CONFIRMATION  ?? (_tMP_CI_REGISTRO_CONFIRMATION = CreateObjectSet<TMP_CI_REGISTRO_CONFIRMATION>("TMP_CI_REGISTRO_CONFIRMATION")); }
+        }
+        private ObjectSet<TMP_CI_REGISTRO_CONFIRMATION> _tMP_CI_REGISTRO_CONFIRMATION;
 
         #endregion
 
@@ -528,6 +534,40 @@ namespace Protell.DAL
         public ObjectResult<Nullable<bool>> spPrepareBulkUpsertCiRegistroRecurrent()
         {
             return base.ExecuteFunction<Nullable<bool>>("spPrepareBulkUpsertCiRegistroRecurrent");
+        }
+        public ObjectResult<spGetCI_REGISTRO_Result> spGetCI_REGISTRO(Nullable<long> fechaActual, string categoria)
+        {
+    
+            ObjectParameter fechaActualParameter;
+    
+            if (fechaActual.HasValue)
+            {
+                fechaActualParameter = new ObjectParameter("FechaActual", fechaActual);
+            }
+            else
+            {
+                fechaActualParameter = new ObjectParameter("FechaActual", typeof(long));
+            }
+    
+            ObjectParameter categoriaParameter;
+    
+            if (categoria != null)
+            {
+                categoriaParameter = new ObjectParameter("Categoria", categoria);
+            }
+            else
+            {
+                categoriaParameter = new ObjectParameter("Categoria", typeof(string));
+            }
+            return base.ExecuteFunction<spGetCI_REGISTRO_Result>("spGetCI_REGISTRO", fechaActualParameter, categoriaParameter);
+        }
+        public ObjectResult<Nullable<bool>> spCommitBulkUpdateCiRegistroConfirmation()
+        {
+            return base.ExecuteFunction<Nullable<bool>>("spCommitBulkUpdateCiRegistroConfirmation");
+        }
+        public ObjectResult<Nullable<bool>> spPrepareBulkUpdateCiRegistroConfirmation()
+        {
+            return base.ExecuteFunction<Nullable<bool>>("spPrepareBulkUpdateCiRegistroConfirmation");
         }
 
         #endregion

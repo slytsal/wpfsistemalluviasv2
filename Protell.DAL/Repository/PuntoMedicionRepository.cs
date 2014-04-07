@@ -118,6 +118,8 @@ namespace Protell.DAL.Repository
                           {
                               IdPuntoMedicion = p.IdPuntoMedicion,
                               PuntoMedicionName = p.PuntoMedicionName,
+                              vAccion=p.vAccion,
+                              vCondicion=p.vCondicion,
                               UNIDADMEDIDA = new Model.UnidadMedidaModel()
                               {
                                   IdUnidadMedida = p.IdUnidadMedida,
@@ -162,6 +164,8 @@ namespace Protell.DAL.Repository
                           {
                               IdPuntoMedicion = p.IdPuntoMedicion,
                               PuntoMedicionName = p.PuntoMedicionName,
+                              vAccion = p.vAccion,
+                              vCondicion = p.vCondicion,
                               UNIDADMEDIDA = new Model.UnidadMedidaModel()
                               {
                                   IdUnidadMedida = p.IdUnidadMedida,
@@ -206,6 +210,8 @@ namespace Protell.DAL.Repository
                           {
                               IdPuntoMedicion = p.IdPuntoMedicion,
                               PuntoMedicionName = p.PuntoMedicionName,
+                              vAccion = p.vAccion,
+                              vCondicion = p.vCondicion,
                               UNIDADMEDIDA = new Model.UnidadMedidaModel()
                               {
                                   IdUnidadMedida = p.IdUnidadMedida,
