@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Script.Serialization;
 
+
 namespace Protell.DAL.Repository.v2
 {
     public delegate void DidCiRegistroRecurrentDataChanged(object o, CiRegistroRecurrentDataChangedArgs e);
@@ -199,93 +200,98 @@ namespace Protell.DAL.Repository.v2
             return;
         }
 
-        public ObservableCollection<RegistroModel> GetCiRegistro(int Categoria)
+        public Dictionary<string, ObservableCollection<RegistroModel>> GetCiRegistro()
         {
             Dictionary<string, ObservableCollection<RegistroModel>> AllRegistros = new Dictionary<string, ObservableCollection<RegistroModel>>();
-            ObservableCollection<RegistroModel> items = new ObservableCollection<RegistroModel>();
+            
+            ObservableCollection<RegistroModel> items;
             try
             {
-                using(var entity=new db_SeguimientoProtocolo_r2Entities())
-                {                    
-                    switch(Categoria)
-                    {
-                        case 1:
-                          (from result in entity.spGetCI_REGISTRO(20140407, PUNTOSMEDICION)
-                             select result).ToList().ForEach(row => {
-                                 items.Add(new RegistroModel()
-                                     {
-                                         IdRegistro=row.IdRegistro,
-                                         IdPuntoMedicion=row.IdPuntoMedicion, 
-                                         FechaCaptura=row.FechaCaptura, 
-                                         HoraRegistro=row.HoraRegistro,
-                                         DiaRegistro=row.DiaRegistro, 
-                                         Valor=row.Valor, 
-                                         AccionActual=row.AccionActual,
-                                         IsActive=row.IsActive,
-                                         IsModified=row.IsModified,
-                                         LastModifiedDate=row.LastModifiedDate, 
-                                         IdCondicion=row.IdCondicion,
-                                         ServerLastModifiedDate=row.ServerLastModifiedDate,
-                                         FechaNumerica=row.FechaNumerica
-                                     });
+                using (var entity = new db_SeguimientoProtocolo_r2Entities())
+                {
+
+                    items = new ObservableCollection<RegistroModel>();
+                    (from result in entity.spGetCI_REGISTRO(20140407, PUNTOSMEDICION)
+                     select result).ToList().ForEach(row =>
+                     {
+                         items.Add(new RegistroModel()
+                             {
+                                 IdRegistro = row.IdRegistro,
+                                 IdPuntoMedicion = row.IdPuntoMedicion,
+                                 FechaCaptura = row.FechaCaptura,
+                                 HoraRegistro = row.HoraRegistro,
+                                 DiaRegistro = row.DiaRegistro,
+                                 Valor = row.Valor,
+                                 AccionActual = row.AccionActual,
+                                 IsActive = row.IsActive,
+                                 IsModified = row.IsModified,
+                                 LastModifiedDate = row.LastModifiedDate,
+                                 IdCondicion = row.IdCondicion,
+                                 ServerLastModifiedDate = row.ServerLastModifiedDate,
+                                 FechaNumerica = row.FechaNumerica
                              });
-                          break;
+                     });
+                    AllRegistros.Add(PUNTOSMEDICION, items);
 
-                        case 2:
-                          (from result in entity.spGetCI_REGISTRO(20140407, LUMBRERAS)
-                           select result).ToList().ForEach(row =>
-                           {
-                               items.Add(new RegistroModel()
-                               {
-                                   IdRegistro = row.IdRegistro,
-                                   IdPuntoMedicion = row.IdPuntoMedicion,
-                                   FechaCaptura = row.FechaCaptura,
-                                   HoraRegistro = row.HoraRegistro,
-                                   DiaRegistro = row.DiaRegistro,
-                                   Valor = row.Valor,
-                                   AccionActual = row.AccionActual,
-                                   IsActive = row.IsActive,
-                                   IsModified = row.IsModified,
-                                   LastModifiedDate = row.LastModifiedDate,
-                                   IdCondicion = row.IdCondicion,
-                                   ServerLastModifiedDate = row.ServerLastModifiedDate,
-                                   FechaNumerica = row.FechaNumerica
-                               });
-                           });
-                          break;
+                    items = new ObservableCollection<RegistroModel>();
+                    (from result in entity.spGetCI_REGISTRO(20140407, LUMBRERAS)
+                     select result).ToList().ForEach(row =>
+                     {
+                         items.Add(new RegistroModel()
+                         {
+                             IdRegistro = row.IdRegistro,
+                             IdPuntoMedicion = row.IdPuntoMedicion,
+                             FechaCaptura = row.FechaCaptura,
+                             HoraRegistro = row.HoraRegistro,
+                             DiaRegistro = row.DiaRegistro,
+                             Valor = row.Valor,
+                             AccionActual = row.AccionActual,
+                             IsActive = row.IsActive,
+                             IsModified = row.IsModified,
+                             LastModifiedDate = row.LastModifiedDate,
+                             IdCondicion = row.IdCondicion,
+                             ServerLastModifiedDate = row.ServerLastModifiedDate,
+                             FechaNumerica = row.FechaNumerica
+                         });
+                     });
+                    AllRegistros.Add(LUMBRERAS, items);
 
-                        case 3:
-                          (from result in entity.spGetCI_REGISTRO(20140407, ESTPLUVIOGRAFICAS)
-                           select result).ToList().ForEach(row =>
-                           {
-                               items.Add(new RegistroModel()
-                               {
-                                   IdRegistro = row.IdRegistro,
-                                   IdPuntoMedicion = row.IdPuntoMedicion,
-                                   FechaCaptura = row.FechaCaptura,
-                                   HoraRegistro = row.HoraRegistro,
-                                   DiaRegistro = row.DiaRegistro,
-                                   Valor = row.Valor,
-                                   AccionActual = row.AccionActual,
-                                   IsActive = row.IsActive,
-                                   IsModified = row.IsModified,
-                                   LastModifiedDate = row.LastModifiedDate,
-                                   IdCondicion = row.IdCondicion,
-                                   ServerLastModifiedDate = row.ServerLastModifiedDate,
-                                   FechaNumerica = row.FechaNumerica
-                               });
-                           });
-                          break;
-                    }                        
-                   
+                    items = new ObservableCollection<RegistroModel>();
+                    (from result in entity.spGetCI_REGISTRO(20140407, ESTPLUVIOGRAFICAS)
+                     select result).ToList().ForEach(row =>
+                     {
+                         items.Add(new RegistroModel()
+                         {
+                             IdRegistro = row.IdRegistro,
+                             IdPuntoMedicion = row.IdPuntoMedicion,
+                             FechaCaptura = row.FechaCaptura,
+                             HoraRegistro = row.HoraRegistro,
+                             DiaRegistro = row.DiaRegistro,
+                             Valor = row.Valor,
+                             AccionActual = row.AccionActual,
+                             IsActive = row.IsActive,
+                             IsModified = row.IsModified,
+                             LastModifiedDate = row.LastModifiedDate,
+                             IdCondicion = row.IdCondicion,
+                             ServerLastModifiedDate = row.ServerLastModifiedDate,
+                             FechaNumerica = row.FechaNumerica
+                         });
+                     });
+                    AllRegistros.Add(ESTPLUVIOGRAFICAS, items);
+
                 }
             }
             catch (Exception ex)
             {
 
             }
-            return items;
+            return AllRegistros;
         }
+
+
+        
+
+       
 
         /// <summary>
         /// Logica de descarga e inserción de registros de servidor en base local

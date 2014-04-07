@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Protell.DAL.Repository.v2;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Protell.Model.SyncModels;
+using System.Collections.ObjectModel;
+using Protell.Model;
 namespace Protell.DAL.Repository.v2.Tests
 {
     [TestClass()]
@@ -60,10 +62,7 @@ namespace Protell.DAL.Repository.v2.Tests
 
         [TestMethod()]
         public void RegistroModelTest()
-        {
-           
-            
-
+        {                      
             Model.RegistroModel r = new Model.RegistroModel()
             {
 
@@ -83,6 +82,14 @@ namespace Protell.DAL.Repository.v2.Tests
             };
 
             Console.WriteLine(r.FechaNumerica.ToString());
+        }
+
+        [TestMethod()]
+        public void GetCiRegistroTest()
+        {
+            CiRegistroRepository ci = new CiRegistroRepository();
+            Dictionary<string, ObservableCollection<RegistroModel>> res=ci.GetCiRegistro();
+            
         }        
 
     }

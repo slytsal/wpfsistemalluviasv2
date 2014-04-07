@@ -8,7 +8,7 @@
         xmlns:my="clr-namespace:Protell.UI.v2" 
         xmlns:my2="clr-namespace:Protell.UI.Registro"
         Icon="/Protell.UI;component/Images/SistemasLLuvias_1.ico"
-        >
+        Loaded="Window_Loaded">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

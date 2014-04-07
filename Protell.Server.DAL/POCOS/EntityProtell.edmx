@@ -41,13 +41,6 @@ warning 6002: The table/view 'qaDevinmr3.dbo._CAT_PUNTO_MEDICION' does not have 
           <Property Name="IsModified" Type="bit" Nullable="false" />
           <Property Name="ServerLastModifiedDate" Type="bigint" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'qaDevinmr3.dbo.APP_SETTINGS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="APP_SETTINGS">
-          <Property Name="IdSettings" Type="bigint" />
-          <Property Name="SettingName" Type="nvarchar" MaxLength="250" />
-          <Property Name="Value" Type="nvarchar" MaxLength="250" />
-        </EntityType>-->
         <EntityType Name="APP_USUARIO">
           <Key>
             <PropertyRef Name="IdUsuario" />
@@ -541,6 +534,9 @@ warning 6013: The table/view 'qaDevinmr3.dbo.APP_SETTINGS' does not have a prima
         <Function Name="GD_GET_DATOSESTRUCTURAS_2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GD_GET_DATOSESTRUCTURAS_OLD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="LoadCnfHora" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spCommitBulkUpsertCiRegistroUploaded" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="session" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="spDownloadCiRegistroOnDemand" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="FechaActual" Type="bigint" Mode="In" />
           <Parameter Name="IdPuntoMedicion" Type="bigint" Mode="In" />
@@ -789,6 +785,9 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
             <Parameter Name="FechaFin" Mode="In" Type="Int64" />
             <Parameter Name="SLMD" Mode="In" Type="Int64" />
             <Parameter Name="LMD" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="spCommitBulkUpsertCiRegistroUploaded">
+            <Parameter Name="session" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="C_CAT_PUNTO_MEDICION">
@@ -1823,6 +1822,7 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spCommitBulkUpsertCiRegistroUploaded" FunctionName="devinmr3Model.Store.spCommitBulkUpsertCiRegistroUploaded" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
