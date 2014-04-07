@@ -150,14 +150,16 @@ namespace Protell.UI.v2
             //Condicionar catsync
             try
             {
-                SyncViewModel svm = new SyncViewModel();
+                //SyncViewModel svm = new SyncViewModel();
                 //CondProdResultModel model = new CondProdResultModel();    
                            
                 //string res = svm.CallDownloadCondicion();             
                 //model = new JavaScriptSerializer().Deserialize<CondProdResultModel>(res);
                // svm.CallUploadAppRol();
                 //svm.CallDownloadCiRegistroOnDemand(1000, 0, 0);
-                svm.DownloadData();
+                //svm.DownloadData();
+
+                SyncRecurrentSingleton.Instance.StartThread();
 
                
                 //if (!UploadProcessViewModel.IsRunning)
