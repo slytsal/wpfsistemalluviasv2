@@ -269,6 +269,7 @@ namespace Protell.Model
                 if (_vAccion != value)
                 {
                     _vAccion = value;
+                    VisivilityAccion = ((bool)(value)) ? "Visible" : "Collapsed";
                     OnPropertyChanged(vAccionPropertyName);
                 }
             }
@@ -284,6 +285,7 @@ namespace Protell.Model
                 if (_vCondicion != value)
                 {
                     _vCondicion = value;
+                    VisibilityCondicion = ((bool)(value)) ? "Visible" : "Collapsed";
                     OnPropertyChanged(vCondicionPropertyName);
                 }
             }
@@ -355,6 +357,36 @@ namespace Protell.Model
         private string _UIVisible;
         public const string UIVisibleName = "UIVisible";
 
+        public string VisibilityCondicion
+        {
+            get { return _VisibilityCondicion; }
+            set
+            {
+                if (_VisibilityCondicion != value)
+                {
+                    _VisibilityCondicion = value;
+                    OnPropertyChanged(VisibilityCondicionPropertyName);
+                }
+            }
+        }
+        private string _VisibilityCondicion;
+        public const string VisibilityCondicionPropertyName = "VisibilityCondicion";
+
+        public string VisivilityAccion
+        {
+            get { return _VisivilityAccion; }
+            set
+            {
+                if (_VisivilityAccion != value)
+                {
+                    _VisivilityAccion = value;
+                    OnPropertyChanged(VisivilityAccionPropertyName);
+                }
+            }
+        }
+        private string _VisivilityAccion;
+        public const string VisivilityAccionPropertyName = "VisivilityAccion";
+
         public void GetVisibility()
         {
             if (this.Visibility)
@@ -363,5 +395,6 @@ namespace Protell.Model
                 this.UIVisible = "Collapsed";
         }
 
+        
     }
 }

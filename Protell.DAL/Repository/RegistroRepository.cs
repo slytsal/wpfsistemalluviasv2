@@ -187,6 +187,8 @@ namespace Protell.DAL.Repository
                         {
                             PuntoMedicionName = result.CAT_PUNTO_MEDICION.PuntoMedicionName,
                             IdPuntoMedicion = result.CAT_PUNTO_MEDICION.IdPuntoMedicion,
+                            vAccion=result.CAT_PUNTO_MEDICION.vAccion,
+                            vCondicion=result.CAT_PUNTO_MEDICION.vAccion,
                             UNIDADMEDIDA = new Model.UnidadMedidaModel()
                             {
                                 UnidadMedidaName = result.CAT_PUNTO_MEDICION.CAT_UNIDAD_MEDIDA.UnidadMedidaName,
@@ -205,13 +207,15 @@ namespace Protell.DAL.Repository
                         AccionActual = result.AccionActual,
                         IsModified= result.IsModified,
                         LastModifiedDate= result.LastModifiedDate,
+                        ServerLastModifiedDate=result.ServerLastModifiedDate,
                         Condicion = new Model.CondProModel()
                              {
                                  CondicionName = result.CAT_CONDPRO.CondicionName,
                                  IdCondicion = result.CAT_CONDPRO.IdCondicion,
                                  PathCodicion = result.CAT_CONDPRO.PathCodicion,
                              },
-                        IdCondicion = result.IdCondicion
+                        IdCondicion = result.IdCondicion,
+                       
                     };
                     
                 }
@@ -781,6 +785,8 @@ namespace Protell.DAL.Repository
                                  PuntoMedicionName = p.CAT_PUNTO_MEDICION.PuntoMedicionName,
                                  IdPuntoMedicion = p.CAT_PUNTO_MEDICION.IdPuntoMedicion,
                                  Visibility =p.CAT_PUNTO_MEDICION.Visibility,
+                                 vCondicion=p.CAT_PUNTO_MEDICION.vCondicion,
+                                 vAccion=p.CAT_PUNTO_MEDICION.vAccion,
                                  UNIDADMEDIDA = new Model.UnidadMedidaModel() 
                                  {
                                      UnidadMedidaName = p.CAT_PUNTO_MEDICION.CAT_UNIDAD_MEDIDA.UnidadMedidaName,

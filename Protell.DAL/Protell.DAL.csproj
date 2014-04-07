@@ -211,6 +211,9 @@
     <Compile Include="spAutoLogin_Result.cs">
       <DependentUpon>Protelldb.tt</DependentUpon>
     </Compile>
+    <Compile Include="spGetCI_REGISTRO_Result.cs">
+      <DependentUpon>Protelldb.tt</DependentUpon>
+    </Compile>
     <Compile Include="spGetMaxTableCiRegistroRecurrent_Result.cs">
       <DependentUpon>Protelldb.tt</DependentUpon>
     </Compile>
@@ -224,6 +227,9 @@
       <DependentUpon>Protelldb.tt</DependentUpon>
     </Compile>
     <Compile Include="SYNCTABLE.cs">
+      <DependentUpon>Protelldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TMP_CI_REGISTRO_CONFIRMATION.cs">
       <DependentUpon>Protelldb.tt</DependentUpon>
     </Compile>
     <Compile Include="TMP_CI_REGISTRO_ONDEMAND.cs">
