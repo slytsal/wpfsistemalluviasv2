@@ -115,6 +115,22 @@ namespace Protell.DAL.Repository.v2
             return _CommitBulkUpsertRecurrent;
         }
 
+        private void PrepareBulkUpdateConfirmation()
+        {
+            try
+            {
+                using (var entity = new db_SeguimientoProtocolo_r2Entities())
+                {
+                    entity.spPrepareBulkUpsertCiRegistroRecurrent();
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+
+
         /// <summary>
         /// Inserta los registros descargados del servidor en tabla temporal TMP_CI_REGISTRO_RECURRENT
         /// </summary>
@@ -283,5 +299,49 @@ namespace Protell.DAL.Repository.v2
                 DidCiRegistroRecurrentDataChangedHandler(this, new CiRegistroRecurrentDataChangedArgs(dataChanged));
             }
         }
+
+        public bool Upload()
+        {
+            bool responseService = false;
+
+            string jsonResponse = "";
+            string webMethodName = "Download_CIRegistroRecurrent";
+
+            CiRegistroUploadResponseModel response = new CiRegistroUploadResponseModel();
+
+            //Obtener datos
+            ObservableCollection<RegistroModel> registros = this.GetIsModified();
+            if (registros != null && registros.Count > 0)
+            {
+                CiRegistroUploadModel crum=new CiRegistroUploadModel();
+                crum.CiRegistro=registros;
+                crum.UserData=new UserDataSync();
+
+                jsonResponse=DownloadFactory.Instance.CallUploadWebService(webMethodName, (object)crum);
+                if (!String.IsNullOrEmpty(jsonResponse))
+                {
+                    JavaScriptSerializer js = new JavaScriptSerializer();
+                    js.MaxJsonLength = Int32.MaxValue;
+                    response = js.Deserialize<CiRegistroUploadResponseModel>(jsonResponse);
+
+                    if (response != null && response.confirmation.Count > 0)
+                    {
+                        //TODO: Insertar datos de confirmacion
+                    }
+                }//endif
+                else
+                {
+                    //No hubo respuesta de confirmacion; probablemente un error en la llamda del servicio
+                    responseService = true;
+                }
+            }//endif
+            else
+            {
+                //no hay registros para subir al servidor
+                responseService = true;
+            }
+
+            return responseService;
+        }//endUpload()
     }
 }

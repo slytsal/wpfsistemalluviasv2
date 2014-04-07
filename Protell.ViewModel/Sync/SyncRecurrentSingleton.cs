@@ -103,6 +103,39 @@ namespace Protell.ViewModel.Sync
             //Levantar evento de fin
         }
 
+        private void UploadData()
+        {
+            try
+            {
+                Protell.DAL.Repository.v2.ModifiedDataRepository modifiedDataRepository = new Protell.DAL.Repository.v2.ModifiedDataRepository();
+                ObservableCollection<ModifiedDataModel> tablesName = modifiedDataRepository.GetUploadTables();
+
+                //TEST: Solo tomar la de CI_REGISTRO
+
+                if (tablesName!=null && tablesName.Count>0)
+                {
+                    foreach (ModifiedDataModel item in tablesName)
+                    {
+                        //TODO: Solo tomar la de CI_REGISTRO para aplicacion captura
+                        bool x = false;
+                        IServiceFactory factory = ServiceFactory.Instance.getClass(item.SYNCTABLE.SyncTableName);
+                        if (item.SYNCTABLE.SyncTableName.ToUpper() == "CI_REGISTRO")
+                        {
+                            //TODO: Cuando se haya probado la descarga de información de los catálogos pasar estas lineas fuera del if
+                            if (((Protell.DAL.Repository.v2.CiRegistroRepository)factory).Upload())
+                            {
+                                modifiedDataRepository.UpdateServerModifiedDate(item);
+                            }
+                        }//endif
+                    }//endforeach 
+                }//endif
+            }
+            catch (Exception ex)
+            {
+                this._isRuning = false;
+            }
+        }
+
         /// <summary>
         /// Manejador del evento de CiRegsitroRepository para propagar este evento y lanzarlo como un evento del singleton que indica que los datos
         /// de CI_REGISTRO han cambiado

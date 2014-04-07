@@ -83,7 +83,14 @@ namespace Protell.DAL.Repository.v2.Tests
             };
 
             Console.WriteLine(r.FechaNumerica.ToString());
-        }        
+        }
+
+        [TestMethod()]
+        public void GetUploadTablesTest()
+        {
+            ModifiedDataRepository mdr = new ModifiedDataRepository();
+            mdr.GetUploadTables();
+        }
 
     }
 }
