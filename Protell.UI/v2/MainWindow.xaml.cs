@@ -251,8 +251,21 @@ namespace Protell.UI.v2
 
         private void tcTablero_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
-                  
+            try
+            {
+                if (e.Source is TabControl)
+                {
+                    if (((TabControl)e.Source).SelectedIndex == 0)
+                    {
+                        pmPuntoMedicion.DataContext = vm.pmPuntosMedicion;
+                        pmPuntoMedicion.init(this, vm);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ;                
+            }
         }
 
         

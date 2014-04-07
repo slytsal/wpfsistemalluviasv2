@@ -1845,7 +1845,7 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="EntityProtell" ZoomLevel="33">
+      <Diagram Name="EntityProtell" ZoomLevel="82">
         <EntityTypeShape EntityType="devinmr3Model.C_CAT_PUNTO_MEDICION" Width="1.5" PointX="2.75" PointY="2" Height="2.9417936197916665" IsExpanded="true" />
         <EntityTypeShape EntityType="devinmr3Model.APP_ROL" Width="1.5" PointX="10.75" PointY="6.625" Height="2.5571907552083326" IsExpanded="true" />
         <EntityTypeShape EntityType="devinmr3Model.APP_USUARIO" Width="1.5" PointX="10.75" PointY="10.75" Height="4.0956022135416674" IsExpanded="true" />
