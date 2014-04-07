@@ -184,6 +184,7 @@
     <Compile Include="Repository\v2\CatOperacionEstructuraRepository.cs" />
     <Compile Include="Repository\v2\CatPuntoMedicionMinMaxRepository.cs" />
     <Compile Include="Repository\v2\CatSistemaRepository.cs" />
+    <Compile Include="Repository\v2\CiRegistroRepository.cs" />
     <Compile Include="Repository\v2\CondicionRepository.cs" />
     <Compile Include="Repository\v2\LinksRepository.cs" />
     <Compile Include="Repository\v2\ModifiedDateRepository.cs" />

@@ -27,12 +27,15 @@ namespace Protell.Service.Services
         }
 
 
-        public bool Upload_CiRegistro(CiRegistroResultModel param)
+        public bool Upload_CiRegistro(CiRegistroUploadModel param)
         {
             bool x = false;
             try
             {
+                if (param != null && param.CiRegistro != null && param.CiRegistro.Count > 0)
+                {
 
+                }
             }
             catch (Exception ex)
             {                
@@ -40,6 +43,12 @@ namespace Protell.Service.Services
             }
             return x;
 
+        }
+
+
+        public bool Upload_CiRegistro(CiRegistroResultModel param)
+        {
+            throw new NotImplementedException();
         }
     }
 }

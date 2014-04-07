@@ -14,5 +14,8 @@ namespace Protell.Model.SyncModels
 
         [DataMember]
         public long SLMD;
+
+        [DataMember]
+        public long LMD;
     }
 }
