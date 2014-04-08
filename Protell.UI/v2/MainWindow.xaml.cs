@@ -20,6 +20,9 @@ namespace Protell.UI.v2
     /// </summary>    
     public partial class MainWindow 
     {
+        private const string LUMBRERAS = "LUMBRERAS";
+        private const string PUNTOSMEDICION = "PUNTOSMEDICION";
+        private const string ESTPLUVIOGRAFICAS = "ESTPLUVIOGRAFICAS";
         Confirmation c = new Confirmation();
         SyncLogViewModel logvm = new SyncLogViewModel("Dummy");
         TableroViewModel vm;
@@ -55,12 +58,12 @@ namespace Protell.UI.v2
             cLumbreras.init(this,vm);
             cEstPluviograficas.DataContext = vm.cEstPluviograficas;
             cEstPluviograficas.init(this, vm);
-            
 
-            //DTimerUploadProcess = new DispatcherTimer();
-            //DTimerUploadProcess.Tick += new EventHandler(DTimerUploadProcess_Tick);
-            //DTimerUploadProcess.Interval = new TimeSpan(0, 0, 60);
-            //DTimerUploadProcess.Start();
+
+            DTimerUploadProcess = new DispatcherTimer();
+            DTimerUploadProcess.Tick += new EventHandler(DTimerUploadProcess_Tick);
+            DTimerUploadProcess.Interval = new TimeSpan(0, 0, 60);
+            DTimerUploadProcess.Start();
             GetAppTitle();
             //vm.PropertyChanged += new PropertyChangedEventHandler(vm_PropertyChanged);
 
@@ -257,9 +260,22 @@ namespace Protell.UI.v2
                 {
                     if (((TabControl)e.Source).SelectedIndex == 0)
                     {
-                        //pmPuntoMedicion.DataContext = vm.pmPuntosMedicion;
-                        //pmPuntoMedicion.init(this, vm);
-                        MessageBox.Show("we");
+                        vm.pmAll.GetItemsPuntosMedicion(vm.cPuntosMedicion.SelectedItem, PUNTOSMEDICION);
+                        pmPuntoMedicion.DataContext = vm.pmAll;
+                        pmPuntoMedicion.init(this, vm);                        
+                    }
+
+                    if (((TabControl)e.Source).SelectedIndex == 1)
+                    {
+                        vm.pmAll.GetItemsPuntosMedicion(vm.cLumbreras.SelectedItem, LUMBRERAS);
+                        pmLumbreras.DataContext = vm.pmAll;
+                        pmLumbreras.init(this, vm);
+                    }
+                    if (((TabControl)e.Source).SelectedIndex == 2)
+                    {
+                        vm.pmAll.GetItemsPuntosMedicion(vm.cEstPluviograficas.SelectedItem, ESTPLUVIOGRAFICAS);
+                        pmEstPluviograficas.DataContext = vm.pmAll;
+                        pmEstPluviograficas.init(this, vm);
                     }
                 }
             }
@@ -267,32 +283,6 @@ namespace Protell.UI.v2
             {
                 ;                
             }
-        }
-
-        
-            //if (tcTablero.SelectedIndex == 0)
-            //{
-            //    pmPuntoMedicion.DataContext = vm.pmPuntosMedicion;
-            //    pmPuntoMedicion.init(this, vm);
-            //}
-
-            //if (tcTablero.SelectedIndex == 1)
-            //{
-            //    pmLumbreras.DataContext = vm.pmLumbreras;
-            //    pmLumbreras.init(this, vm);
-            //}
-
-            //if (tcTablero.SelectedIndex == 2)
-            //{
-            //    pmEstPluviograficas.DataContext = vm.pmEstPluviograficas;
-            //    pmEstPluviograficas.init(this, vm);
-            //}      
-        
-
-        
-        //private void tcTablero_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    MessageBox.Show(e.AddedItems.ToString());
-        //}        
+        }                   
     }
 }

@@ -22,73 +22,11 @@ namespace Protell.ViewModel.v2
 
         public PuntosMedicionViewModel()
         {
-            this.Registros = new ObservableCollection<RegistroModel>();
-            
+            this.Registros = new ObservableCollection<RegistroModel>();            
         }
         #endregion
 
-        #region ICollectionView
-
-        public ICollectionView View
-        {
-            get { return _View; }
-            set
-            {
-                if (_View != value)
-                {
-                    _View = value;
-                    OnPropertyChanged(ViewPropertyName);
-                }
-            }
-        }
-        private ICollectionView _View;
-        public const string ViewPropertyName = "View";
-
-        public ICollectionView LumbrerasView
-        {
-            get { return _LumbrerasView; }
-            set
-            {
-                if (_LumbrerasView != value)
-                {
-                    _LumbrerasView = value;
-                    OnPropertyChanged(LumbrerasViewPropertyName);
-                }
-            }
-        }
-        private ICollectionView _LumbrerasView;
-        public const string LumbrerasViewPropertyName = "LumbrerasView";
-
-        public ICollectionView PuntoMedicionView
-        {
-            get { return _PuntoMedicionView; }
-            set
-            {
-                if (_PuntoMedicionView != value)
-                {
-                    _PuntoMedicionView = value;
-                    OnPropertyChanged(PuntoMedicionViewPropertyName);
-                }
-            }
-        }
-        private ICollectionView _PuntoMedicionView;
-        public const string PuntoMedicionViewPropertyName = "PuntoMedicionView";
-
-        public ICollectionView EstPluviograficasView
-        {
-            get { return _EstPluviograficasView; }
-            set
-            {
-                if (_EstPluviograficasView != value)
-                {
-                    _EstPluviograficasView = value;
-                    OnPropertyChanged(EstPluviograficasViewPropertyName);
-                }
-            }
-        }
-        private ICollectionView _EstPluviograficasView;
-        public const string EstPluviograficasViewPropertyName = "EstPluviograficasView";
-        #endregion
+        
 
         #region Instancias.
         private IRegistro _RegistroRepository;
@@ -105,7 +43,7 @@ namespace Protell.ViewModel.v2
             {
                 if (_pSelectedItem != value)
                 {
-                    _pSelectedItem = value;
+                    _pSelectedItem = value;                    
                     OnPropertyChanged(SelectedItemPropertyName);
                 }
             }
@@ -143,18 +81,146 @@ namespace Protell.ViewModel.v2
         private Dictionary<string, ObservableCollection<RegistroModel>> _AllRegistros;
         public const string AllRegistrosPropertyName = "AllRegistros";
 
+        public ICollectionView View
+        {
+            get { return _View; }
+            set
+            {
+                if (_View != value)
+                {
+                    _View = value;
+                    OnPropertyChanged(ViewPropertyName);
+                }
+            }
+        }
+        private ICollectionView _View;
+        public const string ViewPropertyName = "View";
+
+        public ICollectionView PuntosMedicionView
+        {
+            get { return _PuntosMedicionView; }
+            set
+            {
+                if (_PuntosMedicionView != value)
+                {
+                    _PuntosMedicionView = value;
+                    OnPropertyChanged(PuntosMedicionViewPropertyName);
+                }
+            }
+        }
+        private ICollectionView _PuntosMedicionView;
+        public const string PuntosMedicionViewPropertyName = "PuntosMedicionView";
+
+        public ICollectionView LumbrerasView
+        {
+            get { return _LumbrerasView; }
+            set
+            {
+                if (_LumbrerasView != value)
+                {
+                    _LumbrerasView = value;
+                    OnPropertyChanged(LumbrerasViewPropertyName);
+                }
+            }
+        }
+        private ICollectionView _LumbrerasView;
+        public const string LumbrerasViewPropertyName = "LumbrerasView";
+
+        public ICollectionView EstPluviograficasView
+        {
+            get { return _EstPluviograficasView; }
+            set
+            {
+                if (_EstPluviograficasView != value)
+                {
+                    _EstPluviograficasView = value;
+                    OnPropertyChanged(EstPluviograficasViewPropertyName);
+                }
+            }
+        }
+        private ICollectionView _EstPluviograficasView;
+        public const string EstPluviograficasViewPropertyName = "EstPluviograficasView";
+
+
+
+        public ObservableCollection<RegistroModel> PuntosMedicion
+        {
+            get { return _PuntosMedicion; }
+            set
+            {
+                if (_PuntosMedicion != value)
+                {
+                    _PuntosMedicion = value;
+                    OnPropertyChanged(PuntosMedicionPropertyName);
+                }
+            }
+        }
+        private ObservableCollection<RegistroModel> _PuntosMedicion;
+        public const string PuntosMedicionPropertyName = "PuntosMedicion";
+
+        public ObservableCollection<RegistroModel> Lumbreras
+        {
+            get { return _Lumbreras; }
+            set
+            {
+                if (_Lumbreras != value)
+                {
+                    _Lumbreras = value;
+                    OnPropertyChanged(LumbrerasPropertyName);
+                }
+            }
+        }
+        private ObservableCollection<RegistroModel> _Lumbreras;
+        public const string LumbrerasPropertyName = "Lumbreras";
+
+        public ObservableCollection<RegistroModel> EstPluviograficas
+        {
+            get { return _EstPluviograficas; }
+            set
+            {
+                if (_EstPluviograficas != value)
+                {
+                    _EstPluviograficas = value;
+                    OnPropertyChanged(EstPluviograficasPropertyName);
+                }
+            }
+        }
+        private ObservableCollection<RegistroModel> _EstPluviograficas;
+        public const string EstPluviograficasPropertyName = "EstPluviograficas";
+
         #endregion
 
         #region Metodos.
+        public void GetPuntos()
+        {
+            Lumbreras = AllRegistros[LUMBRERAS];
+            PuntosMedicion = AllRegistros[PUNTOSMEDICION];
+            EstPluviograficas = AllRegistros[ESTPLUVIOGRAFICAS];
+        }
 
         public void GetItemsPuntosMedicion(PuntoMedicionModel viewModel, string Key)
         {
             try
             {
-                if (this.AllRegistros!=null)
-                {                    
-                    this.Registros = this.AllRegistros[Key];                                        
+                
+                if (this.AllRegistros != null)
+                {
+                    this.Registros = this.AllRegistros[Key];
                 }
+                else
+                {
+                    getAllRegistros();
+                    this.Registros = this.AllRegistros[Key];
+                }
+
+                View = CollectionViewSource.GetDefaultView(Registros);
+                //View = CollectionViewSource.GetDefaultView(Registros);
+                //if (View != null)
+                //{
+                //    View.Filter = f => String.IsNullOrEmpty(viewModel.IdPuntoMedicion.ToString()) ? true : ((RegistroModel)f).IdPuntoMedicion.ToString().Contains(viewModel.IdPuntoMedicion.ToString());
+                //    View.Refresh();
+                //}
+                    
                 
                 //_RegistroRepository = new RegistroRepository();
                 //this.pSelectedItem = new RegistroModel() { IdPuntoMedicion = viewModel.IdPuntoMedicion, PUNTOMEDICION = viewModel };
@@ -169,6 +235,25 @@ namespace Protell.ViewModel.v2
             catch (Exception)
             {
                 ;
+            }
+        }
+
+        public void FilterRegistros(PuntoMedicionModel model)
+        {
+            try
+            {
+
+                
+                if (View != null)
+                {
+                    //View = CollectionViewSource.GetDefaultView(Registros);
+                    View.Filter = f => String.IsNullOrEmpty(model.IdPuntoMedicion.ToString()) ? true : ((RegistroModel)f).IdPuntoMedicion.Equals(model.IdPuntoMedicion);// .Contains(model.IdPuntoMedicion.ToString());
+                    View.Refresh();
+                }
+            }
+            catch (Exception)
+            {                
+                
             }
         }
 

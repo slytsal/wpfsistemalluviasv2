@@ -43,12 +43,16 @@
         </Grid>
         
         <!--Puntos de medición-->        
-        <DataGrid Grid.Row="2"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"                  
+        <DataGrid Grid.Row="2"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" 
+                  
                  ItemsSource="{Binding Registros, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  SelectedItem="{Binding pSelectedItem,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                 
                  Name="ListRegistros"  Margin="5" MouseDoubleClick="ListRegistros_MouseDoubleClick"                                    
                   AutoGenerateColumns="False" IsReadOnly="True"                
                   CanUserAddRows="False" KeyDown="ListRegistros_KeyDown"
+                  EnableColumnVirtualization="True"
+EnableRowVirtualization="True"
+                  
                  >
             <DataGrid.Resources>
                 <local:BindingProxy x:Key="proxy" Data="{Binding}"/>

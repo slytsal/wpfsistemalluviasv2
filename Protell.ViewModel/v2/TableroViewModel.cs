@@ -31,9 +31,11 @@ namespace Protell.ViewModel.v2
         public CategoriasViewModel cEstPluviograficas;
 
         //PuntosMedicion
-        public PuntosMedicionViewModel pmPuntosMedicion;
-        public PuntosMedicionViewModel pmLumbreras;
-        public PuntosMedicionViewModel pmEstPluviograficas;
+        //public PuntosMedicionViewModel pmPuntosMedicion;
+        //public PuntosMedicionViewModel pmLumbreras;
+        //public PuntosMedicionViewModel pmEstPluviograficas;
+
+        public PuntosMedicionViewModel pmAll;
 
         #endregion
 
@@ -59,16 +61,19 @@ namespace Protell.ViewModel.v2
             cEstPluviograficas = new CategoriasViewModel();
             cEstPluviograficas.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(cEstPluviograficas_PropertyChanged);
 
-            //Puntos Medición.
-            pmPuntosMedicion = new PuntosMedicionViewModel();
-            pmPuntosMedicion.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(pmPuntosMedicion_PropertyChanged);
-
-            pmLumbreras = new PuntosMedicionViewModel();
-            pmLumbreras.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(pmLumbreras_PropertyChanged);
-
-            pmEstPluviograficas = new PuntosMedicionViewModel();
-            pmEstPluviograficas.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(pmEstPluviograficas_PropertyChanged);
+            //PuntosMedicion
+            pmAll = new PuntosMedicionViewModel();
+            pmAll.PropertyChanged += pmAll_PropertyChanged;
+            
             init();
+        }
+
+        void pmAll_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "pSelectedItem")
+            {
+                this.SelectedItemPopUp = pmAll.pSelectedItem;
+            }
         }
                 
         #region Eventos.
@@ -77,8 +82,11 @@ namespace Protell.ViewModel.v2
         {
             if (e.PropertyName == "SelectedItem")
             {
-                pmEstPluviograficas.GetItemsPuntosMedicion(cEstPluviograficas.SelectedItem,ESTPLUVIOGRAFICAS);//cEstPluviograficas.SelectedItem);
+                pmAll.FilterRegistros(cEstPluviograficas.SelectedItem);                
+                //View.Refresh();
+                //pmAll.GetItemsPuntosMedicion(cEstPluviograficas.SelectedItem,ESTPLUVIOGRAFICAS);                
                 this.SelectedItemTabControl = cEstPluviograficas.SelectedItem;
+                //pmAll.View.Refresh();
             }
         }
 
@@ -86,21 +94,21 @@ namespace Protell.ViewModel.v2
         {
             if (e.PropertyName == "SelectedItem")
             {
-                pmLumbreras.GetItemsPuntosMedicion(cLumbreras.SelectedItem,LUMBRERAS);
-                this.SelectedItemTabControl = cLumbreras.SelectedItem;
+                //pmAll.GetItemsPuntosMedicion(cLumbreras.SelectedItem, LUMBRERAS);
+               // this.SelectedItemTabControl = cLumbreras.SelectedItem;
             }
         }
 
         void cPuntosMedicion_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "SelectedItem")
-            {                
-                pmPuntosMedicion.GetItemsPuntosMedicion(cPuntosMedicion.SelectedItem,PUNTOSMEDICION);
-                this.SelectedItemTabControl = ( cPuntosMedicion.SelectedItem != null ) ? cPuntosMedicion.SelectedItem : cPuntosMedicion.SelectedItemAux;
-                if (cPuntosMedicion.SelectedItem == null)
-                {
-                    Console.Write("Null:" + cPuntosMedicion.SelectedItem);
-                }
+            {
+                //pmAll.GetItemsPuntosMedicion(cPuntosMedicion.SelectedItem, PUNTOSMEDICION);
+                //this.SelectedItemTabControl = ( cPuntosMedicion.SelectedItem != null ) ? cPuntosMedicion.SelectedItem : cPuntosMedicion.SelectedItemAux;
+                //if (cPuntosMedicion.SelectedItem == null)
+                //{
+                //    Console.Write("Null:" + cPuntosMedicion.SelectedItem);
+                //}
             }
         }
 
@@ -110,7 +118,7 @@ namespace Protell.ViewModel.v2
             {
                 if (e.PropertyName == "pSelectedItem")
                 {
-                    this.SelectedItemPopUp = pmEstPluviograficas.pSelectedItem;
+                    this.SelectedItemPopUp = pmAll.pSelectedItem;
                 }
             }
             catch (Exception)
@@ -125,7 +133,7 @@ namespace Protell.ViewModel.v2
             {
                 if (e.PropertyName == "pSelectedItem")
                 {
-                    this.SelectedItemPopUp = pmLumbreras.pSelectedItem;
+                    this.SelectedItemPopUp = pmAll.pSelectedItem;
                 }
             }
             catch (Exception)
@@ -140,7 +148,7 @@ namespace Protell.ViewModel.v2
             {
                 if (e.PropertyName == "pSelectedItem")
                 {
-                    this.SelectedItemPopUp = pmPuntosMedicion.pSelectedItem;
+                    this.SelectedItemPopUp = pmAll.pSelectedItem;
                 }
             }
             catch (Exception)
