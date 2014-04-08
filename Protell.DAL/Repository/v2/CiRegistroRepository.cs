@@ -280,7 +280,7 @@ namespace Protell.DAL.Repository.v2
             return;
         }
 
-        public ObservableCollection<RegistroModel> GetCiRegistro(int Categoria)
+        public Dictionary<string, ObservableCollection<RegistroModel>> GetCiRegistro()
         {
             Dictionary<string, ObservableCollection<RegistroModel>> AllRegistros = new Dictionary<string, ObservableCollection<RegistroModel>>();
             

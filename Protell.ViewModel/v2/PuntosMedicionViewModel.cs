@@ -214,12 +214,6 @@ namespace Protell.ViewModel.v2
                 }
 
                 View = CollectionViewSource.GetDefaultView(Registros);
-                //View = CollectionViewSource.GetDefaultView(Registros);
-                //if (View != null)
-                //{
-                //    View.Filter = f => String.IsNullOrEmpty(viewModel.IdPuntoMedicion.ToString()) ? true : ((RegistroModel)f).IdPuntoMedicion.ToString().Contains(viewModel.IdPuntoMedicion.ToString());
-                //    View.Refresh();
-                //}
                     
                 
                 //_RegistroRepository = new RegistroRepository();

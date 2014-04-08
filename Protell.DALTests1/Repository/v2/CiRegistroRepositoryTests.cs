@@ -89,7 +89,7 @@ namespace Protell.DAL.Repository.v2.Tests
         public void GetUploadTablesTest()
         {
             ModifiedDataRepository mdr = new ModifiedDataRepository();
-            mdr.GetUploadTables();
+            
         }
 
     }
