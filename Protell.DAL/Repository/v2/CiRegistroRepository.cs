@@ -195,6 +195,7 @@ namespace Protell.DAL.Repository.v2
                         //Insertar en stored
                         entity.TMP_CI_REGISTRO_CONFIRMATION.AddObject(new TMP_CI_REGISTRO_CONFIRMATION()
                         {
+                            IdRegistro=reg.IdRegistro,
                             IdPuntoMedicion = reg.IdPuntoMedicion,
                             LastModifiedDate = reg.LMD,
                             ServerLastModifiedDate = reg.SLMD,

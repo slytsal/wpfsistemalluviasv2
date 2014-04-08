@@ -124,6 +124,7 @@ namespace Protell.Server.DAL.Repository.v2
                         {
                             confirmation.Add(new CiRegistroUploadConfirmationModel()
                             {
+                                IdRegistro=Int64.Parse( o.FechaNumerica.ToString()+o.IdPuntoMedicion.ToString() ),
                                 IdPuntoMedicion = o.IdPuntoMedicion,
                                 FechaNumerica = (long)o.FechaNumerica,
                                 LMD = o.LastModifiedDate,
