@@ -32,6 +32,7 @@ namespace Protell.DAL.Repository.v2
 
         public event DidCiRegistroRecurrentDataChanged DidCiRegistroRecurrentDataChangedHandler; 
 
+        //Clase para petición al servicio web de descarga
         private class RequestBodyContent
         {
             public long fechaActual;
@@ -73,6 +74,7 @@ namespace Protell.DAL.Repository.v2
             return _GetBodyContent;
         }
 
+        //--Metodos para insertar confirmacion (respuesta del servicio de update)
         /// <summary>
         /// Borra la tabla temporal de TMP_CI_REGISTRO_RECURRENT
         /// </summary>
@@ -93,31 +95,6 @@ namespace Protell.DAL.Repository.v2
             }
 
             //return _PrepareRecurrentBulkUpsert;
-        }
-
-        /// <summary>
-        /// Ejecuta el upsert de la tabla temporal CI_REGISTRO a la tabla final.
-        /// </summary>
-        /// <returns></returns>
-        private bool CommitBulkUpsertRecurrent()
-        {
-            //TODO: Este es un fix para pasar forzosamente un parámetro al stored. No debe ser necesario recibir un parámetro.
-            bool _CommitBulkUpsertRecurrent = false;
-
-            try
-            {
-                using (var entity = new db_SeguimientoProtocolo_r2Entities())
-                {
-                    _CommitBulkUpsertRecurrent = (bool)entity.spCommitBulkUpsertCiRegistroRecurrent().FirstOrDefault();
-                    entity.SaveChanges();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-            return _CommitBulkUpsertRecurrent;
         }
 
         /// <summary>
@@ -160,6 +137,109 @@ namespace Protell.DAL.Repository.v2
             }//endcatch
         }
 
+        /// <summary>
+        /// Ejecuta el upsert de la tabla temporal CI_REGISTRO a la tabla final.
+        /// </summary>
+        /// <returns></returns>
+        private bool CommitBulkUpsertRecurrent()
+        {
+            //TODO: Este es un fix para pasar forzosamente un parámetro al stored. No debe ser necesario recibir un parámetro.
+            bool _CommitBulkUpsertRecurrent = false;
+
+            try
+            {
+                using (var entity = new db_SeguimientoProtocolo_r2Entities())
+                {
+                    _CommitBulkUpsertRecurrent = (bool)entity.spCommitBulkUpsertCiRegistroRecurrent().FirstOrDefault();
+                    entity.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return _CommitBulkUpsertRecurrent;
+        }
+
+        //--Metodos para insertar confirmacion (respuesta del servicio de update)
+        /// <summary>
+        /// Borra la tabla temporal de TMP_CI_REGISTRO_CONFIRMATION
+        /// </summary>
+        private void PrepareBulkUpdateConfirmation()
+        {
+            try
+            {
+                using (var entity = new db_SeguimientoProtocolo_r2Entities())
+                {
+                    entity.spPrepareBulkUpdateCiRegistroConfirmation();
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        /// <summary>
+        /// Inserta los registros descargados del servidor en tabla temporal TMP_CI_REGISTRO_CONFIRMATION
+        /// </summary>
+        /// <param name="registros"></param>
+        private void BulkUpdateConfirmation(ObservableCollection<CiRegistroUploadConfirmationModel> registros)
+        {
+            try
+            {
+                using (var entity = new db_SeguimientoProtocolo_r2Entities())
+                {
+                    foreach (var reg in registros)
+                    {
+                        //Insertar en stored
+                        entity.TMP_CI_REGISTRO_CONFIRMATION.AddObject(new TMP_CI_REGISTRO_CONFIRMATION()
+                        {
+                            IdPuntoMedicion = reg.IdPuntoMedicion,
+                            LastModifiedDate = reg.LMD,
+                            ServerLastModifiedDate = reg.SLMD,
+                            FechaNumerica = reg.FechaNumerica
+                        });
+                    }
+
+                    entity.SaveChanges();
+                }//endusing
+            }//endtry
+            catch (Exception ex)
+            {
+                throw ex;
+            }//endcatch
+        }
+
+        /// <summary>
+        /// Ejecuta el UPDATE de la tabla tempora CONFIRMATION a la tabla de CI_REGISTROS para actualizar ServerLastModifiedDate
+        /// </summary>
+        /// <returns></returns>
+        private bool CommitBulkUpdateConfirmation()
+        {
+            //TODO: Este es un fix para pasar forzosamente un parámetro al stored. No debe ser necesario recibir un parámetro.
+            bool _CommitBulkUpdateConfirmation = false;
+
+            try
+            {
+                using (var entity = new db_SeguimientoProtocolo_r2Entities())
+                {
+                    _CommitBulkUpdateConfirmation = (bool)entity.spCommitBulkUpdateCiRegistroConfirmation().FirstOrDefault();
+                    entity.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return _CommitBulkUpdateConfirmation;
+        }
+
+        /// <summary>
+        /// Obtiene todos los registros donde IsModified=1 (Registros nuevos a subir)
+        /// </summary>
+        /// <returns></returns>
         public ObservableCollection<RegistroModel> GetIsModified()
         {
             ObservableCollection<RegistroModel> result = new ObservableCollection<RegistroModel>();
@@ -200,7 +280,7 @@ namespace Protell.DAL.Repository.v2
             return;
         }
 
-        public Dictionary<string, ObservableCollection<RegistroModel>> GetCiRegistro()
+        public ObservableCollection<RegistroModel> GetCiRegistro(int Categoria)
         {
             Dictionary<string, ObservableCollection<RegistroModel>> AllRegistros = new Dictionary<string, ObservableCollection<RegistroModel>>();
             
@@ -208,15 +288,14 @@ namespace Protell.DAL.Repository.v2
             try
             {
                 using (var entity = new db_SeguimientoProtocolo_r2Entities())
-                {
+                {                    
 
                     items = new ObservableCollection<RegistroModel>();
-                    (from result in entity.spGetCI_REGISTRO(20140407, PUNTOSMEDICION)
-                     orderby result.FechaNumerica descending
+                          (from result in entity.spGetCI_REGISTRO(20140407, PUNTOSMEDICION)
                      select result).ToList().ForEach(row =>
                      {
-                         items.Add(new RegistroModel()
-                             {
+                                 items.Add(new RegistroModel()
+                                     {
                                  IdRegistro = row.IdRegistro,
                                  IdPuntoMedicion = row.IdPuntoMedicion,
                                  FechaCaptura = row.FechaCaptura,
@@ -230,58 +309,56 @@ namespace Protell.DAL.Repository.v2
                                  IdCondicion = row.IdCondicion,
                                  ServerLastModifiedDate = row.ServerLastModifiedDate,
                                  FechaNumerica = row.FechaNumerica
+                                     });
                              });
-                     });
                     AllRegistros.Add(PUNTOSMEDICION, items);
 
                     items = new ObservableCollection<RegistroModel>();
-                    (from result in entity.spGetCI_REGISTRO(20140408, LUMBRERAS)
-                     orderby result.FechaNumerica descending
-                     select result).ToList().ForEach(row =>
-                     {
-                         items.Add(new RegistroModel()
-                         {
-                             IdRegistro = row.IdRegistro,
-                             IdPuntoMedicion = row.IdPuntoMedicion,
-                             FechaCaptura = row.FechaCaptura,
-                             HoraRegistro = row.HoraRegistro,
-                             DiaRegistro = row.DiaRegistro,
-                             Valor = row.Valor,
-                             AccionActual = row.AccionActual,
-                             IsActive = row.IsActive,
-                             IsModified = row.IsModified,
-                             LastModifiedDate = row.LastModifiedDate,
-                             IdCondicion = row.IdCondicion,
-                             ServerLastModifiedDate = row.ServerLastModifiedDate,
-                             FechaNumerica = row.FechaNumerica
-                         });
-                     });
+                          (from result in entity.spGetCI_REGISTRO(20140407, LUMBRERAS)
+                           select result).ToList().ForEach(row =>
+                           {
+                               items.Add(new RegistroModel()
+                               {
+                                   IdRegistro = row.IdRegistro,
+                                   IdPuntoMedicion = row.IdPuntoMedicion,
+                                   FechaCaptura = row.FechaCaptura,
+                                   HoraRegistro = row.HoraRegistro,
+                                   DiaRegistro = row.DiaRegistro,
+                                   Valor = row.Valor,
+                                   AccionActual = row.AccionActual,
+                                   IsActive = row.IsActive,
+                                   IsModified = row.IsModified,
+                                   LastModifiedDate = row.LastModifiedDate,
+                                   IdCondicion = row.IdCondicion,
+                                   ServerLastModifiedDate = row.ServerLastModifiedDate,
+                                   FechaNumerica = row.FechaNumerica
+                               });
+                           });
                     AllRegistros.Add(LUMBRERAS, items);
 
                     items = new ObservableCollection<RegistroModel>();
-                    (from result in entity.spGetCI_REGISTRO(20140408, ESTPLUVIOGRAFICAS)
-                     orderby result.FechaNumerica descending
-                     select result).ToList().ForEach(row =>
-                     {
-                         items.Add(new RegistroModel()
-                         {
-                             IdRegistro = row.IdRegistro,
-                             IdPuntoMedicion = row.IdPuntoMedicion,
-                             FechaCaptura = row.FechaCaptura,
-                             HoraRegistro = row.HoraRegistro,
-                             DiaRegistro = row.DiaRegistro,
-                             Valor = row.Valor,
-                             AccionActual = row.AccionActual,
-                             IsActive = row.IsActive,
-                             IsModified = row.IsModified,
-                             LastModifiedDate = row.LastModifiedDate,
-                             IdCondicion = row.IdCondicion,
-                             ServerLastModifiedDate = row.ServerLastModifiedDate,
-                             FechaNumerica = row.FechaNumerica
-                         });
-                     });
+                          (from result in entity.spGetCI_REGISTRO(20140407, ESTPLUVIOGRAFICAS)
+                           select result).ToList().ForEach(row =>
+                           {
+                               items.Add(new RegistroModel()
+                               {
+                                   IdRegistro = row.IdRegistro,
+                                   IdPuntoMedicion = row.IdPuntoMedicion,
+                                   FechaCaptura = row.FechaCaptura,
+                                   HoraRegistro = row.HoraRegistro,
+                                   DiaRegistro = row.DiaRegistro,
+                                   Valor = row.Valor,
+                                   AccionActual = row.AccionActual,
+                                   IsActive = row.IsActive,
+                                   IsModified = row.IsModified,
+                                   LastModifiedDate = row.LastModifiedDate,
+                                   IdCondicion = row.IdCondicion,
+                                   ServerLastModifiedDate = row.ServerLastModifiedDate,
+                                   FechaNumerica = row.FechaNumerica
+                               });
+                           });
                     AllRegistros.Add(ESTPLUVIOGRAFICAS, items);
-
+                   
                 }
             }
             catch (Exception ex)
@@ -291,6 +368,10 @@ namespace Protell.DAL.Repository.v2
             return AllRegistros;
         }
 
+
+        
+
+       
 
         /// <summary>
         /// Logica de descarga e inserción de registros de servidor en base local
@@ -367,7 +448,57 @@ namespace Protell.DAL.Repository.v2
             }
 
             return responseService;
+        }//endDownload()
+
+        /// <summary>
+        /// Logica de subida de informacion
+        /// </summary>
+        /// <returns></returns>
+        public bool Upload()
+        {
+            bool responseService = false;
+
+            string jsonResponse = "";
+            string webMethodName = "Upload_CiRegistro";
+
+            CiRegistroUploadResponseModel response = new CiRegistroUploadResponseModel();
+
+            //Obtener datos
+            ObservableCollection<RegistroModel> registros = this.GetIsModified();
+            if (registros != null && registros.Count > 0)
+            {
+                CiRegistroUploadModel crum = new CiRegistroUploadModel();
+                crum.CiRegistro = registros;
+                crum.UserData = new UserDataSync();
+
+                jsonResponse = DownloadFactory.Instance.CallUploadWebService(webMethodName, (object)crum);
+                if (!String.IsNullOrEmpty(jsonResponse))
+                {
+                    JavaScriptSerializer js = new JavaScriptSerializer();
+                    js.MaxJsonLength = Int32.MaxValue;
+                    response = js.Deserialize<CiRegistroUploadResponseModel>(jsonResponse);
+
+                    if (response != null && response.confirmation.Count > 0)
+                    {
+                        this.PrepareBulkUpdateConfirmation();
+                        this.BulkUpdateConfirmation(response.confirmation);
+                        this.CommitBulkUpdateConfirmation();
+                    }
+                }//endif
+                else
+                {
+                    //No hubo respuesta de confirmacion; probablemente un error en la llamda del servicio
+                    responseService = true;
+                }
+            }//endif
+            else
+            {
+                //no hay registros para subir al servidor
+                responseService = true;
         }
+
+            return responseService;
+        }//endUpload()
 
         /// <summary>
         /// Dispara event que indica si los datos en la base en CI_REGISTRO sufrieron algun cambio por medio de la descarga recurrente

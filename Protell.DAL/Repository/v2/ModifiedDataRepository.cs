@@ -67,6 +67,58 @@ namespace Protell.DAL.Repository.v2
             return lstTableNames;
         }
 
+        /// <summary>
+        /// Obtiene las tablas que se van a subir al servidor
+        /// En aplicación cliente de captura solo se considera CI_REGISTRO
+        /// </summary>
+        /// <returns></returns>
+        public ObservableCollection<ModifiedDataModel> GetUploadTables()
+        {
+            ObservableCollection<ModifiedDataModel> uploadTables=null;
+
+            try
+            {
+                using (var entity = new db_SeguimientoProtocolo_r2Entities())
+                {
+                    try
+                    {
+                        var res = (from result in entity.MODIFIEDDATAs
+                               where (bool?)result.IsModified==true
+                               select result).ToList();
+
+                        if (res != null && res.Count > 0)
+                        {
+                            uploadTables=new ObservableCollection<ModifiedDataModel>();
+                            res.ForEach(r => {
+                                uploadTables.Add(new ModifiedDataModel()
+                                {
+                                    IdModifiedData=r.IdModifiedData,
+                                    IdSyncTable=r.IdSyncTable,
+                                    IsModified=r.IsModified,
+                                    ServerModifiedDate=r.ServerModifiedDate,
+                                    SYNCTABLE = new Protell.Model.SyncTableModel()
+                                    {
+                                        IdSyncTable=r.SYNCTABLE.IdSyncTable,
+                                        SyncTableName=r.SYNCTABLE.SyncTableName
+                                    }
+                                });
+                            });
+                        }//endif
+                    }//endtry
+                    catch (Exception)
+                    {
+                        ;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });
+            }
+
+            return uploadTables;
+        }
+
         public bool UpdateServerModifiedDate(ModifiedDataModel model)
         {
             bool x = false;

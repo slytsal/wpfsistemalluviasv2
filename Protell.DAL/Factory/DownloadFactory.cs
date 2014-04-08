@@ -14,11 +14,10 @@ namespace Protell.DAL.Factory
         private static readonly Lazy<DownloadFactory> lazy = new Lazy<DownloadFactory>(() => new DownloadFactory());
         public static DownloadFactory Instance { get { return lazy.Value; } }
 
-        
-        public string CallWebService(string webMethodName, object bodyContent)
+        public string CallWebService(string url, string webMethodName, object bodyContent)
         {
             string res="";
-            var client = new RestClient(SyncProperties.routeDownload);
+            var client = new RestClient(url);
             var request = new RestRequest(Method.POST);
             request.Resource = webMethodName;
             request.RequestFormat = RestSharp.DataFormat.Json;
@@ -26,6 +25,15 @@ namespace Protell.DAL.Factory
             request.AddBody(bodyContent);
             IRestResponse response = client.Execute(request);
             res = response.Content;
+            return res;
+        }
+
+        public string CallWebService(string webMethodName, object bodyContent)
+        {
+            string res="";
+
+            this.CallWebService(SyncProperties.routeDownload, webMethodName, bodyContent);
+
             return res;
         }
 
@@ -46,8 +54,24 @@ namespace Protell.DAL.Factory
             {
                 AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });
             }
-            return this.CallWebService(webMethodName, bodyContent);
-            
+            return this.CallWebService(webMethodName, bodyContent);   
+        }
+
+        public string CallUploadWebService(string webMethodName,object bodyContent)
+        {
+            string res = "";
+
+            try
+            {
+                res = this.CallWebService(SyncProperties.routeUpload,webMethodName, bodyContent);
+            }
+            catch (Exception ex)
+            {
+                //TODO: Insertar en bitacora mensaje de error
+                ;
+            }
+
+            return res;
         }
 
     }
