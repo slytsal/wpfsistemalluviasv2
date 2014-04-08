@@ -90,6 +90,13 @@ namespace Protell.DAL.Repository.v2.Tests
             CiRegistroRepository ci = new CiRegistroRepository();
             Dictionary<string, ObservableCollection<RegistroModel>> res=ci.GetCiRegistro();
             
+        }
+
+        [TestMethod()]
+        public void InsertTest()
+        {
+            CiRegistroRepository ci = new CiRegistroRepository();
+            
         }        
 
     }

@@ -19,6 +19,12 @@ namespace Protell.DAL
     {
         #region Primitive Properties
     
+        public virtual long IdRegistro
+        {
+            get;
+            set;
+        }
+    
         public virtual long IdPuntoMedicion
         {
             get;

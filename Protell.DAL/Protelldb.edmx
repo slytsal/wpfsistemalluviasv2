@@ -322,13 +322,11 @@
           <Property Name="SyncTableName" Type="nvarchar(max)" />
           <Property Name="OrderTable" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'db_SeguimientoProtocolo_r2.dbo.TMP_CI_REGISTRO_CONFIRMATION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TMP_CI_REGISTRO_CONFIRMATION">
           <Key>
-            <PropertyRef Name="IdPuntoMedicion" />
-            <PropertyRef Name="FechaNumerica" />
+            <PropertyRef Name="IdRegistro" />
           </Key>
+          <Property Name="IdRegistro" Type="bigint" Nullable="false" />
           <Property Name="IdPuntoMedicion" Type="bigint" Nullable="false" />
           <Property Name="FechaNumerica" Type="bigint" Nullable="false" />
           <Property Name="LastModifiedDate" Type="bigint" />
@@ -692,16 +690,9 @@ warning 6002: The table/view 'db_SeguimientoProtocolo_r2.dbo.TMP_CI_REGISTRO_CON
           <EntitySet Name="REL_EST_PUNTOMED" EntityType="Self.REL_EST_PUNTOMED" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="REL_ESTRUCTURA_DEPENDENCIA" EntityType="Self.REL_ESTRUCTURA_DEPENDENCIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYNCTABLE" EntityType="Self.SYNCTABLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TMP_CI_REGISTRO_CONFIRMATION" EntityType="Self.TMP_CI_REGISTRO_CONFIRMATION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TMP_CI_REGISTRO_ONDEMAND" EntityType="Self.TMP_CI_REGISTRO_ONDEMAND" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TMP_CI_REGISTRO_RECURRENTE" EntityType="Self.TMP_CI_REGISTRO_RECURRENTE" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TMP_CI_REGISTRO_CONFIRMATION" EntityType="Self.TMP_CI_REGISTRO_CONFIRMATION" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[TMP_CI_REGISTRO_CONFIRMATION].[IdPuntoMedicion] AS [IdPuntoMedicion], 
-[TMP_CI_REGISTRO_CONFIRMATION].[FechaNumerica] AS [FechaNumerica], 
-[TMP_CI_REGISTRO_CONFIRMATION].[LastModifiedDate] AS [LastModifiedDate], 
-[TMP_CI_REGISTRO_CONFIRMATION].[ServerLastModifiedDate] AS [ServerLastModifiedDate]
-FROM [dbo].[TMP_CI_REGISTRO_CONFIRMATION] AS [TMP_CI_REGISTRO_CONFIRMATION]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="APP_ROL_APP_USUARIO_ROL_FK1" Association="Self.APP_ROL_APP_USUARIO_ROL_FK1">
             <End Role="APP_ROL" EntitySet="APP_ROL" />
             <End Role="APP_USUARIO_ROL" EntitySet="APP_USUARIO_ROL" />
@@ -948,9 +939,9 @@ FROM [dbo].[TMP_CI_REGISTRO_CONFIRMATION] AS [TMP_CI_REGISTRO_CONFIRMATION]</Def
             <Parameter Name="FechaActual" Mode="In" Type="Int64" />
             <Parameter Name="Categoria" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="TMP_CI_REGISTRO_CONFIRMATION" EntityType="db_SeguimientoProtocolo_r2Model.TMP_CI_REGISTRO_CONFIRMATION" />
           <FunctionImport Name="spCommitBulkUpdateCiRegistroConfirmation" ReturnType="Collection(Boolean)" />
           <FunctionImport Name="spPrepareBulkUpdateCiRegistroConfirmation" ReturnType="Collection(Boolean)" />
+          <EntitySet Name="TMP_CI_REGISTRO_CONFIRMATION" EntityType="db_SeguimientoProtocolo_r2Model.TMP_CI_REGISTRO_CONFIRMATION" />
         </EntityContainer>
         <EntityType Name="APP_ROL">
           <Key>
@@ -1635,9 +1626,9 @@ FROM [dbo].[TMP_CI_REGISTRO_CONFIRMATION] AS [TMP_CI_REGISTRO_CONFIRMATION]</Def
         </ComplexType>
         <EntityType Name="TMP_CI_REGISTRO_CONFIRMATION">
           <Key>
-            <PropertyRef Name="IdPuntoMedicion" />
-            <PropertyRef Name="FechaNumerica" />
+            <PropertyRef Name="IdRegistro" />
           </Key>
+          <Property Name="IdRegistro" Type="Int64" Nullable="false" />
           <Property Name="IdPuntoMedicion" Type="Int64" Nullable="false" />
           <Property Name="FechaNumerica" Type="Int64" Nullable="false" />
           <Property Name="LastModifiedDate" Type="Int64" />
@@ -2107,6 +2098,8 @@ FROM [dbo].[TMP_CI_REGISTRO_CONFIRMATION] AS [TMP_CI_REGISTRO_CONFIRMATION]</Def
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spCommitBulkUpdateCiRegistroConfirmation" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spCommitBulkUpdateCiRegistroConfirmation" />
+          <FunctionImportMapping FunctionImportName="spPrepareBulkUpdateCiRegistroConfirmation" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spPrepareBulkUpdateCiRegistroConfirmation" />
           <EntitySetMapping Name="TMP_CI_REGISTRO_CONFIRMATION">
             <EntityTypeMapping TypeName="db_SeguimientoProtocolo_r2Model.TMP_CI_REGISTRO_CONFIRMATION">
               <MappingFragment StoreEntitySet="TMP_CI_REGISTRO_CONFIRMATION">
@@ -2114,11 +2107,10 @@ FROM [dbo].[TMP_CI_REGISTRO_CONFIRMATION] AS [TMP_CI_REGISTRO_CONFIRMATION]</Def
                 <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
                 <ScalarProperty Name="FechaNumerica" ColumnName="FechaNumerica" />
                 <ScalarProperty Name="IdPuntoMedicion" ColumnName="IdPuntoMedicion" />
+                <ScalarProperty Name="IdRegistro" ColumnName="IdRegistro" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="spCommitBulkUpdateCiRegistroConfirmation" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spCommitBulkUpdateCiRegistroConfirmation" />
-          <FunctionImportMapping FunctionImportName="spPrepareBulkUpdateCiRegistroConfirmation" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spPrepareBulkUpdateCiRegistroConfirmation" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

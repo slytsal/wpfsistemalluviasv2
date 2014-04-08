@@ -109,7 +109,7 @@ namespace Protell.ViewModel.v2
                     _SelectedItem = value;
                     if (_SelectedItem != null)
                     {
-                        this.SelectedItemAux = _SelectedItem;
+                        this.SelectedItemAux = _SelectedItem;                        
                     }
                     OnPropertyChanged(SelectedItemPropertyName);
                 }                

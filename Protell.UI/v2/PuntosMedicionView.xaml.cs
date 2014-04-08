@@ -55,21 +55,21 @@ namespace Protell.UI.v2
             string item="";
             if (v.ToString() == "Punto Medición")
             {
-                vm.SelectedItemPopUp = vm.pmPuntosMedicion.pSelectedItem;
-                vm.SelectedCondicion = vm.pmPuntosMedicion.pSelectedItem.Condicion;
-                item = vm.pmPuntosMedicion.pSelectedItem.HoraMilitar;
+                vm.SelectedItemPopUp = vm.pmAll.pSelectedItem;
+                vm.SelectedCondicion = vm.pmAll.pSelectedItem.Condicion;
+                item = vm.pmAll.pSelectedItem.HoraMilitar;
             }
             if (v.ToString() == "Lumbreras")
             {
-                vm.SelectedItemPopUp = vm.pmLumbreras.pSelectedItem;
-                vm.SelectedCondicion = vm.pmLumbreras.pSelectedItem.Condicion;
-                item = vm.pmLumbreras.pSelectedItem.HoraMilitar;
+                vm.SelectedItemPopUp = vm.pmAll.pSelectedItem;
+                vm.SelectedCondicion = vm.pmAll.pSelectedItem.Condicion;
+                item = vm.pmAll.pSelectedItem.HoraMilitar;
             }
             if (v.ToString() == "Estaciones Pluviográficas")
             {
-                vm.SelectedItemPopUp = vm.pmEstPluviograficas.pSelectedItem;
-                vm.SelectedCondicion = vm.pmEstPluviograficas.pSelectedItem.Condicion;
-                item = vm.pmEstPluviograficas.pSelectedItem.HoraMilitar;
+                vm.SelectedItemPopUp = vm.pmAll.pSelectedItem;
+                vm.SelectedCondicion = vm.pmAll.pSelectedItem.Condicion;
+                item = vm.pmAll.pSelectedItem.HoraMilitar;
             }
 
             vm.SelectedHora = item.Substring(0, 2);  //( item.Length == 4 ) ? item.Substring(0, 2) : "0" + item.Substring(0, 1);

@@ -212,6 +212,7 @@ namespace Protell.DAL.Repository.v2
 
                     items = new ObservableCollection<RegistroModel>();
                     (from result in entity.spGetCI_REGISTRO(20140407, PUNTOSMEDICION)
+                     orderby result.FechaNumerica descending
                      select result).ToList().ForEach(row =>
                      {
                          items.Add(new RegistroModel()
@@ -234,7 +235,8 @@ namespace Protell.DAL.Repository.v2
                     AllRegistros.Add(PUNTOSMEDICION, items);
 
                     items = new ObservableCollection<RegistroModel>();
-                    (from result in entity.spGetCI_REGISTRO(20140407, LUMBRERAS)
+                    (from result in entity.spGetCI_REGISTRO(20140408, LUMBRERAS)
+                     orderby result.FechaNumerica descending
                      select result).ToList().ForEach(row =>
                      {
                          items.Add(new RegistroModel()
@@ -257,7 +259,8 @@ namespace Protell.DAL.Repository.v2
                     AllRegistros.Add(LUMBRERAS, items);
 
                     items = new ObservableCollection<RegistroModel>();
-                    (from result in entity.spGetCI_REGISTRO(20140407, ESTPLUVIOGRAFICAS)
+                    (from result in entity.spGetCI_REGISTRO(20140408, ESTPLUVIOGRAFICAS)
+                     orderby result.FechaNumerica descending
                      select result).ToList().ForEach(row =>
                      {
                          items.Add(new RegistroModel()
@@ -288,10 +291,6 @@ namespace Protell.DAL.Repository.v2
             return AllRegistros;
         }
 
-
-        
-
-       
 
         /// <summary>
         /// Logica de descarga e inserción de registros de servidor en base local
