@@ -6,6 +6,7 @@ using Protell.Server.DAL.POCOS;
 using System.Threading;
 using Protell.Server.DAL.Repository.v2;
 using Protell.DAL.Factory;
+using System.Collections.Generic;
 
 namespace Protell.ViewModel.Sync
 {
@@ -72,7 +73,7 @@ namespace Protell.ViewModel.Sync
             try
             {
                 Protell.DAL.Repository.v2.ModifiedDataRepository modifiedDataRepository = new Protell.DAL.Repository.v2.ModifiedDataRepository();
-                ObservableCollection<ModifiedDataModel> tablesName = modifiedDataRepository.DownloadModifiedData();
+                List<ModifiedDataModel> tablesName = modifiedDataRepository.DownloadModifiedData();
 
                 //TEST: Solo tomar la de CI_REGISTRO
 

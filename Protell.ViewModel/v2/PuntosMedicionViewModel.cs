@@ -175,7 +175,7 @@ namespace Protell.ViewModel.v2
         public void getAllRegistros()
         {
             registroRepository = new CiRegistroRepository();
-            this.AllRegistros = registroRepository.GetCiRegistro();
+            //this.AllRegistros = registroRepository.GetCiRegistro();
         }
 
         public bool CanSave()

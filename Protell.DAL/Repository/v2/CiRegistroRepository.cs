@@ -101,7 +101,7 @@ namespace Protell.DAL.Repository.v2
         /// Inserta los registros descargados del servidor en tabla temporal TMP_CI_REGISTRO_RECURRENT
         /// </summary>
         /// <param name="registros"></param>
-        private void BulkUpsertRecurrent(ObservableCollection<Model.RegistroModel> registros)
+        private void BulkUpsertRecurrent(List<Model.RegistroModel> registros)
         {
             try
             {
@@ -184,7 +184,7 @@ namespace Protell.DAL.Repository.v2
         /// Inserta los registros descargados del servidor en tabla temporal TMP_CI_REGISTRO_CONFIRMATION
         /// </summary>
         /// <param name="registros"></param>
-        private void BulkUpdateConfirmation(ObservableCollection<CiRegistroUploadConfirmationModel> registros)
+        private void BulkUpdateConfirmation(List<CiRegistroUploadConfirmationModel> registros)
         {
             try
             {
@@ -240,9 +240,9 @@ namespace Protell.DAL.Repository.v2
         /// Obtiene todos los registros donde IsModified=1 (Registros nuevos a subir)
         /// </summary>
         /// <returns></returns>
-        public ObservableCollection<RegistroModel> GetIsModified()
+        public List<CiRegistroPOCO> GetIsModified()
         {
-            ObservableCollection<RegistroModel> result = new ObservableCollection<RegistroModel>();
+            List<CiRegistroPOCO> result = new List<CiRegistroPOCO>();
             try
             {
                 using (var entity = new db_SeguimientoProtocolo_r2Entities())
@@ -250,11 +250,11 @@ namespace Protell.DAL.Repository.v2
                      where res.IsModified == true
                      select res).ToList().ForEach(row =>
                      {
-                         result.Add(new RegistroModel()
+                         result.Add(new CiRegistroPOCO()
                          {
                              IdRegistro = row.IdRegistro,
                              IdPuntoMedicion = row.IdPuntoMedicion,
-                             FechaCaptura = row.FechaCaptura,
+                             //FechaCaptura = row.FechaCaptura,
                              HoraRegistro = row.HoraRegistro,
                              DiaRegistro = row.DiaRegistro,
                              Valor = row.Valor,
@@ -263,8 +263,8 @@ namespace Protell.DAL.Repository.v2
                              IsModified = row.IsModified,
                              LastModifiedDate = row.LastModifiedDate,
                              IdCondicion = row.IdCondicion,
-                             ServerLastModifiedDate = row.ServerLastModifiedDate,
-                             FechaNumerica = row.FechaNumerica
+                             ServerLastModifiedDate = (long)((row.ServerLastModifiedDate == null) ? 0 : row.ServerLastModifiedDate),
+                             FechaNumerica = (long)((row.FechaNumerica == null) ? 0 : row.FechaNumerica)
                          });
                      });
             }
@@ -365,7 +365,7 @@ namespace Protell.DAL.Repository.v2
             {
 
             }
-            return AllRegistros;
+            return null;
         }
 
 
@@ -464,24 +464,30 @@ namespace Protell.DAL.Repository.v2
             CiRegistroUploadResponseModel response = new CiRegistroUploadResponseModel();
 
             //Obtener datos
-            ObservableCollection<RegistroModel> registros = this.GetIsModified();
+            List<CiRegistroPOCO> registros = this.GetIsModified();
             if (registros != null && registros.Count > 0)
             {
                 CiRegistroUploadModel crum = new CiRegistroUploadModel();
                 crum.CiRegistro = registros;
-                crum.UserData = new UserDataSync();
+                //crum.UserData = new UserDataSync();
 
-                jsonResponse = DownloadFactory.Instance.CallUploadWebService(webMethodName, (object)crum);
+                //crum.CiRegistro = null;
+                //crum.UserData = null;
+
+                CiRegistroUploadServiceInputWrapper wrapperServiceParameter = new CiRegistroUploadServiceInputWrapper();
+                wrapperServiceParameter.param = crum;
+
+                jsonResponse = DownloadFactory.Instance.CallUploadWebService(webMethodName, wrapperServiceParameter);
                 if (!String.IsNullOrEmpty(jsonResponse))
                 {
                     JavaScriptSerializer js = new JavaScriptSerializer();
                     js.MaxJsonLength = Int32.MaxValue;
                     response = js.Deserialize<CiRegistroUploadResponseModel>(jsonResponse);
 
-                    if (response != null && response.confirmation.Count > 0)
+                    if (response != null && response.Upload_CiRegistroResult != null && response.Upload_CiRegistroResult.Count > 0)
                     {
                         this.PrepareBulkUpdateConfirmation();
-                        this.BulkUpdateConfirmation(response.confirmation);
+                        this.BulkUpdateConfirmation(response.Upload_CiRegistroResult);
                         this.CommitBulkUpdateConfirmation();
                     }
                 }//endif
@@ -495,7 +501,7 @@ namespace Protell.DAL.Repository.v2
             {
                 //no hay registros para subir al servidor
                 responseService = true;
-        }
+            }
 
             return responseService;
         }//endUpload()

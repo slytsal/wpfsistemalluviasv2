@@ -4,6 +4,7 @@ using Protell.Server.DAL.POCOS;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -18,12 +19,12 @@ namespace Protell.Server.DAL.Repository.v2
             return "TMP_CI_REGISTRO_UPLOADED_" + unid.ToString();
         }
 
-        private string GetSqlInsertString(RegistroModel r,bool notIncludeUnion)
+        private string GetSqlInsertString(CiRegistroPOCO r,bool notIncludeUnion)
         {
             string sql = "select ";
             sql+=r.IdRegistro.ToString()+",";
             sql += r.IdPuntoMedicion.ToString() + ",";
-            sql += "'"+String.Format("{0:yyyyMMdd HH:mm:ss}", r.FechaCaptura)+"',";
+            sql += "'" + String.Format("{0:yyyyMMdd HH:mm:ss}", DateTime.ParseExact(r.FechaNumerica.ToString().Substring(0, 8), "yyyyMMdd", CultureInfo.InvariantCulture)) + "',";
             sql += r.HoraRegistro.ToString() + ",";
             sql += r.DiaRegistro.ToString() + ",";
             sql += r.Valor.ToString() + ",";
@@ -53,11 +54,11 @@ namespace Protell.Server.DAL.Repository.v2
             return session;
         }
 
-        public void BulkUpsertUploaded(ObservableCollection<Model.RegistroModel> registros,long unidSession)
+        public void BulkUpsertUploaded(List<CiRegistroPOCO> registros,long unidSession)
         {
             List<Thread> workerThreads = new List<Thread>();
 
-            string _base = "Insert into " + this.GetTmpUploadedTable(unidSession) + " ";
+            string _base = "SET DATEFORMAT YMD; Insert into " + this.GetTmpUploadedTable(unidSession) + " ";
             string sqlStatement = _base;
 
             int maxReg = 0;
@@ -76,7 +77,7 @@ namespace Protell.Server.DAL.Repository.v2
                         workerThreads.Last().IsBackground = true;
                         workerThreads.Last().Start(sqlStatement);
 
-                        sqlStatement = "Insert into " + this.GetTmpUploadedTable(unidSession) + " ";
+                        sqlStatement = _base;
                     }
                     else
                     {
@@ -109,29 +110,55 @@ namespace Protell.Server.DAL.Repository.v2
             }
         }
 
-        public void CommitBulkUpsertUploaded()
+        public List<CiRegistroUploadConfirmationModel> CommitBulkUpsertUploaded(long session)
         {
-            using (var entity = new db_SeguimientoProtocolo_r2Entities())
+            List<CiRegistroUploadConfirmationModel> confirmation = new List<CiRegistroUploadConfirmationModel>();
+            try
             {
-                
+                using (var entity = new db_SeguimientoProtocolo_r2Entities())
+                {
+                    List<spCommitBulkUpsertCiRegistroUploaded_Result> res = entity.spCommitBulkUpsertCiRegistroUploaded(session).ToList();
+                    if (res != null && res.Count > 0)
+                    {
+                        res.ForEach(o =>
+                        {
+                            confirmation.Add(new CiRegistroUploadConfirmationModel()
+                            {
+                                IdPuntoMedicion = o.IdPuntoMedicion,
+                                FechaNumerica = (long)o.FechaNumerica,
+                                LMD = o.LastModifiedDate,
+                                SLMD = (long)o.ServerLastModifiedDate
+                            });
+                        });
+                    }
+                }
             }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return confirmation;
         }
 
         /// <summary>
         /// Metodo principal para proceso de insercion de información recibida del cliente
         /// </summary>
-        public void UpsertUploaded(ObservableCollection<Model.RegistroModel> registros)
+        public List<CiRegistroUploadConfirmationModel> UpsertUploaded(List<CiRegistroPOCO> registros)
         {
+            List<CiRegistroUploadConfirmationModel> confirmation=null;
             if (registros != null && registros.Count > 0)
             {
                 long session = this.PrepareBulkUpsertUploaded();
                 this.BulkUpsertUploaded(registros, session);
-                this.CommitBulkUpsertUploaded();
+                confirmation=this.CommitBulkUpsertUploaded(session);
             }
             else
             {
-
+                confirmation = null;
             }//endIfElse
+
+            return confirmation;
         }
     }
 }

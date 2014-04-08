@@ -52,6 +52,7 @@
     <Compile Include="AppRolModel.cs" />
     <Compile Include="AppUsuarioModel.cs" />
     <Compile Include="AppUsuarioRolModel.cs" />
+    <Compile Include="CiRegistroPOCO.cs" />
     <Compile Include="CnfSettingModel.cs" />
     <Compile Include="SyncModels\CatAgrupadorIsoyetasResultModel.cs" />
     <Compile Include="SyncModels\CatDependenciaResultModel.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="SyncModels\CiRegistroUploadConfirmationModel.cs" />
     <Compile Include="SyncModels\CiRegistroUploadModel.cs" />
     <Compile Include="SyncModels\CiRegistroUploadResponseModel.cs" />
+    <Compile Include="SyncModels\CiRegistroUploadServiceInputWrapper.cs" />
     <Compile Include="SyncModels\CiTrackingResultModel.cs" />
     <Compile Include="SyncModels\CondProdResultModel.cs" />
     <Compile Include="CondProModel.cs">

@@ -11,16 +11,11 @@ namespace Protell.DAL.Repository.v2.Tests
     [TestClass()]
     public class CiRegistroRepositoryTests
     {
-        
-
         [TestMethod()]
         public void GetBodyContentTest()
         {
-
-
             long minFechaNumerica = 20130101;
-            int l = minFechaNumerica.ToString().Length;
-            
+            int l = minFechaNumerica.ToString().Length;   
         }
 
         [TestMethod()]
@@ -61,9 +56,6 @@ namespace Protell.DAL.Repository.v2.Tests
         [TestMethod()]
         public void RegistroModelTest()
         {
-           
-            
-
             Model.RegistroModel r = new Model.RegistroModel()
             {
 
@@ -90,6 +82,13 @@ namespace Protell.DAL.Repository.v2.Tests
         {
             ModifiedDataRepository mdr = new ModifiedDataRepository();
             mdr.GetUploadTables();
+        }
+
+        [TestMethod()]
+        public void UploadTest()
+        {
+            CiRegistroRepository ci = new CiRegistroRepository();
+            ci.Upload();
         }
 
     }

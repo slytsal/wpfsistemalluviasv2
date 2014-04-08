@@ -43,7 +43,7 @@ namespace Protell.Server.DAL.Repository.v2.Tests
             }
 
             //Llamar al método
-            crr.UpsertUploaded(registros);
+            //crr.UpsertUploaded(registros);
         }
     }
 }

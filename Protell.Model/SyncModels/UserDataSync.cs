@@ -17,5 +17,12 @@ namespace Protell.Model.SyncModels
 
         [DataMember]
         public string PcIp;
+
+        public UserDataSync()
+        {
+            this.UserName = "";
+            this.PcIp = "";
+            this.PcName = "";
+        }
     }
 }
