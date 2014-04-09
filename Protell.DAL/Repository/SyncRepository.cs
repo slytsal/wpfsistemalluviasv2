@@ -56,6 +56,34 @@ namespace Protell.DAL.Repository
             }
         }
 
+
+        //-------------------------------------------------------------V2
+        public bool UpdateIsModifiedData(long IdSyncTable)
+        {
+            bool x = false;
+            try
+            {
+                using(var entity= new db_SeguimientoProtocolo_r2Entities())
+                {
+                    MODIFIEDDATA item = null;
+                    item = (from res in entity.MODIFIEDDATAs
+                            where res.IdSyncTable == IdSyncTable
+                            select res).First();
+                    if (item!=null)
+                    {
+                        item.IsModified = true;
+                        entity.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+            return x;
+        }
+
         public MaxTableModel GetMaxTable(string tableName)
         {
             MaxTableModel maximos = new MaxTableModel();
@@ -77,12 +105,12 @@ namespace Protell.DAL.Repository
             return maximos;
         }
 
-        public string GetCurrentDate()
+        public long GetCurrentDate()
         {
-            string res = "";
+            long res = 0;
             try
             {
-                res = String.Format("{0:yyyyMMdd HH:mm}", TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, "Central Standard Time (Mexico)"));
+                res = long.Parse(String.Format("{0:yyyyMMdd}", TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, "Central Standard Time (Mexico)")));
            }
             catch (Exception)
             {

@@ -13,6 +13,8 @@ namespace Protell.DAL.Repository
     {
         SyncRepository _SyncRepository = new SyncRepository();
         TrackingRepository trackRepository = new TrackingRepository();
+
+        private const long ID_SYNCTABLE = 20140324174857773;
                 
         // Create.
         public void InsertRegistro(Model.RegistroModel registro,Model.UsuarioModel usuario)
@@ -70,7 +72,8 @@ namespace Protell.DAL.Repository
 
                         trackRepository.InsertTracking(trackRepository.createTracking(registro, usuario, "Insert"));                        
                         //Actualiza tabla para subir informacion.
-                        _SyncRepository.UpdateSyn(entity);                        
+                        //_SyncRepository.UpdateSyn(entity);                        
+                        _SyncRepository.UpdateIsModifiedData(ID_SYNCTABLE);
                     }
                     //actualiza registro
                     if (result != null)
@@ -318,7 +321,8 @@ namespace Protell.DAL.Repository
                     result.IdCondicion = registro.Condicion.IdCondicion;
                     result.FechaNumerica = registro.FechaNumerica;
                     entity.SaveChanges();
-                    _SyncRepository.UpdateSyn(entity);
+                    //_SyncRepository.UpdateSyn(entity);
+                    _SyncRepository.UpdateIsModifiedData(ID_SYNCTABLE);
                     trackRepository.InsertTracking(trackRepository.createTracking(registro, usuario, "Update"));
                 }
             }

@@ -65,7 +65,7 @@ namespace Protell.UI.v2
             DTimerUploadProcess.Interval = new TimeSpan(0, 0, 60);
             DTimerUploadProcess.Start();
             GetAppTitle();
-            //vm.PropertyChanged += new PropertyChangedEventHandler(vm_PropertyChanged);
+            vm.PropertyChanged += new PropertyChangedEventHandler(vm_PropertyChanged);
 
             //TimerNuevo = new DispatcherTimer();
             //TimerNuevo.Tick += new EventHandler(TimerNuevo_Tick);
