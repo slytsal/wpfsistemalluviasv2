@@ -368,7 +368,7 @@ namespace Protell.DAL.Repository.v2
             {
 
             }
-            return null;
+            return AllRegistros;
         }
 
 
