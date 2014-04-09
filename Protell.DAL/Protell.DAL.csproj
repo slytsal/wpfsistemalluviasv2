@@ -57,6 +57,9 @@
     <Compile Include="APP_ROL.cs">
       <DependentUpon>Protelldb.tt</DependentUpon>
     </Compile>
+    <Compile Include="APP_SETTINGS.cs">
+      <DependentUpon>Protelldb.tt</DependentUpon>
+    </Compile>
     <Compile Include="APP_USUARIO.cs">
       <DependentUpon>Protelldb.tt</DependentUpon>
     </Compile>
@@ -82,6 +85,9 @@
       <DependentUpon>Protelldb.tt</DependentUpon>
     </Compile>
     <Compile Include="CAT_OPERACION_ESTRUCTURA.cs">
+      <DependentUpon>Protelldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CAT_PROTOCOLO.cs">
       <DependentUpon>Protelldb.tt</DependentUpon>
     </Compile>
     <Compile Include="CAT_PUNTO_MEDICION.cs">
@@ -188,6 +194,7 @@
     <Compile Include="Repository\UsuarioRepository.cs" />
     <Compile Include="Repository\v2\AppBitacoraRepository.cs" />
     <Compile Include="Repository\v2\AppRolRepository.cs" />
+    <Compile Include="Repository\v2\AppSettingsRepository.cs" />
     <Compile Include="Repository\v2\AppUsuarioRepository.cs" />
     <Compile Include="Repository\v2\AppUsuarioRolRepository.cs" />
     <Compile Include="Repository\v2\CatAccionActualRepository.cs" />
@@ -195,6 +202,7 @@
     <Compile Include="Repository\v2\CatCondProRepository.cs" />
     <Compile Include="Repository\v2\CatDependenciaRepository.cs" />
     <Compile Include="Repository\v2\CatOperacionEstructuraRepository.cs" />
+    <Compile Include="Repository\v2\CatProtocoloRepository.cs" />
     <Compile Include="Repository\v2\CiRegistroRepository.cs" />
     <Compile Include="Repository\v2\CiTrakingRepository.cs" />
     <Compile Include="Repository\v2\ModifiedDataRepository.cs" />
@@ -227,6 +235,9 @@
       <DependentUpon>Protelldb.tt</DependentUpon>
     </Compile>
     <Compile Include="SYNCTABLE.cs">
+      <DependentUpon>Protelldb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
       <DependentUpon>Protelldb.tt</DependentUpon>
     </Compile>
     <Compile Include="TMP_CI_REGISTRO_CONFIRMATION.cs">

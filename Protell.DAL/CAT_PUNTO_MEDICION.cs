@@ -316,6 +316,38 @@ namespace Protell.DAL
             }
         }
         private CAT_ACCION_ACTUAL _cAT_ACCION_ACTUAL;
+    
+        public virtual ICollection<CAT_PROTOCOLO> CAT_PROTOCOLO
+        {
+            get
+            {
+                if (_cAT_PROTOCOLO == null)
+                {
+                    var newCollection = new FixupCollection<CAT_PROTOCOLO>();
+                    newCollection.CollectionChanged += FixupCAT_PROTOCOLO;
+                    _cAT_PROTOCOLO = newCollection;
+                }
+                return _cAT_PROTOCOLO;
+            }
+            set
+            {
+                if (!ReferenceEquals(_cAT_PROTOCOLO, value))
+                {
+                    var previousValue = _cAT_PROTOCOLO as FixupCollection<CAT_PROTOCOLO>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupCAT_PROTOCOLO;
+                    }
+                    _cAT_PROTOCOLO = value;
+                    var newValue = value as FixupCollection<CAT_PROTOCOLO>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupCAT_PROTOCOLO;
+                    }
+                }
+            }
+        }
+        private ICollection<CAT_PROTOCOLO> _cAT_PROTOCOLO;
 
         #endregion
 
@@ -444,6 +476,28 @@ namespace Protell.DAL
             if (e.OldItems != null)
             {
                 foreach (CAT_PUNTO_MEDICION_MAX_MIN item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.CAT_PUNTO_MEDICION, this))
+                    {
+                        item.CAT_PUNTO_MEDICION = null;
+                    }
+                }
+            }
+        }
+    
+        private void FixupCAT_PROTOCOLO(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach (CAT_PROTOCOLO item in e.NewItems)
+                {
+                    item.CAT_PUNTO_MEDICION = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (CAT_PROTOCOLO item in e.OldItems)
                 {
                     if (ReferenceEquals(item.CAT_PUNTO_MEDICION, this))
                     {

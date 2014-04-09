@@ -185,6 +185,18 @@ namespace Protell.Server.DAL.POCOS
             get { return _sYNCTABLEs  ?? (_sYNCTABLEs = CreateObjectSet<SYNCTABLE>("SYNCTABLEs")); }
         }
         private ObjectSet<SYNCTABLE> _sYNCTABLEs;
+    
+        public ObjectSet<APP_SETTINGS> APP_SETTINGS
+        {
+            get { return _aPP_SETTINGS  ?? (_aPP_SETTINGS = CreateObjectSet<APP_SETTINGS>("APP_SETTINGS")); }
+        }
+        private ObjectSet<APP_SETTINGS> _aPP_SETTINGS;
+    
+        public ObjectSet<CAT_PROTOCOLO> CAT_PROTOCOLO
+        {
+            get { return _cAT_PROTOCOLO  ?? (_cAT_PROTOCOLO = CreateObjectSet<CAT_PROTOCOLO>("CAT_PROTOCOLO")); }
+        }
+        private ObjectSet<CAT_PROTOCOLO> _cAT_PROTOCOLO;
 
         #endregion
 

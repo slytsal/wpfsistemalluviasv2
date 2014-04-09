@@ -221,6 +221,24 @@ namespace Protell.DAL
             get { return _tMP_CI_REGISTRO_CONFIRMATION  ?? (_tMP_CI_REGISTRO_CONFIRMATION = CreateObjectSet<TMP_CI_REGISTRO_CONFIRMATION>("TMP_CI_REGISTRO_CONFIRMATION")); }
         }
         private ObjectSet<TMP_CI_REGISTRO_CONFIRMATION> _tMP_CI_REGISTRO_CONFIRMATION;
+    
+        public ObjectSet<sysdiagram> sysdiagrams
+        {
+            get { return _sysdiagrams  ?? (_sysdiagrams = CreateObjectSet<sysdiagram>("sysdiagrams")); }
+        }
+        private ObjectSet<sysdiagram> _sysdiagrams;
+    
+        public ObjectSet<APP_SETTINGS> APP_SETTINGS
+        {
+            get { return _aPP_SETTINGS  ?? (_aPP_SETTINGS = CreateObjectSet<APP_SETTINGS>("APP_SETTINGS")); }
+        }
+        private ObjectSet<APP_SETTINGS> _aPP_SETTINGS;
+    
+        public ObjectSet<CAT_PROTOCOLO> CAT_PROTOCOLO
+        {
+            get { return _cAT_PROTOCOLO  ?? (_cAT_PROTOCOLO = CreateObjectSet<CAT_PROTOCOLO>("CAT_PROTOCOLO")); }
+        }
+        private ObjectSet<CAT_PROTOCOLO> _cAT_PROTOCOLO;
 
         #endregion
 

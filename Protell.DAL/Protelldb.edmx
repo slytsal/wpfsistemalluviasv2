@@ -25,6 +25,16 @@
           <Property Name="IsModified" Type="bit" Nullable="false" />
           <Property Name="ServerLastModifiedDate" Type="bigint" />
         </EntityType>
+        <EntityType Name="APP_SETTINGS">
+          <Key>
+            <PropertyRef Name="IdSettings" />
+          </Key>
+          <Property Name="IdSettings" Type="bigint" Nullable="false" />
+          <Property Name="SettingName" Type="nvarchar" MaxLength="250" />
+          <Property Name="Value" Type="nvarchar" MaxLength="250" />
+          <Property Name="LastModifiedDate" Type="bigint" Nullable="false" />
+          <Property Name="ServerLastModifiedDate" Type="bigint" />
+        </EntityType>
         <EntityType Name="APP_USUARIO">
           <Key>
             <PropertyRef Name="IdUsuario" />
@@ -135,6 +145,15 @@
           <Property Name="OperacionEstrucuturaName" Type="nvarchar" MaxLength="1500" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="IsModified" Type="bit" Nullable="false" />
+          <Property Name="LastModifiedDate" Type="bigint" Nullable="false" />
+          <Property Name="ServerLastModifiedDate" Type="bigint" />
+        </EntityType>
+        <EntityType Name="CAT_PROTOCOLO">
+          <Key>
+            <PropertyRef Name="IdProtocolo" />
+          </Key>
+          <Property Name="IdProtocolo" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPuntoMedicion" Type="bigint" />
           <Property Name="LastModifiedDate" Type="bigint" Nullable="false" />
           <Property Name="ServerLastModifiedDate" Type="bigint" />
         </EntityType>
@@ -321,6 +340,16 @@
           <Property Name="IdSyncTable" Type="bigint" Nullable="false" />
           <Property Name="SyncTableName" Type="nvarchar(max)" />
           <Property Name="OrderTable" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="TMP_CI_REGISTRO_CONFIRMATION">
           <Key>
@@ -512,6 +541,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__CAT_PROTO__IdPun__339FAB6E">
+          <End Role="CAT_PUNTO_MEDICION" Type="Self.CAT_PUNTO_MEDICION" Multiplicity="0..1" />
+          <End Role="CAT_PROTOCOLO" Type="Self.CAT_PROTOCOLO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_PUNTO_MEDICION">
+              <PropertyRef Name="IdPuntoMedicion" />
+            </Principal>
+            <Dependent Role="CAT_PROTOCOLO">
+              <PropertyRef Name="IdPuntoMedicion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__CAT_PUNTO__IdAcc__1EA48E88">
           <End Role="CAT_ACCION_ACTUAL" Type="Self.CAT_ACCION_ACTUAL" Multiplicity="0..1" />
           <End Role="CAT_PUNTO_MEDICION" Type="Self.CAT_PUNTO_MEDICION" Multiplicity="*" />
@@ -665,6 +706,7 @@
         <EntityContainer Name="db_SeguimientoProtocolo_r2ModelStoreContainer">
           <EntitySet Name="APP_BITACORA" EntityType="Self.APP_BITACORA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="APP_ROL" EntityType="Self.APP_ROL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="APP_SETTINGS" EntityType="Self.APP_SETTINGS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="APP_USUARIO" EntityType="Self.APP_USUARIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="APP_USUARIO_ROL" EntityType="Self.APP_USUARIO_ROL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_ACCION_ACTUAL" EntityType="Self.CAT_ACCION_ACTUAL" Schema="dbo" store:Type="Tables" />
@@ -674,6 +716,7 @@
           <EntitySet Name="CAT_ESTRUCTURA" EntityType="Self.CAT_ESTRUCTURA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_LINKS" EntityType="Self.CAT_LINKS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_OPERACION_ESTRUCTURA" EntityType="Self.CAT_OPERACION_ESTRUCTURA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CAT_PROTOCOLO" EntityType="Self.CAT_PROTOCOLO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_PUNTO_MEDICION" EntityType="Self.CAT_PUNTO_MEDICION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_PUNTO_MEDICION_MAX_MIN" EntityType="Self.CAT_PUNTO_MEDICION_MAX_MIN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_SERVER_LASTDATA" EntityType="Self.CAT_SERVER_LASTDATA" Schema="dbo" store:Type="Tables" />
@@ -690,6 +733,7 @@
           <EntitySet Name="REL_EST_PUNTOMED" EntityType="Self.REL_EST_PUNTOMED" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="REL_ESTRUCTURA_DEPENDENCIA" EntityType="Self.REL_ESTRUCTURA_DEPENDENCIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYNCTABLE" EntityType="Self.SYNCTABLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TMP_CI_REGISTRO_CONFIRMATION" EntityType="Self.TMP_CI_REGISTRO_CONFIRMATION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TMP_CI_REGISTRO_ONDEMAND" EntityType="Self.TMP_CI_REGISTRO_ONDEMAND" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TMP_CI_REGISTRO_RECURRENTE" EntityType="Self.TMP_CI_REGISTRO_RECURRENTE" Schema="dbo" store:Type="Tables" />
@@ -740,6 +784,10 @@
           <AssociationSet Name="CAT_UNIDAD_MEDIDA_CAT_PUNTO_MEDICION_FK1" Association="Self.CAT_UNIDAD_MEDIDA_CAT_PUNTO_MEDICION_FK1">
             <End Role="CAT_UNIDAD_MEDIDA" EntitySet="CAT_UNIDAD_MEDIDA" />
             <End Role="CAT_PUNTO_MEDICION" EntitySet="CAT_PUNTO_MEDICION" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CAT_PROTO__IdPun__339FAB6E" Association="Self.FK__CAT_PROTO__IdPun__339FAB6E">
+            <End Role="CAT_PUNTO_MEDICION" EntitySet="CAT_PUNTO_MEDICION" />
+            <End Role="CAT_PROTOCOLO" EntitySet="CAT_PROTOCOLO" />
           </AssociationSet>
           <AssociationSet Name="FK__CAT_PUNTO__IdAcc__1EA48E88" Association="Self.FK__CAT_PUNTO__IdAcc__1EA48E88">
             <End Role="CAT_ACCION_ACTUAL" EntitySet="CAT_ACCION_ACTUAL" />
@@ -942,6 +990,13 @@
           <FunctionImport Name="spCommitBulkUpdateCiRegistroConfirmation" ReturnType="Collection(Boolean)" />
           <FunctionImport Name="spPrepareBulkUpdateCiRegistroConfirmation" ReturnType="Collection(Boolean)" />
           <EntitySet Name="TMP_CI_REGISTRO_CONFIRMATION" EntityType="db_SeguimientoProtocolo_r2Model.TMP_CI_REGISTRO_CONFIRMATION" />
+          <EntitySet Name="sysdiagrams" EntityType="db_SeguimientoProtocolo_r2Model.sysdiagram" />
+          <EntitySet Name="APP_SETTINGS" EntityType="db_SeguimientoProtocolo_r2Model.APP_SETTINGS" />
+          <EntitySet Name="CAT_PROTOCOLO" EntityType="db_SeguimientoProtocolo_r2Model.CAT_PROTOCOLO" />
+          <AssociationSet Name="FK__CAT_PROTO__IdPun__339FAB6E" Association="db_SeguimientoProtocolo_r2Model.FK__CAT_PROTO__IdPun__339FAB6E">
+            <End Role="CAT_PUNTO_MEDICION" EntitySet="CAT_PUNTO_MEDICION" />
+            <End Role="CAT_PROTOCOLO" EntitySet="CAT_PROTOCOLO" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="APP_ROL">
           <Key>
@@ -1060,6 +1115,7 @@
           <Property Name="longitud" Type="Double" />
           <Property Name="IdAccionActual" Type="Int64" />
           <NavigationProperty Name="CAT_ACCION_ACTUAL" Relationship="db_SeguimientoProtocolo_r2Model.FK__CAT_PUNTO__IdAcc__1EA48E88" FromRole="CAT_PUNTO_MEDICION" ToRole="CAT_ACCION_ACTUAL" />
+          <NavigationProperty Name="CAT_PROTOCOLO" Relationship="db_SeguimientoProtocolo_r2Model.FK__CAT_PROTO__IdPun__339FAB6E" FromRole="CAT_PUNTO_MEDICION" ToRole="CAT_PROTOCOLO" />
         </EntityType>
         <EntityType Name="CAT_PUNTO_MEDICION_MAX_MIN">
           <Key>
@@ -1634,6 +1690,48 @@
           <Property Name="LastModifiedDate" Type="Int64" />
           <Property Name="ServerLastModifiedDate" Type="Int64" />
         </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="APP_SETTINGS">
+          <Key>
+            <PropertyRef Name="IdSettings" />
+          </Key>
+          <Property Name="IdSettings" Type="Int64" Nullable="false" />
+          <Property Name="SettingName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LastModifiedDate" Type="Int64" Nullable="false" />
+          <Property Name="ServerLastModifiedDate" Type="Int64" />
+        </EntityType>
+        <EntityType Name="CAT_PROTOCOLO">
+          <Key>
+            <PropertyRef Name="IdProtocolo" />
+          </Key>
+          <Property Name="IdProtocolo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPuntoMedicion" Type="Int64" />
+          <Property Name="LastModifiedDate" Type="Int64" Nullable="false" />
+          <Property Name="ServerLastModifiedDate" Type="Int64" />
+          <NavigationProperty Name="CAT_PUNTO_MEDICION" Relationship="db_SeguimientoProtocolo_r2Model.FK__CAT_PROTO__IdPun__339FAB6E" FromRole="CAT_PROTOCOLO" ToRole="CAT_PUNTO_MEDICION" />
+        </EntityType>
+        <Association Name="FK__CAT_PROTO__IdPun__339FAB6E">
+          <End Type="db_SeguimientoProtocolo_r2Model.CAT_PUNTO_MEDICION" Role="CAT_PUNTO_MEDICION" Multiplicity="0..1" />
+          <End Type="db_SeguimientoProtocolo_r2Model.CAT_PROTOCOLO" Role="CAT_PROTOCOLO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_PUNTO_MEDICION">
+              <PropertyRef Name="IdPuntoMedicion" />
+            </Principal>
+            <Dependent Role="CAT_PROTOCOLO">
+              <PropertyRef Name="IdPuntoMedicion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2111,6 +2209,38 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="db_SeguimientoProtocolo_r2Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="APP_SETTINGS">
+            <EntityTypeMapping TypeName="db_SeguimientoProtocolo_r2Model.APP_SETTINGS">
+              <MappingFragment StoreEntitySet="APP_SETTINGS">
+                <ScalarProperty Name="ServerLastModifiedDate" ColumnName="ServerLastModifiedDate" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="SettingName" ColumnName="SettingName" />
+                <ScalarProperty Name="IdSettings" ColumnName="IdSettings" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAT_PROTOCOLO">
+            <EntityTypeMapping TypeName="db_SeguimientoProtocolo_r2Model.CAT_PROTOCOLO">
+              <MappingFragment StoreEntitySet="CAT_PROTOCOLO">
+                <ScalarProperty Name="ServerLastModifiedDate" ColumnName="ServerLastModifiedDate" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="IdPuntoMedicion" ColumnName="IdPuntoMedicion" />
+                <ScalarProperty Name="IdProtocolo" ColumnName="IdProtocolo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2133,7 +2263,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Protelldb" ZoomLevel="74">
+      <Diagram Name="Protelldb" ZoomLevel="81">
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.APP_ROL" Width="1.5" PointX="8.75" PointY="16.5" Height="2.5571907552083317" IsExpanded="true" />
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.APP_USUARIO" Width="1.5" PointX="8.75" PointY="0.75" Height="4.0956022135416656" IsExpanded="true" />
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.APP_USUARIO_ROL" Width="1.5" PointX="14" PointY="16.5" Height="2.3648893229166674" IsExpanded="true" />
@@ -2287,6 +2417,10 @@
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.CAT_ACCION_ACTUAL" Width="1.5" PointX="16.375" PointY="15.75" />
         <AssociationConnector Association="db_SeguimientoProtocolo_r2Model.FK__CAT_PUNTO__IdAcc__1EA48E88" />
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.TMP_CI_REGISTRO_CONFIRMATION" Width="1.5" PointX="17.375" PointY="10.75" />
+        <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.sysdiagram" Width="1.5" PointX="18.375" PointY="0.75" />
+        <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.APP_SETTINGS" Width="1.5" PointX="18.375" PointY="3.75" />
+        <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.CAT_PROTOCOLO" Width="1.5" PointX="5.25" PointY="19.125" />
+        <AssociationConnector Association="db_SeguimientoProtocolo_r2Model.FK__CAT_PROTO__IdPun__339FAB6E" />
       </Diagram>
     </Diagrams>
   </Designer>

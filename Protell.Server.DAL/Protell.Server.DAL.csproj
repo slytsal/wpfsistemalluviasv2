@@ -59,6 +59,9 @@
     <Compile Include="POCOS\APP_ROL.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
+    <Compile Include="POCOS\APP_SETTINGS.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
     <Compile Include="POCOS\APP_USUARIO.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
@@ -81,6 +84,9 @@
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
     <Compile Include="POCOS\CAT_OPERACION_ESTRUCTURA.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\CAT_PROTOCOLO.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
     <Compile Include="POCOS\CAT_PUNTO_MEDICION.cs">
@@ -181,10 +187,12 @@
     <Compile Include="Repository\UploadLogRepository.cs" />
     <Compile Include="Repository\v2\AgrupadorIsoyetasRepository.cs" />
     <Compile Include="Repository\v2\AppRolRepository.cs" />
+    <Compile Include="Repository\v2\AppSettingsRepository.cs" />
     <Compile Include="Repository\v2\AppUsuarioRolRepository.cs" />
     <Compile Include="Repository\v2\CatDependenciaRepository.cs" />
     <Compile Include="Repository\v2\CatEstructuraRepository.cs" />
     <Compile Include="Repository\v2\CatOperacionEstructuraRepository.cs" />
+    <Compile Include="Repository\v2\CatProtocoloRepository.cs" />
     <Compile Include="Repository\v2\CatPuntoMedicionMinMaxRepository.cs" />
     <Compile Include="Repository\v2\CatSistemaRepository.cs" />
     <Compile Include="Repository\v2\CiRegistroRepository.cs" />

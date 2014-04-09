@@ -82,11 +82,9 @@ namespace Protell.ViewModel.v2
         {
             if (e.PropertyName == "SelectedItem")
             {
-                pmAll.FilterRegistros(cEstPluviograficas.SelectedItem);                
-                //View.Refresh();
-                //pmAll.GetItemsPuntosMedicion(cEstPluviograficas.SelectedItem,ESTPLUVIOGRAFICAS);                
+                pmAll.FilterRegistros(cEstPluviograficas.SelectedItem);                                                
                 this.SelectedItemTabControl = cEstPluviograficas.SelectedItem;
-                //pmAll.View.Refresh();
+                
             }
         }
 

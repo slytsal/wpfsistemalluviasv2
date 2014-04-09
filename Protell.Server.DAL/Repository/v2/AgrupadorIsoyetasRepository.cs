@@ -1,10 +1,8 @@
 ﻿using Protell.Model;
 using Protell.Server.DAL.POCOS;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 
 namespace Protell.Server.DAL.Repository.v2
 {

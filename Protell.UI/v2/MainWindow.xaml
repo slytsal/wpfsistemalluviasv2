@@ -228,7 +228,21 @@
                             <ColumnDefinition Width=".60*"/>
                         </Grid.ColumnDefinitions>
                         <my:CategoriaView  Grid.Column="0" x:Name="cEstPluviograficas" VerticalAlignment="Stretch" Margin="5" Background="White"/>
-                        <my:PuntosMedicionView x:Name="pmEstPluviograficas" Grid.Column="1" VerticalAlignment="Stretch" Margin="5" HorizontalAlignment="Stretch" Background="White"/>
+                        <!--<my:PuntosMedicionView x:Name="pmEstPluviograficas" Grid.Column="1" VerticalAlignment="Stretch" Margin="5" HorizontalAlignment="Stretch" Background="White"/>-->
+                        <ListView Name="pmEstPluviograficas" Grid.Column="1" VerticalAlignment="Stretch" Margin="5" 
+                                  HorizontalAlignment="Stretch" Background="White" 
+                                  VirtualizingStackPanel.IsVirtualizing="True"
+            VirtualizingStackPanel.VirtualizationMode="Recycling">
+                            <ListView.View>
+                                <GridView>                                    
+                                    <GridViewColumn Header="Fecha Captura" DisplayMemberBinding="{Binding FechaCaptura,StringFormat={}{0:dd/MM/yyyy}}"/>
+                                    <GridViewColumn Header="Hora" DisplayMemberBinding="{Binding HoraMilitar}"/>
+                                    <GridViewColumn Header="Valor" DisplayMemberBinding="{Binding Valor}" />
+                                    <GridViewColumn Header="Unidad Medida" DisplayMemberBinding="{Binding PUNTOMEDICION.UNIDADMEDIDA.UnidadMedidaShort, Mode=TwoWay}"/>
+                                    <GridViewColumn Header="Acción Actual" DisplayMemberBinding="{Binding AccionActual}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
                     </Grid>
                 </TabItem>
             </TabControl>

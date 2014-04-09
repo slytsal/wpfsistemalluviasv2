@@ -13,7 +13,7 @@ namespace Protell.Service.Services
     [DataContractFormat]
     public class Download : IDownload
     {
-        #region Miembros de IDownload
+       
 
         public ObservableCollection<ModifiedDataModel> Download_ModifiedData()
         {
@@ -151,12 +151,7 @@ namespace Protell.Service.Services
                 ;
             }
             return result;
-        }
-
-        
-
-        #endregion
-
+        }       
 
         public ObservableCollection<AppUsuarioRolModel> Download_AppUsuarioRol(long LastModifiedDate, long ServerLastModifiedDate)
         {
@@ -345,6 +340,37 @@ namespace Protell.Service.Services
             return result;
         }
 
-        
+        public ObservableCollection<ProtocoloModel> Download_Protocolo(long LastModifiedDate, long ServerLastModifiedDate)
+        {
+            ObservableCollection<ProtocoloModel> result = new ObservableCollection<ProtocoloModel>();
+            try
+            {
+                using(var repository=new CatProtocoloRepository())
+                {
+                    result = repository.GetProtocolo(LastModifiedDate, ServerLastModifiedDate);
+                }
+            }
+            catch (Exception)
+            {                                
+            }
+            return result;
+        }
+
+        public ObservableCollection<AppSettingsModel> Download_Settings(long LastModifiedDate, long ServerLastModifiedDate)
+        {
+            ObservableCollection<AppSettingsModel> result = new ObservableCollection<AppSettingsModel>();
+            try
+            {
+                using(var repository=new AppSettingsRepository())
+                {
+                    result = repository.GetSettings(LastModifiedDate, ServerLastModifiedDate);
+                }
+            }
+            catch (Exception)
+            {
+                                
+            }
+            return result;
+        }
     }
 }

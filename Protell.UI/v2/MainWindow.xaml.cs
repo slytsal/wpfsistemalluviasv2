@@ -274,8 +274,8 @@ namespace Protell.UI.v2
                     if (((TabControl)e.Source).SelectedIndex == 2)
                     {
                         vm.pmAll.GetItemsPuntosMedicion(vm.cEstPluviograficas.SelectedItem, ESTPLUVIOGRAFICAS);
-                        pmEstPluviograficas.DataContext = vm.pmAll;
-                        pmEstPluviograficas.init(this, vm);
+                        pmEstPluviograficas.ItemsSource = vm.pmAll.Registros;
+                        //pmEstPluviograficas.init(this, vm);
                     }
                 }
             }
