@@ -101,7 +101,6 @@ namespace Protell.ViewModel.Sync
                 }//foreach
 
                 //Subir datos
-                //Subir datos
                 if (downloadStatus)
                 {
                     Protell.DAL.Repository.v2.CiRegistroRepository crr = new DAL.Repository.v2.CiRegistroRepository();

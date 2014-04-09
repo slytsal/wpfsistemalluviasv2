@@ -59,11 +59,13 @@ namespace Protell.UI.v2
             cEstPluviograficas.DataContext = vm.cEstPluviograficas;
             cEstPluviograficas.init(this, vm);
 
-
+            //Timer de Sincronizacion Recurrente
             DTimerUploadProcess = new DispatcherTimer();
             DTimerUploadProcess.Tick += new EventHandler(DTimerUploadProcess_Tick);
             DTimerUploadProcess.Interval = new TimeSpan(0, 0, 60);
             DTimerUploadProcess.Start();
+            SyncRecurrentSingleton.Instance.DidCiRegistroDataChangedEvent += Instance_DidCiRegistroDataChangedEvent;
+
             GetAppTitle();
             vm.PropertyChanged += new PropertyChangedEventHandler(vm_PropertyChanged);
 
@@ -72,6 +74,16 @@ namespace Protell.UI.v2
             //TimerNuevo.Interval = new TimeSpan(0, 0, 20);
             //TimerNuevo.Start();            
             //this.txbMenssage.Text = logvm.GetDataTimeLastSyncLog();
+        }
+
+        /// <summary>
+        /// Evento que notifica si CiRegistro Sufrió algún cambio de información
+        /// </summary>
+        /// <param name="o">Referencia al singleton</param>
+        /// <param name="e">Argumentos</param>
+        void Instance_DidCiRegistroDataChangedEvent(object o, DidCiRegistroDataChangedArgs e)
+        {
+            string res = "";
         }
 
         void TimerNuevo_Tick(object sender, EventArgs e)
