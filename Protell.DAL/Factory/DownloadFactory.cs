@@ -19,10 +19,13 @@ namespace Protell.DAL.Factory
             string res="";
             var client = new RestClient(url);
             var request = new RestRequest(Method.POST);
+            client.Timeout = 300000;
+            request.Timeout = 300000;
             request.Resource = webMethodName;
             request.RequestFormat = RestSharp.DataFormat.Json;
             request.AddHeader("Content-type", "application/json");
             request.AddBody(bodyContent);
+            
             IRestResponse response = client.Execute(request);
             res = response.Content;
             return res;
@@ -32,7 +35,7 @@ namespace Protell.DAL.Factory
         {
             string res="";
 
-            res= this.CallWebService(SyncProperties.routeDownload, webMethodName, bodyContent);
+            res=this.CallWebService(SyncProperties.routeDownload, webMethodName, bodyContent);
 
             return res;
         }
