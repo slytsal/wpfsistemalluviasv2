@@ -95,6 +95,7 @@ namespace Protell.DAL.Repository
                         update.Valor = registro.Valor;
                         update.AccionActual = registro.AccionActual;
                         update.IsActive = registro.IsActive;
+                        update.IsModified = true;
                         update.FechaNumerica = registro.FechaNumerica;
                         UpdateRegistro(update,usuario);
                     }

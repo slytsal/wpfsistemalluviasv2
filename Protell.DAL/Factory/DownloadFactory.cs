@@ -32,7 +32,7 @@ namespace Protell.DAL.Factory
         {
             string res="";
 
-            this.CallWebService(SyncProperties.routeDownload, webMethodName, bodyContent);
+            res= this.CallWebService(SyncProperties.routeDownload, webMethodName, bodyContent);
 
             return res;
         }
