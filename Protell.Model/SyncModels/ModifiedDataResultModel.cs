@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 
 namespace Protell.Model.SyncModels
@@ -7,7 +8,7 @@ namespace Protell.Model.SyncModels
     public class ModifiedDataResultModel:ModelBase
     {
         [DataMember]
-        public ObservableCollection<ModifiedDataModel> Download_ModifiedDataResult
+        public List<ModifiedDataModel> Download_ModifiedDataResult
         {
             get { return _Download_ModifiedDataResult; }
             set
@@ -19,7 +20,7 @@ namespace Protell.Model.SyncModels
                 }
             }
         }
-        private ObservableCollection<ModifiedDataModel> _Download_ModifiedDataResult;
+        private List<ModifiedDataModel> _Download_ModifiedDataResult;
         public const string Download_ModifiedDataResultPropertyName = "Download_ModifiedDataResult";
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 
 namespace Protell.Model.SyncModels
@@ -10,6 +11,6 @@ namespace Protell.Model.SyncModels
     public class CiRegistroUploadResponseModel
     {
         [DataMember]
-        public ObservableCollection<CiRegistroUploadConfirmationModel> confirmation;
+        public List<CiRegistroUploadConfirmationModel> Upload_CiRegistroResult;
     }
 }

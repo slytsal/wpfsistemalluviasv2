@@ -6,6 +6,7 @@ using Protell.Model;
 using System.Configuration;
 using System.Collections.ObjectModel;
 using Protell.DAL.Factory;
+using System.Collections.Generic;
 
 
 namespace Protell.ViewModel.Sync
@@ -53,7 +54,7 @@ namespace Protell.ViewModel.Sync
             try
             {
                 ModifiedDataRepository modifiedDataRepository = new ModifiedDataRepository();
-                ObservableCollection<ModifiedDataModel> tablesName = modifiedDataRepository.DownloadModifiedData();
+                List<ModifiedDataModel> tablesName = modifiedDataRepository.DownloadModifiedData();
                 foreach (ModifiedDataModel item in tablesName)
                 {
                     bool x = false;
@@ -69,10 +70,7 @@ namespace Protell.ViewModel.Sync
             {
                 
             }
-
         }
-
-        
 
         public void CallDownloadCiRegistroOnDemand(long idPuntoMedicion, long lastModifiedDate, long serverLastModifiedDate)
         {
@@ -86,9 +84,6 @@ namespace Protell.ViewModel.Sync
             DownloadRepository res = new DownloadRepository();
             res.CallDownloadCiRegistroRecurrent(fechaActual, fechaFin, LastModifiedDate, ServerLastModifiedDate);
         }
-        
-
-
 
         #endregion
 

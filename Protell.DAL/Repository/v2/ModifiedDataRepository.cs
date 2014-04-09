@@ -5,15 +5,16 @@ using Protell.Model;
 using RestSharp;
 using System.Web.Script.Serialization;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Protell.DAL.Repository.v2
 {
     public class ModifiedDataRepository
     {
-        public ObservableCollection<ModifiedDataModel> DownloadModifiedData()
+        public List<ModifiedDataModel> DownloadModifiedData()
         {
-            ObservableCollection<ModifiedDataModel> modifiedServer = new ObservableCollection<ModifiedDataModel>();
-            ObservableCollection<ModifiedDataModel> lstTableNames = new ObservableCollection<ModifiedDataModel>();
+            List<ModifiedDataModel> modifiedServer = new List<ModifiedDataModel>();
+            List<ModifiedDataModel> lstTableNames = new List<ModifiedDataModel>();
             try
             {
                 string webMethod = "Download_ModifiedData";

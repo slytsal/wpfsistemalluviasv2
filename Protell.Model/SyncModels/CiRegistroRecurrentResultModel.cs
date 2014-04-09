@@ -12,7 +12,7 @@ namespace Protell.Model.SyncModels
     public class CiRegistroRecurrentResultModel : ModelBase
     {
         [DataMember]
-        public ObservableCollection<RegistroModel> Download_CIRegistroRecurrentResult
+        public List<RegistroModel> Download_CIRegistroRecurrentResult
         {
             get { return _Download_CIRegistroRecurrentResult; }
             set
@@ -24,7 +24,7 @@ namespace Protell.Model.SyncModels
                 }
             }
         }
-        private ObservableCollection<RegistroModel> _Download_CIRegistroRecurrentResult;
+        private List<RegistroModel> _Download_CIRegistroRecurrentResult;
         public const string Download_CIRegistroRecurrentPropertyName = "Download_CIRegistroRecurrentResult";
     }
 }

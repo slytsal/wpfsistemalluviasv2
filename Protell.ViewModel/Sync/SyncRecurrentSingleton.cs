@@ -6,6 +6,7 @@ using Protell.Server.DAL.POCOS;
 using System.Threading;
 using Protell.Server.DAL.Repository.v2;
 using Protell.DAL.Factory;
+using System.Collections.Generic;
 
 namespace Protell.ViewModel.Sync
 {
@@ -72,14 +73,17 @@ namespace Protell.ViewModel.Sync
             try
             {
                 Protell.DAL.Repository.v2.ModifiedDataRepository modifiedDataRepository = new Protell.DAL.Repository.v2.ModifiedDataRepository();
-                ObservableCollection<ModifiedDataModel> tablesName = modifiedDataRepository.DownloadModifiedData();
+                List<ModifiedDataModel> tablesName = modifiedDataRepository.DownloadModifiedData();
+
+                bool status = true;
+                bool downloadStatus = true;
 
                 //TEST: Solo tomar la de CI_REGISTRO
-
                 foreach (ModifiedDataModel item in tablesName)
                 {
+                    
+
                     //TEST: Solo tomar la de CI_REGISTRO
-                    bool x = false;
                     IServiceFactory factory = ServiceFactory.Instance.getClass(item.SYNCTABLE.SyncTableName);
                     if (item.SYNCTABLE.SyncTableName.ToUpper() == "CI_REGISTRO")
                     {
@@ -87,11 +91,21 @@ namespace Protell.ViewModel.Sync
                         ((Protell.DAL.Repository.v2.CiRegistroRepository)factory).DidCiRegistroRecurrentDataChangedHandler += SyncRecurrentSingleton_DidCiRegistroRecurrentDataChangedHandler;
 
                         //TODO: Cuando se haya probado la descarga de información de los catálogos pasar estas lineas fuera del if
-                        if (factory.Download())
+                        status=factory.Download();
+                        downloadStatus=(downloadStatus==false || status==false)?false:status;
+                        if (status)
                         {
                             modifiedDataRepository.UpdateServerModifiedDate(item);
                         }
                     }
+                }//foreach
+
+                //Subir datos
+                //Subir datos
+                if (downloadStatus)
+                {
+                    Protell.DAL.Repository.v2.CiRegistroRepository crr = new DAL.Repository.v2.CiRegistroRepository();
+                    crr.Upload();
                 }
             }
             catch (Exception ex)

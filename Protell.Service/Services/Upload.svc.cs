@@ -2,6 +2,8 @@
 using System.ServiceModel;
 using System.ServiceModel.Activation;
 using Protell.Model.SyncModels;
+using Protell.Server.DAL.Repository.v2;
+using System.Collections.Generic;
 
 namespace Protell.Service.Services
 {
@@ -27,28 +29,23 @@ namespace Protell.Service.Services
         }
 
 
-        public bool Upload_CiRegistro(CiRegistroUploadModel param)
+        public List<CiRegistroUploadConfirmationModel> Upload_CiRegistro(CiRegistroUploadModel param)
         {
-            bool x = false;
+            List<CiRegistroUploadConfirmationModel> response = null;
             try
             {
                 if (param != null && param.CiRegistro != null && param.CiRegistro.Count > 0)
                 {
-
+                    CiRegistroRepository crr = new CiRegistroRepository();
+                    response=crr.UpsertUploaded(param.CiRegistro);
                 }
             }
             catch (Exception ex)
             {                
                 throw;
             }
-            return x;
 
-        }
-
-
-        public bool Upload_CiRegistro(CiRegistroResultModel param)
-        {
-            throw new NotImplementedException();
+            return response;
         }
     }
 }
