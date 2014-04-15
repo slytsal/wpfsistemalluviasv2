@@ -64,9 +64,8 @@ namespace Protell.DAL.Repository.v2
                 model = new JavaScriptSerializer().Deserialize<CatPuntoMedicionResultModel>(res);
                 if (model.Download_PuntosMedicionResult != null && model.Download_PuntosMedicionResult.Count > 0)
                 {
-                    Upsert(model.Download_PuntosMedicionResult);
-                }
-                x = true;
+                    x=Upsert(model.Download_PuntosMedicionResult);
+                }                
             }
             catch (Exception ex)
             {
@@ -76,8 +75,9 @@ namespace Protell.DAL.Repository.v2
             return x;
         }
 
-        public void Upsert(ObservableCollection<PuntoMedicionModel> items)
+        public bool Upsert(ObservableCollection<PuntoMedicionModel> items)
         {
+            bool x = false;
             using (var entity = new db_SeguimientoProtocolo_r2Entities())
             {
                 try
@@ -136,12 +136,13 @@ namespace Protell.DAL.Repository.v2
                         }
                     }
                     entity.SaveChanges();
+                    x = true;
                 }
                 catch (Exception ex)
                 {
                     AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });
                 }
-
+                return x;
             }
         }
     }

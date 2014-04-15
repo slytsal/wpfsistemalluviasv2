@@ -31,12 +31,6 @@ namespace Protell.Server.DAL.POCOS
             set;
         }
     
-        public virtual string UsuarioPwd
-        {
-            get;
-            set;
-        }
-    
         public virtual string Nombre
         {
             get;
@@ -98,6 +92,12 @@ namespace Protell.Server.DAL.POCOS
         }
     
         public virtual Nullable<long> ServerLastModifiedDate
+        {
+            get;
+            set;
+        }
+    
+        public virtual byte[] UsuarioPwd
         {
             get;
             set;

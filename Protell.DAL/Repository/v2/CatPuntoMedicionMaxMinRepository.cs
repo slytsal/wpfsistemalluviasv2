@@ -122,5 +122,29 @@ namespace Protell.DAL.Repository.v2
 
             }
         }
+
+        public PuntoMedicionMaxMinModel GetMaxMin(long IdPuntoMedicion)
+        {
+            PuntoMedicionMaxMinModel model = new PuntoMedicionMaxMinModel();
+            try
+            {
+                using(var entity=new db_SeguimientoProtocolo_r2Entities())
+                {
+                    (from item in entity.CAT_PUNTO_MEDICION_MAX_MIN
+                     where item.IdPuntoMedicion == IdPuntoMedicion
+                     select item).ToList().ForEach(row =>
+                     {
+                         model.IdPuntoMedicionMaxMin = row.IdPuntoMedicionMaxMin;
+                         model.Max = row.Max;
+                         model.Min = row.Min;
+                     });
+                }
+            }
+            catch (Exception)
+            {                                
+            }
+
+            return model;
+        }
     }
 }

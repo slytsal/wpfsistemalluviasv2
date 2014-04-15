@@ -73,6 +73,7 @@ namespace Protell.Model
                 {
                     _FechaCaptura = value;
                     OnPropertyChanged(FechaCapturaPropertyName);
+                    
                 }
             }
         }
@@ -234,7 +235,7 @@ namespace Protell.Model
         public const string IsCheckedPropertyName = "IsChecked";
 
         // **************************** **************************** ****************************
-
+        [DataMember]
         public PuntoMedicionModel PUNTOMEDICION
         {
             get { return _PUNTOMEDICION; }
@@ -251,6 +252,7 @@ namespace Protell.Model
         public const string PUNTOMEDICIONPropertyName = "PUNTOMEDICION";
 
         // **************************** **************************** ****************************
+        [DataMember]
         public CondProModel Condicion
         {
             get { return _Condicion; }
@@ -422,7 +424,7 @@ namespace Protell.Model
         {
             get
             {
-                 _Error = string.Empty;
+                _Error = string.Empty;
                 switch (columnName)
                 {
                     case "HoraMilitar":

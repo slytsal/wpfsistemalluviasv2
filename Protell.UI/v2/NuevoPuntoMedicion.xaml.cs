@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using Protell.ViewModel.v2;
 using System.Timers;
+using Protell.Model;
 
 namespace Protell.UI.v2
 {
@@ -12,38 +13,50 @@ namespace Protell.UI.v2
     public partial class NuevoPuntoMedicion : Window
     {
         Confirmation c = new Confirmation();
-        TableroViewModel viewModel;
+        MainViewModel viewModel;
+
+        CapturaViewModel capturaViewModel;//= new CapturaViewModel();
+        
+        //Editar registro existente
+        public NuevoPuntoMedicion(RegistroModel registroModel,MainViewModel vm)
+        {
+            InitializeComponent();
+            capturaViewModel = new CapturaViewModel();
+            capturaViewModel.PropertyChanged += capturaViewModel_PropertyChanged;
+            viewModel = vm;            
+            capturaViewModel.InitEdit(registroModel,vm);
+            this.DataContext = capturaViewModel;
+            dtpFecha.Focus();            
+        }
+
+        void capturaViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName=="IsSave")
+            {
+                if (capturaViewModel.IsSave)
+                    this.Close();
+            }
+        }
+
         public NuevoPuntoMedicion()
         {
             InitializeComponent();
-            viewModel = new TableroViewModel(c);
-            dtpFecha.Focus();
-            //Timer tm = new Timer();            
-            //tm.Interval = 1000;
-            //tm.Enabled = true;
-            //tm.Elapsed += new ElapsedEventHandler(tm_Elapsed);
-            //tm.Start();
+            capturaViewModel = new CapturaViewModel();
+            capturaViewModel.PropertyChanged += capturaViewModel_PropertyChanged;
+            capturaViewModel.InitDefault(null);
+            this.DataContext = capturaViewModel;
+            dtpFecha.Focus();            
         }
-
-        void tm_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            //btnGuardar_Click(sender,null);
-            //Timer tm = (Timer) sender;
-            //tm.Enabled = false;
-        }
-
-
-
-        public NuevoPuntoMedicion(TableroViewModel vm)
+        
+        public NuevoPuntoMedicion(MainViewModel vm)
         {
             InitializeComponent();
+            capturaViewModel = new CapturaViewModel();
+            capturaViewModel.PropertyChanged += capturaViewModel_PropertyChanged;
+            capturaViewModel.InitDefault(vm);
             viewModel = vm;
             dtpFecha.Focus();
-            //Timer tm = new Timer();
-            //tm.Interval = 1000;
-            //tm.Enabled = true;
-            //tm.Elapsed += new ElapsedEventHandler(tm_Elapsed);
-            //tm.Start();
+            this.DataContext = capturaViewModel;
            
         }
 
@@ -52,12 +65,12 @@ namespace Protell.UI.v2
             if (e.Key == Key.Escape) this.Close();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (this.txbTitulo.Text == "Nueva Captura") viewModel.DefaultValues();
-            this.DataContext = viewModel;            
-            dtpFecha.Focus();
-        }
+        //private void Window_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //capturaViewModel.InitDefault(viewModel);
+        //if (this.txbTitulo.Text == "Nueva Captura") capturaViewModel.DefaultValues();
+            
+        //}
 
         private void txtValor_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -71,29 +84,29 @@ namespace Protell.UI.v2
 
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                viewModel.SaveCommand.Execute(null);
-                Action a = () =>
-                {
-                    if (viewModel.IsSave)
-                    {
-                        this.Close();
-                    }
-                };
-                Application.Current.Dispatcher.BeginInvoke(a);                
-            }
-            catch (Exception)
-            {
-                Action a = () =>
-                {
-                    if (viewModel.IsSave)
-                    {
-                        this.Close();
-                    }
-                };
-                Application.Current.Dispatcher.BeginInvoke(a);                
-            }
+            //try
+            //{
+            //    viewModel.SaveCommand.Execute(null);
+            //    Action a = () =>
+            //    {
+            //        if (viewModel.IsSave)
+            //        {
+            //            this.Close();
+            //        }
+            //    };
+            //    Application.Current.Dispatcher.BeginInvoke(a);                
+            //}
+            //catch (Exception)
+            //{
+            //    Action a = () =>
+            //    {
+            //        if (viewModel.IsSave)
+            //        {
+            //            this.Close();
+            //        }
+            //    };
+            //    Application.Current.Dispatcher.BeginInvoke(a);                
+            //}
             
         }
 

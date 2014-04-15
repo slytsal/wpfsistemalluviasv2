@@ -21,7 +21,7 @@ namespace Protell.ViewModel.v2
         {
             Load();
             GetSyncLog();
-            GetStatusConexion();
+            PingServer();
         }
 
         public SyncLogViewModel(string Dummy)
@@ -118,13 +118,13 @@ namespace Protell.ViewModel.v2
         }
 
         #region Validar conexion.
-        private bool GetStatusConexion()
+        private bool PingServer()
         {
             bool x = false;
             try
-            {                
-                x = NetworkInterface.GetIsNetworkAvailable();
-                //Networ
+            {
+                x = syncLogRepository.PingServer();// NetworkInterface.GetIsNetworkAvailable();
+                
                 if (!x)
                 {
                     Conexion = new StatusInternetModel()

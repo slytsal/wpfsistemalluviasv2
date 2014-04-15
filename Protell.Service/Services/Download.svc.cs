@@ -13,7 +13,10 @@ namespace Protell.Service.Services
     [DataContractFormat]
     public class Download : IDownload
     {
-       
+        public bool PingServer()
+        {
+            return true;
+        }
 
         public ObservableCollection<ModifiedDataModel> Download_ModifiedData()
         {
@@ -136,6 +139,22 @@ namespace Protell.Service.Services
             return puntosMedicion;
         }
 
+        public UsuarioModel Download_AppUsuario(string Usuario, string Password)
+        {
+            UsuarioModel result = new UsuarioModel();
+            try
+            {
+                using (var repository=new  AppUsuarioRepository())
+                {
+                    result = repository.getUsuario(Usuario, Password);
+                }
+            }
+            catch (Exception)
+            {                                
+            }
+            return result;
+        }
+        
         public ObservableCollection<AppRolModel> Download_AppRol(long LastModifiedDate, long ServerLastModifiedDate)
         {
             ObservableCollection<AppRolModel> result = new ObservableCollection<AppRolModel>();
@@ -372,5 +391,24 @@ namespace Protell.Service.Services
             }
             return result;
         }
+
+        public ObservableCollection<AccionActualModel> Download_AccionActual(long LastModifiedDate, long ServerLastModifiedDate)
+        {
+            ObservableCollection<AccionActualModel> result = new ObservableCollection<AccionActualModel>();
+            try
+            {
+                using (var repository = new CatAccionActualRepository())
+                {
+                    result = repository.GetAccionActual(LastModifiedDate, ServerLastModifiedDate);
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            return result;
+        }
+
+        
     }
 }

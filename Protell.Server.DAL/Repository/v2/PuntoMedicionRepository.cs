@@ -31,7 +31,10 @@ namespace Protell.Server.DAL.Repository.v2
                               IsActive = row.IsActive,
                               IsModified = row.IsModified,
                               LastModifiedDate = row.LastModifiedDate,
-                              ServerLastModifiedDate = row.ServerLastModifiedDate
+                              ServerLastModifiedDate = row.ServerLastModifiedDate,
+                              vAccion=row.vAccion,
+                              vCondicion=row.vCondicion,
+                              Visibility=(bool)row.Visibility
                           });
                       });
                 }

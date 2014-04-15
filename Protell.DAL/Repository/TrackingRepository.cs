@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using Microsoft.Win32;
 using System.Management;
+using System.Web.Script.Serialization;
 
 namespace Protell.DAL.Repository
 {
@@ -28,7 +29,10 @@ namespace Protell.DAL.Repository
                         Equipo=tracking.Equipo,
                         Ubicacion=tracking.Ubicacion,
                         IdRegistro=tracking.IdRegistro,
-                        IdUsuario=tracking.IdUsuario                        
+                        IdUsuario=tracking.IdUsuario ,
+                        IsModified=tracking.IsModified,
+                        LastModifiedDate=tracking.LastModifiedDate,
+                        ServerLastModifiedDate=tracking.ServerLastModifiedDate
                     });
                     entity.SaveChanges();
                 }
@@ -66,7 +70,7 @@ namespace Protell.DAL.Repository
             try
             {
                 string valor="";
-                
+                valor = new JavaScriptSerializer().Serialize(registro);
                 track.IdTracking = long.Parse(( String.Format("{0:yyyy:MM:dd:HH:mm:ss:fff}", DateTime.Now) ).Replace(":", ""));
                 track.Accion = accion;
                 track.Valor = valor;
@@ -75,6 +79,9 @@ namespace Protell.DAL.Repository
                 track.Ubicacion = Environment.OSVersion.ToString();                
                 track.IdRegistro = registro.IdRegistro;
                 track.IdUsuario = usuario.IdUsuario;
+                track.IsModified = true;
+                track.LastModifiedDate = long.Parse((String.Format("{0:yyyy:MM:dd:HH:mm:ss:fff}", DateTime.Now)).Replace(":", ""));
+                track.ServerLastModifiedDate = 0;
             }
             catch (Exception)
             {

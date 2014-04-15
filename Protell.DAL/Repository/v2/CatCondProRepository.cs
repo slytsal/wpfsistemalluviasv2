@@ -68,7 +68,6 @@ namespace Protell.DAL.Repository.v2
             return x;
         }
 
-
         public void Upsert(ObservableCollection<CondProModel> items)
         {
             using (var entity = new db_SeguimientoProtocolo_r2Entities())
@@ -120,6 +119,33 @@ namespace Protell.DAL.Repository.v2
                 }
 
             }
+        }
+
+        public ObservableCollection<CondProModel> GetCondicions()
+        {
+            ObservableCollection<CondProModel> items = new ObservableCollection<CondProModel>();
+            try
+            {
+                using(var entity=new db_SeguimientoProtocolo_r2Entities())
+                {
+                    (from res in entity.CAT_CONDPRO
+                     where res.IsActive == true
+                     select res).ToList().ForEach(row => {
+                         items.Add(new CondProModel()
+                         {
+                             IdCondicion = row.IdCondicion,
+                             CondicionName = row.CondicionName,
+                             PathCodicion = row.PathCodicion
+                         });
+                     });
+                }
+            }
+            catch (Exception ex)
+            {
+                
+            }
+
+            return items;
         }
     }
 }

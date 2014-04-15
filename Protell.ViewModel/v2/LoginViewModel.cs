@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Protell.DAL;
 using Protell.DAL.Repository;
+using Protell.DAL.Repository.v2;
 using Protell.Model;
 
 namespace Protell.ViewModel.v2
@@ -14,13 +15,14 @@ namespace Protell.ViewModel.v2
         public LoginViewModel()
         {
             usuarioRepository= new UsuarioRepository();
+
             //this.UserName = "icastillo@inmeta.com.mx";
             //this.UserPassword = "Passw0rd1!";            
         }
         #endregion        
 
         #region Instancias.
-
+        
         private UsuarioRepository usuarioRepository;         
         #endregion
 
@@ -134,6 +136,22 @@ namespace Protell.ViewModel.v2
             }            
         }
 
+        private void AttmpLoginServer()
+        {
+            try
+            {
+                using(var repository=new AppUsuarioRepository())
+                {
+                    bool x = false;
+                    x = repository.Download(this.UserName, this.UserPassword);
+                }
+            }
+            catch (Exception)
+            {
+                                
+            }
+        }
+
         private bool CanLogin()
         {
             bool x = false;
@@ -144,10 +162,10 @@ namespace Protell.ViewModel.v2
 
 
         public void ValidateAutoLogin()
-        {
-            
+        {            
             try
             {
+
                 this.Usuario = usuarioRepository.AutoLogin();
             }
             catch (Exception)

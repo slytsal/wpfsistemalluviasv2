@@ -7,12 +7,18 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Data;
 using Protell.DAL.Repository.v2;
+using System.Collections.Generic;
 
 namespace Protell.ViewModel.v2
 {
     public class CategoriasViewModel : ViewModelBase
     {
         string Categoria = "";
+
+        private const string LUMBRERAS = "LUMBRERAS";
+        private const string PUNTOSMEDICION = "PUNTOSMEDICION";
+        private const string ESTPLUVIOGRAFICAS = "ESTPLUVIOGRAFICAS";
+
 
         #region Constructor
         public CategoriasViewModel()
@@ -144,16 +150,16 @@ namespace Protell.ViewModel.v2
             {
                 switch (Categoria)
                 {
-                    case "PuntosMedicion":                        
+                    case PUNTOSMEDICION:                        
                         this.PuntosMedicion = _PuntoMedicionRepository.GetPuntosMedicion() as ObservableCollection<PuntoMedicionModel>;
                                          
                         break;
 
-                    case "Lumbreras":
+                    case LUMBRERAS:
                         this.PuntosMedicion = _PuntoMedicionRepository.GetLumbreras() as ObservableCollection<PuntoMedicionModel>;                        
                         break;
 
-                    case "EstPluviograficas":
+                    case ESTPLUVIOGRAFICAS:
                         this.PuntosMedicion = _PuntoMedicionRepository.GetEstPluviograficas() as ObservableCollection<PuntoMedicionModel>;
                         
                         break;

@@ -63,21 +63,21 @@ namespace Protell.Model
         public const string PathCodicionPropertyName = "PathCodicion";
 
         // **************************** **************************** **************************** 
-        [DataMember]
-        public long IdConsideracion
-        {
-            get { return _IdConsideracion; }
-            set
-            {
-                if (_IdConsideracion != value)
-                {
-                    _IdConsideracion = value;
-                    OnPropertyChanged(IdConsideracionPropertyName);
-                }
-            }
-        }
-        private long _IdConsideracion;
-        public const string IdConsideracionPropertyName = "IdConsideracion";
+        //[DataMember]
+        //public long IdConsideracion
+        //{
+        //    get { return _IdConsideracion; }
+        //    set
+        //    {
+        //        if (_IdConsideracion != value)
+        //        {
+        //            _IdConsideracion = value;
+        //            OnPropertyChanged(IdConsideracionPropertyName);
+        //        }
+        //    }
+        //}
+        //private long _IdConsideracion;
+        //public const string IdConsideracionPropertyName = "IdConsideracion";
 
         // **************************** **************************** **************************** 
         [DataMember]

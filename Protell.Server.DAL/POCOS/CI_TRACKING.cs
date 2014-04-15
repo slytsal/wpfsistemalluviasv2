@@ -121,21 +121,6 @@ namespace Protell.Server.DAL.POCOS
 
         #region Navigation Properties
     
-        public virtual APP_USUARIO APP_USUARIO
-        {
-            get { return _aPP_USUARIO; }
-            set
-            {
-                if (!ReferenceEquals(_aPP_USUARIO, value))
-                {
-                    var previousValue = _aPP_USUARIO;
-                    _aPP_USUARIO = value;
-                    FixupAPP_USUARIO(previousValue);
-                }
-            }
-        }
-        private APP_USUARIO _aPP_USUARIO;
-    
         public virtual CI_REGISTRO CI_REGISTRO
         {
             get { return _cI_REGISTRO; }
@@ -150,36 +135,27 @@ namespace Protell.Server.DAL.POCOS
             }
         }
         private CI_REGISTRO _cI_REGISTRO;
+    
+        public virtual APP_USUARIO APP_USUARIO
+        {
+            get { return _aPP_USUARIO; }
+            set
+            {
+                if (!ReferenceEquals(_aPP_USUARIO, value))
+                {
+                    var previousValue = _aPP_USUARIO;
+                    _aPP_USUARIO = value;
+                    FixupAPP_USUARIO(previousValue);
+                }
+            }
+        }
+        private APP_USUARIO _aPP_USUARIO;
 
         #endregion
 
         #region Association Fixup
     
         private bool _settingFK = false;
-    
-        private void FixupAPP_USUARIO(APP_USUARIO previousValue)
-        {
-            if (previousValue != null && previousValue.CI_TRACKING.Contains(this))
-            {
-                previousValue.CI_TRACKING.Remove(this);
-            }
-    
-            if (APP_USUARIO != null)
-            {
-                if (!APP_USUARIO.CI_TRACKING.Contains(this))
-                {
-                    APP_USUARIO.CI_TRACKING.Add(this);
-                }
-                if (IdUsuario != APP_USUARIO.IdUsuario)
-                {
-                    IdUsuario = APP_USUARIO.IdUsuario;
-                }
-            }
-            else if (!_settingFK)
-            {
-                IdUsuario = null;
-            }
-        }
     
         private void FixupCI_REGISTRO(CI_REGISTRO previousValue)
         {
@@ -202,6 +178,30 @@ namespace Protell.Server.DAL.POCOS
             else if (!_settingFK)
             {
                 IdRegistro = null;
+            }
+        }
+    
+        private void FixupAPP_USUARIO(APP_USUARIO previousValue)
+        {
+            if (previousValue != null && previousValue.CI_TRACKING.Contains(this))
+            {
+                previousValue.CI_TRACKING.Remove(this);
+            }
+    
+            if (APP_USUARIO != null)
+            {
+                if (!APP_USUARIO.CI_TRACKING.Contains(this))
+                {
+                    APP_USUARIO.CI_TRACKING.Add(this);
+                }
+                if (IdUsuario != APP_USUARIO.IdUsuario)
+                {
+                    IdUsuario = APP_USUARIO.IdUsuario;
+                }
+            }
+            else if (!_settingFK)
+            {
+                IdUsuario = null;
             }
         }
 

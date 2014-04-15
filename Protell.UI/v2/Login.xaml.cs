@@ -27,7 +27,7 @@ namespace Protell.UI.v2
                 LoginViewModel login = (LoginViewModel) sender;                
                 if (login.Usuario != null)
                 {
-                    MainWindow view = new MainWindow(login.Usuario);
+                    Main view = new Main(login.Usuario);
                     view.Show();
                     this.Close();
                 }                

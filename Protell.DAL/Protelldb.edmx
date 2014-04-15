@@ -666,7 +666,7 @@
         </Function>
         <Function Name="spGetCI_REGISTRO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="FechaActual" Type="bigint" Mode="In" />
-          <Parameter Name="Categoria" Type="nvarchar" Mode="In" />
+          <Parameter Name="IdPuntoMedicion" Type="bigint" Mode="In" />
         </Function>
         <Function Name="spGetDateTimeLastSync" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spGetDaysToSync" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -985,7 +985,7 @@
           </AssociationSet>
           <FunctionImport Name="spGetCI_REGISTRO" ReturnType="Collection(db_SeguimientoProtocolo_r2Model.spGetCI_REGISTRO_Result)">
             <Parameter Name="FechaActual" Mode="In" Type="Int64" />
-            <Parameter Name="Categoria" Mode="In" Type="String" />
+            <Parameter Name="IdPuntoMedicion" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="spCommitBulkUpdateCiRegistroConfirmation" ReturnType="Collection(Boolean)" />
           <FunctionImport Name="spPrepareBulkUpdateCiRegistroConfirmation" ReturnType="Collection(Boolean)" />
@@ -1673,12 +1673,21 @@
           <Property Type="Int32" Name="DiaRegistro" Nullable="false" />
           <Property Type="Double" Name="Valor" Nullable="false" />
           <Property Type="String" Name="AccionActual" Nullable="true" MaxLength="1000" />
-          <Property Type="Boolean" Name="IsActive" Nullable="false" />
-          <Property Type="Boolean" Name="IsModified" Nullable="false" />
           <Property Type="Int64" Name="LastModifiedDate" Nullable="false" />
           <Property Type="Int64" Name="IdCondicion" Nullable="false" />
           <Property Type="Int64" Name="ServerLastModifiedDate" Nullable="true" />
           <Property Type="Int64" Name="FechaNumerica" Nullable="true" />
+          <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Boolean" Name="vAccion" Nullable="true" />
+          <Property Type="Boolean" Name="vCondicion" Nullable="true" />
+          <Property Type="Boolean" Name="Visibility" Nullable="false" />
+          <Property Type="Int64" Name="IdUnidadMedida" Nullable="false" />
+          <Property Type="String" Name="UnidadMedidaName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="UnidadMedidaShort" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="CondicionName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="PathCodicion" Nullable="false" MaxLength="500" />
+          <Property Type="Int64" Name="IdTipoPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="TipoPuntoMedicionName" Nullable="false" MaxLength="250" />
         </ComplexType>
         <EntityType Name="TMP_CI_REGISTRO_CONFIRMATION">
           <Key>
@@ -2187,12 +2196,21 @@
                 <ScalarProperty Name="DiaRegistro" ColumnName="DiaRegistro" />
                 <ScalarProperty Name="Valor" ColumnName="Valor" />
                 <ScalarProperty Name="AccionActual" ColumnName="AccionActual" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="IsModified" ColumnName="IsModified" />
                 <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
                 <ScalarProperty Name="IdCondicion" ColumnName="IdCondicion" />
                 <ScalarProperty Name="ServerLastModifiedDate" ColumnName="ServerLastModifiedDate" />
                 <ScalarProperty Name="FechaNumerica" ColumnName="FechaNumerica" />
+                <ScalarProperty Name="PuntoMedicionName" ColumnName="PuntoMedicionName" />
+                <ScalarProperty Name="vAccion" ColumnName="vAccion" />
+                <ScalarProperty Name="vCondicion" ColumnName="vCondicion" />
+                <ScalarProperty Name="Visibility" ColumnName="Visibility" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="UnidadMedidaName" ColumnName="UnidadMedidaName" />
+                <ScalarProperty Name="UnidadMedidaShort" ColumnName="UnidadMedidaShort" />
+                <ScalarProperty Name="CondicionName" ColumnName="CondicionName" />
+                <ScalarProperty Name="PathCodicion" ColumnName="PathCodicion" />
+                <ScalarProperty Name="IdTipoPuntoMedicion" ColumnName="IdTipoPuntoMedicion" />
+                <ScalarProperty Name="TipoPuntoMedicionName" ColumnName="TipoPuntoMedicionName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

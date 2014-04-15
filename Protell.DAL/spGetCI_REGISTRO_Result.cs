@@ -61,18 +61,6 @@ namespace Protell.DAL
             set;
         }
     
-        public bool IsActive
-        {
-            get;
-            set;
-        }
-    
-        public bool IsModified
-        {
-            get;
-            set;
-        }
-    
         public long LastModifiedDate
         {
             get;
@@ -92,6 +80,72 @@ namespace Protell.DAL
         }
     
         public Nullable<long> FechaNumerica
+        {
+            get;
+            set;
+        }
+    
+        public string PuntoMedicionName
+        {
+            get;
+            set;
+        }
+    
+        public Nullable<bool> vAccion
+        {
+            get;
+            set;
+        }
+    
+        public Nullable<bool> vCondicion
+        {
+            get;
+            set;
+        }
+    
+        public bool Visibility
+        {
+            get;
+            set;
+        }
+    
+        public long IdUnidadMedida
+        {
+            get;
+            set;
+        }
+    
+        public string UnidadMedidaName
+        {
+            get;
+            set;
+        }
+    
+        public string UnidadMedidaShort
+        {
+            get;
+            set;
+        }
+    
+        public string CondicionName
+        {
+            get;
+            set;
+        }
+    
+        public string PathCodicion
+        {
+            get;
+            set;
+        }
+    
+        public long IdTipoPuntoMedicion
+        {
+            get;
+            set;
+        }
+    
+        public string TipoPuntoMedicionName
         {
             get;
             set;

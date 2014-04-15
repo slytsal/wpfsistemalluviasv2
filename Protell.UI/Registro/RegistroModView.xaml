@@ -174,7 +174,8 @@
                                  ItemsSource="{Binding Condicion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                  SelectedItem="{Binding SelectedCondicion,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                  Name="ListCondicion" BorderBrush="Transparent"
-                                 Visibility="{Binding Registro.PUNTOMEDICION.UIVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                 Visibility="{Binding Registro.PUNTOMEDICION.UIVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                 >
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <my:CondicionActualView />

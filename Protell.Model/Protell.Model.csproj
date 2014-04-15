@@ -57,6 +57,8 @@
     <Compile Include="CnfSettingModel.cs" />
     <Compile Include="ProtocoloModel.cs" />
     <Compile Include="SyncModels\AppSettingsResultModel.cs" />
+    <Compile Include="SyncModels\AppUsuarioResultModel.cs" />
+    <Compile Include="SyncModels\CatAccionActualResultModel.cs" />
     <Compile Include="SyncModels\CatAgrupadorIsoyetasResultModel.cs" />
     <Compile Include="SyncModels\CatDependenciaResultModel.cs" />
     <Compile Include="SyncModels\CatEstructuraResultModel.cs" />
@@ -68,6 +70,7 @@
     <Compile Include="SyncModels\CatSistemaResultModel.cs" />
     <Compile Include="SyncModels\CatTipoPuntoMedicionResultModel.cs" />
     <Compile Include="SyncModels\CatUnidadMedidaResultModel.cs" />
+    <Compile Include="SyncModels\CiRegistroOnDemandResultModel.cs" />
     <Compile Include="SyncModels\CiRegistroUploadConfirmationModel.cs" />
     <Compile Include="SyncModels\CiRegistroUploadModel.cs" />
     <Compile Include="SyncModels\CiRegistroUploadResponseModel.cs" />
@@ -164,6 +167,7 @@
     <Compile Include="SyncModels\CiRegistroRecurrentResultModel.cs" />
     <Compile Include="SyncModels\CiRegistroResultModel.cs" />
     <Compile Include="SyncModels\ModifiedDataResultModel.cs" />
+    <Compile Include="SyncModels\PingServerResultModel.cs" />
     <Compile Include="SyncModels\RelEstPuntoMedResultModel.cs" />
     <Compile Include="SyncModels\RelEstructuraDependenciaResultModel.cs" />
     <Compile Include="SyncModels\UserDataSync.cs" />

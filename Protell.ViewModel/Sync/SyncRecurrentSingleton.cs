@@ -91,12 +91,13 @@ namespace Protell.ViewModel.Sync
                         ((Protell.DAL.Repository.v2.CiRegistroRepository)factory).DidCiRegistroRecurrentDataChangedHandler += SyncRecurrentSingleton_DidCiRegistroRecurrentDataChangedHandler;
 
                         //TODO: Cuando se haya probado la descarga de información de los catálogos pasar estas lineas fuera del if
-                        status=factory.Download();
-                        downloadStatus=(downloadStatus==false || status==false)?false:status;
-                        if (status)
-                        {
-                            modifiedDataRepository.UpdateServerModifiedDate(item);
-                        }
+                        
+                    }
+                    status = factory.Download();
+                    downloadStatus = (downloadStatus == false || status == false) ? false : status;
+                    if (status)
+                    {
+                        modifiedDataRepository.UpdateServerModifiedDate(item);
                     }
                 }//foreach
 

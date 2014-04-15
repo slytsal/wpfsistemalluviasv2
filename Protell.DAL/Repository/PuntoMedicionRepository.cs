@@ -109,10 +109,10 @@ namespace Protell.DAL.Repository
             {
                 try
                 {                    
-                    ( from o in entity.CAT_PUNTO_MEDICION
+                    ( from o in entity.CAT_PUNTO_MEDICION                      
                       orderby o.PuntoMedicionName  ascending
                       where o.IsActive == true && o.IdTipoPuntoMedicion != 3 && o.IdTipoPuntoMedicion != 1                      
-                      select o ).ToList().ForEach(p =>
+                      select o).ToList().ForEach(p =>
                       {
                           PuntoMedicions.Add(new Model.PuntoMedicionModel()
                           {
@@ -130,7 +130,7 @@ namespace Protell.DAL.Repository
                               {
                                   IdTipoPuntoMedicion = p.IdTipoPuntoMedicion,
                                   TipoPuntoMedicionName = p.CAT_TIPO_PUNTO_MEDICION.TipoPuntoMedicionName
-                              },
+                              },                                                           
                               ValorReferencia = (float) p.ValorReferencia,
                               ParametroReferencia = p.ParametroReferencia,
                               IsActive = p.IsActive,
@@ -239,6 +239,8 @@ namespace Protell.DAL.Repository
             }
             return PuntoMedicions;
         }
+
+        
 
         // Read ID.
         public Model.PuntoMedicionModel GetPuntoMedicionID(Model.PuntoMedicionModel puntomedicion)

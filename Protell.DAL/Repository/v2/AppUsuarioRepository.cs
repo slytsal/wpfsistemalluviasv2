@@ -1,15 +1,28 @@
 ﻿using Protell.DAL.Factory;
 using Protell.Model;
+using Protell.Model.SyncModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Web.Script.Serialization;
 
 namespace Protell.DAL.Repository.v2
 {
-    public class AppUsuarioRepository : IDisposable, IServiceFactory
+    public class AppUsuarioRepository : IDisposable
     {
+        private class BodyContent
+        {
+            public BodyContent(string Usuario, string Password)
+            {
+                this.Usurio = Usuario;
+                this.Password = Password;
+            }
+            public string Usurio;
+            public string Password;
+        }
+
         public ObservableCollection<UsuarioModel> GetIsModified()
         {
             ObservableCollection<UsuarioModel> result = new ObservableCollection<UsuarioModel>();
@@ -51,9 +64,48 @@ namespace Protell.DAL.Repository.v2
             return;
         }
 
-        public bool Download()
+        public bool Download(string Usuario, string Password)
         {
-            return true;
+            bool x = false;
+            string webMethodName = "Download_AppUsuario";
+            AppUsuarioResultModel model = new AppUsuarioResultModel();            
+            BodyContent bodyContent = null;
+            try
+            {
+                bodyContent = new BodyContent(Usuario, Password);
+                //Desearilizar la respuestas                
+                string jsonResponse = DownloadFactory.Instance.CallWebService(webMethodName, bodyContent);
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                js.MaxJsonLength = Int32.MaxValue;
+                model = js.Deserialize<AppUsuarioResultModel>(jsonResponse);
+                if (model.Download_AppUsuarioResult != null)
+                {
+                    //x = Upsert(list.Download_CIRegistroOnDemandResult);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });
+            }
+
+            return x;
+        }
+
+        private bool Upsert(UsuarioModel items)
+        {
+            bool x = false;
+            using (var entity = new db_SeguimientoProtocolo_r2Entities())
+            {
+                try
+                {
+                    
+                }
+                catch (Exception ex)
+                {
+                    AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });
+                }
+                return x;
+            }
         }
     }
 }

@@ -3,6 +3,9 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using Protell.Model;
+using Protell.Model.SyncModels;
+using System.Web.Script.Serialization;
+using Protell.DAL.Factory;
 
 namespace Protell.DAL.Repository
 {
@@ -82,6 +85,25 @@ namespace Protell.DAL.Repository
             {
                 return entity.spGetDateTimeLastSync().ToList<string>().First();
             }
+        }
+
+
+        public bool PingServer()
+        {
+            bool x = false;
+            string webMethodName = "PingServer";            
+            try
+            {
+                string res = DownloadFactory.Instance.CallWebService(webMethodName, null);
+                PingServerResultModel model = new PingServerResultModel();
+                model = new JavaScriptSerializer().Deserialize<PingServerResultModel>(res);
+                x = model.PingServerResult;
+            }
+            catch (Exception ex)
+            {
+                x = false;
+            }
+            return x;
         }
 
     }

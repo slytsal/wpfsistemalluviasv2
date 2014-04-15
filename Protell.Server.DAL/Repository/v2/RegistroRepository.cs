@@ -12,8 +12,7 @@ namespace Protell.Server.DAL.Repository.v2
         {
             ObservableCollection<RegistroModel> registros = new ObservableCollection<RegistroModel>();            
             using (var entity = new db_SeguimientoProtocolo_r2Entities())
-            {
-                
+            {                
                 try
                 {
                     ( from res in entity.spDownloadCiRegistroOnDemand(currentDate,idPuntoMedicion)
@@ -27,12 +26,30 @@ namespace Protell.Server.DAL.Repository.v2
                               DiaRegistro = row.DiaRegistro,
                               Valor = row.Valor,
                               AccionActual = row.AccionActual,
-                              IsActive = row.IsActive,
-                              IsModified = row.IsModified,
                               LastModifiedDate = row.LastModifiedDate,
                               IdCondicion = row.IdCondicion,
                               ServerLastModifiedDate = row.ServerLastModifiedDate,
                               FechaNumerica = row.FechaNumerica,
+                              PUNTOMEDICION = new PuntoMedicionModel()
+                              {
+                                  PuntoMedicionName = row.PuntoMedicionName,
+                                  IdPuntoMedicion = row.IdPuntoMedicion,
+                                  vAccion = row.vAccion,
+                                  vCondicion = row.vCondicion,
+                                  Visibility =(bool) row.Visibility,
+                                  UNIDADMEDIDA = new UnidadMedidaModel()
+                                  {
+                                      IdUnidadMedida = row.IdUnidadMedida,
+                                      UnidadMedidaName = row.UnidadMedidaName,
+                                      UnidadMedidaShort = row.UnidadMedidaShort
+                                  }
+                              },
+                              Condicion = new CondProModel()
+                              {
+                                  IdCondicion = row.IdCondicion,
+                                  CondicionName = row.CondicionName,
+                                  PathCodicion = row.PathCodicion
+                              }
                           });
                       });
 

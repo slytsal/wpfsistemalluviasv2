@@ -13,28 +13,21 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Background="{x:Null}">        
+    <Grid Background="White">        
         <Grid.RowDefinitions>
-            <RowDefinition Height="AUTO"/>            
-            <RowDefinition Height="AUTO"/>
+            <RowDefinition Height="AUTO"/>                        
             <RowDefinition Height="*"/>
             <RowDefinition Height="AUTO"/>
-        </Grid.RowDefinitions>                 
-        <!--Boton Nuevo-->
-        <!--<Grid Grid.Row="0">            
-            <Button Content="Nuevo" Margin="5" 
-                    FontSize="20" FontFamily="Calibri"
-                    HorizontalAlignment="Left" Click="Button_Click" />
-        </Grid>-->        
+        </Grid.RowDefinitions>                                
         <!--Titulo-->
-        <Grid Grid.Row="1" 
+        <Grid Grid.Row="0" 
               Background="#FF43434B">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="AUTO"/>
             </Grid.ColumnDefinitions>
-            
-            <Label Content="{Binding pSelectedItem.PUNTOMEDICION.PuntoMedicionName}" Padding="5" 
+
+            <Label Content="{Binding SelectetPuntoMedicionItem.PuntoMedicionName}" Padding="5" 
                    HorizontalAlignment="Stretch" VerticalAlignment="Center" 
                    FontSize="20" Foreground="White" FontFamily="Calibri"/>
             <Button Grid.Column="1" Content="Nuevo" Margin="5" 
@@ -42,105 +35,38 @@
                     HorizontalAlignment="Left" Click="Button_Click" />
         </Grid>
         
-        <!--Puntos de medición-->        
-        <DataGrid Grid.Row="2"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" 
-                  
+        <!--Puntos de medición-->
+        <DataGrid Grid.Row="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"                   
                  ItemsSource="{Binding Registros, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  SelectedItem="{Binding pSelectedItem,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                 
                  Name="ListRegistros"  Margin="5" MouseDoubleClick="ListRegistros_MouseDoubleClick"                                    
-                  AutoGenerateColumns="False" IsReadOnly="True"                
-                  CanUserAddRows="False" KeyDown="ListRegistros_KeyDown"
-                  EnableColumnVirtualization="True"
-EnableRowVirtualization="True"
-                  
+                 AutoGenerateColumns="False" IsReadOnly="True"                  
+                 CanUserAddRows="False" KeyDown="ListRegistros_KeyDown"
+                 EnableColumnVirtualization="True"
+                 EnableRowVirtualization="True"
+                 VirtualizingStackPanel.VirtualizationMode="Recycling"    
+                 ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                  ScrollViewer.ScrollChanged="ListRegistros_ScrollChanged"
                  >
             <DataGrid.Resources>
                 <local:BindingProxy x:Key="proxy" Data="{Binding}"/>
             </DataGrid.Resources>
-            <DataGrid.Columns>                
+            <DataGrid.Columns>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Image Width="25" Height="29" Source="{Binding Condicion.PathCodicion}" Stretch="Fill"/>                                   
+                            <Image Width="25" Height="29" Source="{Binding Condicion.PathCodicion}" Stretch="Fill"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Fecha Captura" Binding="{Binding FechaCaptura,StringFormat={}{0:dd/MM/yyyy}}"/>
+                <DataGridTextColumn Header="Fecha Numerica" Binding="{Binding FechaNumerica}"/>
                 <DataGridTextColumn Header="Hora" Binding="{Binding HoraMilitar}"/>
                 <DataGridTextColumn Header="Valor" Binding="{Binding Valor}" Visibility="{Binding Path=PUNTOMEDICION.Visibility, Source={StaticResource proxy}}"/>
                 <DataGridTextColumn Header="Unidad Medida" Binding="{Binding PUNTOMEDICION.UNIDADMEDIDA.UnidadMedidaShort, Mode=TwoWay}"/>
                 <DataGridTextColumn Header="Acción Actual" Binding="{Binding AccionActual}"/>
-            </DataGrid.Columns>            
+            </DataGrid.Columns>
         </DataGrid >
-        <ScrollViewer/>
-        <Grid Grid.Row="1" 
-              Background="#FF43434B">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="AUTO"/>
-            </Grid.ColumnDefinitions>
-
-            <Label Content="{Binding pSelectedItem.PUNTOMEDICION.PuntoMedicionName}" Padding="5" 
-                   HorizontalAlignment="Stretch" VerticalAlignment="Center" 
-                   FontSize="20" Foreground="White" FontFamily="Calibri"/>
-            <Button Grid.Column="1" Content="Nuevo" Margin="5" 
-                    FontSize="20" FontFamily="Calibri"
-                    HorizontalAlignment="Left" Click="Button_Click" />
-        </Grid>
-
-        <!--<ListView Grid.Row="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                 ItemsSource="{Binding Registros, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                 SelectedItem="{Binding pSelectedItem,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                 
-                 Name="ListRegistros"  Margin="5" MouseDoubleClick="ListRegistros_MouseDoubleClick">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Border BorderBrush="SkyBlue" BorderThickness="2" 
-                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                Margin="1" Padding="5">                        
-                        <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width=".30*"/>
-                                <ColumnDefinition Width=".70*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="0">
-                                <Image   Width="50" Height="50" HorizontalAlignment="Center"  VerticalAlignment="Center" 
-                                            Source="{Binding Condicion.PathCodicion}" Stretch="Fill"/>
-                            </Grid>
-                            <Grid Grid.Column="1" Margin="10">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="AUTO"/>
-                                    <RowDefinition Height="AUTO"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Row="0" >
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="0"  Margin="5" Content="{Binding FechaCaptura,StringFormat={}{0:dd/MM/yyyy}}" FontSize="20" FontFamily="Calibri"/>
-                                </Grid>
-                                <Grid Grid.Row="1">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="AUTO"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid Grid.Column="1">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="AUTO"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Label Grid.Column="0" Content="{Binding Valor}" 
-                                               FontSize="56" FontFamily="Calibri" FontWeight="Light" VerticalAlignment="Bottom"/>
-                                        <Label Grid.Column="1" Content="{Binding PUNTOMEDICION.UNIDADMEDIDA.UnidadMedidaShort, Mode=TwoWay}" 
-                                               FontSize="20" FontFamily="Calibri" FontWeight="ExtraLight" VerticalAlignment="Bottom"/>
-                                    </Grid>
-                                    <Label Grid.Column="0" FontFamily="Calibri" FontSize="20" Content="{Binding HoraMilitar}"/>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>-->                
+        <Button Content="Ver Mas..." Grid.Row="2" Name="btnVermas" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{Binding VerMasCommand}"/>
     </Grid>
 </UserControl>

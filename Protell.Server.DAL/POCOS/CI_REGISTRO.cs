@@ -138,21 +138,6 @@ namespace Protell.Server.DAL.POCOS
         }
         private CAT_CONDPRO _cAT_CONDPRO;
     
-        public virtual CAT_PUNTO_MEDICION CAT_PUNTO_MEDICION
-        {
-            get { return _cAT_PUNTO_MEDICION; }
-            set
-            {
-                if (!ReferenceEquals(_cAT_PUNTO_MEDICION, value))
-                {
-                    var previousValue = _cAT_PUNTO_MEDICION;
-                    _cAT_PUNTO_MEDICION = value;
-                    FixupCAT_PUNTO_MEDICION(previousValue);
-                }
-            }
-        }
-        private CAT_PUNTO_MEDICION _cAT_PUNTO_MEDICION;
-    
         public virtual ICollection<CI_TRACKING> CI_TRACKING
         {
             get
@@ -184,6 +169,21 @@ namespace Protell.Server.DAL.POCOS
             }
         }
         private ICollection<CI_TRACKING> _cI_TRACKING;
+    
+        public virtual CAT_PUNTO_MEDICION CAT_PUNTO_MEDICION
+        {
+            get { return _cAT_PUNTO_MEDICION; }
+            set
+            {
+                if (!ReferenceEquals(_cAT_PUNTO_MEDICION, value))
+                {
+                    var previousValue = _cAT_PUNTO_MEDICION;
+                    _cAT_PUNTO_MEDICION = value;
+                    FixupCAT_PUNTO_MEDICION(previousValue);
+                }
+            }
+        }
+        private CAT_PUNTO_MEDICION _cAT_PUNTO_MEDICION;
 
         #endregion
 

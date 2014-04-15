@@ -33,6 +33,7 @@ namespace Protell.UI.EstPuntoMed
 
         private void btGuardar_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show("");
         }
     }
 }

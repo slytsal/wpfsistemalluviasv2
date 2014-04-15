@@ -553,7 +553,7 @@ namespace Protell.DAL
         {
             return base.ExecuteFunction<Nullable<bool>>("spPrepareBulkUpsertCiRegistroRecurrent");
         }
-        public ObjectResult<spGetCI_REGISTRO_Result> spGetCI_REGISTRO(Nullable<long> fechaActual, string categoria)
+        public ObjectResult<spGetCI_REGISTRO_Result> spGetCI_REGISTRO(Nullable<long> fechaActual, Nullable<long> idPuntoMedicion)
         {
     
             ObjectParameter fechaActualParameter;
@@ -567,17 +567,17 @@ namespace Protell.DAL
                 fechaActualParameter = new ObjectParameter("FechaActual", typeof(long));
             }
     
-            ObjectParameter categoriaParameter;
+            ObjectParameter idPuntoMedicionParameter;
     
-            if (categoria != null)
+            if (idPuntoMedicion.HasValue)
             {
-                categoriaParameter = new ObjectParameter("Categoria", categoria);
+                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", idPuntoMedicion);
             }
             else
             {
-                categoriaParameter = new ObjectParameter("Categoria", typeof(string));
+                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", typeof(long));
             }
-            return base.ExecuteFunction<spGetCI_REGISTRO_Result>("spGetCI_REGISTRO", fechaActualParameter, categoriaParameter);
+            return base.ExecuteFunction<spGetCI_REGISTRO_Result>("spGetCI_REGISTRO", fechaActualParameter, idPuntoMedicionParameter);
         }
         public ObjectResult<Nullable<bool>> spCommitBulkUpdateCiRegistroConfirmation()
         {

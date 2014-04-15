@@ -30,7 +30,11 @@ namespace Protell.DAL.Repository.v2
         private const string PUNTOSMEDICION = "PUNTOSMEDICION";
         private const string ESTPLUVIOGRAFICAS = "ESTPLUVIOGRAFICAS";
 
-        public event DidCiRegistroRecurrentDataChanged DidCiRegistroRecurrentDataChangedHandler; 
+        SyncRepository _SyncRepository = new SyncRepository();
+        TrackingRepository trackRepository = new TrackingRepository();
+        private const long ID_SYNCTABLE = 20140324174857773;
+
+        public event DidCiRegistroRecurrentDataChanged DidCiRegistroRecurrentDataChangedHandler;
 
         //Clase para petición al servicio web de descarga
         private class RequestBodyContent
@@ -41,6 +45,17 @@ namespace Protell.DAL.Repository.v2
             public long ServerLastModifiedDate;
         }
 
+
+        private class BodyContentOnDemand
+        {
+            public BodyContentOnDemand(long lastDate, long idPuntoMedicion)
+            {
+                this.currentDate = lastDate;
+                this.idPuntoMedicion = idPuntoMedicion;
+            }
+            public long currentDate;
+            public long idPuntoMedicion;
+        }
         /// <summary>
         /// Obtiene de la bd los parámetros para el servicio
         /// </summary>
@@ -73,6 +88,14 @@ namespace Protell.DAL.Repository.v2
 
             return _GetBodyContent;
         }
+
+        private BodyContentOnDemand GetBodyOnDemand(long lastDate, long idPuntoMedicion)
+        {
+            BodyContentOnDemand body = null;
+            body = new BodyContentOnDemand(lastDate, idPuntoMedicion);
+            return body;
+        }
+
 
         //--Metodos para insertar confirmacion (respuesta del servicio de update)
         /// <summary>
@@ -195,7 +218,7 @@ namespace Protell.DAL.Repository.v2
                         //Insertar en stored
                         entity.TMP_CI_REGISTRO_CONFIRMATION.AddObject(new TMP_CI_REGISTRO_CONFIRMATION()
                         {
-                            IdRegistro=reg.IdRegistro,
+                            IdRegistro = reg.IdRegistro,
                             IdPuntoMedicion = reg.IdPuntoMedicion,
                             LastModifiedDate = reg.LMD,
                             ServerLastModifiedDate = reg.SLMD,
@@ -281,20 +304,16 @@ namespace Protell.DAL.Repository.v2
             return;
         }
 
-        public Dictionary<string, ObservableCollection<RegistroModel>> GetCiRegistro()
+        public List<RegistroModel> GetCiRegistro(long IdPuntoMedicion, long fechaActual)
         {
-            Dictionary<string, ObservableCollection<RegistroModel>> AllRegistros = new Dictionary<string, ObservableCollection<RegistroModel>>();
 
-            ObservableCollection<RegistroModel> items;
+            List<RegistroModel> items = new List<RegistroModel>();
             try
             {
-                SyncRepository sync= new SyncRepository();
-                long fechaActual = sync.GetCurrentDate();
                 using (var entity = new db_SeguimientoProtocolo_r2Entities())
                 {
 
-                    items = new ObservableCollection<RegistroModel>();
-                    (from result in entity.spGetCI_REGISTRO(fechaActual, PUNTOSMEDICION)
+                    (from result in entity.spGetCI_REGISTRO(fechaActual, IdPuntoMedicion)
                      select result).ToList().ForEach(row =>
                {
                    items.Add(new RegistroModel()
@@ -306,75 +325,47 @@ namespace Protell.DAL.Repository.v2
                            DiaRegistro = row.DiaRegistro,
                            Valor = row.Valor,
                            AccionActual = row.AccionActual,
-                           IsActive = row.IsActive,
-                           IsModified = row.IsModified,
                            LastModifiedDate = row.LastModifiedDate,
                            IdCondicion = row.IdCondicion,
                            ServerLastModifiedDate = row.ServerLastModifiedDate,
-                           FechaNumerica = row.FechaNumerica
+                           FechaNumerica = row.FechaNumerica,
+                           PUNTOMEDICION = new PuntoMedicionModel()
+                           {
+                               PuntoMedicionName = row.PuntoMedicionName,
+                               IdPuntoMedicion = row.IdPuntoMedicion,
+                               vAccion = row.vAccion,
+                               vCondicion = row.vCondicion,
+                               Visibility = row.Visibility,
+                                TIPOPUNTOMEDICION =new TipoPuntoMedicionModel()
+                                {
+                                    IdTipoPuntoMedicion=row.IdTipoPuntoMedicion,
+                                    TipoPuntoMedicionName=row.TipoPuntoMedicionName
+                                },
+                               UNIDADMEDIDA = new UnidadMedidaModel()
+                               {
+                                   IdUnidadMedida = row.IdUnidadMedida,
+                                   UnidadMedidaName = row.UnidadMedidaName,
+                                   UnidadMedidaShort = row.UnidadMedidaShort
+                               }
+                           },
+                           Condicion = new CondProModel()
+                           {
+                               IdCondicion = row.IdCondicion,
+                               CondicionName = row.CondicionName,
+                               PathCodicion = row.PathCodicion
+                           }
+
                        });
                });
-                    AllRegistros.Add(PUNTOSMEDICION, items);
 
-                    items = new ObservableCollection<RegistroModel>();
-                    (from result in entity.spGetCI_REGISTRO(fechaActual, LUMBRERAS)
-                     select result).ToList().ForEach(row =>
-                     {
-                         items.Add(new RegistroModel()
-                         {
-                             IdRegistro = row.IdRegistro,
-                             IdPuntoMedicion = row.IdPuntoMedicion,
-                             FechaCaptura = row.FechaCaptura,
-                             HoraRegistro = row.HoraRegistro,
-                             DiaRegistro = row.DiaRegistro,
-                             Valor = row.Valor,
-                             AccionActual = row.AccionActual,
-                             IsActive = row.IsActive,
-                             IsModified = row.IsModified,
-                             LastModifiedDate = row.LastModifiedDate,
-                             IdCondicion = row.IdCondicion,
-                             ServerLastModifiedDate = row.ServerLastModifiedDate,
-                             FechaNumerica = row.FechaNumerica
-                         });
-                     });
-                    AllRegistros.Add(LUMBRERAS, items);
-
-                    items = new ObservableCollection<RegistroModel>();
-                    (from result in entity.spGetCI_REGISTRO(fechaActual, ESTPLUVIOGRAFICAS)
-                     select result).ToList().ForEach(row =>
-                     {
-                         items.Add(new RegistroModel()
-                         {
-                             IdRegistro = row.IdRegistro,
-                             IdPuntoMedicion = row.IdPuntoMedicion,
-                             FechaCaptura = row.FechaCaptura,
-                             HoraRegistro = row.HoraRegistro,
-                             DiaRegistro = row.DiaRegistro,
-                             Valor = row.Valor,
-                             AccionActual = row.AccionActual,
-                             IsActive = row.IsActive,
-                             IsModified = row.IsModified,
-                             LastModifiedDate = row.LastModifiedDate,
-                             IdCondicion = row.IdCondicion,
-                             ServerLastModifiedDate = row.ServerLastModifiedDate,
-                             FechaNumerica = row.FechaNumerica
-                         });
-                     });
-                    AllRegistros.Add(ESTPLUVIOGRAFICAS, items);
 
                 }
             }
             catch (Exception ex)
             {
-
             }
-            return AllRegistros;
+            return items;
         }
-
-
-        
-
-       
 
         /// <summary>
         /// Logica de descarga e inserción de registros de servidor en base local
@@ -395,7 +386,7 @@ namespace Protell.DAL.Repository.v2
                 //Obtener parámetros que se pasarán al servicio
                 RequestBodyContent bodyContent = this.GetBodyContent();
                 requestedFechaFin = bodyContent.fechaFin;
-                minFechaNumerica=requestedFechaFin;
+                minFechaNumerica = requestedFechaFin;
 
                 //Preparacion para bulk upsert
                 this.PrepareRecurrentBulkUpsert();
@@ -414,13 +405,14 @@ namespace Protell.DAL.Repository.v2
                         //Insertar datos del servidor
                         this.BulkUpsertRecurrent(list.Download_CIRegistroRecurrentResult);
 
-                        minFechaNumerica = Int64.Parse( list.Download_CIRegistroRecurrentResult.Min(p => p.FechaNumerica).ToString().Substring(0,8) );
+                        minFechaNumerica = Int64.Parse(list.Download_CIRegistroRecurrentResult.Min(p => p.FechaNumerica).ToString().Substring(0, 8));
 
                         //Restar un día a la fecha minima
-                        if(minFechaNumerica.ToString().Length==8){
+                        if (minFechaNumerica.ToString().Length == 8)
+                        {
                             DateTime dt = new DateTime(Int32.Parse(minFechaNumerica.ToString().Substring(0, 4)), Int32.Parse(minFechaNumerica.ToString().Substring(4, 2)), Int32.Parse(minFechaNumerica.ToString().Substring(6, 2)));
-                            dt=dt.AddDays(-1);
-                            minFechaNumerica= Int64.Parse( String.Format("{0:yyyyMMdd}",dt) );
+                            dt = dt.AddDays(-1);
+                            minFechaNumerica = Int64.Parse(String.Format("{0:yyyyMMdd}", dt));
                             bodyContent = this.GetBodyContent();
                             bodyContent.fechaActual = minFechaNumerica;
                         }
@@ -435,7 +427,7 @@ namespace Protell.DAL.Repository.v2
                     }
                 }
 
-                bool DataChanged=this.CommitBulkUpsertRecurrent();
+                bool DataChanged = this.CommitBulkUpsertRecurrent();
                 if (DataChanged)
                 {
                     this.RaiseDidCiRegistroRecurrentDataChanged(DataChanged);
@@ -452,6 +444,34 @@ namespace Protell.DAL.Repository.v2
 
             return responseService;
         }//endDownload()
+
+        public bool DownloadOnDemand(long lastDate, long IdPuntoMedicion)
+        {
+            bool x = false;
+            string webMethodName = "Download_CIRegistroOnDemand";
+            CiRegistroOnDemandResultModel list = new CiRegistroOnDemandResultModel();
+            RegistroRepository registroRepository = new RegistroRepository();
+            BodyContentOnDemand bodyContent = null;
+            try
+            {
+                bodyContent = GetBodyOnDemand(lastDate, IdPuntoMedicion);
+                //Desearilizar la respuestas                
+                string jsonResponse = DownloadFactory.Instance.CallWebService(webMethodName, bodyContent);
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                js.MaxJsonLength = Int32.MaxValue;
+                list = js.Deserialize<CiRegistroOnDemandResultModel>(jsonResponse);
+                if(list.Download_CIRegistroOnDemandResult!=null && list.Download_CIRegistroOnDemandResult.Count>0)
+                {
+                    x = Upsert(list.Download_CIRegistroOnDemandResult);
+                }
+            }
+            catch (Exception ex)
+            {
+                AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });
+            }
+
+            return x;
+        }
 
         /// <summary>
         /// Logica de subida de informacion
@@ -520,5 +540,205 @@ namespace Protell.DAL.Repository.v2
                 DidCiRegistroRecurrentDataChangedHandler(this, new CiRegistroRecurrentDataChangedArgs(dataChanged));
             }
         }
+
+        //Obtener un punto de medicion
+        public ObservableCollection<RegistroModel> GetPuntoMedicion(long idPuntoMedicion)
+        {
+            ObservableCollection<RegistroModel> oc = new ObservableCollection<RegistroModel>();
+            try
+            {
+                SyncRepository sync = new SyncRepository();
+                long fechaActual = sync.GetCurrentDate();
+                using (var entity = new db_SeguimientoProtocolo_r2Entities())
+                {
+                    var res = (from o in entity.CI_REGISTRO
+                               where o.IdPuntoMedicion == idPuntoMedicion
+                               select o).ToList();
+                    if (res != null && res.Count > 0)
+                    {
+                        res.ForEach(row =>
+                        {
+                            oc.Add(new RegistroModel()
+                            {
+                                IdRegistro = row.IdRegistro,
+                                IdPuntoMedicion = row.IdPuntoMedicion,
+                                FechaCaptura = row.FechaCaptura,
+                                HoraRegistro = row.HoraRegistro,
+                                DiaRegistro = row.DiaRegistro,
+                                Valor = row.Valor,
+                                AccionActual = row.AccionActual,
+                                IsActive = row.IsActive,
+                                IsModified = row.IsModified,
+                                LastModifiedDate = row.LastModifiedDate,
+                                IdCondicion = row.IdCondicion,
+                                ServerLastModifiedDate = row.ServerLastModifiedDate,
+                                FechaNumerica = row.FechaNumerica
+                            });
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return oc;
+        }
+
+        private bool Upsert(List<RegistroModel> items)
+        {
+            bool x = false;
+            using (var entity = new db_SeguimientoProtocolo_r2Entities())
+            {
+                try
+                {
+                    foreach (RegistroModel row in items)
+                    {
+                        CI_REGISTRO result = null;
+                        try
+                        {
+                            result = (from s in entity.CI_REGISTRO
+                                      where s.IdRegistro == row.IdRegistro
+                                      || s.FechaNumerica==row.FechaNumerica
+                                      select s).First();
+                        }
+                        catch (Exception)
+                        {
+                            ;
+                        }
+                        if (result == null)
+                        {
+                            entity.CI_REGISTRO.AddObject(
+                                new CI_REGISTRO()
+                                {
+                                    IdRegistro = row.IdRegistro,
+                                    IdPuntoMedicion = row.IdPuntoMedicion,
+                                    FechaCaptura = row.FechaCaptura,
+                                    HoraRegistro = row.HoraRegistro,
+                                    DiaRegistro = row.DiaRegistro,
+                                    Valor = row.Valor,
+                                    AccionActual = row.AccionActual,
+                                    IsActive = row.IsActive,
+                                    IsModified = row.IsModified,
+                                    LastModifiedDate = row.LastModifiedDate,
+                                    IdCondicion = row.IdCondicion,
+                                    ServerLastModifiedDate = row.ServerLastModifiedDate,
+                                    FechaNumerica = row.FechaNumerica,
+                                });
+                        }
+                        if (result != null && result.LastModifiedDate < row.LastModifiedDate)
+                        {                            
+                            result.IdPuntoMedicion = row.IdPuntoMedicion;
+                            result.FechaCaptura = row.FechaCaptura;
+                            result.HoraRegistro = row.HoraRegistro;
+                            result.DiaRegistro = row.DiaRegistro;
+                            result.Valor = row.Valor;
+                            result.AccionActual = row.AccionActual;                                                        
+                            result.LastModifiedDate = row.LastModifiedDate;
+                            result.IdCondicion = row.IdCondicion;
+                            result.ServerLastModifiedDate = row.ServerLastModifiedDate;
+                            result.FechaNumerica = row.FechaNumerica;
+                        }
+                    }
+                    entity.SaveChanges();
+                    x = true;
+                }
+                catch (Exception ex)
+                {
+                    AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });
+                }
+                return x;
+            }
+        }
+
+        public bool Insert(RegistroModel item, UsuarioModel user)
+        {
+            bool x=false;
+            try
+            {
+                using (var entity=new db_SeguimientoProtocolo_r2Entities())
+                {
+                    if(item!=null)
+                    {
+                        CI_REGISTRO result = null;
+                        try
+                        {
+                            result = (from i in entity.CI_REGISTRO
+                                      where i.IdRegistro == item.IdRegistro
+                                      select i).First();
+                        }
+                        catch (Exception)
+                        {
+                            try
+                            {
+                                result = (from i in entity.CI_REGISTRO
+                                          where i.IdPuntoMedicion == item.IdPuntoMedicion
+                                          && i.FechaNumerica == item.FechaNumerica
+                                          select i).FirstOrDefault();
+                            }
+                            catch (Exception )
+                            {                                                                
+                            }
+                        }
+
+                        try
+                        {
+                            if (result == null)
+                            {
+                                entity.CI_REGISTRO.AddObject(
+                                    new CI_REGISTRO()
+                                    {
+                                        IdRegistro = item.IdRegistro,
+                                        IdPuntoMedicion = item.PUNTOMEDICION.IdPuntoMedicion,
+                                        FechaCaptura = item.FechaCaptura,
+                                        HoraRegistro = item.HoraRegistro,
+                                        DiaRegistro = item.DiaRegistro,
+                                        Valor = item.Valor,
+                                        AccionActual = item.AccionActual,
+                                        IsActive = true,
+                                        IsModified = true,
+                                        LastModifiedDate = new UNID().getNewUNID(),
+                                        IdCondicion = item.Condicion.IdCondicion,
+                                        FechaNumerica = item.FechaNumerica
+                                    });
+                                entity.SaveChanges();
+                                trackRepository.InsertTracking(trackRepository.createTracking(item, user, "Insert"));
+                                _SyncRepository.UpdateIsModifiedData(ID_SYNCTABLE);
+                            }
+                            else
+                            {
+                                
+                                result.IdPuntoMedicion = item.PUNTOMEDICION.IdPuntoMedicion;
+                                result.FechaCaptura = item.FechaCaptura;
+                                result.HoraRegistro = item.HoraRegistro;
+                                result.DiaRegistro = item.DiaRegistro;
+                                result.Valor = item.Valor;
+                                result.AccionActual = item.AccionActual;
+                                result.IsModified = true;
+                                result.LastModifiedDate = new UNID().getNewUNID();
+                                result.IdCondicion = item.Condicion.IdCondicion;
+                                result.FechaNumerica = item.FechaNumerica;
+                                entity.SaveChanges();                                
+                                _SyncRepository.UpdateIsModifiedData(ID_SYNCTABLE);
+                                trackRepository.InsertTracking(trackRepository.createTracking(item, user, "Update"));
+                            }
+                            x = true;
+                        }
+                        catch (Exception ex)
+                        {
+                            AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });                            
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });
+            }
+            return x;
+        }
     }
+
 }
+    

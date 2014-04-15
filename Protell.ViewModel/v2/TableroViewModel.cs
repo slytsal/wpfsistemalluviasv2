@@ -10,14 +10,38 @@ using System.Configuration;
 
 namespace Protell.ViewModel.v2
 {
+
+    public delegate void PuntoMedicionSelected(object o, PuntoMedicionSelectedArgs e);
+
+    public class PuntoMedicionSelectedArgs : EventArgs
+    {
+        public readonly long IdPuntoMedicion;
+
+        public PuntoMedicionSelectedArgs(long IdPuntoMedicion)
+        {
+            this.IdPuntoMedicion = IdPuntoMedicion;
+        }
+
+    }
     public class TableroViewModel:ViewModelBase
     {
+        public event PuntoMedicionSelected PuntoMedicionSelectedHandler;
+
+        private void RaisePuntoMedicionSelected(long IdPuntoMedicion)
+        {
+            if (PuntoMedicionSelectedHandler != null)
+            {
+                PuntoMedicionSelectedHandler(this, new PuntoMedicionSelectedArgs(IdPuntoMedicion));
+            }
+        }
+
         private const string LUMBRERAS = "LUMBRERAS";
         private const string PUNTOSMEDICION = "PUNTOSMEDICION";
         private const string ESTPLUVIOGRAFICAS = "ESTPLUVIOGRAFICAS";
 
         int TopLog = 0;
         public bool IsSave = false;
+
         #region Instancias
         private ICondPro _CondProRepository;
         private IRegistro _RegistroRepository;        
@@ -82,8 +106,18 @@ namespace Protell.ViewModel.v2
         {
             if (e.PropertyName == "SelectedItem")
             {
-                pmAll.FilterRegistros(cEstPluviograficas.SelectedItem);                                                
-                this.SelectedItemTabControl = cEstPluviograficas.SelectedItem;
+                if (e.PropertyName == "SelectedItem")
+                {
+                    //pmAll.FilterRegistros(cEstPluviograficas.SelectedItem);                
+                    if (cEstPluviograficas != null && cEstPluviograficas.SelectedItem != null)
+                    {
+                        this.RaisePuntoMedicionSelected(cEstPluviograficas.SelectedItem.IdPuntoMedicion);
+                    }
+                    //View.Refresh();
+                    //pmAll.GetItemsPuntosMedicion(cEstPluviograficas.SelectedItem,ESTPLUVIOGRAFICAS);                
+                    this.SelectedItemTabControl = cEstPluviograficas.SelectedItem;
+                    //pmAll.View.Refresh();
+                }
                 
             }
         }
@@ -442,9 +476,7 @@ namespace Protell.ViewModel.v2
             }
             else
                 this.IsSave = false;
-        }
-
-        
+        }        
 
         public RelayCommand ValidarSaveCommand
         {

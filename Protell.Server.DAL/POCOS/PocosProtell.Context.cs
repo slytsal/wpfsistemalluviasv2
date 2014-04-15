@@ -54,12 +54,6 @@ namespace Protell.Server.DAL.POCOS
         }
         private ObjectSet<APP_ROL> _aPP_ROL;
     
-        public ObjectSet<APP_USUARIO> APP_USUARIO
-        {
-            get { return _aPP_USUARIO  ?? (_aPP_USUARIO = CreateObjectSet<APP_USUARIO>("APP_USUARIO")); }
-        }
-        private ObjectSet<APP_USUARIO> _aPP_USUARIO;
-    
         public ObjectSet<APP_USUARIO_ROL> APP_USUARIO_ROL
         {
             get { return _aPP_USUARIO_ROL  ?? (_aPP_USUARIO_ROL = CreateObjectSet<APP_USUARIO_ROL>("APP_USUARIO_ROL")); }
@@ -83,12 +77,6 @@ namespace Protell.Server.DAL.POCOS
             get { return _cAT_ESTRUCTURA  ?? (_cAT_ESTRUCTURA = CreateObjectSet<CAT_ESTRUCTURA>("CAT_ESTRUCTURA")); }
         }
         private ObjectSet<CAT_ESTRUCTURA> _cAT_ESTRUCTURA;
-    
-        public ObjectSet<CAT_PUNTO_MEDICION> CAT_PUNTO_MEDICION
-        {
-            get { return _cAT_PUNTO_MEDICION  ?? (_cAT_PUNTO_MEDICION = CreateObjectSet<CAT_PUNTO_MEDICION>("CAT_PUNTO_MEDICION")); }
-        }
-        private ObjectSet<CAT_PUNTO_MEDICION> _cAT_PUNTO_MEDICION;
     
         public ObjectSet<CAT_PUNTO_MEDICION_MAX_MIN> CAT_PUNTO_MEDICION_MAX_MIN
         {
@@ -197,6 +185,24 @@ namespace Protell.Server.DAL.POCOS
             get { return _cAT_PROTOCOLO  ?? (_cAT_PROTOCOLO = CreateObjectSet<CAT_PROTOCOLO>("CAT_PROTOCOLO")); }
         }
         private ObjectSet<CAT_PROTOCOLO> _cAT_PROTOCOLO;
+    
+        public ObjectSet<CAT_PUNTO_MEDICION> CAT_PUNTO_MEDICION
+        {
+            get { return _cAT_PUNTO_MEDICION  ?? (_cAT_PUNTO_MEDICION = CreateObjectSet<CAT_PUNTO_MEDICION>("CAT_PUNTO_MEDICION")); }
+        }
+        private ObjectSet<CAT_PUNTO_MEDICION> _cAT_PUNTO_MEDICION;
+    
+        public ObjectSet<CAT_ACCION_ACTUAL> CAT_ACCION_ACTUAL
+        {
+            get { return _cAT_ACCION_ACTUAL  ?? (_cAT_ACCION_ACTUAL = CreateObjectSet<CAT_ACCION_ACTUAL>("CAT_ACCION_ACTUAL")); }
+        }
+        private ObjectSet<CAT_ACCION_ACTUAL> _cAT_ACCION_ACTUAL;
+    
+        public ObjectSet<APP_USUARIO> APP_USUARIO
+        {
+            get { return _aPP_USUARIO  ?? (_aPP_USUARIO = CreateObjectSet<APP_USUARIO>("APP_USUARIO")); }
+        }
+        private ObjectSet<APP_USUARIO> _aPP_USUARIO;
 
         #endregion
 
@@ -356,6 +362,32 @@ namespace Protell.Server.DAL.POCOS
                 sessionParameter = new ObjectParameter("session", typeof(long));
             }
             return base.ExecuteFunction<spCommitBulkUpsertCiRegistroUploaded_Result>("spCommitBulkUpsertCiRegistroUploaded", sessionParameter);
+        }
+        public ObjectResult<spLogin_Result> spLogin(string usuario, string pass)
+        {
+    
+            ObjectParameter usuarioParameter;
+    
+            if (usuario != null)
+            {
+                usuarioParameter = new ObjectParameter("Usuario", usuario);
+            }
+            else
+            {
+                usuarioParameter = new ObjectParameter("Usuario", typeof(string));
+            }
+    
+            ObjectParameter passParameter;
+    
+            if (pass != null)
+            {
+                passParameter = new ObjectParameter("Pass", pass);
+            }
+            else
+            {
+                passParameter = new ObjectParameter("Pass", typeof(string));
+            }
+            return base.ExecuteFunction<spLogin_Result>("spLogin", usuarioParameter, passParameter);
         }
 
         #endregion

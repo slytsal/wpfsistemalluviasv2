@@ -11,6 +11,7 @@ using System.Configuration;
 using Protell.ViewModel.Sync;
 using Protell.Model;
 using System.ComponentModel;
+using System.Collections.Generic;
 
 
 namespace Protell.UI.v2
@@ -20,6 +21,8 @@ namespace Protell.UI.v2
     /// </summary>    
     public partial class MainWindow 
     {
+        private Dictionary<string, PuntosMedicionView> controls;
+
         private const string LUMBRERAS = "LUMBRERAS";
         private const string PUNTOSMEDICION = "PUNTOSMEDICION";
         private const string ESTPLUVIOGRAFICAS = "ESTPLUVIOGRAFICAS";
@@ -35,17 +38,14 @@ namespace Protell.UI.v2
         }
         public NuevoPuntoMedicion npmv;
 
-        //public DispatcherTimer TimerNuevo
-        //{
-        //    get { return _TimerNuevo; }
-        //    set { _TimerNuevo = value; }
-        //}
-        //private DispatcherTimer _TimerNuevo;
+       
         
         public MainWindow(UsuarioModel usuarioModel)
         {
             InitializeComponent();
+            this.controls = new Dictionary<string, PuntosMedicionView>();
             vm = new TableroViewModel(c);
+            vm.PuntoMedicionSelectedHandler += vm_PuntoMedicionSelectedHandler;
             int SyncTime = Int32.Parse(ConfigurationManager.AppSettings["SyncTime"].ToString());
             int SyncTimeSol = Int32.Parse(ConfigurationManager.AppSettings["SyncTimeSol"].ToString());
             this._ImgSync = (Storyboard) this.FindResource("rotateImg");
@@ -53,11 +53,11 @@ namespace Protell.UI.v2
             this.DataContext = vm;
             vm.Usuario = usuarioModel;
             cPuntoMedicion.DataContext = vm.cPuntosMedicion;
-            cPuntoMedicion.init(this, vm);
+            //cPuntoMedicion.init(this, vm);
             cLumbreras.DataContext = vm.cLumbreras;
-            cLumbreras.init(this,vm);
+            //cLumbreras.init(this,vm);
             cEstPluviograficas.DataContext = vm.cEstPluviograficas;
-            cEstPluviograficas.init(this, vm);
+            //cEstPluviograficas.init(this, vm);
 
             //Timer de Sincronizacion Recurrente
             DTimerUploadProcess = new DispatcherTimer();
@@ -67,13 +67,21 @@ namespace Protell.UI.v2
             SyncRecurrentSingleton.Instance.DidCiRegistroDataChangedEvent += Instance_DidCiRegistroDataChangedEvent;
 
             GetAppTitle();
-            vm.PropertyChanged += new PropertyChangedEventHandler(vm_PropertyChanged);
-
-            //TimerNuevo = new DispatcherTimer();
-            //TimerNuevo.Tick += new EventHandler(TimerNuevo_Tick);
-            //TimerNuevo.Interval = new TimeSpan(0, 0, 20);
-            //TimerNuevo.Start();            
+            vm.PropertyChanged += new PropertyChangedEventHandler(vm_PropertyChanged);            
             //this.txbMenssage.Text = logvm.GetDataTimeLastSyncLog();
+        }
+
+        void vm_PuntoMedicionSelectedHandler(object o, PuntoMedicionSelectedArgs e)
+        {
+            if(!controls.ContainsKey(e.IdPuntoMedicion.ToString()))
+            {
+                //PuntosMedicionV2ViewModel pmvm = new PuntosMedicionV2ViewModel();
+                ////pmvm.LoadPuntoMedicion(e.);
+                //PuntosMedicionView pm = new PuntosMedicionView();
+                //pm.DataContext = pmvm;
+                //this.controls.Add(e.IdPuntoMedicion.ToString(), pm);
+            }
+            this.RegistrosViewEstaciones.Content = this.controls[e.IdPuntoMedicion.ToString()];
         }
 
         /// <summary>
@@ -88,7 +96,7 @@ namespace Protell.UI.v2
 
         void TimerNuevo_Tick(object sender, EventArgs e)
         {
-            npmv = new NuevoPuntoMedicion(vm);
+            npmv = new NuevoPuntoMedicion();
             npmv.txbTitulo.Text = "Nueva Captura";
             npmv.Owner = this;
             npmv.ShowDialog();            
@@ -125,14 +133,12 @@ namespace Protell.UI.v2
                     vm.SelectedItemTabControl = ( vm.cEstPluviograficas.SelectedItem != null ) ? vm.cEstPluviograficas.SelectedItem : vm.cEstPluviograficas.SelectedItemAux;
                 }
                 //vm.DefaultValues();                
-                npmv = new NuevoPuntoMedicion(vm);
+                //npmv = new NuevoPuntoMedicion(vm);
                 npmv.txbTitulo.Text = "Nueva Captura";
                 npmv.Owner = this;
                 npmv.ShowDialog();
             }            
-        }
-
-        
+        }        
 
         public void NameUser()
         {
@@ -272,22 +278,28 @@ namespace Protell.UI.v2
                 {
                     if (((TabControl)e.Source).SelectedIndex == 0)
                     {
-                        vm.pmAll.GetItemsPuntosMedicion(vm.cPuntosMedicion.SelectedItem, PUNTOSMEDICION);
-                        pmPuntoMedicion.DataContext = vm.pmAll;
-                        pmPuntoMedicion.init(this, vm);                        
+                        PuntosMedicionView pm;
+                      
+                        if (this.controls.ContainsKey(vm.cPuntosMedicion.SelectedItem.IdPuntoMedicion.ToString()))
+                        {
+                            this.RegistrosViewPuntosMedicion.Content = this.controls[vm.cPuntosMedicion.SelectedItem.IdPuntoMedicion.ToString()];
+                        }
+                        else
+                        {
+                            pm = new PuntosMedicionView();
+                            pm.DataContext = vm.pmAll;
+                            //pm.init(this, vm);
+                            this.controls.Add(vm.cPuntosMedicion.SelectedItem.IdPuntoMedicion.ToString(), pm);
+                        }    
                     }
 
                     if (((TabControl)e.Source).SelectedIndex == 1)
                     {
-                        vm.pmAll.GetItemsPuntosMedicion(vm.cLumbreras.SelectedItem, LUMBRERAS);
-                        pmLumbreras.DataContext = vm.pmAll;
-                        pmLumbreras.init(this, vm);
+                        
                     }
                     if (((TabControl)e.Source).SelectedIndex == 2)
                     {
-                        vm.pmAll.GetItemsPuntosMedicion(vm.cEstPluviograficas.SelectedItem, ESTPLUVIOGRAFICAS);
-                        pmEstPluviograficas.ItemsSource = vm.pmAll.Registros;
-                        //pmEstPluviograficas.init(this, vm);
+                        
                     }
                 }
             }

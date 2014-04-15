@@ -68,6 +68,9 @@
     <Compile Include="POCOS\APP_USUARIO_ROL.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
+    <Compile Include="POCOS\CAT_ACCION_ACTUAL.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
     <Compile Include="POCOS\CAT_AGRUPADOR_ISOYETA.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
@@ -161,6 +164,9 @@
     <Compile Include="POCOS\SpGdGetDatosEstructuras2_Result.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
+    <Compile Include="POCOS\spLogin_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
     <Compile Include="POCOS\spSelectLastCI_Registro_Result.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
@@ -188,7 +194,9 @@
     <Compile Include="Repository\v2\AgrupadorIsoyetasRepository.cs" />
     <Compile Include="Repository\v2\AppRolRepository.cs" />
     <Compile Include="Repository\v2\AppSettingsRepository.cs" />
+    <Compile Include="Repository\v2\AppUsuarioRepository.cs" />
     <Compile Include="Repository\v2\AppUsuarioRolRepository.cs" />
+    <Compile Include="Repository\v2\CatAccionActualRepository.cs" />
     <Compile Include="Repository\v2\CatDependenciaRepository.cs" />
     <Compile Include="Repository\v2\CatEstructuraRepository.cs" />
     <Compile Include="Repository\v2\CatOperacionEstructuraRepository.cs" />
