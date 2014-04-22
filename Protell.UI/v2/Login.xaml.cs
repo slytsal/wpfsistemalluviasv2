@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using Protell.ViewModel.v2;
 using System.Diagnostics;
+using System;
 
 namespace Protell.UI.v2
 {
@@ -14,24 +15,31 @@ namespace Protell.UI.v2
         public Login()
         {
             InitializeComponent();
-            vm = new LoginViewModel();
-            this.DataContext = vm;            
+            vm = new LoginViewModel();            
             vm.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(vm_PropertyChanged);
-            vm.ValidateAutoLogin();
+            this.DataContext = vm;            
+            //vm.ValidateAutoLogin();
         }
 
         void vm_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "Usuario")
+            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
             {
-                LoginViewModel login = (LoginViewModel) sender;                
-                if (login.Usuario != null)
+                if (e.PropertyName == "Usuario")
                 {
-                    Main view = new Main(login.Usuario);
-                    view.Show();
-                    this.Close();
-                }                
-            }
+                    LoginViewModel login = (LoginViewModel)sender;
+                    if (login.Usuario != null)
+                    {
+                        Main view = new Main(login.Usuario);
+                        view.Show();
+                        this.Close();
+                    }
+                }
+                if (e.PropertyName == "Visibility")
+                {
+                    ProgressRingActuslizacion.Visibility = Visibility.Visible;
+                }
+            }));
         }
 
         private void btnCerrar_Click(object sender, RoutedEventArgs e)

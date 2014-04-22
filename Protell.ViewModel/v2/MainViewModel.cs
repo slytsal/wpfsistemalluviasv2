@@ -75,6 +75,42 @@ namespace Protell.ViewModel.v2
        private RelayCommand _CloseSesion;
        public const string CloseSesionPropertyName = "CloseSesion";
 
+       public bool IsSave
+       {
+           get { return _IsSave; }
+           set
+           {
+               if (_IsSave != value)
+               {
+                   _IsSave = value;
+                   OnPropertyChanged(IsSavePropertyName);
+               }
+           }
+       }
+       private bool _IsSave;
+       public const string IsSavePropertyName = "IsSave";
+
+       public string LastSync
+       {
+           get { return _LastSync; }
+           set
+           {
+               if (_LastSync != value)
+               {
+                   _LastSync = value;
+                   OnPropertyChanged(LastSyncPropertyName);
+               }
+           }
+       }
+       private string _LastSync;
+       public const string LastSyncPropertyName = "LastSync";
+
+       public void GetSync()
+       {
+           SyncLogRepository sync=new SyncLogRepository();
+           this.LastSync = sync.GetLastSync();
+       }
+
        public void AttmpCloseSesion()
        {
            bool x = false;

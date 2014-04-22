@@ -1,10 +1,14 @@
 ﻿using Protell.DAL.Repository;
 using Protell.DAL.Repository.v2;
 using Protell.Model;
+using Protell.ViewModel.Sync;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Protell.ViewModel.v2
 {
@@ -29,6 +33,12 @@ namespace Protell.ViewModel.v2
         public PuntosMedicionV2ViewModel()
         {
             this.Registros = new ObservableCollection<RegistroModel>();
+            //SyncRecurrentSingleton.Instance.DidCiRegistroDataChangedEvent += Instance_DidCiRegistroDataChangedEvent;
+        }
+
+        void Instance_DidCiRegistroDataChangedEvent(object o, DidCiRegistroDataChangedArgs e)
+        {
+            LoadPuntoMedicion(null);
         }
       
         private static bool IsVerMas = false;
@@ -65,11 +75,19 @@ namespace Protell.ViewModel.v2
 
         public void LoadPuntoMedicion(PuntoMedicionModel model)
         {
-            CiRegistroRepository crr = new CiRegistroRepository();
-            SyncRepository sync = new SyncRepository();
-            this.SelectetPuntoMedicionItem = model;
-            long fechaActual = sync.GetCurrentDate();
-            this.Registros = new ObservableCollection<RegistroModel>(crr.GetCiRegistro(SelectetPuntoMedicionItem.IdPuntoMedicion, fechaActual));
+            try
+            {
+                CiRegistroRepository crr = new CiRegistroRepository();
+                SyncRepository sync = new SyncRepository();
+                this.SelectetPuntoMedicionItem = (model != null) ? model : SelectetPuntoMedicionItem;
+                long fechaActual = sync.GetCurrentDate();
+                this.Registros = new ObservableCollection<RegistroModel>(crr.GetCiRegistro(SelectetPuntoMedicionItem.IdPuntoMedicion, fechaActual));
+
+            }
+            catch (Exception)
+            {
+                                
+            }
         }
 
         public RelayCommand VerMasCommand
@@ -78,7 +96,7 @@ namespace Protell.ViewModel.v2
             { 
                 if(this._VerMasCommand==null)
                 {
-                    _VerMasCommand = new RelayCommand(t => AttpVerMas(), c => CanVerMas());
+                    _VerMasCommand = new RelayCommand(t => AttpVerMasThread(), c => CanVerMas());
                 }
                 return _VerMasCommand; }            
         }
@@ -106,17 +124,14 @@ namespace Protell.ViewModel.v2
         private void AttpVerMas()
         {
             IsVerMas = true;
+            MouseChange(true);
             CiRegistroRepository crr = new CiRegistroRepository();
             try
             {
                 
-                long lastDate=0;
-                //long IdPuntoMedicion = 0;
-                //ObservableCollection<RegistroModel> tmp =new ObservableCollection<RegistroModel>();
+                long lastDate=0;                
                 List<RegistroModel> lstTmp = new List<RegistroModel>();
-                lastDate = (this.Registros.Count > 0) ? long.Parse(Registros.Min(p => p.FechaNumerica).ToString().Substring(0, 8)) : long.Parse(String.Format("{0:yyyyMMdd}", DateTime.Now));
-                //IdPuntoMedicion = (from res in this.Registros
-                //                   select res.IdPuntoMedicion).First();
+                lastDate = (this.Registros.Count > 0) ? long.Parse(Registros.Min(p => p.FechaNumerica).ToString().Substring(0, 8)) : long.Parse(String.Format("{0:yyyyMMdd}", DateTime.Now));                
                 //Restar un día a la fecha minima
                 if (lastDate.ToString().Length == 8)
                 {
@@ -130,33 +145,59 @@ namespace Protell.ViewModel.v2
                 {
                      crr.DownloadOnDemand(lastDate, this.SelectetPuntoMedicionItem.IdPuntoMedicion);
                      lstTmp = crr.GetCiRegistro(this.SelectetPuntoMedicionItem.IdPuntoMedicion, lastDate);
-                }                
+                }
+
                 foreach (RegistroModel item in lstTmp)
                 {
-                    this.Registros.Add(new RegistroModel()
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        IdRegistro = item.IdRegistro,
-                        IdPuntoMedicion = item.IdPuntoMedicion,
-                        FechaCaptura = item.FechaCaptura,
-                        HoraRegistro = item.HoraRegistro,
-                        DiaRegistro = item.DiaRegistro,
-                        Valor = item.Valor,
-                        AccionActual = item.AccionActual,
-                        LastModifiedDate = item.LastModifiedDate,
-                        IdCondicion = item.IdCondicion,
-                        ServerLastModifiedDate = item.ServerLastModifiedDate,
-                        FechaNumerica = item.FechaNumerica,
-                        PUNTOMEDICION = item.PUNTOMEDICION,
-                        Condicion = item.Condicion         
-                    });
+                        
+                        //if(exist)
+                        //{
+                            this.Registros.Add(new RegistroModel()
+                            {
+                                IdRegistro = item.IdRegistro,
+                                IdPuntoMedicion = item.IdPuntoMedicion,
+                                FechaCaptura = item.FechaCaptura,
+                                HoraRegistro = item.HoraRegistro,
+                                DiaRegistro = item.DiaRegistro,
+                                Valor = item.Valor,
+                                AccionActual = item.AccionActual,
+                                LastModifiedDate = item.LastModifiedDate,
+                                IdCondicion = item.IdCondicion,
+                                ServerLastModifiedDate = item.ServerLastModifiedDate,
+                                FechaNumerica = item.FechaNumerica,
+                                PUNTOMEDICION = item.PUNTOMEDICION,
+                                Condicion = item.Condicion
+                            });
+                                                
+                    }));
                 }
                 IsVerMas = false;
-
+                
             }
             catch (System.Exception)
             {
-                                
+                IsVerMas = false;                
             }
+            MouseChange(false);
+        }
+
+        private void MouseChange( bool IsActive)
+        {
+            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                Mouse.OverrideCursor = (IsActive) ? Cursors.Wait : null;                
+            }));
+            
+        }
+
+        private void AttpVerMasThread()
+        {
+            Thread hilo = new Thread(AttpVerMas);
+            hilo.IsBackground = true;
+            hilo.Start();
+            hilo.Join();
         }
     }
 }

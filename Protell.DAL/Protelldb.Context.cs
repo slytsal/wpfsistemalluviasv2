@@ -48,12 +48,6 @@ namespace Protell.DAL
         }
         private ObjectSet<APP_ROL> _aPP_ROL;
     
-        public ObjectSet<APP_USUARIO> APP_USUARIO
-        {
-            get { return _aPP_USUARIO  ?? (_aPP_USUARIO = CreateObjectSet<APP_USUARIO>("APP_USUARIO")); }
-        }
-        private ObjectSet<APP_USUARIO> _aPP_USUARIO;
-    
         public ObjectSet<APP_USUARIO_ROL> APP_USUARIO_ROL
         {
             get { return _aPP_USUARIO_ROL  ?? (_aPP_USUARIO_ROL = CreateObjectSet<APP_USUARIO_ROL>("APP_USUARIO_ROL")); }
@@ -239,6 +233,12 @@ namespace Protell.DAL
             get { return _cAT_PROTOCOLO  ?? (_cAT_PROTOCOLO = CreateObjectSet<CAT_PROTOCOLO>("CAT_PROTOCOLO")); }
         }
         private ObjectSet<CAT_PROTOCOLO> _cAT_PROTOCOLO;
+    
+        public ObjectSet<APP_USUARIO> APP_USUARIO
+        {
+            get { return _aPP_USUARIO  ?? (_aPP_USUARIO = CreateObjectSet<APP_USUARIO>("APP_USUARIO")); }
+        }
+        private ObjectSet<APP_USUARIO> _aPP_USUARIO;
 
         #endregion
 
@@ -586,6 +586,179 @@ namespace Protell.DAL
         public ObjectResult<Nullable<bool>> spPrepareBulkUpdateCiRegistroConfirmation()
         {
             return base.ExecuteFunction<Nullable<bool>>("spPrepareBulkUpdateCiRegistroConfirmation");
+        }
+        public ObjectResult<Nullable<bool>> spInsertUsuario(Nullable<long> idUsuario, string usuarioCorreo, string usuarioPwd, string nombre, string apellido, string area, string puesto, Nullable<bool> isActive, Nullable<bool> isModified, Nullable<long> lastModifiedDate, Nullable<bool> isNewUser, Nullable<bool> isVerified, Nullable<bool> isMailSent, Nullable<long> serverLastModifiedDate)
+        {
+    
+            ObjectParameter idUsuarioParameter;
+    
+            if (idUsuario.HasValue)
+            {
+                idUsuarioParameter = new ObjectParameter("IdUsuario", idUsuario);
+            }
+            else
+            {
+                idUsuarioParameter = new ObjectParameter("IdUsuario", typeof(long));
+            }
+    
+            ObjectParameter usuarioCorreoParameter;
+    
+            if (usuarioCorreo != null)
+            {
+                usuarioCorreoParameter = new ObjectParameter("UsuarioCorreo", usuarioCorreo);
+            }
+            else
+            {
+                usuarioCorreoParameter = new ObjectParameter("UsuarioCorreo", typeof(string));
+            }
+    
+            ObjectParameter usuarioPwdParameter;
+    
+            if (usuarioPwd != null)
+            {
+                usuarioPwdParameter = new ObjectParameter("UsuarioPwd", usuarioPwd);
+            }
+            else
+            {
+                usuarioPwdParameter = new ObjectParameter("UsuarioPwd", typeof(string));
+            }
+    
+            ObjectParameter nombreParameter;
+    
+            if (nombre != null)
+            {
+                nombreParameter = new ObjectParameter("Nombre", nombre);
+            }
+            else
+            {
+                nombreParameter = new ObjectParameter("Nombre", typeof(string));
+            }
+    
+            ObjectParameter apellidoParameter;
+    
+            if (apellido != null)
+            {
+                apellidoParameter = new ObjectParameter("Apellido", apellido);
+            }
+            else
+            {
+                apellidoParameter = new ObjectParameter("Apellido", typeof(string));
+            }
+    
+            ObjectParameter areaParameter;
+    
+            if (area != null)
+            {
+                areaParameter = new ObjectParameter("Area", area);
+            }
+            else
+            {
+                areaParameter = new ObjectParameter("Area", typeof(string));
+            }
+    
+            ObjectParameter puestoParameter;
+    
+            if (puesto != null)
+            {
+                puestoParameter = new ObjectParameter("Puesto", puesto);
+            }
+            else
+            {
+                puestoParameter = new ObjectParameter("Puesto", typeof(string));
+            }
+    
+            ObjectParameter isActiveParameter;
+    
+            if (isActive.HasValue)
+            {
+                isActiveParameter = new ObjectParameter("IsActive", isActive);
+            }
+            else
+            {
+                isActiveParameter = new ObjectParameter("IsActive", typeof(bool));
+            }
+    
+            ObjectParameter isModifiedParameter;
+    
+            if (isModified.HasValue)
+            {
+                isModifiedParameter = new ObjectParameter("IsModified", isModified);
+            }
+            else
+            {
+                isModifiedParameter = new ObjectParameter("IsModified", typeof(bool));
+            }
+    
+            ObjectParameter lastModifiedDateParameter;
+    
+            if (lastModifiedDate.HasValue)
+            {
+                lastModifiedDateParameter = new ObjectParameter("LastModifiedDate", lastModifiedDate);
+            }
+            else
+            {
+                lastModifiedDateParameter = new ObjectParameter("LastModifiedDate", typeof(long));
+            }
+    
+            ObjectParameter isNewUserParameter;
+    
+            if (isNewUser.HasValue)
+            {
+                isNewUserParameter = new ObjectParameter("IsNewUser", isNewUser);
+            }
+            else
+            {
+                isNewUserParameter = new ObjectParameter("IsNewUser", typeof(bool));
+            }
+    
+            ObjectParameter isVerifiedParameter;
+    
+            if (isVerified.HasValue)
+            {
+                isVerifiedParameter = new ObjectParameter("IsVerified", isVerified);
+            }
+            else
+            {
+                isVerifiedParameter = new ObjectParameter("IsVerified", typeof(bool));
+            }
+    
+            ObjectParameter isMailSentParameter;
+    
+            if (isMailSent.HasValue)
+            {
+                isMailSentParameter = new ObjectParameter("IsMailSent", isMailSent);
+            }
+            else
+            {
+                isMailSentParameter = new ObjectParameter("IsMailSent", typeof(bool));
+            }
+    
+            ObjectParameter serverLastModifiedDateParameter;
+    
+            if (serverLastModifiedDate.HasValue)
+            {
+                serverLastModifiedDateParameter = new ObjectParameter("ServerLastModifiedDate", serverLastModifiedDate);
+            }
+            else
+            {
+                serverLastModifiedDateParameter = new ObjectParameter("ServerLastModifiedDate", typeof(long));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("spInsertUsuario", idUsuarioParameter, usuarioCorreoParameter, usuarioPwdParameter, nombreParameter, apellidoParameter, areaParameter, puestoParameter, isActiveParameter, isModifiedParameter, lastModifiedDateParameter, isNewUserParameter, isVerifiedParameter, isMailSentParameter, serverLastModifiedDateParameter);
+        }
+        public ObjectResult<Nullable<bool>> spCommitBulkUpsertCiRegistroDownloadOnDemand(Nullable<long> session)
+        {
+    
+            ObjectParameter sessionParameter;
+    
+            if (session.HasValue)
+            {
+                sessionParameter = new ObjectParameter("session", session);
+            }
+            else
+            {
+                sessionParameter = new ObjectParameter("session", typeof(long));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("spCommitBulkUpsertCiRegistroDownloadOnDemand", sessionParameter);
         }
 
         #endregion

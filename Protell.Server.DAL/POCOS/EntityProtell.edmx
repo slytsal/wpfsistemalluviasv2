@@ -206,6 +206,17 @@ warning 6002: The table/view 'qaDevinmr3.dbo._CAT_PUNTO_MEDICION' does not have 
           <Property Name="LastModifiedDate" Type="bigint" />
           <Property Name="IsModified" Type="bit" />
         </EntityType>
+        <EntityType Name="CAT_PUNTOS_MEDICION_SHORTNAME">
+          <Key>
+            <PropertyRef Name="IdShortName" />
+          </Key>
+          <Property Name="IdShortName" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPuntoMedicion" Type="bigint" />
+          <Property Name="ShortName" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="IsModified" Type="bit" Nullable="false" />
+          <Property Name="LastModifiedDate" Type="bigint" Nullable="false" />
+          <Property Name="ServerLastModifiedDate" Type="bigint" Nullable="false" />
+        </EntityType>
         <EntityType Name="CAT_SERVER_LASTDATA">
           <Key>
             <PropertyRef Name="IdServerLastData" />
@@ -506,6 +517,18 @@ warning 6002: The table/view 'qaDevinmr3.dbo._CAT_PUNTO_MEDICION' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__CAT_PUNTO__IdPun__4865BE2A">
+          <End Role="CAT_PUNTO_MEDICION" Type="Self.CAT_PUNTO_MEDICION" Multiplicity="0..1" />
+          <End Role="CAT_PUNTOS_MEDICION_SHORTNAME" Type="Self.CAT_PUNTOS_MEDICION_SHORTNAME" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_PUNTO_MEDICION">
+              <PropertyRef Name="IdPuntoMedicion" />
+            </Principal>
+            <Dependent Role="CAT_PUNTOS_MEDICION_SHORTNAME">
+              <PropertyRef Name="IdPuntoMedicion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__CI_TRACKI__IdReg__7C1A6C5A">
           <End Role="CI_REGISTRO" Type="Self.CI_REGISTRO" Multiplicity="0..1" />
           <End Role="CI_TRACKING" Type="Self.CI_TRACKING" Multiplicity="*" />
@@ -628,6 +651,7 @@ warning 6002: The table/view 'qaDevinmr3.dbo._CAT_PUNTO_MEDICION' does not have 
           <EntitySet Name="CAT_PROTOCOLO" EntityType="Self.CAT_PROTOCOLO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_PUNTO_MEDICION" EntityType="Self.CAT_PUNTO_MEDICION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_PUNTO_MEDICION_MAX_MIN" EntityType="Self.CAT_PUNTO_MEDICION_MAX_MIN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CAT_PUNTOS_MEDICION_SHORTNAME" EntityType="Self.CAT_PUNTOS_MEDICION_SHORTNAME" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_SERVER_LASTDATA" EntityType="Self.CAT_SERVER_LASTDATA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_SISTEMA" EntityType="Self.CAT_SISTEMA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_SYNC" EntityType="Self.CAT_SYNC" Schema="dbo" store:Type="Tables" />
@@ -710,6 +734,10 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
           <AssociationSet Name="FK__CAT_PUNTO__IdAcc__3A179ED3" Association="Self.FK__CAT_PUNTO__IdAcc__3A179ED3">
             <End Role="CAT_ACCION_ACTUAL" EntitySet="CAT_ACCION_ACTUAL" />
             <End Role="CAT_PUNTO_MEDICION" EntitySet="CAT_PUNTO_MEDICION" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CAT_PUNTO__IdPun__4865BE2A" Association="Self.FK__CAT_PUNTO__IdPun__4865BE2A">
+            <End Role="CAT_PUNTO_MEDICION" EntitySet="CAT_PUNTO_MEDICION" />
+            <End Role="CAT_PUNTOS_MEDICION_SHORTNAME" EntitySet="CAT_PUNTOS_MEDICION_SHORTNAME" />
           </AssociationSet>
           <AssociationSet Name="FK__CI_TRACKI__IdReg__7C1A6C5A" Association="Self.FK__CI_TRACKI__IdReg__7C1A6C5A">
             <End Role="CI_REGISTRO" EntitySet="CI_REGISTRO" />
@@ -874,6 +902,11 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
             <Parameter Name="Usuario" Mode="In" Type="String" />
             <Parameter Name="Pass" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="CAT_PUNTOS_MEDICION_SHORTNAME" EntityType="devinmr3Model.CAT_PUNTOS_MEDICION_SHORTNAME" />
+          <AssociationSet Name="FK__CAT_PUNTO__IdPun__4865BE2A" Association="devinmr3Model.FK__CAT_PUNTO__IdPun__4865BE2A">
+            <End Role="CAT_PUNTO_MEDICION" EntitySet="CAT_PUNTO_MEDICION" />
+            <End Role="CAT_PUNTOS_MEDICION_SHORTNAME" EntitySet="CAT_PUNTOS_MEDICION_SHORTNAME" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="C_CAT_PUNTO_MEDICION">
           <Key>
@@ -1413,6 +1446,7 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
           <NavigationProperty Name="CAT_PUNTO_MEDICION_MAX_MIN" Relationship="devinmr3Model.FK_CAT_PUNTO_MEDICION_MAX_MIN_CAT_PUNTO_MEDICION" FromRole="CAT_PUNTO_MEDICION" ToRole="CAT_PUNTO_MEDICION_MAX_MIN" />
           <Property Name="IdAccionActual" Type="Int64" />
           <NavigationProperty Name="CAT_ACCION_ACTUAL" Relationship="devinmr3Model.FK__CAT_PUNTO__IdAcc__3A179ED3" FromRole="CAT_PUNTO_MEDICION" ToRole="CAT_ACCION_ACTUAL" />
+          <NavigationProperty Name="CAT_PUNTOS_MEDICION_SHORTNAME" Relationship="devinmr3Model.FK__CAT_PUNTO__IdPun__4865BE2A" FromRole="CAT_PUNTO_MEDICION" ToRole="CAT_PUNTOS_MEDICION_SHORTNAME" />
         </EntityType>
         <Association Name="FK__CAT_PROTO__IdPun__3552E9B6">
           <End Type="devinmr3Model.CAT_PUNTO_MEDICION" Role="CAT_PUNTO_MEDICION" Multiplicity="0..1" />
@@ -1584,6 +1618,30 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
           <Property Type="Boolean" Name="IsMailSent" Nullable="true" />
           <Property Type="Int64" Name="ServerLastModifiedDate" Nullable="true" />
         </ComplexType>
+        <EntityType Name="CAT_PUNTOS_MEDICION_SHORTNAME">
+          <Key>
+            <PropertyRef Name="IdShortName" />
+          </Key>
+          <Property Name="IdShortName" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPuntoMedicion" Type="Int64" />
+          <Property Name="ShortName" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="IsModified" Type="Boolean" Nullable="false" />
+          <Property Name="LastModifiedDate" Type="Int64" Nullable="false" />
+          <Property Name="ServerLastModifiedDate" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="CAT_PUNTO_MEDICION" Relationship="devinmr3Model.FK__CAT_PUNTO__IdPun__4865BE2A" FromRole="CAT_PUNTOS_MEDICION_SHORTNAME" ToRole="CAT_PUNTO_MEDICION" />
+        </EntityType>
+        <Association Name="FK__CAT_PUNTO__IdPun__4865BE2A">
+          <End Type="devinmr3Model.CAT_PUNTO_MEDICION" Role="CAT_PUNTO_MEDICION" Multiplicity="0..1" />
+          <End Type="devinmr3Model.CAT_PUNTOS_MEDICION_SHORTNAME" Role="CAT_PUNTOS_MEDICION_SHORTNAME" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_PUNTO_MEDICION">
+              <PropertyRef Name="IdPuntoMedicion" />
+            </Principal>
+            <Dependent Role="CAT_PUNTOS_MEDICION_SHORTNAME">
+              <PropertyRef Name="IdPuntoMedicion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2066,6 +2124,18 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="CAT_PUNTOS_MEDICION_SHORTNAME">
+            <EntityTypeMapping TypeName="devinmr3Model.CAT_PUNTOS_MEDICION_SHORTNAME">
+              <MappingFragment StoreEntitySet="CAT_PUNTOS_MEDICION_SHORTNAME">
+                <ScalarProperty Name="ServerLastModifiedDate" ColumnName="ServerLastModifiedDate" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="IsModified" ColumnName="IsModified" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="IdPuntoMedicion" ColumnName="IdPuntoMedicion" />
+                <ScalarProperty Name="IdShortName" ColumnName="IdShortName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2182,6 +2252,8 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
         <AssociationConnector Association="devinmr3Model.APP_USUARIO_APP_USUARIO_ROL_FK1" />
         <AssociationConnector Association="devinmr3Model.APP_USUARIO_CAT_UPLOAD_LOG_FK1" />
         <AssociationConnector Association="devinmr3Model.FK__CI_TRACKI__IdUsu__7D0E9093" />
+        <EntityTypeShape EntityType="devinmr3Model.CAT_PUNTOS_MEDICION_SHORTNAME" Width="1.5" PointX="5.25" PointY="0.75" />
+        <AssociationConnector Association="devinmr3Model.FK__CAT_PUNTO__IdPun__4865BE2A" />
       </Diagram>
     </Diagrams>
   </Designer>

@@ -203,6 +203,12 @@ namespace Protell.Server.DAL.POCOS
             get { return _aPP_USUARIO  ?? (_aPP_USUARIO = CreateObjectSet<APP_USUARIO>("APP_USUARIO")); }
         }
         private ObjectSet<APP_USUARIO> _aPP_USUARIO;
+    
+        public ObjectSet<CAT_PUNTOS_MEDICION_SHORTNAME> CAT_PUNTOS_MEDICION_SHORTNAME
+        {
+            get { return _cAT_PUNTOS_MEDICION_SHORTNAME  ?? (_cAT_PUNTOS_MEDICION_SHORTNAME = CreateObjectSet<CAT_PUNTOS_MEDICION_SHORTNAME>("CAT_PUNTOS_MEDICION_SHORTNAME")); }
+        }
+        private ObjectSet<CAT_PUNTOS_MEDICION_SHORTNAME> _cAT_PUNTOS_MEDICION_SHORTNAME;
 
         #endregion
 

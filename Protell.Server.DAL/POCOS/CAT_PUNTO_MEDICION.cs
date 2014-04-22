@@ -348,6 +348,38 @@ namespace Protell.Server.DAL.POCOS
             }
         }
         private CAT_ACCION_ACTUAL _cAT_ACCION_ACTUAL;
+    
+        public virtual ICollection<CAT_PUNTOS_MEDICION_SHORTNAME> CAT_PUNTOS_MEDICION_SHORTNAME
+        {
+            get
+            {
+                if (_cAT_PUNTOS_MEDICION_SHORTNAME == null)
+                {
+                    var newCollection = new FixupCollection<CAT_PUNTOS_MEDICION_SHORTNAME>();
+                    newCollection.CollectionChanged += FixupCAT_PUNTOS_MEDICION_SHORTNAME;
+                    _cAT_PUNTOS_MEDICION_SHORTNAME = newCollection;
+                }
+                return _cAT_PUNTOS_MEDICION_SHORTNAME;
+            }
+            set
+            {
+                if (!ReferenceEquals(_cAT_PUNTOS_MEDICION_SHORTNAME, value))
+                {
+                    var previousValue = _cAT_PUNTOS_MEDICION_SHORTNAME as FixupCollection<CAT_PUNTOS_MEDICION_SHORTNAME>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupCAT_PUNTOS_MEDICION_SHORTNAME;
+                    }
+                    _cAT_PUNTOS_MEDICION_SHORTNAME = value;
+                    var newValue = value as FixupCollection<CAT_PUNTOS_MEDICION_SHORTNAME>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupCAT_PUNTOS_MEDICION_SHORTNAME;
+                    }
+                }
+            }
+        }
+        private ICollection<CAT_PUNTOS_MEDICION_SHORTNAME> _cAT_PUNTOS_MEDICION_SHORTNAME;
 
         #endregion
 
@@ -498,6 +530,28 @@ namespace Protell.Server.DAL.POCOS
             if (e.OldItems != null)
             {
                 foreach (CAT_PUNTO_MEDICION_MAX_MIN item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.CAT_PUNTO_MEDICION, this))
+                    {
+                        item.CAT_PUNTO_MEDICION = null;
+                    }
+                }
+            }
+        }
+    
+        private void FixupCAT_PUNTOS_MEDICION_SHORTNAME(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach (CAT_PUNTOS_MEDICION_SHORTNAME item in e.NewItems)
+                {
+                    item.CAT_PUNTO_MEDICION = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (CAT_PUNTOS_MEDICION_SHORTNAME item in e.OldItems)
                 {
                     if (ReferenceEquals(item.CAT_PUNTO_MEDICION, this))
                     {

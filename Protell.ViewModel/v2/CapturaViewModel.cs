@@ -17,7 +17,8 @@ namespace Protell.ViewModel.v2
         /// </summary>
         CatCondProRepository r = new CatCondProRepository();
         CatAccionActualRepository accionRepository = new CatAccionActualRepository();
-        CiRegistroRepository registroRepository = new CiRegistroRepository();        
+        CiRegistroRepository registroRepository = new CiRegistroRepository();      
+        
         MainViewModel  vm;
 
         /// <summary>
@@ -25,11 +26,11 @@ namespace Protell.ViewModel.v2
         /// </summary>
         public CapturaViewModel()
         {
-            Condiciones = new ObservableCollection<CondProModel>();
+            Condiciones = new ObservableCollection<CondProModel>();            
             getCondicions();
             GetHours();
         }
-
+       
         //editar registro existente
         public void InitEdit(RegistroModel registro, MainViewModel vmodel)
         {

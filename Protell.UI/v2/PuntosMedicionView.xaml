@@ -37,7 +37,7 @@
         
         <!--Puntos de medición-->
         <DataGrid Grid.Row="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"                   
-                 ItemsSource="{Binding Registros, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 ItemsSource="{Binding Registros, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,NotifyOnSourceUpdated=True}"
                  SelectedItem="{Binding pSelectedItem,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                 
                  Name="ListRegistros"  Margin="5" MouseDoubleClick="ListRegistros_MouseDoubleClick"                                    
                  AutoGenerateColumns="False" IsReadOnly="True"                  

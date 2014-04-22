@@ -3,12 +3,9 @@ using Protell.Model.SyncModels;
 using Protell.Server.DAL.POCOS;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Web.Script.Serialization;
 
 namespace Protell.Server.DAL.Repository.v2
 {

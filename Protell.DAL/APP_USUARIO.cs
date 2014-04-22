@@ -31,7 +31,7 @@ namespace Protell.DAL
             set;
         }
     
-        public virtual string UsuarioPwd
+        public virtual byte[] UsuarioPwd
         {
             get;
             set;

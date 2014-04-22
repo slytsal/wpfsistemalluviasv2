@@ -4,8 +4,10 @@ using Protell.Model.SyncModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Web.Script.Serialization;
 
 
@@ -66,6 +68,7 @@ namespace Protell.DAL.Repository.v2
 
             try
             {
+                SyncRepository sync = new SyncRepository();
                 using (var entity = new db_SeguimientoProtocolo_r2Entities())
                 {
                     var res = entity.spGetMaxTableCiRegistroRecurrent().FirstOrDefault();
@@ -73,7 +76,7 @@ namespace Protell.DAL.Repository.v2
                     {
                         _GetBodyContent = new RequestBodyContent()
                         {
-                            fechaActual = (long)res.FechaInicio,
+                            fechaActual = sync.GetCurrentDate(),
                             fechaFin = (long)res.FechaFin,
                             LastModifiedDate = (long)res.LastModifiedDate,
                             ServerLastModifiedDate = (long)res.ServerLastModifiedDate
@@ -462,7 +465,7 @@ namespace Protell.DAL.Repository.v2
                 list = js.Deserialize<CiRegistroOnDemandResultModel>(jsonResponse);
                 if(list.Download_CIRegistroOnDemandResult!=null && list.Download_CIRegistroOnDemandResult.Count>0)
                 {
-                    x = Upsert(list.Download_CIRegistroOnDemandResult);
+                    x = UpsertOnDemand(list.Download_CIRegistroOnDemandResult);
                 }
             }
             catch (Exception ex)
@@ -654,12 +657,12 @@ namespace Protell.DAL.Repository.v2
 
         public bool Insert(RegistroModel item, UsuarioModel user)
         {
-            bool x=false;
+            bool x = false;
             try
-            {
-                using (var entity=new db_SeguimientoProtocolo_r2Entities())
+            {                
+                using (var entity = new db_SeguimientoProtocolo_r2Entities())
                 {
-                    if(item!=null)
+                    if (item != null)
                     {
                         CI_REGISTRO result = null;
                         try
@@ -677,8 +680,8 @@ namespace Protell.DAL.Repository.v2
                                           && i.FechaNumerica == item.FechaNumerica
                                           select i).FirstOrDefault();
                             }
-                            catch (Exception )
-                            {                                                                
+                            catch (Exception)
+                            {
                             }
                         }
 
@@ -708,7 +711,7 @@ namespace Protell.DAL.Repository.v2
                             }
                             else
                             {
-                                
+
                                 result.IdPuntoMedicion = item.PUNTOMEDICION.IdPuntoMedicion;
                                 result.FechaCaptura = item.FechaCaptura;
                                 result.HoraRegistro = item.HoraRegistro;
@@ -719,15 +722,16 @@ namespace Protell.DAL.Repository.v2
                                 result.LastModifiedDate = new UNID().getNewUNID();
                                 result.IdCondicion = item.Condicion.IdCondicion;
                                 result.FechaNumerica = item.FechaNumerica;
-                                entity.SaveChanges();                                
+                                entity.SaveChanges();
                                 _SyncRepository.UpdateIsModifiedData(ID_SYNCTABLE);
                                 trackRepository.InsertTracking(trackRepository.createTracking(item, user, "Update"));
                             }
                             x = true;
+                            this.RaiseDidCiRegistroRecurrentDataChanged(true);
                         }
                         catch (Exception ex)
                         {
-                            AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });                            
+                            AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });
                         }
                     }
                 }
@@ -738,6 +742,141 @@ namespace Protell.DAL.Repository.v2
             }
             return x;
         }
+        
+
+        #region Metodos descarga Bajo demanda.
+        private string GetTmpUploadedTable(long unid)
+        {
+            return "TMP_CI_REGISTRO_DOWNLOAD_ONDEMAND_" + unid.ToString();
+        }
+
+        public long PrepareBulkUpsertUploaded()
+        {
+            long session = 0;
+            using (var entity = new db_SeguimientoProtocolo_r2Entities())
+            {
+                session = (new UNID()).getNewUNID();
+                string sqlCmd = "select TOP 1 * into " + this.GetTmpUploadedTable(session) + " from CI_REGISTRO; TRUNCATE TABLE " + this.GetTmpUploadedTable(session);
+                entity.ExecuteStoreCommand(sqlCmd);
+            }
+
+            return session;
+        }
+
+        private string GetSqlInsertString(RegistroModel r, bool notIncludeUnion)
+        {
+            string sql = "select ";
+            sql += r.IdRegistro.ToString() + ",";
+            sql += r.IdPuntoMedicion.ToString() + ",";
+            sql += "'" + String.Format("{0:yyyyMMdd HH:mm:ss}", DateTime.ParseExact(r.FechaNumerica.ToString().Substring(0, 8), "yyyyMMdd", CultureInfo.InvariantCulture)) + "',";
+            sql += r.HoraRegistro.ToString() + ",";
+            sql += r.DiaRegistro.ToString() + ",";
+            sql += r.Valor.ToString() + ",";
+            sql += "'" + r.AccionActual.ToString() + "',";
+            sql += (r.IsActive ? 1 : 0).ToString() + ",";
+            sql += (r.IsModified ? 1 : 0).ToString() + ",";
+            sql += r.LastModifiedDate.ToString() + ",";
+            sql += r.IdCondicion.ToString() + ",";
+            sql += r.ServerLastModifiedDate.ToString() + ",";
+            sql += r.FechaNumerica.ToString() + "";
+            sql += (notIncludeUnion) ? "" : " union all";
+
+            return sql;
+        }
+
+        public static void ExecuteSqlString(object sqlStmt)
+        {
+            string sSqlStmt = (string)sqlStmt;
+            using (var entity = new db_SeguimientoProtocolo_r2Entities())
+            {
+                entity.ExecuteStoreCommand(sSqlStmt);
+            }
+        }
+
+        public void BulkUpsertUploaded(List<RegistroModel> registros, long unidSession)
+        {
+            List<Thread> workerThreads = new List<Thread>();
+
+            string _base = "SET DATEFORMAT YMD; Insert into " + this.GetTmpUploadedTable(unidSession) + " ";
+            string sqlStatement = _base;
+
+            int maxReg = 0;
+            int i = 0;
+            int batch = 1000;
+
+            if (registros != null && registros.Count > 0)
+            {
+                maxReg = registros.Count - 1;
+                foreach (var r in registros)
+                {
+                    if ((i + 1) % batch == 0)
+                    {
+                        sqlStatement += " " + this.GetSqlInsertString(r, true);
+                        workerThreads.Add(new Thread(CiRegistroRepository.ExecuteSqlString));
+                        workerThreads.Last().IsBackground = true;
+                        workerThreads.Last().Start(sqlStatement);
+
+                        sqlStatement = _base;
+                    }
+                    else
+                    {
+                        sqlStatement += " " + this.GetSqlInsertString(r, ((maxReg == i) ? true : false));
+                    }
+
+                    i++;
+                }
+
+                if (sqlStatement != _base)
+                {
+                    workerThreads.Add(new Thread(CiRegistroRepository.ExecuteSqlString));
+                    workerThreads.Last().IsBackground = true;
+                    workerThreads.Last().Start(sqlStatement);
+                }
+
+                foreach (Thread thread in workerThreads)
+                {
+                    thread.Join();
+                }
+            }
+        }
+
+        public bool CommitBulkUpsertUploaded(long session)
+        {
+            bool x = false;
+            try
+            {
+                using (var entity = new db_SeguimientoProtocolo_r2Entities())
+                {
+                     entity.spCommitBulkUpsertCiRegistroDownloadOnDemand(session);
+                     x = true;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return x;
+        }
+
+        public bool UpsertOnDemand(List<RegistroModel> items)
+        {
+            bool x = false;
+
+            if (items != null && items.Count > 0)
+            {
+                long session = this.PrepareBulkUpsertUploaded();
+                this.BulkUpsertUploaded(items, session);
+                x=this.CommitBulkUpsertUploaded(session);
+            }
+
+            return x;
+        }
+
+        
+        #endregion
+
+        
     }
 
 }

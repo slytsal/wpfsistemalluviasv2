@@ -6,6 +6,8 @@ using Protell.DAL;
 using Protell.DAL.Repository;
 using Protell.DAL.Repository.v2;
 using Protell.Model;
+using System.Threading;
+using Protell.ViewModel.Sync;
 
 namespace Protell.ViewModel.v2
 {
@@ -15,7 +17,7 @@ namespace Protell.ViewModel.v2
         public LoginViewModel()
         {
             usuarioRepository= new UsuarioRepository();
-
+            this.Visibility = "Collapsed";    
             //this.UserName = "icastillo@inmeta.com.mx";
             //this.UserPassword = "Passw0rd1!";            
         }
@@ -109,22 +111,41 @@ namespace Protell.ViewModel.v2
             {
                 if (_LoginCommand == null)
                 {
-                    _LoginCommand = new RelayCommand(m => this.AttmpLogin(), m => this.CanLogin());
+                    _LoginCommand = new RelayCommand(m => this.HiloLogin(), m => this.CanLogin());
                 }
                 return _LoginCommand;
             }            
         }
         private RelayCommand _LoginCommand;
-        public const string LoginCommandPropertyName = "LoginCommand";        
+        public const string LoginCommandPropertyName = "LoginCommand";
+
+        public string Visibility
+        {
+            get { return _Visibility; }
+            set
+            {
+                if (_Visibility != value)
+                {
+                    _Visibility = value;
+                    OnPropertyChanged(VisibilityPropertyName);
+                }
+            }
+        }
+        private string _Visibility;
+        public const string VisibilityPropertyName = "Visibility";
+
         #endregion
 
         #region Metodos.
+        
 
         private void AttmpLogin()
         {
+            
             UsuarioModel user;
             try
-            {
+            {                
+                this.Visibility = "Visible";
                 this.Menssage = "";
                 user = usuarioRepository.GetUsuario(this.UserName, this.UserPassword, this.IsSaveSesion);
                 this.Usuario = ( user != null ) ? user : null;
@@ -133,7 +154,8 @@ namespace Protell.ViewModel.v2
             catch (Exception)
             {
                 //throw;
-            }            
+            }
+            this.Visibility = "Collapsed";    
         }
 
         private void AttmpLoginServer()
@@ -148,8 +170,9 @@ namespace Protell.ViewModel.v2
             }
             catch (Exception)
             {
-                                
+                          
             }
+            this.Visibility = "Collapsed";
         }
 
         private bool CanLogin()
@@ -172,6 +195,15 @@ namespace Protell.ViewModel.v2
             {
                 
             }
+        }
+
+        public void HiloLogin()
+        {
+            
+            Thread hilo = new Thread(AttmpLogin);
+            hilo.IsBackground = true;
+            SyncOnDemandSingleton.Instance.AddThread(hilo);
+            SyncOnDemandSingleton.Instance.RunThreads();
         }
         #endregion
     }

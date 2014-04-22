@@ -16,10 +16,10 @@ namespace Protell.DAL.Repository.v2
         {
             public BodyContent(string Usuario, string Password)
             {
-                this.Usurio = Usuario;
+                this.Usuario = Usuario;
                 this.Password = Password;
             }
-            public string Usurio;
+            public string Usuario;
             public string Password;
         }
 
@@ -37,7 +37,7 @@ namespace Protell.DAL.Repository.v2
                          {
                              IdUsuario = row.IdUsuario,
                              UsuarioCorreo = row.UsuarioCorreo,
-                             UsuarioPwd = row.UsuarioPwd,
+                             //UsuarioPwd = row.UsuarioPwd,
                              Nombre = row.Nombre,
                              Apellido = row.Apellido,
                              Area = row.Area,
@@ -78,9 +78,9 @@ namespace Protell.DAL.Repository.v2
                 JavaScriptSerializer js = new JavaScriptSerializer();
                 js.MaxJsonLength = Int32.MaxValue;
                 model = js.Deserialize<AppUsuarioResultModel>(jsonResponse);
-                if (model.Download_AppUsuarioResult != null)
+                if (model.Download_AppUsuarioResult != null && model.Download_AppUsuarioResult.IdUsuario!=null)
                 {
-                    //x = Upsert(list.Download_CIRegistroOnDemandResult);
+                    x = Upsert(model.Download_AppUsuarioResult);
                 }
             }
             catch (Exception ex)
@@ -98,7 +98,22 @@ namespace Protell.DAL.Repository.v2
             {
                 try
                 {
-                    
+                    entity.spInsertUsuario(
+                        items.IdUsuario,
+                        items.UsuarioCorreo,
+                        items.UsuarioPwd,
+                        items.Nombre,
+                        items.Apellido,
+                        items.Area,
+                        items.Puesto,
+                        items.IsActive,
+                        items.IsModified,
+                        items.LastModifiedDate,
+                        items.IsNewUser,
+                        items.IsVerified,
+                        items.IsMailSent,
+                        items.ServerLastModifiedDate
+                        );
                 }
                 catch (Exception ex)
                 {
@@ -107,5 +122,8 @@ namespace Protell.DAL.Repository.v2
                 return x;
             }
         }
+
+
+        
     }
 }

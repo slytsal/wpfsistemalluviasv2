@@ -17,13 +17,27 @@ namespace Protell.UI.v2
         Main parent;
 
         PuntosMedicionV2ViewModel pmViewModel = new PuntosMedicionV2ViewModel();
+
         public PuntosMedicionView()
         {
             InitializeComponent();
             
         }
      
+        public void EnRoll()
+        {
+            //if(vm!=null)
+                vm.PropertyChanged += vm_PropertyChanged;
+        }
 
+        void vm_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "IsSave")
+            {
+                if (vm.IsSave)
+                    pmViewModel.LoadPuntoMedicion(pmViewModel.SelectetPuntoMedicionItem);
+            }
+        }
         /// <summary>
         /// Nuevo Registro
         /// </summary>
@@ -42,6 +56,7 @@ namespace Protell.UI.v2
         {
             this.vm = viewModel;
             this.parent = mw;
+            EnRoll();
         }
 
         public void init(Main window,MainViewModel viewModel,PuntoMedicionModel model )
@@ -50,6 +65,7 @@ namespace Protell.UI.v2
             this.vm = viewModel;            
             pmViewModel.LoadPuntoMedicion(model);
             this.DataContext = pmViewModel;
+            EnRoll();
             
         }
 

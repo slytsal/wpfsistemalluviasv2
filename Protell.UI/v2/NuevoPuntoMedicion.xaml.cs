@@ -34,7 +34,13 @@ namespace Protell.UI.v2
             if(e.PropertyName=="IsSave")
             {
                 if (capturaViewModel.IsSave)
+                {
+                    viewModel.IsSave = true;
+                    viewModel.IsSave = false;
                     this.Close();
+
+                }
+                    
             }
         }
 

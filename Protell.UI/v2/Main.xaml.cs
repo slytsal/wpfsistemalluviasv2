@@ -31,6 +31,7 @@ namespace Protell.UI.v2
             InfoLoad();
             vmMain = new MainViewModel();
             vmMain.Usuario = usuarioModel;
+            vmMain.GetSync();
             vmMain.PropertyChanged += vmMain_PropertyChanged;
             this.DataContext = vmMain;
         }
@@ -54,6 +55,7 @@ namespace Protell.UI.v2
             Assembly assembly = Assembly.GetExecutingAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             this.Title = "SISTEMA DE CAPTURA PARA EL PROTOCOLO DE LLUVIAS  "+ "(V" + fvi.ProductVersion.ToString() + ")";
+            
         }
 
         private void Image_MouseDown(object sender, MouseButtonEventArgs e)
@@ -86,12 +88,20 @@ namespace Protell.UI.v2
             try
             {
                 SyncRecurrentSingleton.Instance.StartThread();
+                vmMain.GetSync();
+                //SyncRecurrentSingleton.Instance.DidCiRegistroDataChangedEvent += Instance_DidCiRegistroDataChangedEvent;
+                
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
 
+        }
+
+        void Instance_DidCiRegistroDataChangedEvent(object o, DidCiRegistroDataChangedArgs e)
+        {
+            tcTablero_SelectionChanged(tcTablero, null);
         }
 
         private void tcTablero_SelectionChanged(object sender, SelectionChangedEventArgs e)

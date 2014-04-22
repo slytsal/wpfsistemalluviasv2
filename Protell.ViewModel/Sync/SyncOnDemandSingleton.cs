@@ -7,41 +7,39 @@ using System.Collections.Generic;
 
 namespace Protell.ViewModel.Sync
 {
-    public delegate void DidCiRegistroDataChangedDelegate(object o, DidCiRegistroDataChangedArgs e);
+    public delegate void DidCiRegistroDataChangedOnDemandDelegate(object o, DidCiRegistroDataChangedOnDemandArgs e);
 
-    public class DidCiRegistroDataChangedArgs : EventArgs
+    public class DidCiRegistroDataChangedOnDemandArgs : EventArgs
     {
-        public readonly bool DataChanged;
+        public readonly bool DataChangedOnDemand;
 
-        public DidCiRegistroDataChangedArgs(bool dataChanged)
+        public DidCiRegistroDataChangedOnDemandArgs(bool dataChanged)
         {
-            DataChanged = dataChanged;
+            DataChangedOnDemand = dataChanged;
         }
 
     }
 
-    //Proceso de sincronización continua de todas las tablas
-    public sealed class SyncRecurrentSingleton
+    public sealed class SyncOnDemandSingleton
     {
         #region Eventos
-        public event DidCiRegistroDataChangedDelegate DidCiRegistroDataChangedEvent;
+        public event DidCiRegistroDataChangedOnDemandDelegate DidCiRegistroDataChangedOnDemandEvent;
 
-        private void RaiseDidDataChangedDelegateEvent(bool dataChanged)
+        private void RaiseDidDataChangedDelegateOnDemandEvent(bool dataChanged)
         {
-            if (DidCiRegistroDataChangedEvent != null)
+            if (DidCiRegistroDataChangedOnDemandEvent != null)
             {
-                DidCiRegistroDataChangedEvent(this, new DidCiRegistroDataChangedArgs(dataChanged));
+                DidCiRegistroDataChangedOnDemandEvent(this, new DidCiRegistroDataChangedOnDemandArgs(dataChanged));
             }
         }
         #endregion
 
-        //Para net 4 ; Con lazy implementa Singleton sin thread locks
-        private static readonly Lazy<SyncRecurrentSingleton> lazy = new Lazy<SyncRecurrentSingleton>(() => new SyncRecurrentSingleton());
+        private static readonly Lazy<SyncOnDemandSingleton> lazy = new Lazy<SyncOnDemandSingleton>(() => new SyncOnDemandSingleton());
 
-        public static SyncRecurrentSingleton Instance { get { return lazy.Value; } }
+        public static SyncOnDemandSingleton Instance { get { return lazy.Value; } }
 
         //Constructor
-        private SyncRecurrentSingleton()
+        private SyncOnDemandSingleton()
         {
             //TODO :  Validar inicializacion de hilo para establecerlo como background
             this.syncThread = new Thread(() => DoWork());
@@ -51,6 +49,8 @@ namespace Protell.ViewModel.Sync
 
         //Propiedades
         private Thread syncThread;
+
+        private List<Thread> listSyncThread = new List<Thread>();
 
         private bool _isRuning;
         public bool IsRuning
@@ -62,6 +62,20 @@ namespace Protell.ViewModel.Sync
         }
 
         //Métodos
+        public void AddThread(Thread item)
+        {
+            listSyncThread.Add(item);
+        }
+
+        public void RunThreads()
+        {
+            foreach (Thread item in listSyncThread)
+            {
+                item.Start();
+                item.Join();
+            }
+        }
+
         private void DoWork()
         {
             //Levantar evento de inicio
@@ -78,7 +92,7 @@ namespace Protell.ViewModel.Sync
                 //TEST: Solo tomar la de CI_REGISTRO
                 foreach (ModifiedDataModel item in tablesName)
                 {
-                    
+
 
                     //TEST: Solo tomar la de CI_REGISTRO
                     IServiceFactory factory = ServiceFactory.Instance.getClass(item.SYNCTABLE.SyncTableName);
@@ -88,7 +102,7 @@ namespace Protell.ViewModel.Sync
                         ((Protell.DAL.Repository.v2.CiRegistroRepository)factory).DidCiRegistroRecurrentDataChangedHandler += SyncRecurrentSingleton_DidCiRegistroRecurrentDataChangedHandler;
 
                         //TODO: Cuando se haya probado la descarga de información de los catálogos pasar estas lineas fuera del if
-                        
+
                     }
                     status = factory.Download();
                     downloadStatus = (downloadStatus == false || status == false) ? false : status;
@@ -109,7 +123,7 @@ namespace Protell.ViewModel.Sync
             {
                 this._isRuning = false;
             }
-            
+
             this._isRuning = false;
             //Levantar evento de fin
         }
@@ -123,7 +137,7 @@ namespace Protell.ViewModel.Sync
 
                 //TEST: Solo tomar la de CI_REGISTRO
 
-                if (tablesName!=null && tablesName.Count>0)
+                if (tablesName != null && tablesName.Count > 0)
                 {
                     foreach (ModifiedDataModel item in tablesName)
                     {
@@ -156,7 +170,7 @@ namespace Protell.ViewModel.Sync
         void SyncRecurrentSingleton_DidCiRegistroRecurrentDataChangedHandler(object o, DAL.Repository.v2.CiRegistroRecurrentDataChangedArgs e)
         {
             //Lanzar evento interno
-            this.RaiseDidDataChangedDelegateEvent(e.DataChanged);
+            this.RaiseDidDataChangedDelegateOnDemandEvent(e.DataChanged);
 
             //Unsubscribe event 
             ((Protell.DAL.Repository.v2.CiRegistroRepository)o).DidCiRegistroRecurrentDataChangedHandler -= SyncRecurrentSingleton_DidCiRegistroRecurrentDataChangedHandler;
@@ -170,5 +184,6 @@ namespace Protell.ViewModel.Sync
                 this.syncThread.Start();
             }
         }
+
     }
 }

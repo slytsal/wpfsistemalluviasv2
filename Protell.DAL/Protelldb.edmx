@@ -41,7 +41,7 @@
           </Key>
           <Property Name="IdUsuario" Type="bigint" Nullable="false" />
           <Property Name="UsuarioCorreo" Type="nvarchar" MaxLength="250" />
-          <Property Name="UsuarioPwd" Type="nvarchar" MaxLength="12" />
+          <Property Name="UsuarioPwd" Type="varbinary" MaxLength="500" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Apellido" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Area" Type="nvarchar" MaxLength="250" />
@@ -290,7 +290,7 @@
           </Key>
           <Property Name="IdTracking" Type="bigint" Nullable="false" />
           <Property Name="Accion" Type="nvarchar" MaxLength="500" />
-          <Property Name="Valor" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Valor" Type="nvarchar(max)" />
           <Property Name="Ip" Type="nvarchar" MaxLength="20" />
           <Property Name="Equipo" Type="nvarchar" MaxLength="255" />
           <Property Name="Ubicacion" Type="nvarchar" MaxLength="1000" />
@@ -651,6 +651,9 @@
         </Association>
         <Function Name="spAutoLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spCommitBulkUpdateCiRegistroConfirmation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spCommitBulkUpsertCiRegistroDownloadOnDemand" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="session" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="spCommitBulkUpsertCiRegistroOnDemand" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spCommitBulkUpsertCiRegistroRecurrent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spCommitCiRegistroDataTemp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -698,6 +701,22 @@
           <Parameter Name="ServerLastModifiedDate" Type="bigint" Mode="In" />
           <Parameter Name="FechaNumerica" Type="bigint" Mode="In" />
           <Parameter Name="SessionUnid" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="spInsertUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUsuario" Type="bigint" Mode="In" />
+          <Parameter Name="UsuarioCorreo" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="UsuarioPwd" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Nombre" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Apellido" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Area" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Puesto" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="IsActive" Type="bit" Mode="In" />
+          <Parameter Name="IsModified" Type="bit" Mode="In" />
+          <Parameter Name="LastModifiedDate" Type="bigint" Mode="In" />
+          <Parameter Name="IsNewUser" Type="bit" Mode="In" />
+          <Parameter Name="IsVerified" Type="bit" Mode="In" />
+          <Parameter Name="IsMailSent" Type="bit" Mode="In" />
+          <Parameter Name="ServerLastModifiedDate" Type="bigint" Mode="In" />
         </Function>
         <Function Name="spPrepareBulkUpdateCiRegistroConfirmation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spPrepareBulkUpsertCiRegistroOnDemand" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -828,7 +847,6 @@
       <Schema Namespace="db_SeguimientoProtocolo_r2Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="db_SeguimientoProtocolo_r2Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="APP_ROL" EntityType="db_SeguimientoProtocolo_r2Model.APP_ROL" />
-          <EntitySet Name="APP_USUARIO" EntityType="db_SeguimientoProtocolo_r2Model.APP_USUARIO" />
           <EntitySet Name="APP_USUARIO_ROL" EntityType="db_SeguimientoProtocolo_r2Model.APP_USUARIO_ROL" />
           <EntitySet Name="CAT_CONDPRO" EntityType="db_SeguimientoProtocolo_r2Model.CAT_CONDPRO" />
           <EntitySet Name="CAT_DEPENDENCIA" EntityType="db_SeguimientoProtocolo_r2Model.CAT_DEPENDENCIA" />
@@ -847,14 +865,6 @@
           <AssociationSet Name="APP_ROL_APP_USUARIO_ROL_FK1" Association="db_SeguimientoProtocolo_r2Model.APP_ROL_APP_USUARIO_ROL_FK1">
             <End Role="APP_ROL" EntitySet="APP_ROL" />
             <End Role="APP_USUARIO_ROL" EntitySet="APP_USUARIO_ROL" />
-          </AssociationSet>
-          <AssociationSet Name="APP_USUARIO_APP_USUARIO_ROL_FK1" Association="db_SeguimientoProtocolo_r2Model.APP_USUARIO_APP_USUARIO_ROL_FK1">
-            <End Role="APP_USUARIO" EntitySet="APP_USUARIO" />
-            <End Role="APP_USUARIO_ROL" EntitySet="APP_USUARIO_ROL" />
-          </AssociationSet>
-          <AssociationSet Name="APP_USUARIO_CAT_UPLOAD_LOG_FK1" Association="db_SeguimientoProtocolo_r2Model.APP_USUARIO_CAT_UPLOAD_LOG_FK1">
-            <End Role="APP_USUARIO" EntitySet="APP_USUARIO" />
-            <End Role="CAT_UPLOAD_LOG" EntitySet="CAT_UPLOAD_LOG" />
           </AssociationSet>
           <AssociationSet Name="CAT_CONDPRO_CI_REGISTRO_FK1" Association="db_SeguimientoProtocolo_r2Model.CAT_CONDPRO_CI_REGISTRO_FK1">
             <End Role="CAT_CONDPRO" EntitySet="CAT_CONDPRO" />
@@ -899,10 +909,6 @@
           <EntitySet Name="CAT_SYNC_LOG" EntityType="db_SeguimientoProtocolo_r2Model.CAT_SYNC_LOG" />
           <FunctionImport Name="spGetLastSync" ReturnType="Collection(String)" />
           <EntitySet Name="CAT_SESION" EntityType="db_SeguimientoProtocolo_r2Model.CAT_SESION" />
-          <AssociationSet Name="FK__CAT_SESIO__IdUsu__4D94879B" Association="db_SeguimientoProtocolo_r2Model.FK__CAT_SESIO__IdUsu__4D94879B">
-            <End Role="APP_USUARIO" EntitySet="APP_USUARIO" />
-            <End Role="CAT_SESION" EntitySet="CAT_SESION" />
-          </AssociationSet>
           <FunctionImport Name="spAutoLogin" ReturnType="Collection(db_SeguimientoProtocolo_r2Model.spAutoLogin_Result)" />
           <FunctionImport Name="spCurrentUser" ReturnType="Collection(Boolean)">
             <Parameter Name="IdUsuario" Mode="In" Type="Int64" />
@@ -910,10 +916,6 @@
           </FunctionImport>
           <FunctionImport Name="spGetDateTimeLastSync" ReturnType="Collection(String)" />
           <EntitySet Name="CI_TRACKING" EntityType="db_SeguimientoProtocolo_r2Model.CI_TRACKING" />
-          <AssociationSet Name="FK__CI_TRACKI__IdUsu__628FA481" Association="db_SeguimientoProtocolo_r2Model.FK__CI_TRACKI__IdUsu__628FA481">
-            <End Role="APP_USUARIO" EntitySet="APP_USUARIO" />
-            <End Role="CI_TRACKING" EntitySet="CI_TRACKING" />
-          </AssociationSet>
           <AssociationSet Name="FK__CI_TRACKI__IdReg__619B8048" Association="db_SeguimientoProtocolo_r2Model.FK__CI_TRACKI__IdReg__619B8048">
             <End Role="CI_REGISTRO" EntitySet="CI_REGISTRO" />
             <End Role="CI_TRACKING" EntitySet="CI_TRACKING" />
@@ -997,6 +999,42 @@
             <End Role="CAT_PUNTO_MEDICION" EntitySet="CAT_PUNTO_MEDICION" />
             <End Role="CAT_PROTOCOLO" EntitySet="CAT_PROTOCOLO" />
           </AssociationSet>
+          <EntitySet Name="APP_USUARIO" EntityType="db_SeguimientoProtocolo_r2Model.APP_USUARIO" />
+          <AssociationSet Name="APP_USUARIO_APP_USUARIO_ROL_FK1" Association="db_SeguimientoProtocolo_r2Model.APP_USUARIO_APP_USUARIO_ROL_FK1">
+            <End Role="APP_USUARIO" EntitySet="APP_USUARIO" />
+            <End Role="APP_USUARIO_ROL" EntitySet="APP_USUARIO_ROL" />
+          </AssociationSet>
+          <AssociationSet Name="APP_USUARIO_CAT_UPLOAD_LOG_FK1" Association="db_SeguimientoProtocolo_r2Model.APP_USUARIO_CAT_UPLOAD_LOG_FK1">
+            <End Role="APP_USUARIO" EntitySet="APP_USUARIO" />
+            <End Role="CAT_UPLOAD_LOG" EntitySet="CAT_UPLOAD_LOG" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CAT_SESIO__IdUsu__4D94879B" Association="db_SeguimientoProtocolo_r2Model.FK__CAT_SESIO__IdUsu__4D94879B">
+            <End Role="APP_USUARIO" EntitySet="APP_USUARIO" />
+            <End Role="CAT_SESION" EntitySet="CAT_SESION" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CI_TRACKI__IdUsu__628FA481" Association="db_SeguimientoProtocolo_r2Model.FK__CI_TRACKI__IdUsu__628FA481">
+            <End Role="APP_USUARIO" EntitySet="APP_USUARIO" />
+            <End Role="CI_TRACKING" EntitySet="CI_TRACKING" />
+          </AssociationSet>
+          <FunctionImport Name="spInsertUsuario" ReturnType="Collection(Boolean)">
+            <Parameter Name="IdUsuario" Mode="In" Type="Int64" />
+            <Parameter Name="UsuarioCorreo" Mode="In" Type="String" />
+            <Parameter Name="UsuarioPwd" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Apellido" Mode="In" Type="String" />
+            <Parameter Name="Area" Mode="In" Type="String" />
+            <Parameter Name="Puesto" Mode="In" Type="String" />
+            <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+            <Parameter Name="IsModified" Mode="In" Type="Boolean" />
+            <Parameter Name="LastModifiedDate" Mode="In" Type="Int64" />
+            <Parameter Name="IsNewUser" Mode="In" Type="Boolean" />
+            <Parameter Name="IsVerified" Mode="In" Type="Boolean" />
+            <Parameter Name="IsMailSent" Mode="In" Type="Boolean" />
+            <Parameter Name="ServerLastModifiedDate" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="spCommitBulkUpsertCiRegistroDownloadOnDemand" ReturnType="Collection(Boolean)">
+            <Parameter Name="session" Mode="In" Type="Int64" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="APP_ROL">
           <Key>
@@ -1010,29 +1048,6 @@
           <NavigationProperty Name="APP_USUARIO_ROL" Relationship="db_SeguimientoProtocolo_r2Model.APP_ROL_APP_USUARIO_ROL_FK1" FromRole="APP_ROL" ToRole="APP_USUARIO_ROL" />
           <Property Type="Int64" Name="ServerLastModifiedDate" />
         </EntityType>
-        <EntityType Name="APP_USUARIO">
-          <Key>
-            <PropertyRef Name="IdUsuario" />
-          </Key>
-          <Property Name="IdUsuario" Type="Int64" Nullable="false" />
-          <Property Name="UsuarioCorreo" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
-          <Property Name="UsuarioPwd" Type="String" MaxLength="12" Unicode="true" FixedLength="false" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
-          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
-          <Property Name="Area" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
-          <Property Name="Puesto" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="IsModified" Type="Boolean" Nullable="false" />
-          <Property Name="LastModifiedDate" Type="Int64" Nullable="false" />
-          <Property Name="IsNewUser" Type="Boolean" Nullable="false" />
-          <Property Name="IsVerified" Type="Boolean" Nullable="false" />
-          <Property Name="IsMailSent" Type="Boolean" />
-          <NavigationProperty Name="APP_USUARIO_ROL" Relationship="db_SeguimientoProtocolo_r2Model.APP_USUARIO_APP_USUARIO_ROL_FK1" FromRole="APP_USUARIO" ToRole="APP_USUARIO_ROL" />
-          <NavigationProperty Name="CAT_UPLOAD_LOG" Relationship="db_SeguimientoProtocolo_r2Model.APP_USUARIO_CAT_UPLOAD_LOG_FK1" FromRole="APP_USUARIO" ToRole="CAT_UPLOAD_LOG" />
-          <NavigationProperty Name="CAT_SESION" Relationship="db_SeguimientoProtocolo_r2Model.FK__CAT_SESIO__IdUsu__4D94879B" FromRole="APP_USUARIO" ToRole="CAT_SESION" />
-          <NavigationProperty Name="CI_TRACKING" Relationship="db_SeguimientoProtocolo_r2Model.FK__CI_TRACKI__IdUsu__628FA481" FromRole="APP_USUARIO" ToRole="CI_TRACKING" />
-          <Property Type="Int64" Name="ServerLastModifiedDate" />
-        </EntityType>
         <EntityType Name="APP_USUARIO_ROL">
           <Key>
             <PropertyRef Name="IdUsuario" />
@@ -1044,8 +1059,8 @@
           <Property Name="LastModifiedDate" Type="Int64" Nullable="false" />
           <Property Name="IsModified" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="APP_ROL" Relationship="db_SeguimientoProtocolo_r2Model.APP_ROL_APP_USUARIO_ROL_FK1" FromRole="APP_USUARIO_ROL" ToRole="APP_ROL" />
-          <NavigationProperty Name="APP_USUARIO" Relationship="db_SeguimientoProtocolo_r2Model.APP_USUARIO_APP_USUARIO_ROL_FK1" FromRole="APP_USUARIO_ROL" ToRole="APP_USUARIO" />
           <Property Type="Int64" Name="ServerLastModifiedDate" />
+          <NavigationProperty Name="APP_USUARIO" Relationship="db_SeguimientoProtocolo_r2Model.APP_USUARIO_APP_USUARIO_ROL_FK1" FromRole="APP_USUARIO_ROL" ToRole="APP_USUARIO" />
         </EntityType>
         <EntityType Name="CAT_CONDPRO">
           <Key>
@@ -1253,30 +1268,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="APP_USUARIO_APP_USUARIO_ROL_FK1">
-          <End Role="APP_USUARIO" Type="db_SeguimientoProtocolo_r2Model.APP_USUARIO" Multiplicity="1" />
-          <End Role="APP_USUARIO_ROL" Type="db_SeguimientoProtocolo_r2Model.APP_USUARIO_ROL" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="APP_USUARIO">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="APP_USUARIO_ROL">
-              <PropertyRef Name="IdUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="APP_USUARIO_CAT_UPLOAD_LOG_FK1">
-          <End Role="APP_USUARIO" Type="db_SeguimientoProtocolo_r2Model.APP_USUARIO" Multiplicity="0..1" />
-          <End Role="CAT_UPLOAD_LOG" Type="db_SeguimientoProtocolo_r2Model.CAT_UPLOAD_LOG" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="APP_USUARIO">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="CAT_UPLOAD_LOG">
-              <PropertyRef Name="IdUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="CAT_CONDPRO_CI_REGISTRO_FK1">
           <End Role="CAT_CONDPRO" Type="db_SeguimientoProtocolo_r2Model.CAT_CONDPRO" Multiplicity="1" />
           <End Role="CI_REGISTRO" Type="db_SeguimientoProtocolo_r2Model.CI_REGISTRO" Multiplicity="*" />
@@ -1416,18 +1407,6 @@
           <Property Type="Boolean" Name="IsSaveSesion" />
           <NavigationProperty Name="APP_USUARIO" Relationship="db_SeguimientoProtocolo_r2Model.FK__CAT_SESIO__IdUsu__4D94879B" FromRole="CAT_SESION" ToRole="APP_USUARIO" />
         </EntityType>
-        <Association Name="FK__CAT_SESIO__IdUsu__4D94879B">
-          <End Type="db_SeguimientoProtocolo_r2Model.APP_USUARIO" Role="APP_USUARIO" Multiplicity="0..1" />
-          <End Type="db_SeguimientoProtocolo_r2Model.CAT_SESION" Role="CAT_SESION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="APP_USUARIO">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="CAT_SESION">
-              <PropertyRef Name="IdUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <ComplexType Name="spAutoLogin_Result">
           <Property Type="Int64" Name="IdUsuario" Nullable="false" />
           <Property Type="String" Name="UsuarioCorreo" Nullable="true" MaxLength="250" />
@@ -1449,30 +1428,18 @@
           </Key>
           <Property Type="Int64" Name="IdTracking" Nullable="false" />
           <Property Type="String" Name="Accion" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Valor" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Valor" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Ip" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Equipo" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Ubicacion" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Type="Int64" Name="IdRegistro" />
           <Property Type="Int64" Name="IdUsuario" />
-          <NavigationProperty Name="APP_USUARIO" Relationship="db_SeguimientoProtocolo_r2Model.FK__CI_TRACKI__IdUsu__628FA481" FromRole="CI_TRACKING" ToRole="APP_USUARIO" />
           <NavigationProperty Name="CI_REGISTRO" Relationship="db_SeguimientoProtocolo_r2Model.FK__CI_TRACKI__IdReg__619B8048" FromRole="CI_TRACKING" ToRole="CI_REGISTRO" />
           <Property Name="ServerLastModifiedDate" Type="Int64" />
           <Property Name="LastModifiedDate" Type="Int64" />
           <Property Name="IsModified" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="APP_USUARIO" Relationship="db_SeguimientoProtocolo_r2Model.FK__CI_TRACKI__IdUsu__628FA481" FromRole="CI_TRACKING" ToRole="APP_USUARIO" />
         </EntityType>
-        <Association Name="FK__CI_TRACKI__IdUsu__628FA481">
-          <End Type="db_SeguimientoProtocolo_r2Model.APP_USUARIO" Role="APP_USUARIO" Multiplicity="0..1" />
-          <End Type="db_SeguimientoProtocolo_r2Model.CI_TRACKING" Role="CI_TRACKING" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="APP_USUARIO">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="CI_TRACKING">
-              <PropertyRef Name="IdUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__CI_TRACKI__IdReg__619B8048">
           <End Type="db_SeguimientoProtocolo_r2Model.CI_REGISTRO" Role="CI_REGISTRO" Multiplicity="0..1" />
           <End Type="db_SeguimientoProtocolo_r2Model.CI_TRACKING" Role="CI_TRACKING" Multiplicity="*" />
@@ -1741,6 +1708,77 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="APP_USUARIO">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int64" Nullable="false" />
+          <Property Name="UsuarioCorreo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="UsuarioPwd" Type="Binary" MaxLength="500" FixedLength="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Area" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Puesto" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsModified" Type="Boolean" Nullable="false" />
+          <Property Name="LastModifiedDate" Type="Int64" Nullable="false" />
+          <Property Name="IsNewUser" Type="Boolean" Nullable="false" />
+          <Property Name="IsVerified" Type="Boolean" Nullable="false" />
+          <Property Name="IsMailSent" Type="Boolean" />
+          <Property Name="ServerLastModifiedDate" Type="Int64" />
+          <NavigationProperty Name="APP_USUARIO_ROL" Relationship="db_SeguimientoProtocolo_r2Model.APP_USUARIO_APP_USUARIO_ROL_FK1" FromRole="APP_USUARIO" ToRole="APP_USUARIO_ROL" />
+          <NavigationProperty Name="CAT_UPLOAD_LOG" Relationship="db_SeguimientoProtocolo_r2Model.APP_USUARIO_CAT_UPLOAD_LOG_FK1" FromRole="APP_USUARIO" ToRole="CAT_UPLOAD_LOG" />
+          <NavigationProperty Name="CAT_SESION" Relationship="db_SeguimientoProtocolo_r2Model.FK__CAT_SESIO__IdUsu__4D94879B" FromRole="APP_USUARIO" ToRole="CAT_SESION" />
+          <NavigationProperty Name="CI_TRACKING" Relationship="db_SeguimientoProtocolo_r2Model.FK__CI_TRACKI__IdUsu__628FA481" FromRole="APP_USUARIO" ToRole="CI_TRACKING" />
+        </EntityType>
+        <Association Name="APP_USUARIO_APP_USUARIO_ROL_FK1">
+          <End Type="db_SeguimientoProtocolo_r2Model.APP_USUARIO" Role="APP_USUARIO" Multiplicity="1" />
+          <End Type="db_SeguimientoProtocolo_r2Model.APP_USUARIO_ROL" Role="APP_USUARIO_ROL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APP_USUARIO">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="APP_USUARIO_ROL">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="APP_USUARIO_CAT_UPLOAD_LOG_FK1">
+          <End Type="db_SeguimientoProtocolo_r2Model.APP_USUARIO" Role="APP_USUARIO" Multiplicity="0..1" />
+          <End Type="db_SeguimientoProtocolo_r2Model.CAT_UPLOAD_LOG" Role="CAT_UPLOAD_LOG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APP_USUARIO">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="CAT_UPLOAD_LOG">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CAT_SESIO__IdUsu__4D94879B">
+          <End Type="db_SeguimientoProtocolo_r2Model.APP_USUARIO" Role="APP_USUARIO" Multiplicity="0..1" />
+          <End Type="db_SeguimientoProtocolo_r2Model.CAT_SESION" Role="CAT_SESION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APP_USUARIO">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="CAT_SESION">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CI_TRACKI__IdUsu__628FA481">
+          <End Type="db_SeguimientoProtocolo_r2Model.APP_USUARIO" Role="APP_USUARIO" Multiplicity="0..1" />
+          <End Type="db_SeguimientoProtocolo_r2Model.CI_TRACKING" Role="CI_TRACKING" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APP_USUARIO">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="CI_TRACKING">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1756,26 +1794,6 @@
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
                 <ScalarProperty Name="IsModified" ColumnName="IsModified" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="APP_USUARIO">
-            <EntityTypeMapping TypeName="db_SeguimientoProtocolo_r2Model.APP_USUARIO">
-              <MappingFragment StoreEntitySet="APP_USUARIO">
-                <ScalarProperty Name="ServerLastModifiedDate" ColumnName="ServerLastModifiedDate" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="UsuarioCorreo" ColumnName="UsuarioCorreo" />
-                <ScalarProperty Name="UsuarioPwd" ColumnName="UsuarioPwd" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
-                <ScalarProperty Name="Area" ColumnName="Area" />
-                <ScalarProperty Name="Puesto" ColumnName="Puesto" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="IsModified" ColumnName="IsModified" />
-                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
-                <ScalarProperty Name="IsNewUser" ColumnName="IsNewUser" />
-                <ScalarProperty Name="IsVerified" ColumnName="IsVerified" />
-                <ScalarProperty Name="IsMailSent" ColumnName="IsMailSent" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2259,6 +2277,28 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="APP_USUARIO">
+            <EntityTypeMapping TypeName="db_SeguimientoProtocolo_r2Model.APP_USUARIO">
+              <MappingFragment StoreEntitySet="APP_USUARIO">
+                <ScalarProperty Name="ServerLastModifiedDate" ColumnName="ServerLastModifiedDate" />
+                <ScalarProperty Name="IsMailSent" ColumnName="IsMailSent" />
+                <ScalarProperty Name="IsVerified" ColumnName="IsVerified" />
+                <ScalarProperty Name="IsNewUser" ColumnName="IsNewUser" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="IsModified" ColumnName="IsModified" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Puesto" ColumnName="Puesto" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="UsuarioPwd" ColumnName="UsuarioPwd" />
+                <ScalarProperty Name="UsuarioCorreo" ColumnName="UsuarioCorreo" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spInsertUsuario" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spInsertUsuario" />
+          <FunctionImportMapping FunctionImportName="spCommitBulkUpsertCiRegistroDownloadOnDemand" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spCommitBulkUpsertCiRegistroDownloadOnDemand" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2283,7 +2323,6 @@
     <Diagrams>
       <Diagram Name="Protelldb" ZoomLevel="81">
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.APP_ROL" Width="1.5" PointX="8.75" PointY="16.5" Height="2.5571907552083317" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.APP_USUARIO" Width="1.5" PointX="8.75" PointY="0.75" Height="4.0956022135416656" IsExpanded="true" />
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.APP_USUARIO_ROL" Width="1.5" PointX="14" PointY="16.5" Height="2.3648893229166674" IsExpanded="true" />
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.CAT_CONDPRO" Width="1.5" PointX="6" PointY="10.875" Height="2.7494921874999996" IsExpanded="true" />
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.CAT_DEPENDENCIA" Width="1.5" PointX="3" PointY="16.25" Height="2.1725878906249996" IsExpanded="true" />
@@ -2304,21 +2343,6 @@
           <ConnectorPoint PointX="10.416666666666666" PointY="17.315921817057294" />
           <ConnectorPoint PointX="10.583333333333334" PointY="17.315921817057294" />
           <ConnectorPoint PointX="14" PointY="17.315921817057294" />
-        </AssociationConnector>
-        <AssociationConnector Association="db_SeguimientoProtocolo_r2Model.APP_USUARIO_APP_USUARIO_ROL_FK1" ManuallyRouted="false">
-          <ConnectorPoint PointX="9.328123" PointY="5.230205078125" />
-          <ConnectorPoint PointX="9.328123" PointY="6.25" />
-          <ConnectorPoint PointX="9.8854166666666661" PointY="6.2499999999999991" />
-          <ConnectorPoint PointX="10.052083333333334" PointY="6.25" />
-          <ConnectorPoint PointX="10.125" PointY="6.25" />
-          <ConnectorPoint PointX="10.125" PointY="16.25" />
-          <ConnectorPoint PointX="10.5" PointY="16.25" />
-          <ConnectorPoint PointX="10.5" PointY="18.234556498286317" />
-          <ConnectorPoint PointX="14" PointY="18.234556498286317" />
-        </AssociationConnector>
-        <AssociationConnector Association="db_SeguimientoProtocolo_r2Model.APP_USUARIO_CAT_UPLOAD_LOG_FK1" ManuallyRouted="false">
-          <ConnectorPoint PointX="10.25" PointY="3.8362939453125016" />
-          <ConnectorPoint PointX="11" PointY="3.8362939453125016" />
         </AssociationConnector>
         <AssociationConnector Association="db_SeguimientoProtocolo_r2Model.CAT_CONDPRO_CI_REGISTRO_FK1" ManuallyRouted="false">
           <ConnectorPoint PointX="7.5" PointY="11.40625" />
@@ -2372,22 +2396,7 @@
         </AssociationConnector>
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.CAT_SYNC_LOG" Width="1.5" PointX="3.375" PointY="0.75" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.CAT_SESION" Width="1.5" PointX="11" PointY="0.75" Height="1.7879850260416674" />
-        <AssociationConnector Association="db_SeguimientoProtocolo_r2Model.FK__CAT_SESIO__IdUsu__4D94879B" >
-          <ConnectorPoint PointX="10.25" PointY="1.6439925130208337" />
-          <ConnectorPoint PointX="11" PointY="1.6439925130208337" />
-        </AssociationConnector>
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.CI_TRACKING" Width="1.5" PointX="14" PointY="8.25" Height="2.9417936197916674" />
-        <AssociationConnector Association="db_SeguimientoProtocolo_r2Model.FK__CI_TRACKI__IdUsu__628FA481" >
-          <ConnectorPoint PointX="9.96875" PointY="5.230205078125" />
-          <ConnectorPoint PointX="9.96875" PointY="10.924947916666667" />
-          <ConnectorPoint PointX="10.041666666666666" PointY="10.924947916666667" />
-          <ConnectorPoint PointX="10.208333333333334" PointY="10.924947916666667" />
-          <ConnectorPoint PointX="12.213539166666665" PointY="10.924947916666667" />
-          <ConnectorPoint PointX="12.380205833333333" PointY="10.924947916666667" />
-          <ConnectorPoint PointX="12.385416666666666" PointY="10.924947916666667" />
-          <ConnectorPoint PointX="12.552083333333334" PointY="10.924947916666667" />
-          <ConnectorPoint PointX="14" PointY="10.924947916666667" />
-        </AssociationConnector>
         <AssociationConnector Association="db_SeguimientoProtocolo_r2Model.FK__CI_TRACKI__IdReg__619B8048" >
           <ConnectorPoint PointX="9.75" PointY="10.453797200520839" />
           <ConnectorPoint PointX="9.8854166666666661" PointY="10.453797200520837" />
@@ -2439,6 +2448,11 @@
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.APP_SETTINGS" Width="1.5" PointX="18.375" PointY="3.75" />
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.CAT_PROTOCOLO" Width="1.5" PointX="5.25" PointY="19.125" />
         <AssociationConnector Association="db_SeguimientoProtocolo_r2Model.FK__CAT_PROTO__IdPun__339FAB6E" />
+        <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.APP_USUARIO" Width="1.5" PointX="8.75" PointY="0.75" />
+        <AssociationConnector Association="db_SeguimientoProtocolo_r2Model.APP_USUARIO_APP_USUARIO_ROL_FK1" />
+        <AssociationConnector Association="db_SeguimientoProtocolo_r2Model.APP_USUARIO_CAT_UPLOAD_LOG_FK1" />
+        <AssociationConnector Association="db_SeguimientoProtocolo_r2Model.FK__CAT_SESIO__IdUsu__4D94879B" />
+        <AssociationConnector Association="db_SeguimientoProtocolo_r2Model.FK__CI_TRACKI__IdUsu__628FA481" />
       </Diagram>
     </Diagrams>
   </Designer>

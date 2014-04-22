@@ -20,7 +20,7 @@ namespace Protell.DAL.Repository
                 try
                 {
                     var res = ( from o in entity.APP_USUARIO
-                                where o.UsuarioCorreo == userMail && o.UsuarioPwd == password
+                                //where o.UsuarioCorreo == userMail && o.UsuarioPwd == password
                                 select o ).First<APP_USUARIO>();
 
                     um = new UsuarioModel()
@@ -31,7 +31,7 @@ namespace Protell.DAL.Repository
                         Area = res.Area,
                         Nombre = res.Nombre,
                         Puesto = res.Puesto,
-                        UsuarioPwd = res.UsuarioPwd,
+                        //UsuarioPwd = res.UsuarioPwd,
                         IsActive = res.IsActive
                     };
                     //En caso de encontrar al usuario Gurda la sesion
