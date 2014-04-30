@@ -88,8 +88,7 @@ namespace Protell.UI.v2
             try
             {
                 SyncRecurrentSingleton.Instance.StartThread();
-                vmMain.GetSync();
-                //SyncRecurrentSingleton.Instance.DidCiRegistroDataChangedEvent += Instance_DidCiRegistroDataChangedEvent;
+                vmMain.GetSync();                
                 
             }
             catch (Exception ex)
@@ -98,12 +97,7 @@ namespace Protell.UI.v2
             }
 
         }
-
-        void Instance_DidCiRegistroDataChangedEvent(object o, DidCiRegistroDataChangedArgs e)
-        {
-            tcTablero_SelectionChanged(tcTablero, null);
-        }
-
+       
         private void tcTablero_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try

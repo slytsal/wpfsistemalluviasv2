@@ -138,12 +138,6 @@ namespace Protell.Server.DAL.POCOS
         }
         private ObjectSet<REL_ESTRUCTURA_DEPENDENCIA> _rEL_ESTRUCTURA_DEPENDENCIA;
     
-        public ObjectSet<CI_TRACKING> CI_TRACKING
-        {
-            get { return _cI_TRACKING  ?? (_cI_TRACKING = CreateObjectSet<CI_TRACKING>("CI_TRACKING")); }
-        }
-        private ObjectSet<CI_TRACKING> _cI_TRACKING;
-    
         public ObjectSet<CAT_AGRUPADOR_ISOYETA> CAT_AGRUPADOR_ISOYETA
         {
             get { return _cAT_AGRUPADOR_ISOYETA  ?? (_cAT_AGRUPADOR_ISOYETA = CreateObjectSet<CAT_AGRUPADOR_ISOYETA>("CAT_AGRUPADOR_ISOYETA")); }
@@ -209,6 +203,12 @@ namespace Protell.Server.DAL.POCOS
             get { return _cAT_PUNTOS_MEDICION_SHORTNAME  ?? (_cAT_PUNTOS_MEDICION_SHORTNAME = CreateObjectSet<CAT_PUNTOS_MEDICION_SHORTNAME>("CAT_PUNTOS_MEDICION_SHORTNAME")); }
         }
         private ObjectSet<CAT_PUNTOS_MEDICION_SHORTNAME> _cAT_PUNTOS_MEDICION_SHORTNAME;
+    
+        public ObjectSet<CI_TRACKING> CI_TRACKING
+        {
+            get { return _cI_TRACKING  ?? (_cI_TRACKING = CreateObjectSet<CI_TRACKING>("CI_TRACKING")); }
+        }
+        private ObjectSet<CI_TRACKING> _cI_TRACKING;
 
         #endregion
 

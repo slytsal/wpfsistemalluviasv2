@@ -31,6 +31,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft SQL Server\110\SDK\Assemblies\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft SQL Server\110\SDK\Assemblies\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Smo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft SQL Server\110\SDK\Assemblies\Microsoft.SqlServer.Smo.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\..\..\..\..\..\imcprotell\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -38,6 +53,7 @@
       <HintPath>DLL\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
@@ -90,6 +106,9 @@
     <Compile Include="CAT_PROTOCOLO.cs">
       <DependentUpon>Protelldb.tt</DependentUpon>
     </Compile>
+    <Compile Include="CAT_PUNTOS_MEDICION_SHORTNAME.cs">
+      <DependentUpon>Protelldb.tt</DependentUpon>
+    </Compile>
     <Compile Include="CAT_PUNTO_MEDICION.cs">
       <DependentUpon>Protelldb.tt</DependentUpon>
     </Compile>
@@ -126,6 +145,7 @@
     <Compile Include="CI_TRACKING.cs">
       <DependentUpon>Protelldb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Conexion\MasterConexion.cs" />
     <Compile Include="Factory\DownloadFactory.cs" />
     <Compile Include="Factory\IServiceFactory.cs" />
     <Compile Include="Factory\ServiceFactory.cs" />
@@ -193,6 +213,7 @@
     <Compile Include="Repository\UploadLogRepository.cs" />
     <Compile Include="Repository\UsuarioRepository.cs" />
     <Compile Include="Repository\v2\AppBitacoraRepository.cs" />
+    <Compile Include="Repository\v2\ApplicationRepository.cs" />
     <Compile Include="Repository\v2\AppRolRepository.cs" />
     <Compile Include="Repository\v2\AppSettingsRepository.cs" />
     <Compile Include="Repository\v2\AppUsuarioRepository.cs" />
@@ -234,6 +255,9 @@
     <Compile Include="spGetMaxTable_Result1.cs">
       <DependentUpon>Protelldb.tt</DependentUpon>
     </Compile>
+    <Compile Include="spSelectCurrentUser_Result.cs">
+      <DependentUpon>Protelldb.tt</DependentUpon>
+    </Compile>
     <Compile Include="SYNCTABLE.cs">
       <DependentUpon>Protelldb.tt</DependentUpon>
     </Compile>
@@ -266,6 +290,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Protelldb.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="packages.config" />
     <None Include="Protelldb.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Protelldb.Context.cs</LastGenOutput>

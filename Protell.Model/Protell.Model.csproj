@@ -68,6 +68,8 @@
     <Compile Include="SyncModels\CatProtocoloResultModel.cs" />
     <Compile Include="SyncModels\CatPuntoMedicionMaxMinResultModel.cs" />
     <Compile Include="SyncModels\CatPuntoMedicionResultModel.cs" />
+    <Compile Include="SyncModels\CiTrackingUploadConfirmationModel.cs" />
+    <Compile Include="SyncModels\CiTrackingUploadModel.cs" />
     <Compile Include="SyncModels\CatSistemaResultModel.cs" />
     <Compile Include="SyncModels\CatTipoPuntoMedicionResultModel.cs" />
     <Compile Include="SyncModels\CatUnidadMedidaResultModel.cs" />
@@ -77,6 +79,8 @@
     <Compile Include="SyncModels\CiRegistroUploadResponseModel.cs" />
     <Compile Include="SyncModels\CiRegistroUploadServiceInputWrapper.cs" />
     <Compile Include="SyncModels\CiTrackingResultModel.cs" />
+    <Compile Include="SyncModels\CiTrackingUploadResponseModel.cs" />
+    <Compile Include="SyncModels\CiTrackingUploadServiceInputWrapper.cs" />
     <Compile Include="SyncModels\CondProdResultModel.cs" />
     <Compile Include="CondProModel.cs">
       <SubType>Code</SubType>

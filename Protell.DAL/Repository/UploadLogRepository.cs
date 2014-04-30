@@ -24,7 +24,6 @@ namespace Protell.DAL.Repository
             if (!String.IsNullOrEmpty(upLoadLog))
             {
                 up = JsonConvert.DeserializeObject<Model.UploadLogModel>(upLoadLog);
-
             }
             return up;
         }

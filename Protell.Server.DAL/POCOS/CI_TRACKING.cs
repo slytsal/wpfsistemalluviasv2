@@ -55,31 +55,6 @@ namespace Protell.Server.DAL.POCOS
             set;
         }
     
-        public virtual Nullable<long> IdRegistro
-        {
-            get { return _idRegistro; }
-            set
-            {
-                try
-                {
-                    _settingFK = true;
-                    if (_idRegistro != value)
-                    {
-                        if (CI_REGISTRO != null && CI_REGISTRO.IdRegistro != value)
-                        {
-                            CI_REGISTRO = null;
-                        }
-                        _idRegistro = value;
-                    }
-                }
-                finally
-                {
-                    _settingFK = false;
-                }
-            }
-        }
-        private Nullable<long> _idRegistro;
-    
         public virtual Nullable<long> IdUsuario
         {
             get { return _idUsuario; }
@@ -116,25 +91,22 @@ namespace Protell.Server.DAL.POCOS
             get;
             set;
         }
+    
+        public virtual long IdPuntoMedicion
+        {
+            get;
+            set;
+        }
+    
+        public virtual long FechaNumerica
+        {
+            get;
+            set;
+        }
 
         #endregion
 
         #region Navigation Properties
-    
-        public virtual CI_REGISTRO CI_REGISTRO
-        {
-            get { return _cI_REGISTRO; }
-            set
-            {
-                if (!ReferenceEquals(_cI_REGISTRO, value))
-                {
-                    var previousValue = _cI_REGISTRO;
-                    _cI_REGISTRO = value;
-                    FixupCI_REGISTRO(previousValue);
-                }
-            }
-        }
-        private CI_REGISTRO _cI_REGISTRO;
     
         public virtual APP_USUARIO APP_USUARIO
         {
@@ -156,30 +128,6 @@ namespace Protell.Server.DAL.POCOS
         #region Association Fixup
     
         private bool _settingFK = false;
-    
-        private void FixupCI_REGISTRO(CI_REGISTRO previousValue)
-        {
-            if (previousValue != null && previousValue.CI_TRACKING.Contains(this))
-            {
-                previousValue.CI_TRACKING.Remove(this);
-            }
-    
-            if (CI_REGISTRO != null)
-            {
-                if (!CI_REGISTRO.CI_TRACKING.Contains(this))
-                {
-                    CI_REGISTRO.CI_TRACKING.Add(this);
-                }
-                if (IdRegistro != CI_REGISTRO.IdRegistro)
-                {
-                    IdRegistro = CI_REGISTRO.IdRegistro;
-                }
-            }
-            else if (!_settingFK)
-            {
-                IdRegistro = null;
-            }
-        }
     
         private void FixupAPP_USUARIO(APP_USUARIO previousValue)
         {

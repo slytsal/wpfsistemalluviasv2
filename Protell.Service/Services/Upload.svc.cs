@@ -4,6 +4,7 @@ using System.ServiceModel.Activation;
 using Protell.Model.SyncModels;
 using Protell.Server.DAL.Repository.v2;
 using System.Collections.Generic;
+using System.Web.Script.Serialization;
 
 namespace Protell.Service.Services
 {
@@ -45,6 +46,25 @@ namespace Protell.Service.Services
                 throw;
             }
 
+            return response;
+        }
+
+        public List<CiTrackingUploadConfirmationModel> Upload_CiTracking(CiTrackingUploadModel param)
+        {
+            List<CiTrackingUploadConfirmationModel> response = null;
+            try
+            {
+                if(param!=null && param.Items!=null &&param.Items.Count>0)
+                {
+                    using (var repository=new TrakingRepository())
+                    {
+                        response = repository.Upsert(param.Items);                        
+                    }
+                }
+            }
+            catch (Exception ex)
+            {                
+            }
             return response;
         }
     }

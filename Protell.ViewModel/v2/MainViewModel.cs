@@ -116,9 +116,13 @@ namespace Protell.ViewModel.v2
            bool x = false;
            x = (DialogService.ShowResult("¿Esta seguro que desea cerrar sesión?", "Información.") == MessageBoxResult.OK) ? true : false;
            if (x)
-           {               
-               usuarioRepository.CurrentSesion(this.Usuario.IdUsuario, false);
-               this.Usuario = null;
+           {
+               using (var repository=new AppUsuarioRepository())
+               {
+                   repository.CloseSession();
+                   this.Usuario = null;
+               }//usuarioRepository.CurrentSesion(this.Usuario.IdUsuario, false);
+               
            }
        }
 

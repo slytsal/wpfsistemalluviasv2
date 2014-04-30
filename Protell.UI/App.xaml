@@ -1,7 +1,8 @@
 ﻿<Application x:Class="Protell.UI.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="v2/Login.xaml">
+             Startup="Application_Startup">
+             <!--StartupUri="v2/Login.xaml"-->
     <Application.Resources>
         <ResourceDictionary>
             <!-- WPF 4.0 workaround -->

@@ -20,5 +20,9 @@ namespace Protell.Service.Services
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
         List<CiRegistroUploadConfirmationModel> Upload_CiRegistro(CiRegistroUploadModel param);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        List<CiTrackingUploadConfirmationModel> Upload_CiTracking(CiTrackingUploadModel param);
     }
 }

@@ -64,9 +64,10 @@ namespace Protell.DAL.Repository.v2
             return;
         }
 
-        public bool Download(string Usuario, string Password)
+        public UsuarioModel Download(string Usuario, string Password,bool isSaveSesion)
         {
             bool x = false;
+
             string webMethodName = "Download_AppUsuario";
             AppUsuarioResultModel model = new AppUsuarioResultModel();            
             BodyContent bodyContent = null;
@@ -78,17 +79,21 @@ namespace Protell.DAL.Repository.v2
                 JavaScriptSerializer js = new JavaScriptSerializer();
                 js.MaxJsonLength = Int32.MaxValue;
                 model = js.Deserialize<AppUsuarioResultModel>(jsonResponse);
-                if (model.Download_AppUsuarioResult != null && model.Download_AppUsuarioResult.IdUsuario!=null)
+                if (model.Download_AppUsuarioResult != null && model.Download_AppUsuarioResult.Nombre != null)
                 {
-                    x = Upsert(model.Download_AppUsuarioResult);
+                    if (isSaveSesion)
+                        x = Upsert(model.Download_AppUsuarioResult);
                 }
+                else
+                    model.Download_AppUsuarioResult = null;
+                    
             }
             catch (Exception ex)
             {
                 AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });
             }
 
-            return x;
+            return model.Download_AppUsuarioResult;
         }
 
         private bool Upsert(UsuarioModel items)
@@ -122,8 +127,60 @@ namespace Protell.DAL.Repository.v2
                 return x;
             }
         }
+                
+        public UsuarioModel GetCurrentUser()
+        {
+            UsuarioModel user = null;
+            try
+            {
+                using (var entity = new db_SeguimientoProtocolo_r2Entities())
+                {
+                    entity.spSelectCurrentUser().ToList().ForEach(row =>
+                     {
+                         user = new UsuarioModel();
+                         user.IdUsuario = row.IdUsuario;
+                         user.UsuarioCorreo = row.UsuarioCorreo;
+                         user.UsuarioPwd = row.UsuarioPwd;
+                         user.Nombre = row.Nombre;
+                         user.Apellido = row.Apellido;
+                         user.Area = row.Area;
+                         user.Puesto = row.Puesto;
+                         user.IsActive = row.IsActive;
+                         user.IsModified = row.IsModified;
+                         user.LastModifiedDate = row.LastModifiedDate;
+                         user.IsNewUser = row.IsNewUser;
+                         user.IsVerified = row.IsVerified;
+                         user.IsMailSent = row.IsMailSent;
+                         user.ServerLastModifiedDate = row.ServerLastModifiedDate;
+                     });
+                }
+            }
+            catch (Exception ex)
+            {
+                user = null;
+            }
+            return user;
+        }
 
-
+        public bool CloseSession()
+        {
+            bool x = false;
+            try
+            {
+                using (var entity=new db_SeguimientoProtocolo_r2Entities())
+                {
+                    var item = (from res in entity.APP_USUARIO
+                                select res).FirstOrDefault();
+                    entity.APP_USUARIO.DeleteObject(item);
+                    entity.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });             
+            }
+            return x;
+        }
         
     }
 }

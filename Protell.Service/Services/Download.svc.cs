@@ -404,11 +404,25 @@ namespace Protell.Service.Services
             }
             catch (Exception)
             {
-
             }
             return result;
         }
 
-        
+        public ObservableCollection<CatPuntosMedicionShortNameModel> Download_CatPuntoMedicionShortName(long LastModifiedDate, long ServerLastModifiedDate)
+        {
+            ObservableCollection<CatPuntosMedicionShortNameModel> result = new ObservableCollection<CatPuntosMedicionShortNameModel>();
+            try
+            {
+                using (var repository=new CatPuntosMedicionShortNameRepository())
+                {
+                    result = repository.GetItems(LastModifiedDate, ServerLastModifiedDate);
+                }
+            }
+            catch (Exception)
+            {
+                                
+            }
+            return result;
+        }
     }
 }

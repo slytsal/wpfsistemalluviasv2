@@ -1,0 +1,22 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"        
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" 
+    x:Class="Protell.UI.v2.CreateDataBaseView"
+        Title="CreateDataBaseView" Height="300" Width="300" 
+    WindowStartupLocation="CenterScreen" 
+    WindowState="Normal"
+    WindowStyle="SingleBorderWindow"
+    Loaded="Window_Loaded"
+    >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Content="{Binding Messaje,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+        <Custom:MetroProgressBar              
+            Grid.Row="1"
+            HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="50" IsIndeterminate="True" />
+    </Grid>
+</Window>

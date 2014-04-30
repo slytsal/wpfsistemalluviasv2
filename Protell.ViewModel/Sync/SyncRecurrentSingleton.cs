@@ -98,12 +98,13 @@ namespace Protell.ViewModel.Sync
                     }
                 }//foreach
 
+                UploadData();
                 //Subir datos
-                if (downloadStatus)
-                {
-                    Protell.DAL.Repository.v2.CiRegistroRepository crr = new DAL.Repository.v2.CiRegistroRepository();
-                    crr.Upload();
-                }
+                //if (downloadStatus)
+                //{
+                //    Protell.DAL.Repository.v2.CiRegistroRepository crr = new DAL.Repository.v2.CiRegistroRepository();
+                //    crr.Upload();
+                //}
             }
             catch (Exception ex)
             {
@@ -130,6 +131,14 @@ namespace Protell.ViewModel.Sync
                         //TODO: Solo tomar la de CI_REGISTRO para aplicacion captura
                         bool x = false;
                         IServiceFactory factory = ServiceFactory.Instance.getClass(item.SYNCTABLE.SyncTableName);
+                        if (item.SYNCTABLE.SyncTableName.ToUpper() == "CI_TRACKING")
+                        {
+                            //TODO: Cuando se haya probado la descarga de información de los catálogos pasar estas lineas fuera del if
+                            if (((Protell.DAL.Repository.v2.CiTrakingRepository)factory).Upload())
+                            {
+                                //modifiedDataRepository.UpdateServerModifiedDate(item);
+                            }
+                        }//endif
                         if (item.SYNCTABLE.SyncTableName.ToUpper() == "CI_REGISTRO")
                         {
                             //TODO: Cuando se haya probado la descarga de información de los catálogos pasar estas lineas fuera del if

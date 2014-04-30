@@ -150,12 +150,6 @@ namespace Protell.DAL
         }
         private ObjectSet<CAT_SESION> _cAT_SESION;
     
-        public ObjectSet<CI_TRACKING> CI_TRACKING
-        {
-            get { return _cI_TRACKING  ?? (_cI_TRACKING = CreateObjectSet<CI_TRACKING>("CI_TRACKING")); }
-        }
-        private ObjectSet<CI_TRACKING> _cI_TRACKING;
-    
         public ObjectSet<MODIFIEDDATA> MODIFIEDDATAs
         {
             get { return _mODIFIEDDATAs  ?? (_mODIFIEDDATAs = CreateObjectSet<MODIFIEDDATA>("MODIFIEDDATAs")); }
@@ -239,6 +233,18 @@ namespace Protell.DAL
             get { return _aPP_USUARIO  ?? (_aPP_USUARIO = CreateObjectSet<APP_USUARIO>("APP_USUARIO")); }
         }
         private ObjectSet<APP_USUARIO> _aPP_USUARIO;
+    
+        public ObjectSet<CAT_PUNTOS_MEDICION_SHORTNAME> CAT_PUNTOS_MEDICION_SHORTNAME
+        {
+            get { return _cAT_PUNTOS_MEDICION_SHORTNAME  ?? (_cAT_PUNTOS_MEDICION_SHORTNAME = CreateObjectSet<CAT_PUNTOS_MEDICION_SHORTNAME>("CAT_PUNTOS_MEDICION_SHORTNAME")); }
+        }
+        private ObjectSet<CAT_PUNTOS_MEDICION_SHORTNAME> _cAT_PUNTOS_MEDICION_SHORTNAME;
+    
+        public ObjectSet<CI_TRACKING> CI_TRACKING
+        {
+            get { return _cI_TRACKING  ?? (_cI_TRACKING = CreateObjectSet<CI_TRACKING>("CI_TRACKING")); }
+        }
+        private ObjectSet<CI_TRACKING> _cI_TRACKING;
 
         #endregion
 
@@ -759,6 +765,10 @@ namespace Protell.DAL
                 sessionParameter = new ObjectParameter("session", typeof(long));
             }
             return base.ExecuteFunction<Nullable<bool>>("spCommitBulkUpsertCiRegistroDownloadOnDemand", sessionParameter);
+        }
+        public ObjectResult<spSelectCurrentUser_Result> spSelectCurrentUser()
+        {
+            return base.ExecuteFunction<spSelectCurrentUser_Result>("spSelectCurrentUser");
         }
 
         #endregion

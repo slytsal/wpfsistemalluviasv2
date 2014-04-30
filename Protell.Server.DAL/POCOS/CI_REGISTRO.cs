@@ -138,38 +138,6 @@ namespace Protell.Server.DAL.POCOS
         }
         private CAT_CONDPRO _cAT_CONDPRO;
     
-        public virtual ICollection<CI_TRACKING> CI_TRACKING
-        {
-            get
-            {
-                if (_cI_TRACKING == null)
-                {
-                    var newCollection = new FixupCollection<CI_TRACKING>();
-                    newCollection.CollectionChanged += FixupCI_TRACKING;
-                    _cI_TRACKING = newCollection;
-                }
-                return _cI_TRACKING;
-            }
-            set
-            {
-                if (!ReferenceEquals(_cI_TRACKING, value))
-                {
-                    var previousValue = _cI_TRACKING as FixupCollection<CI_TRACKING>;
-                    if (previousValue != null)
-                    {
-                        previousValue.CollectionChanged -= FixupCI_TRACKING;
-                    }
-                    _cI_TRACKING = value;
-                    var newValue = value as FixupCollection<CI_TRACKING>;
-                    if (newValue != null)
-                    {
-                        newValue.CollectionChanged += FixupCI_TRACKING;
-                    }
-                }
-            }
-        }
-        private ICollection<CI_TRACKING> _cI_TRACKING;
-    
         public virtual CAT_PUNTO_MEDICION CAT_PUNTO_MEDICION
         {
             get { return _cAT_PUNTO_MEDICION; }
@@ -225,28 +193,6 @@ namespace Protell.Server.DAL.POCOS
                 if (IdPuntoMedicion != CAT_PUNTO_MEDICION.IdPuntoMedicion)
                 {
                     IdPuntoMedicion = CAT_PUNTO_MEDICION.IdPuntoMedicion;
-                }
-            }
-        }
-    
-        private void FixupCI_TRACKING(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.NewItems != null)
-            {
-                foreach (CI_TRACKING item in e.NewItems)
-                {
-                    item.CI_REGISTRO = this;
-                }
-            }
-    
-            if (e.OldItems != null)
-            {
-                foreach (CI_TRACKING item in e.OldItems)
-                {
-                    if (ReferenceEquals(item.CI_REGISTRO, this))
-                    {
-                        item.CI_REGISTRO = null;
-                    }
                 }
             }
         }

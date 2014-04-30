@@ -95,22 +95,7 @@ namespace Protell.Model
             }
         }
         private string _Ubicacion;
-        public const string UbicacionPropertyName = "Ubicacion";
-
-        public Nullable<long> IdRegistro
-        {
-            get { return _IdRegistro; }
-            set
-            {
-                if (_IdRegistro != value)
-                {
-                    _IdRegistro = value;
-                    OnPropertyChanged(IdRegistroPropertyName);
-                }
-            }
-        }
-        private Nullable<long> _IdRegistro;
-        public const string IdRegistroPropertyName = "IdRegistro";
+        public const string UbicacionPropertyName = "Ubicacion";      
 
         public Nullable<long> IdUsuario
         {
@@ -171,6 +156,36 @@ namespace Protell.Model
         }
         private bool _IsModified;
         public const string IsModifiedPropertyName = "IsModified";
+
+        public long IdPuntoMedicion
+        {
+            get { return _IdPuntoMedicion; }
+            set
+            {
+                if (_IdPuntoMedicion != value)
+                {
+                    _IdPuntoMedicion = value;
+                    OnPropertyChanged(IdPuntoMedicionPropertyName);
+                }
+            }
+        }
+        private long _IdPuntoMedicion;
+        public const string IdPuntoMedicionPropertyName = "IdPuntoMedicion";
+
+        public long FechaNumerica
+        {
+            get { return _FechaNumerica; }
+            set
+            {
+                if (_FechaNumerica != value)
+                {
+                    _FechaNumerica = value;
+                    OnPropertyChanged(FechaNumericaPropertyName);
+                }
+            }
+        }
+        private long _FechaNumerica;
+        public const string FechaNumericaPropertyName = "FechaNumerica";
         
     }
 }

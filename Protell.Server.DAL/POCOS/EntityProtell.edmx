@@ -299,14 +299,15 @@ warning 6002: The table/view 'qaDevinmr3.dbo._CAT_PUNTO_MEDICION' does not have 
           </Key>
           <Property Name="IdTracking" Type="bigint" Nullable="false" />
           <Property Name="Accion" Type="nvarchar" MaxLength="500" />
-          <Property Name="Valor" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Valor" Type="nvarchar(max)" />
           <Property Name="Ip" Type="nvarchar" MaxLength="20" />
           <Property Name="Equipo" Type="nvarchar" MaxLength="255" />
           <Property Name="Ubicacion" Type="nvarchar" MaxLength="1000" />
-          <Property Name="IdRegistro" Type="bigint" />
           <Property Name="IdUsuario" Type="bigint" />
           <Property Name="ServerLastModifiedDate" Type="bigint" />
           <Property Name="LastModifiedDate" Type="bigint" />
+          <Property Name="IdPuntoMedicion" Type="bigint" Nullable="false" />
+          <Property Name="FechaNumerica" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="MODIFIEDDATA">
           <Key>
@@ -529,18 +530,6 @@ warning 6002: The table/view 'qaDevinmr3.dbo._CAT_PUNTO_MEDICION' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CI_TRACKI__IdReg__7C1A6C5A">
-          <End Role="CI_REGISTRO" Type="Self.CI_REGISTRO" Multiplicity="0..1" />
-          <End Role="CI_TRACKING" Type="Self.CI_TRACKING" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CI_REGISTRO">
-              <PropertyRef Name="IdRegistro" />
-            </Principal>
-            <Dependent Role="CI_TRACKING">
-              <PropertyRef Name="IdRegistro" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__CI_TRACKI__IdUsu__7D0E9093">
           <End Role="APP_USUARIO" Type="Self.APP_USUARIO" Multiplicity="0..1" />
           <End Role="CI_TRACKING" Type="Self.CI_TRACKING" Multiplicity="*" />
@@ -739,10 +728,6 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
             <End Role="CAT_PUNTO_MEDICION" EntitySet="CAT_PUNTO_MEDICION" />
             <End Role="CAT_PUNTOS_MEDICION_SHORTNAME" EntitySet="CAT_PUNTOS_MEDICION_SHORTNAME" />
           </AssociationSet>
-          <AssociationSet Name="FK__CI_TRACKI__IdReg__7C1A6C5A" Association="Self.FK__CI_TRACKI__IdReg__7C1A6C5A">
-            <End Role="CI_REGISTRO" EntitySet="CI_REGISTRO" />
-            <End Role="CI_TRACKING" EntitySet="CI_TRACKING" />
-          </AssociationSet>
           <AssociationSet Name="FK__CI_TRACKI__IdUsu__7D0E9093" Association="Self.FK__CI_TRACKI__IdUsu__7D0E9093">
             <End Role="APP_USUARIO" EntitySet="APP_USUARIO" />
             <End Role="CI_TRACKING" EntitySet="CI_TRACKING" />
@@ -811,11 +796,6 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
           </AssociationSet>
           <FunctionImport Name="SpGdGetDatosEstructuras" ReturnType="Collection(devinmr3Model.GdGetDatosEstructuras_Result)" />
           <FunctionImport Name="SpGdGetDatosEstructuras2" ReturnType="Collection(devinmr3Model.SpGdGetDatosEstructuras2_Result)" />
-          <EntitySet Name="CI_TRACKING" EntityType="devinmr3Model.CI_TRACKING" />
-          <AssociationSet Name="FK__CI_TRACKI__IdReg__05D8E0BE" Association="devinmr3Model.FK__CI_TRACKI__IdReg__05D8E0BE">
-            <End Role="CI_REGISTRO" EntitySet="CI_REGISTRO" />
-            <End Role="CI_TRACKING" EntitySet="CI_TRACKING" />
-          </AssociationSet>
           <FunctionImport Name="spSelectLastCI_Registro" ReturnType="Collection(devinmr3Model.spSelectLastCI_Registro_Result)">
             <Parameter Name="FechaActual" Mode="In" Type="String" />
             <Parameter Name="IdPuntoMedicion" Mode="In" Type="Int64" />
@@ -894,10 +874,6 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
             <End Role="APP_USUARIO" EntitySet="APP_USUARIO" />
             <End Role="CAT_UPLOAD_LOG" EntitySet="CAT_UPLOAD_LOG" />
           </AssociationSet>
-          <AssociationSet Name="FK__CI_TRACKI__IdUsu__7D0E9093" Association="devinmr3Model.FK__CI_TRACKI__IdUsu__7D0E9093">
-            <End Role="APP_USUARIO" EntitySet="APP_USUARIO" />
-            <End Role="CI_TRACKING" EntitySet="CI_TRACKING" />
-          </AssociationSet>
           <FunctionImport Name="spLogin" ReturnType="Collection(devinmr3Model.spLogin_Result)">
             <Parameter Name="Usuario" Mode="In" Type="String" />
             <Parameter Name="Pass" Mode="In" Type="String" />
@@ -906,6 +882,11 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
           <AssociationSet Name="FK__CAT_PUNTO__IdPun__4865BE2A" Association="devinmr3Model.FK__CAT_PUNTO__IdPun__4865BE2A">
             <End Role="CAT_PUNTO_MEDICION" EntitySet="CAT_PUNTO_MEDICION" />
             <End Role="CAT_PUNTOS_MEDICION_SHORTNAME" EntitySet="CAT_PUNTOS_MEDICION_SHORTNAME" />
+          </AssociationSet>
+          <EntitySet Name="CI_TRACKING" EntityType="devinmr3Model.CI_TRACKING" />
+          <AssociationSet Name="FK__CI_TRACKI__IdUsu__7D0E9093" Association="devinmr3Model.FK__CI_TRACKI__IdUsu__7D0E9093">
+            <End Role="APP_USUARIO" EntitySet="APP_USUARIO" />
+            <End Role="CI_TRACKING" EntitySet="CI_TRACKING" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="C_CAT_PUNTO_MEDICION">
@@ -1092,7 +1073,6 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
           <Property Name="ServerLastModifiedDate" Type="Int64" />
           <NavigationProperty Name="CAT_CONDPRO" Relationship="devinmr3Model.CAT_CONDPRO_CI_REGISTRO_FK1" FromRole="CI_REGISTRO" ToRole="CAT_CONDPRO" />
           <Property Type="Int64" Name="FechaNumerica" />
-          <NavigationProperty Name="CI_TRACKING" Relationship="devinmr3Model.FK__CI_TRACKI__IdReg__05D8E0BE" FromRole="CI_REGISTRO" ToRole="CI_TRACKING" />
           <NavigationProperty Name="CAT_PUNTO_MEDICION" Relationship="devinmr3Model.CAT_PUNTO_MEDICION_CI_REGISTRO_FK1" FromRole="CI_REGISTRO" ToRole="CAT_PUNTO_MEDICION" />
         </EntityType>
         <EntityType Name="REL_EST_PUNTOMED">
@@ -1219,35 +1199,6 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
           <Property Type="Int32" Name="ROrder" Nullable="false" />
           <Property Type="Int64" Name="RowNum" Nullable="true" />
         </ComplexType>
-        <EntityType Name="CI_TRACKING">
-          <Key>
-            <PropertyRef Name="IdTracking" />
-          </Key>
-          <Property Type="Int64" Name="IdTracking" Nullable="false" />
-          <Property Type="String" Name="Accion" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Valor" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Ip" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Equipo" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Ubicacion" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="Int64" Name="IdRegistro" />
-          <Property Type="Int64" Name="IdUsuario" />
-          <NavigationProperty Name="CI_REGISTRO" Relationship="devinmr3Model.FK__CI_TRACKI__IdReg__05D8E0BE" FromRole="CI_TRACKING" ToRole="CI_REGISTRO" />
-          <Property Name="ServerLastModifiedDate" Type="Int64" />
-          <Property Name="LastModifiedDate" Type="Int64" />
-          <NavigationProperty Name="APP_USUARIO" Relationship="devinmr3Model.FK__CI_TRACKI__IdUsu__7D0E9093" FromRole="CI_TRACKING" ToRole="APP_USUARIO" />
-        </EntityType>
-        <Association Name="FK__CI_TRACKI__IdReg__05D8E0BE">
-          <End Type="devinmr3Model.CI_REGISTRO" Role="CI_REGISTRO" Multiplicity="0..1" />
-          <End Type="devinmr3Model.CI_TRACKING" Role="CI_TRACKING" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CI_REGISTRO">
-              <PropertyRef Name="IdRegistro" />
-            </Principal>
-            <Dependent Role="CI_TRACKING">
-              <PropertyRef Name="IdRegistro" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <ComplexType Name="spSelectLastCI_Registro_Result">
           <Property Type="Int64" Name="IdRegistro" Nullable="false" />
           <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
@@ -1590,18 +1541,6 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CI_TRACKI__IdUsu__7D0E9093">
-          <End Type="devinmr3Model.APP_USUARIO" Role="APP_USUARIO" Multiplicity="0..1" />
-          <End Type="devinmr3Model.CI_TRACKING" Role="CI_TRACKING" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="APP_USUARIO">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="CI_TRACKING">
-              <PropertyRef Name="IdUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <ComplexType Name="spLogin_Result">
           <Property Type="Int64" Name="IdUsuario" Nullable="false" />
           <Property Type="String" Name="UsuarioCorreo" Nullable="true" MaxLength="250" />
@@ -1639,6 +1578,35 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
             </Principal>
             <Dependent Role="CAT_PUNTOS_MEDICION_SHORTNAME">
               <PropertyRef Name="IdPuntoMedicion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CI_TRACKING">
+          <Key>
+            <PropertyRef Name="IdTracking" />
+          </Key>
+          <Property Name="IdTracking" Type="Int64" Nullable="false" />
+          <Property Name="Accion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Valor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ip" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Equipo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Ubicacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="IdUsuario" Type="Int64" />
+          <Property Name="ServerLastModifiedDate" Type="Int64" />
+          <Property Name="LastModifiedDate" Type="Int64" />
+          <Property Name="IdPuntoMedicion" Type="Int64" Nullable="false" />
+          <Property Name="FechaNumerica" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="APP_USUARIO" Relationship="devinmr3Model.FK__CI_TRACKI__IdUsu__7D0E9093" FromRole="CI_TRACKING" ToRole="APP_USUARIO" />
+        </EntityType>
+        <Association Name="FK__CI_TRACKI__IdUsu__7D0E9093">
+          <End Type="devinmr3Model.APP_USUARIO" Role="APP_USUARIO" Multiplicity="0..1" />
+          <End Type="devinmr3Model.CI_TRACKING" Role="CI_TRACKING" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APP_USUARIO">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="CI_TRACKING">
+              <PropertyRef Name="IdUsuario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1881,22 +1849,6 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="CI_TRACKING">
-            <EntityTypeMapping TypeName="devinmr3Model.CI_TRACKING">
-              <MappingFragment StoreEntitySet="CI_TRACKING">
-                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
-                <ScalarProperty Name="ServerLastModifiedDate" ColumnName="ServerLastModifiedDate" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="IdRegistro" ColumnName="IdRegistro" />
-                <ScalarProperty Name="Ubicacion" ColumnName="Ubicacion" />
-                <ScalarProperty Name="Equipo" ColumnName="Equipo" />
-                <ScalarProperty Name="Ip" ColumnName="Ip" />
-                <ScalarProperty Name="Valor" ColumnName="Valor" />
-                <ScalarProperty Name="Accion" ColumnName="Accion" />
-                <ScalarProperty Name="IdTracking" ColumnName="IdTracking" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="spSelectLastCI_Registro" FunctionName="devinmr3Model.Store.spSelectLastCI_Registro">
             <ResultMapping>
               <ComplexTypeMapping TypeName="devinmr3Model.spSelectLastCI_Registro_Result">
@@ -2136,6 +2088,23 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="CI_TRACKING">
+            <EntityTypeMapping TypeName="devinmr3Model.CI_TRACKING">
+              <MappingFragment StoreEntitySet="CI_TRACKING">
+                <ScalarProperty Name="FechaNumerica" ColumnName="FechaNumerica" />
+                <ScalarProperty Name="IdPuntoMedicion" ColumnName="IdPuntoMedicion" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="ServerLastModifiedDate" ColumnName="ServerLastModifiedDate" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Ubicacion" ColumnName="Ubicacion" />
+                <ScalarProperty Name="Equipo" ColumnName="Equipo" />
+                <ScalarProperty Name="Ip" ColumnName="Ip" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="Accion" ColumnName="Accion" />
+                <ScalarProperty Name="IdTracking" ColumnName="IdTracking" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2206,16 +2175,6 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
           <ConnectorPoint PointX="2.25" PointY="15.461293945312502" />
           <ConnectorPoint PointX="3" PointY="15.461293945312502" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="devinmr3Model.CI_TRACKING" Width="1.5" PointX="19" PointY="10.375" Height="2.9417936197916674" />
-        <AssociationConnector Association="devinmr3Model.FK__CI_TRACKI__IdReg__05D8E0BE" >
-          <ConnectorPoint PointX="9.75" PointY="9.7136946614583337" />
-          <ConnectorPoint PointX="14.541666666666666" PointY="9.7136946614583337" />
-          <ConnectorPoint PointX="14.708333333333334" PointY="9.7136946614583337" />
-          <ConnectorPoint PointX="17.322916666666668" PointY="9.7136946614583337" />
-          <ConnectorPoint PointX="17.489583333333332" PointY="9.7136946614583337" />
-          <ConnectorPoint PointX="19.75" PointY="9.7136946614583337" />
-          <ConnectorPoint PointX="19.75" PointY="10.375" />
-        </AssociationConnector>
         <EntityTypeShape EntityType="devinmr3Model.CAT_AGRUPADOR_ISOYETA" Width="1.5" PointX="18.375" PointY="0.75" Height="1.9802864583333246" />
         <EntityTypeShape EntityType="devinmr3Model.CAT_LINKS" Width="1.5" PointX="18.375" PointY="3.75" Height="2.1725878906250102" />
         <EntityTypeShape EntityType="devinmr3Model.CAT_OPERACION_ESTRUCTURA" Width="1.5" PointX="13.25" PointY="17.75" Height="2.7494921875000102" />
@@ -2251,9 +2210,10 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
         <EntityTypeShape EntityType="devinmr3Model.APP_USUARIO" Width="1.5" PointX="10.75" PointY="17.25" />
         <AssociationConnector Association="devinmr3Model.APP_USUARIO_APP_USUARIO_ROL_FK1" />
         <AssociationConnector Association="devinmr3Model.APP_USUARIO_CAT_UPLOAD_LOG_FK1" />
-        <AssociationConnector Association="devinmr3Model.FK__CI_TRACKI__IdUsu__7D0E9093" />
         <EntityTypeShape EntityType="devinmr3Model.CAT_PUNTOS_MEDICION_SHORTNAME" Width="1.5" PointX="5.25" PointY="0.75" />
         <AssociationConnector Association="devinmr3Model.FK__CAT_PUNTO__IdPun__4865BE2A" />
+        <EntityTypeShape EntityType="devinmr3Model.CI_TRACKING" Width="1.5" PointX="13" PointY="21.75" />
+        <AssociationConnector Association="devinmr3Model.FK__CI_TRACKI__IdUsu__7D0E9093" />
       </Diagram>
     </Diagrams>
   </Designer>

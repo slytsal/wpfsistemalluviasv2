@@ -105,6 +105,10 @@ namespace Protell.Service.Services
 
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
-        ObservableCollection<AccionActualModel> Download_AccionActual(long LastModifiedDate, long ServerLastModifiedDate);                
+        ObservableCollection<AccionActualModel> Download_AccionActual(long LastModifiedDate, long ServerLastModifiedDate);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
+        ObservableCollection<CatPuntosMedicionShortNameModel> Download_CatPuntoMedicionShortName(long LastModifiedDate, long ServerLastModifiedDate);                
     }
 }

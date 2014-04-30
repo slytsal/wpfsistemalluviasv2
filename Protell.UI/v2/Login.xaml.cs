@@ -14,17 +14,24 @@ namespace Protell.UI.v2
         LoginViewModel vm;
         public Login()
         {
-            InitializeComponent();
-            vm = new LoginViewModel();            
-            vm.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(vm_PropertyChanged);
-            this.DataContext = vm;            
-            //vm.ValidateAutoLogin();
+            try
+            {
+                InitializeComponent();
+                vm = new LoginViewModel();
+                vm.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(vm_PropertyChanged);
+                this.DataContext = vm;
+                vm.ValidateAutoLogin();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         void vm_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
+            //Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            //{
                 if (e.PropertyName == "Usuario")
                 {
                     LoginViewModel login = (LoginViewModel)sender;
@@ -34,12 +41,8 @@ namespace Protell.UI.v2
                         view.Show();
                         this.Close();
                     }
-                }
-                if (e.PropertyName == "Visibility")
-                {
-                    ProgressRingActuslizacion.Visibility = Visibility.Visible;
-                }
-            }));
+                }               
+            //}));
         }
 
         private void btnCerrar_Click(object sender, RoutedEventArgs e)

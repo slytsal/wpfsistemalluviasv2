@@ -149,6 +149,7 @@
     <Compile Include="UnidadMedidaViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="v2\ApplicationViewModel.cs" />
     <Compile Include="v2\CapturaViewModel.cs" />
     <Compile Include="v2\CategoriasViewModel.cs" />
     <Compile Include="v2\DialogService.cs" />

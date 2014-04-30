@@ -13,6 +13,8 @@ namespace Protell.DAL.Repository
 {
     class TrackingRepository
     {
+        SyncRepository _SyncRepository = new SyncRepository();
+        private const long ID_SYNCTABLE = 20140324174914687;
         public bool InsertTracking(TrackingModel tracking)
         {
             bool x = false;
@@ -27,14 +29,16 @@ namespace Protell.DAL.Repository
                         Valor=tracking.Valor,
                         Ip=tracking.Ip,
                         Equipo=tracking.Equipo,
-                        Ubicacion=tracking.Ubicacion,
-                        IdRegistro=tracking.IdRegistro,
+                        Ubicacion=tracking.Ubicacion,                        
                         IdUsuario=tracking.IdUsuario ,
                         IsModified=tracking.IsModified,
                         LastModifiedDate=tracking.LastModifiedDate,
-                        ServerLastModifiedDate=tracking.ServerLastModifiedDate
+                        ServerLastModifiedDate=tracking.ServerLastModifiedDate,
+                        IdPuntoMedicion=tracking.IdPuntoMedicion,
+                        FechaNumerica=tracking.FechaNumerica                        
                     });
                     entity.SaveChanges();
+                    _SyncRepository.UpdateIsModifiedData(ID_SYNCTABLE);
                 }
                 catch (Exception)
                 {
@@ -76,12 +80,13 @@ namespace Protell.DAL.Repository
                 track.Valor = valor;
                 track.Ip = GetIP();
                 track.Equipo = Environment.MachineName;
-                track.Ubicacion = Environment.OSVersion.ToString();                
-                track.IdRegistro = registro.IdRegistro;
+                track.Ubicacion = Environment.OSVersion.ToString();                                
                 track.IdUsuario = usuario.IdUsuario;
                 track.IsModified = true;
                 track.LastModifiedDate = long.Parse((String.Format("{0:yyyy:MM:dd:HH:mm:ss:fff}", DateTime.Now)).Replace(":", ""));
                 track.ServerLastModifiedDate = 0;
+                track.IdPuntoMedicion = registro.IdPuntoMedicion;
+                track.FechaNumerica =(long)registro.FechaNumerica;
             }
             catch (Exception)
             {

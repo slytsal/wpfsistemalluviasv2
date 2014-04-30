@@ -72,7 +72,7 @@ namespace Protell.ViewModel.Sync
             foreach (Thread item in listSyncThread)
             {
                 item.Start();
-                item.Join();
+                //item.Join();
             }
         }
 

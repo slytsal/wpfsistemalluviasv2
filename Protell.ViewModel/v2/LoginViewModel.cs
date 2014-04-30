@@ -160,12 +160,18 @@ namespace Protell.ViewModel.v2
 
         private void AttmpLoginServer()
         {
+            UsuarioModel user = null;
             try
             {
                 using(var repository=new AppUsuarioRepository())
                 {
                     bool x = false;
-                    x = repository.Download(this.UserName, this.UserPassword);
+                    this.Visibility = "Visible";
+                    this.Menssage = "";
+                    user=repository.Download(this.UserName, this.UserPassword, IsSaveSesion);
+                    this.Usuario = (user != null) ? user : null;
+                    this.Visibility = "Collapsed";
+                    this.Menssage = (user != null) ? "Bienvenido " + user.Nombre : "Usuario y/o contraseña incorrectos.";
                 }
             }
             catch (Exception)
@@ -178,18 +184,29 @@ namespace Protell.ViewModel.v2
         private bool CanLogin()
         {
             bool x = false;
-            x = !String.IsNullOrEmpty(this.UserName) && !String.IsNullOrEmpty(this.UserPassword);
-            //x = true;
+            x = !String.IsNullOrEmpty(this.UserName) && !String.IsNullOrEmpty(this.UserPassword);            
             return x;
         }
 
+        private bool AutoLogin()
+        {
+            bool x = false;           
+            return x;
+        }
 
         public void ValidateAutoLogin()
         {            
             try
             {
-
-                this.Usuario = usuarioRepository.AutoLogin();
+                UsuarioModel user;
+                using (var repository = new AppUsuarioRepository())
+                {
+                    bool x = false;
+                    user = repository.GetCurrentUser();
+                    if (user != null)
+                        Usuario = repository.Download(user.UsuarioCorreo, user.UsuarioPwd, IsSaveSesion);
+                }
+                
             }
             catch (Exception)
             {
@@ -199,11 +216,10 @@ namespace Protell.ViewModel.v2
 
         public void HiloLogin()
         {
-            
-            Thread hilo = new Thread(AttmpLogin);
+
+            Thread hilo = new Thread(AttmpLoginServer);
             hilo.IsBackground = true;
-            SyncOnDemandSingleton.Instance.AddThread(hilo);
-            SyncOnDemandSingleton.Instance.RunThreads();
+            hilo.Start();            
         }
         #endregion
     }

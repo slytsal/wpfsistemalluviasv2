@@ -78,6 +78,20 @@ namespace Protell.DAL.Repository
             return user;
         }
 
+        public UsuarioModel AutoLoginNew()
+        {
+            UsuarioModel user = new UsuarioModel();
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                                
+            }
+            return user;
+        }
+
         public void CurrentSesion(long IdUsuario, bool isSaveSesion)
         {
             using (var entity=new db_SeguimientoProtocolo_r2Entities())
@@ -87,3 +101,4 @@ namespace Protell.DAL.Repository
         }
     }
 }
+    

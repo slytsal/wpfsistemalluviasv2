@@ -190,6 +190,17 @@
           <Property Name="LastModifiedDate" Type="bigint" />
           <Property Name="IsModified" Type="bit" />
         </EntityType>
+        <EntityType Name="CAT_PUNTOS_MEDICION_SHORTNAME">
+          <Key>
+            <PropertyRef Name="IdShortName" />
+          </Key>
+          <Property Name="IdShortName" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPuntoMedicion" Type="bigint" />
+          <Property Name="ShortName" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="IsModified" Type="bit" Nullable="false" />
+          <Property Name="LastModifiedDate" Type="bigint" Nullable="false" />
+          <Property Name="ServerLastModifiedDate" Type="bigint" Nullable="false" />
+        </EntityType>
         <EntityType Name="CAT_SERVER_LASTDATA">
           <Key>
             <PropertyRef Name="IdServerLastData" />
@@ -294,11 +305,12 @@
           <Property Name="Ip" Type="nvarchar" MaxLength="20" />
           <Property Name="Equipo" Type="nvarchar" MaxLength="255" />
           <Property Name="Ubicacion" Type="nvarchar" MaxLength="1000" />
-          <Property Name="IdRegistro" Type="bigint" />
           <Property Name="IdUsuario" Type="bigint" />
           <Property Name="ServerLastModifiedDate" Type="bigint" />
           <Property Name="LastModifiedDate" Type="bigint" />
           <Property Name="IsModified" Type="bit" Nullable="false" />
+          <Property Name="IdPuntoMedicion" Type="bigint" Nullable="false" />
+          <Property Name="FechaNumerica" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="MODIFIEDDATA">
           <Key>
@@ -565,6 +577,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__CAT_PUNTO__IdPun__540C7B00">
+          <End Role="CAT_PUNTO_MEDICION" Type="Self.CAT_PUNTO_MEDICION" Multiplicity="0..1" />
+          <End Role="CAT_PUNTOS_MEDICION_SHORTNAME" Type="Self.CAT_PUNTOS_MEDICION_SHORTNAME" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_PUNTO_MEDICION">
+              <PropertyRef Name="IdPuntoMedicion" />
+            </Principal>
+            <Dependent Role="CAT_PUNTOS_MEDICION_SHORTNAME">
+              <PropertyRef Name="IdPuntoMedicion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__CAT_SESIO__IdUsu__4D94879B">
           <End Role="APP_USUARIO" Type="Self.APP_USUARIO" Multiplicity="0..1" />
           <End Role="CAT_SESION" Type="Self.CAT_SESION" Multiplicity="*" />
@@ -574,18 +598,6 @@
             </Principal>
             <Dependent Role="CAT_SESION">
               <PropertyRef Name="IdUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__CI_TRACKI__IdReg__619B8048">
-          <End Role="CI_REGISTRO" Type="Self.CI_REGISTRO" Multiplicity="0..1" />
-          <End Role="CI_TRACKING" Type="Self.CI_TRACKING" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CI_REGISTRO">
-              <PropertyRef Name="IdRegistro" />
-            </Principal>
-            <Dependent Role="CI_TRACKING">
-              <PropertyRef Name="IdRegistro" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -721,6 +733,7 @@
         <Function Name="spPrepareBulkUpdateCiRegistroConfirmation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spPrepareBulkUpsertCiRegistroOnDemand" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spPrepareBulkUpsertCiRegistroRecurrent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spSelectCurrentUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="UDF_NewUnid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar" />
         <EntityContainer Name="db_SeguimientoProtocolo_r2ModelStoreContainer">
           <EntitySet Name="APP_BITACORA" EntityType="Self.APP_BITACORA" Schema="dbo" store:Type="Tables" />
@@ -738,6 +751,7 @@
           <EntitySet Name="CAT_PROTOCOLO" EntityType="Self.CAT_PROTOCOLO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_PUNTO_MEDICION" EntityType="Self.CAT_PUNTO_MEDICION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_PUNTO_MEDICION_MAX_MIN" EntityType="Self.CAT_PUNTO_MEDICION_MAX_MIN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CAT_PUNTOS_MEDICION_SHORTNAME" EntityType="Self.CAT_PUNTOS_MEDICION_SHORTNAME" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_SERVER_LASTDATA" EntityType="Self.CAT_SERVER_LASTDATA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_SESION" EntityType="Self.CAT_SESION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_SISTEMA" EntityType="Self.CAT_SISTEMA" Schema="dbo" store:Type="Tables" />
@@ -812,13 +826,13 @@
             <End Role="CAT_ACCION_ACTUAL" EntitySet="CAT_ACCION_ACTUAL" />
             <End Role="CAT_PUNTO_MEDICION" EntitySet="CAT_PUNTO_MEDICION" />
           </AssociationSet>
+          <AssociationSet Name="FK__CAT_PUNTO__IdPun__540C7B00" Association="Self.FK__CAT_PUNTO__IdPun__540C7B00">
+            <End Role="CAT_PUNTO_MEDICION" EntitySet="CAT_PUNTO_MEDICION" />
+            <End Role="CAT_PUNTOS_MEDICION_SHORTNAME" EntitySet="CAT_PUNTOS_MEDICION_SHORTNAME" />
+          </AssociationSet>
           <AssociationSet Name="FK__CAT_SESIO__IdUsu__4D94879B" Association="Self.FK__CAT_SESIO__IdUsu__4D94879B">
             <End Role="APP_USUARIO" EntitySet="APP_USUARIO" />
             <End Role="CAT_SESION" EntitySet="CAT_SESION" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CI_TRACKI__IdReg__619B8048" Association="Self.FK__CI_TRACKI__IdReg__619B8048">
-            <End Role="CI_REGISTRO" EntitySet="CI_REGISTRO" />
-            <End Role="CI_TRACKING" EntitySet="CI_TRACKING" />
           </AssociationSet>
           <AssociationSet Name="FK__CI_TRACKI__IdUsu__628FA481" Association="Self.FK__CI_TRACKI__IdUsu__628FA481">
             <End Role="APP_USUARIO" EntitySet="APP_USUARIO" />
@@ -915,11 +929,6 @@
             <Parameter Name="IsSveSesion" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="spGetDateTimeLastSync" ReturnType="Collection(String)" />
-          <EntitySet Name="CI_TRACKING" EntityType="db_SeguimientoProtocolo_r2Model.CI_TRACKING" />
-          <AssociationSet Name="FK__CI_TRACKI__IdReg__619B8048" Association="db_SeguimientoProtocolo_r2Model.FK__CI_TRACKI__IdReg__619B8048">
-            <End Role="CI_REGISTRO" EntitySet="CI_REGISTRO" />
-            <End Role="CI_TRACKING" EntitySet="CI_TRACKING" />
-          </AssociationSet>
           <EntitySet Name="MODIFIEDDATAs" EntityType="db_SeguimientoProtocolo_r2Model.MODIFIEDDATA" />
           <EntitySet Name="SYNCTABLEs" EntityType="db_SeguimientoProtocolo_r2Model.SYNCTABLE" />
           <AssociationSet Name="FK__MODIFIEDD__IdSyn__6B24EA82" Association="db_SeguimientoProtocolo_r2Model.FK__MODIFIEDD__IdSyn__6B24EA82">
@@ -1012,10 +1021,6 @@
             <End Role="APP_USUARIO" EntitySet="APP_USUARIO" />
             <End Role="CAT_SESION" EntitySet="CAT_SESION" />
           </AssociationSet>
-          <AssociationSet Name="FK__CI_TRACKI__IdUsu__628FA481" Association="db_SeguimientoProtocolo_r2Model.FK__CI_TRACKI__IdUsu__628FA481">
-            <End Role="APP_USUARIO" EntitySet="APP_USUARIO" />
-            <End Role="CI_TRACKING" EntitySet="CI_TRACKING" />
-          </AssociationSet>
           <FunctionImport Name="spInsertUsuario" ReturnType="Collection(Boolean)">
             <Parameter Name="IdUsuario" Mode="In" Type="Int64" />
             <Parameter Name="UsuarioCorreo" Mode="In" Type="String" />
@@ -1033,8 +1038,19 @@
             <Parameter Name="ServerLastModifiedDate" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="spCommitBulkUpsertCiRegistroDownloadOnDemand" ReturnType="Collection(Boolean)">
-            <Parameter Name="session" Mode="In" Type="Int64" />
+          <Parameter Name="session" Mode="In" Type="Int64" />
           </FunctionImport>
+          <EntitySet Name="CAT_PUNTOS_MEDICION_SHORTNAME" EntityType="db_SeguimientoProtocolo_r2Model.CAT_PUNTOS_MEDICION_SHORTNAME" />
+          <EntitySet Name="CI_TRACKING" EntityType="db_SeguimientoProtocolo_r2Model.CI_TRACKING" />
+          <AssociationSet Name="FK__CI_TRACKI__IdUsu__628FA481" Association="db_SeguimientoProtocolo_r2Model.FK__CI_TRACKI__IdUsu__628FA481">
+            <End Role="APP_USUARIO" EntitySet="APP_USUARIO" />
+            <End Role="CI_TRACKING" EntitySet="CI_TRACKING" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CAT_PUNTO__IdPun__540C7B00" Association="db_SeguimientoProtocolo_r2Model.FK__CAT_PUNTO__IdPun__540C7B00">
+            <End Role="CAT_PUNTO_MEDICION" EntitySet="CAT_PUNTO_MEDICION" />
+            <End Role="CAT_PUNTOS_MEDICION_SHORTNAME" EntitySet="CAT_PUNTOS_MEDICION_SHORTNAME" />
+          </AssociationSet>
+          <FunctionImport Name="spSelectCurrentUser" ReturnType="Collection(db_SeguimientoProtocolo_r2Model.spSelectCurrentUser_Result)" />
         </EntityContainer>
         <EntityType Name="APP_ROL">
           <Key>
@@ -1131,6 +1147,7 @@
           <Property Name="IdAccionActual" Type="Int64" />
           <NavigationProperty Name="CAT_ACCION_ACTUAL" Relationship="db_SeguimientoProtocolo_r2Model.FK__CAT_PUNTO__IdAcc__1EA48E88" FromRole="CAT_PUNTO_MEDICION" ToRole="CAT_ACCION_ACTUAL" />
           <NavigationProperty Name="CAT_PROTOCOLO" Relationship="db_SeguimientoProtocolo_r2Model.FK__CAT_PROTO__IdPun__339FAB6E" FromRole="CAT_PUNTO_MEDICION" ToRole="CAT_PROTOCOLO" />
+          <NavigationProperty Name="CAT_PUNTOS_MEDICION_SHORTNAME" Relationship="db_SeguimientoProtocolo_r2Model.FK__CAT_PUNTO__IdPun__540C7B00" FromRole="CAT_PUNTO_MEDICION" ToRole="CAT_PUNTOS_MEDICION_SHORTNAME" />
         </EntityType>
         <EntityType Name="CAT_PUNTO_MEDICION_MAX_MIN">
           <Key>
@@ -1226,7 +1243,6 @@
           <NavigationProperty Name="CAT_CONDPRO" Relationship="db_SeguimientoProtocolo_r2Model.CAT_CONDPRO_CI_REGISTRO_FK1" FromRole="CI_REGISTRO" ToRole="CAT_CONDPRO" />
           <NavigationProperty Name="CAT_PUNTO_MEDICION" Relationship="db_SeguimientoProtocolo_r2Model.CAT_PUNTO_MEDICION_CI_REGISTRO_FK1" FromRole="CI_REGISTRO" ToRole="CAT_PUNTO_MEDICION" />
           <Property Type="Int64" Name="FechaNumerica" />
-          <NavigationProperty Name="CI_TRACKING" Relationship="db_SeguimientoProtocolo_r2Model.FK__CI_TRACKI__IdReg__619B8048" FromRole="CI_REGISTRO" ToRole="CI_TRACKING" />
         </EntityType>
         <EntityType Name="REL_EST_PUNTOMED">
           <Key>
@@ -1422,36 +1438,6 @@
           <Property Type="Boolean" Name="IsVerified" Nullable="false" />
           <Property Type="Boolean" Name="IsMailSent" Nullable="true" />
         </ComplexType>
-        <EntityType Name="CI_TRACKING">
-          <Key>
-            <PropertyRef Name="IdTracking" />
-          </Key>
-          <Property Type="Int64" Name="IdTracking" Nullable="false" />
-          <Property Type="String" Name="Accion" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Valor" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Ip" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Equipo" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Ubicacion" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="Int64" Name="IdRegistro" />
-          <Property Type="Int64" Name="IdUsuario" />
-          <NavigationProperty Name="CI_REGISTRO" Relationship="db_SeguimientoProtocolo_r2Model.FK__CI_TRACKI__IdReg__619B8048" FromRole="CI_TRACKING" ToRole="CI_REGISTRO" />
-          <Property Name="ServerLastModifiedDate" Type="Int64" />
-          <Property Name="LastModifiedDate" Type="Int64" />
-          <Property Name="IsModified" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="APP_USUARIO" Relationship="db_SeguimientoProtocolo_r2Model.FK__CI_TRACKI__IdUsu__628FA481" FromRole="CI_TRACKING" ToRole="APP_USUARIO" />
-        </EntityType>
-        <Association Name="FK__CI_TRACKI__IdReg__619B8048">
-          <End Type="db_SeguimientoProtocolo_r2Model.CI_REGISTRO" Role="CI_REGISTRO" Multiplicity="0..1" />
-          <End Type="db_SeguimientoProtocolo_r2Model.CI_TRACKING" Role="CI_TRACKING" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CI_REGISTRO">
-              <PropertyRef Name="IdRegistro" />
-            </Principal>
-            <Dependent Role="CI_TRACKING">
-              <PropertyRef Name="IdRegistro" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="MODIFIEDDATA">
           <Key>
             <PropertyRef Name="IdModifiedData" />
@@ -1767,6 +1753,36 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CAT_PUNTOS_MEDICION_SHORTNAME">
+          <Key>
+            <PropertyRef Name="IdShortName" />
+          </Key>
+          <Property Name="IdShortName" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPuntoMedicion" Type="Int64" />
+          <Property Name="ShortName" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="IsModified" Type="Boolean" Nullable="false" />
+          <Property Name="LastModifiedDate" Type="Int64" Nullable="false" />
+          <Property Name="ServerLastModifiedDate" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="CAT_PUNTO_MEDICION" Relationship="db_SeguimientoProtocolo_r2Model.FK__CAT_PUNTO__IdPun__540C7B00" FromRole="CAT_PUNTOS_MEDICION_SHORTNAME" ToRole="CAT_PUNTO_MEDICION" />
+        </EntityType>
+        <EntityType Name="CI_TRACKING">
+          <Key>
+            <PropertyRef Name="IdTracking" />
+          </Key>
+          <Property Name="IdTracking" Type="Int64" Nullable="false" />
+          <Property Name="Accion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Valor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ip" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Equipo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Ubicacion" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="IdUsuario" Type="Int64" />
+          <Property Name="ServerLastModifiedDate" Type="Int64" />
+          <Property Name="LastModifiedDate" Type="Int64" />
+          <Property Name="IsModified" Type="Boolean" Nullable="false" />
+          <Property Name="IdPuntoMedicion" Type="Int64" Nullable="false" />
+          <Property Name="FechaNumerica" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="APP_USUARIO" Relationship="db_SeguimientoProtocolo_r2Model.FK__CI_TRACKI__IdUsu__628FA481" FromRole="CI_TRACKING" ToRole="APP_USUARIO" />
+        </EntityType>
         <Association Name="FK__CI_TRACKI__IdUsu__628FA481">
           <End Type="db_SeguimientoProtocolo_r2Model.APP_USUARIO" Role="APP_USUARIO" Multiplicity="0..1" />
           <End Type="db_SeguimientoProtocolo_r2Model.CI_TRACKING" Role="CI_TRACKING" Multiplicity="*" />
@@ -1779,6 +1795,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__CAT_PUNTO__IdPun__540C7B00">
+          <End Type="db_SeguimientoProtocolo_r2Model.CAT_PUNTO_MEDICION" Role="CAT_PUNTO_MEDICION" Multiplicity="0..1" />
+          <End Type="db_SeguimientoProtocolo_r2Model.CAT_PUNTOS_MEDICION_SHORTNAME" Role="CAT_PUNTOS_MEDICION_SHORTNAME" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_PUNTO_MEDICION">
+              <PropertyRef Name="IdPuntoMedicion" />
+            </Principal>
+            <Dependent Role="CAT_PUNTOS_MEDICION_SHORTNAME">
+              <PropertyRef Name="IdPuntoMedicion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="spSelectCurrentUser_Result">
+          <Property Type="Int64" Name="IdUsuario" Nullable="false" />
+          <Property Type="String" Name="UsuarioCorreo" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="UsuarioPwd" Nullable="true" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Apellido" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Area" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Puesto" Nullable="true" MaxLength="250" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="Boolean" Name="IsModified" Nullable="false" />
+          <Property Type="Int64" Name="LastModifiedDate" Nullable="false" />
+          <Property Type="Boolean" Name="IsNewUser" Nullable="false" />
+          <Property Type="Boolean" Name="IsVerified" Nullable="false" />
+          <Property Type="Boolean" Name="IsMailSent" Nullable="true" />
+          <Property Type="Int64" Name="ServerLastModifiedDate" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2033,23 +2077,6 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spCurrentUser" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spCurrentUser" />
           <FunctionImportMapping FunctionImportName="spGetDateTimeLastSync" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spGetDateTimeLastSync" />
-          <EntitySetMapping Name="CI_TRACKING">
-            <EntityTypeMapping TypeName="db_SeguimientoProtocolo_r2Model.CI_TRACKING">
-              <MappingFragment StoreEntitySet="CI_TRACKING">
-                <ScalarProperty Name="IsModified" ColumnName="IsModified" />
-                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
-                <ScalarProperty Name="ServerLastModifiedDate" ColumnName="ServerLastModifiedDate" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="IdRegistro" ColumnName="IdRegistro" />
-                <ScalarProperty Name="Ubicacion" ColumnName="Ubicacion" />
-                <ScalarProperty Name="Equipo" ColumnName="Equipo" />
-                <ScalarProperty Name="Ip" ColumnName="Ip" />
-                <ScalarProperty Name="Valor" ColumnName="Valor" />
-                <ScalarProperty Name="Accion" ColumnName="Accion" />
-                <ScalarProperty Name="IdTracking" ColumnName="IdTracking" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="MODIFIEDDATAs">
             <EntityTypeMapping TypeName="db_SeguimientoProtocolo_r2Model.MODIFIEDDATA">
               <MappingFragment StoreEntitySet="MODIFIEDDATA">
@@ -2299,6 +2326,56 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="spInsertUsuario" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spInsertUsuario" />
           <FunctionImportMapping FunctionImportName="spCommitBulkUpsertCiRegistroDownloadOnDemand" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spCommitBulkUpsertCiRegistroDownloadOnDemand" />
+          <EntitySetMapping Name="CAT_PUNTOS_MEDICION_SHORTNAME">
+            <EntityTypeMapping TypeName="db_SeguimientoProtocolo_r2Model.CAT_PUNTOS_MEDICION_SHORTNAME">
+              <MappingFragment StoreEntitySet="CAT_PUNTOS_MEDICION_SHORTNAME">
+                <ScalarProperty Name="ServerLastModifiedDate" ColumnName="ServerLastModifiedDate" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="IsModified" ColumnName="IsModified" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="IdPuntoMedicion" ColumnName="IdPuntoMedicion" />
+                <ScalarProperty Name="IdShortName" ColumnName="IdShortName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CI_TRACKING">
+            <EntityTypeMapping TypeName="db_SeguimientoProtocolo_r2Model.CI_TRACKING">
+              <MappingFragment StoreEntitySet="CI_TRACKING">
+                <ScalarProperty Name="FechaNumerica" ColumnName="FechaNumerica" />
+                <ScalarProperty Name="IdPuntoMedicion" ColumnName="IdPuntoMedicion" />
+                <ScalarProperty Name="IsModified" ColumnName="IsModified" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="ServerLastModifiedDate" ColumnName="ServerLastModifiedDate" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Ubicacion" ColumnName="Ubicacion" />
+                <ScalarProperty Name="Equipo" ColumnName="Equipo" />
+                <ScalarProperty Name="Ip" ColumnName="Ip" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="Accion" ColumnName="Accion" />
+                <ScalarProperty Name="IdTracking" ColumnName="IdTracking" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spSelectCurrentUser" FunctionName="db_SeguimientoProtocolo_r2Model.Store.spSelectCurrentUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="db_SeguimientoProtocolo_r2Model.spSelectCurrentUser_Result">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="UsuarioCorreo" ColumnName="UsuarioCorreo" />
+                <ScalarProperty Name="UsuarioPwd" ColumnName="UsuarioPwd" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Puesto" ColumnName="Puesto" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsModified" ColumnName="IsModified" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="IsNewUser" ColumnName="IsNewUser" />
+                <ScalarProperty Name="IsVerified" ColumnName="IsVerified" />
+                <ScalarProperty Name="IsMailSent" ColumnName="IsMailSent" />
+                <ScalarProperty Name="ServerLastModifiedDate" ColumnName="ServerLastModifiedDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2321,7 +2398,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Protelldb" ZoomLevel="81">
+      <Diagram Name="Protelldb" ZoomLevel="58">
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.APP_ROL" Width="1.5" PointX="8.75" PointY="16.5" Height="2.5571907552083317" IsExpanded="true" />
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.APP_USUARIO_ROL" Width="1.5" PointX="14" PointY="16.5" Height="2.3648893229166674" IsExpanded="true" />
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.CAT_CONDPRO" Width="1.5" PointX="6" PointY="10.875" Height="2.7494921874999996" IsExpanded="true" />
@@ -2396,17 +2473,6 @@
         </AssociationConnector>
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.CAT_SYNC_LOG" Width="1.5" PointX="3.375" PointY="0.75" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.CAT_SESION" Width="1.5" PointX="11" PointY="0.75" Height="1.7879850260416674" />
-        <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.CI_TRACKING" Width="1.5" PointX="14" PointY="8.25" Height="2.9417936197916674" />
-        <AssociationConnector Association="db_SeguimientoProtocolo_r2Model.FK__CI_TRACKI__IdReg__619B8048" >
-          <ConnectorPoint PointX="9.75" PointY="10.453797200520839" />
-          <ConnectorPoint PointX="9.8854166666666661" PointY="10.453797200520837" />
-          <ConnectorPoint PointX="10.208333333333334" PointY="10.453797200520839" />
-          <ConnectorPoint PointX="12.213539166666665" PointY="10.453797200520839" />
-          <ConnectorPoint PointX="12.380205833333333" PointY="10.453797200520839" />
-          <ConnectorPoint PointX="12.385416666666666" PointY="10.453797200520839" />
-          <ConnectorPoint PointX="12.552083333333334" PointY="10.453797200520839" />
-          <ConnectorPoint PointX="14" PointY="10.453797200520839" />
-        </AssociationConnector>
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.MODIFIEDDATA" Width="1.5" PointX="10.625" PointY="11.875" Height="1.9802864583333388" />
         <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.SYNCTABLE" Width="1.5" PointX="8.375" PointY="12" Height="1.7879850260416674" />
         <AssociationConnector Association="db_SeguimientoProtocolo_r2Model.FK__MODIFIEDD__IdSyn__6B24EA82" >
@@ -2452,7 +2518,10 @@
         <AssociationConnector Association="db_SeguimientoProtocolo_r2Model.APP_USUARIO_APP_USUARIO_ROL_FK1" />
         <AssociationConnector Association="db_SeguimientoProtocolo_r2Model.APP_USUARIO_CAT_UPLOAD_LOG_FK1" />
         <AssociationConnector Association="db_SeguimientoProtocolo_r2Model.FK__CAT_SESIO__IdUsu__4D94879B" />
+        <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.CAT_PUNTOS_MEDICION_SHORTNAME" Width="1.5" PointX="5.25" PointY="22" />
+        <EntityTypeShape EntityType="db_SeguimientoProtocolo_r2Model.CI_TRACKING" Width="1.5" PointX="11" PointY="15.25" />
         <AssociationConnector Association="db_SeguimientoProtocolo_r2Model.FK__CI_TRACKI__IdUsu__628FA481" />
+        <AssociationConnector Association="db_SeguimientoProtocolo_r2Model.FK__CAT_PUNTO__IdPun__540C7B00" />
       </Diagram>
     </Diagrams>
   </Designer>
