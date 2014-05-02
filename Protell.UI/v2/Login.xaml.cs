@@ -19,8 +19,7 @@ namespace Protell.UI.v2
                 InitializeComponent();
                 vm = new LoginViewModel();
                 vm.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(vm_PropertyChanged);
-                this.DataContext = vm;
-                vm.ValidateAutoLogin();
+                this.DataContext = vm;                
             }
             catch (Exception ex)
             {
@@ -65,6 +64,11 @@ namespace Protell.UI.v2
         {
             this.Close();
             Process.GetCurrentProcess().Kill();
+        }
+        
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            vm.ValidateAutoLogin();
         }
         
 

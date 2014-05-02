@@ -8,6 +8,7 @@ using Protell.DAL.Repository.v2;
 using Protell.Model;
 using System.Threading;
 using Protell.ViewModel.Sync;
+using System.Windows;
 
 namespace Protell.ViewModel.v2
 {
@@ -169,7 +170,7 @@ namespace Protell.ViewModel.v2
                     this.Visibility = "Visible";
                     this.Menssage = "";
                     user=repository.Download(this.UserName, this.UserPassword, IsSaveSesion);
-                    this.Usuario = (user != null) ? user : null;
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() => { this.Usuario = (user != null) ? user : null; }));                    
                     this.Visibility = "Collapsed";
                     this.Menssage = (user != null) ? "Bienvenido " + user.Nombre : "Usuario y/o contraseña incorrectos.";
                 }
@@ -216,7 +217,6 @@ namespace Protell.ViewModel.v2
 
         public void HiloLogin()
         {
-
             Thread hilo = new Thread(AttmpLoginServer);
             hilo.IsBackground = true;
             hilo.Start();            

@@ -39,7 +39,7 @@ namespace Protell.UI.v2
             Thread hilo = new Thread(DoWork);
             hilo.IsBackground = true;
             hilo.Start();
-            hilo.Join();
+            //hilo.Join();
         }
 
         private void DoWork()
@@ -48,16 +48,17 @@ namespace Protell.UI.v2
             {                
                 viewModel.CreateDataBase();
                // hilo.Join();
-                Login view = new Login();
-                view.Show();
+               
                 Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-                {                    
-                    this.Close();
+                {
+                    Login view = new Login();
+                    view.Show();
+                    Close();
                 }));
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.InnerException.ToString());
+                MessageBox.Show(ex.Message);
             }
         }
 

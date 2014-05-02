@@ -4,7 +4,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Login" Height="300" Width="520"
         ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen" WindowStyle="None" Icon="/Protell.UI;component/Images/SistemasLLuvias.ico">
+        WindowStartupLocation="CenterScreen" WindowStyle="None" 
+        Icon="/Protell.UI;component/Images/SistemasLLuvias.ico"
+        Loaded="Window_Loaded">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

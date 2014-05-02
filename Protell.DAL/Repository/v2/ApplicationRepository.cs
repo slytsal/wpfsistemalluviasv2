@@ -32,6 +32,30 @@ namespace Protell.DAL.Repository.v2
             return x;
         }
 
+
+        public bool DeleteFiles()
+        {
+            bool x = false;
+            string Folder = ConfigurationManager.AppSettings["ValidationDataBase"].ToString();
+            try
+            {
+                string path = "";
+                path = Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), Folder);
+                if (File.Exists(path))
+                {
+                    string dir = path.Remove(path.LastIndexOf('\\'));
+                    Directory.Delete(dir,true);
+                    x = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                CreateLog(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), ex.Message);
+            }
+
+            return x;
+        }
+
         public string GetAppPath()
         {
             bool x = false;
@@ -73,11 +97,13 @@ namespace Protell.DAL.Repository.v2
                     string query = GetScript(item);
                     master.ExecuteScript(query);
                 }
+                DeleteFiles();
+
             }
             catch (Exception ex)
             {
                 Msj = ex.Message;
-                //CreateLog(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), ex.Message);
+                CreateLog(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), ex.Message);
             }
             return Msj;
 

@@ -44,9 +44,15 @@ namespace Protell.ViewModel.Sync
         private SyncRecurrentSingleton()
         {
             //TODO :  Validar inicializacion de hilo para establecerlo como background
-            this.syncThread = new Thread(() => DoWork());
+            //this.syncThread = new Thread(() => DoWork());
 
             this._isRuning = false;
+        }
+
+        private void CreateThread()
+        {
+            //TODO :  Validar inicializacion de hilo para establecerlo como background
+            this.syncThread = new Thread(() => DoWork());
         }
 
         //Propiedades
@@ -175,6 +181,7 @@ namespace Protell.ViewModel.Sync
         {
             if (!this._isRuning)
             {
+                this.CreateThread();
                 this._isRuning = true;
                 this.syncThread.Start();
             }
