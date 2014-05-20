@@ -153,14 +153,14 @@
                                                 <TextBox Grid.Column="1" Grid.Row="3" Margin="5"                                         
                                                          Name="txtValor" 
                                                          FocusVisualStyle="{DynamicResource MyFocusVisual}"
-                         Width="300" MaxLength="5" 
+                         Width="300" MaxLength="7" 
                          FontSize="20" FontFamily="Calibri"
                          VerticalAlignment="Center" HorizontalAlignment="Left"                                            
                          Text="{Binding Valor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Visibility="{Binding RegistroItem.PUNTOMEDICION.UIVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TabIndex="4" GotFocus="txtValor_GotFocus" SnapsToDevicePixels="True" />
 
                                                 <TextBlock Grid.Column="0" Grid.Row="4" Margin="5"
-                                                           Visibility="{Binding RegistroItemr.PUNTOMEDICION.UIVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                           Visibility="{Binding RegistroItem.PUNTOMEDICION.UIVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                        Text="Unidad de Medida:"
                        FontSize="20" FontFamily="Calibri"
                        HorizontalAlignment="Right" VerticalAlignment="Center"/>

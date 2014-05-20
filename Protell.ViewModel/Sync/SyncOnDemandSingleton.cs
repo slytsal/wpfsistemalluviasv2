@@ -71,8 +71,7 @@ namespace Protell.ViewModel.Sync
         {
             foreach (Thread item in listSyncThread)
             {
-                item.Start();
-                //item.Join();
+                item.Start();                
             }
         }
 
@@ -92,15 +91,12 @@ namespace Protell.ViewModel.Sync
                 //TEST: Solo tomar la de CI_REGISTRO
                 foreach (ModifiedDataModel item in tablesName)
                 {
-
-
                     //TEST: Solo tomar la de CI_REGISTRO
                     IServiceFactory factory = ServiceFactory.Instance.getClass(item.SYNCTABLE.SyncTableName);
                     if (item.SYNCTABLE.SyncTableName.ToUpper() == "CI_REGISTRO")
                     {
                         //Escuchar evento
                         ((Protell.DAL.Repository.v2.CiRegistroRepository)factory).DidCiRegistroRecurrentDataChangedHandler += SyncRecurrentSingleton_DidCiRegistroRecurrentDataChangedHandler;
-
                         //TODO: Cuando se haya probado la descarga de información de los catálogos pasar estas lineas fuera del if
 
                     }

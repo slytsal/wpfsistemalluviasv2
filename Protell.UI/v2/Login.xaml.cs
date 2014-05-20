@@ -31,6 +31,8 @@ namespace Protell.UI.v2
         {
             //Application.Current.Dispatcher.BeginInvoke(new Action(() =>
             //{
+            try
+            {
                 if (e.PropertyName == "Usuario")
                 {
                     LoginViewModel login = (LoginViewModel)sender;
@@ -40,7 +42,12 @@ namespace Protell.UI.v2
                         view.Show();
                         this.Close();
                     }
-                }               
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }               
             //}));
         }
 
@@ -70,8 +77,6 @@ namespace Protell.UI.v2
         {
             vm.ValidateAutoLogin();
         }
-        
-
-        
+                
     }
 }

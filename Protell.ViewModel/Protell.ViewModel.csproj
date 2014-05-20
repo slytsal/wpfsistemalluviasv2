@@ -153,7 +153,6 @@
     <Compile Include="v2\CapturaViewModel.cs" />
     <Compile Include="v2\CategoriasViewModel.cs" />
     <Compile Include="v2\DialogService.cs" />
-    <Compile Include="v2\Dialog\IDialogService.cs" />
     <Compile Include="v2\LoginViewModel.cs" />
     <Compile Include="v2\MainViewModel.cs" />
     <Compile Include="v2\PuntosMedicionV2ViewModel.cs" />

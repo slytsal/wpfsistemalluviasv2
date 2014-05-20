@@ -18,18 +18,25 @@ namespace Protell.UI
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            ApplicationViewModel viewModel = new ApplicationViewModel();
-            if (viewModel.IsFirstApp)
+            try
             {
-                CreateDataBaseView view = new CreateDataBaseView();
-                view.Init(viewModel);
-                view.ShowDialog();
-                //Thread.Sleep(1000);
-            }   
-            else
+                ApplicationViewModel viewModel = new ApplicationViewModel();
+                if (viewModel.IsFirstApp)
+                {
+                    CreateDataBaseView view = new CreateDataBaseView();
+                    view.Init(viewModel);
+                    view.ShowDialog();
+                    //Thread.Sleep(1000);
+                }
+                else
+                {
+                    Login main = new Login();
+                    main.ShowDialog();
+                }
+            }
+            catch (Exception ex)
             {
-                Login main = new Login();
-                main.ShowDialog();
+                MessageBox.Show(ex.Message);
             }
             
         }

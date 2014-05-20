@@ -32,29 +32,31 @@ namespace Protell.UI.v2
             this.DataContext = viewModel;
         }
 
-        //Thread hilo = null;
+       
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //DoWork();
+            
             Thread hilo = new Thread(DoWork);
             hilo.IsBackground = true;
             hilo.Start();
-            //hilo.Join();
+            
         }
 
         private void DoWork()
         {
             try
-            {                
-                viewModel.CreateDataBase();
-               // hilo.Join();
-               
-                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (viewModel.CreateDataBase())
                 {
-                    Login view = new Login();
-                    view.Show();
-                    Close();
-                }));
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        Login view = new Login();
+                        view.Show();
+                        Close();
+                    }));
+                }
+
+
             }
             catch (Exception ex)
             {

@@ -34,7 +34,8 @@ namespace Protell.Server.DAL.Repository.v2
                               ServerLastModifiedDate = row.ServerLastModifiedDate,
                               vAccion=row.vAccion,
                               vCondicion=row.vCondicion,
-                              Visibility=(bool)row.Visibility
+                              Visibility=(bool)row.Visibility,
+                              IdAccionActual =(long)row.IdAccionActual
                           });
                       });
                 }

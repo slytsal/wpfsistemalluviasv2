@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using Protell.DAL.Conexion;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace Protell.DAL.Repository.v2
 {
@@ -18,10 +19,11 @@ namespace Protell.DAL.Repository.v2
             try
             {
                 string path = "";
-                path = Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), Folder);
+                path = Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), Folder);                
                 if(File.Exists(path))
                 {
-                    x = true;
+                    string content = GetContentFile(path);
+                    x = bool.Parse(content);
                 }
             }
             catch (Exception ex)
@@ -31,7 +33,6 @@ namespace Protell.DAL.Repository.v2
 
             return x;
         }
-
 
         public bool DeleteFiles()
         {
@@ -43,9 +44,10 @@ namespace Protell.DAL.Repository.v2
                 path = Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), Folder);
                 if (File.Exists(path))
                 {
-                    string dir = path.Remove(path.LastIndexOf('\\'));
-                    Directory.Delete(dir,true);
-                    x = true;
+                    //string dir = path.Remove(path.LastIndexOf('\\'));
+                    //Directory.Delete(dir,true);
+                    x=ModifiedContentFile(path);
+                    //x = true;
                 }
             }
             catch (Exception ex)
@@ -77,7 +79,7 @@ namespace Protell.DAL.Repository.v2
             return;
         }
 
-        public string GetScript(string PathScript)
+        public string GetContentFile(string PathScript)
         {
             string content = "";
             FileInfo file = new FileInfo(PathScript);
@@ -94,8 +96,9 @@ namespace Protell.DAL.Repository.v2
                 MasterConexion master = new MasterConexion();
                 foreach (var item in GetFiles())
                 {
-                    string query = GetScript(item);
-                    master.ExecuteScript(query);
+                    Msj += item;                    
+                    string query = GetContentFile(item);
+                    master.ExecuteScriptGO(query);
                 }
                 DeleteFiles();
 
@@ -103,6 +106,7 @@ namespace Protell.DAL.Repository.v2
             catch (Exception ex)
             {
                 Msj = ex.Message;
+                MessageBox.Show(ex.Message);
                 CreateLog(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), ex.Message);
             }
             return Msj;
@@ -116,19 +120,19 @@ namespace Protell.DAL.Repository.v2
             {
                 string Folder = ConfigurationManager.AppSettings["Scripts"].ToString();
                 string path = "";
-                path = Path.Combine(Path.GetDirectoryName(Environment.CurrentDirectory), Folder);
+                path = Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), Folder);                
                 if(Directory.Exists(path))
-                {
-                    scripts = Directory.GetFiles(path);
+                {                    
+                    scripts = Directory.GetFiles(path);                    
                 }                
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                MessageBox.Show(ex.Message);
                 scripts = new string[0];
             }
             return scripts;
         }
-
 
         public string CreateLog(string DestinationPath,string Content)
         {
@@ -152,6 +156,27 @@ namespace Protell.DAL.Repository.v2
                 //InsertLogExcepion(ex);
             }
             return PathSave;
+        }
+
+        public bool ModifiedContentFile(string  PathFile)
+        {
+            bool x = false;
+            try
+            {
+                StreamReader reader = new StreamReader(File.OpenRead(PathFile));
+                string fileContent = reader.ReadToEnd();
+                reader.Close();
+                fileContent = fileContent.Replace("True", "False");
+                StreamWriter writer = new StreamWriter(File.OpenWrite(PathFile));
+                writer.Write(fileContent);
+                writer.Close();
+                x = true;
+            }
+            catch (Exception ex)
+            {
+                x = false;                
+            }
+            return x;
         }
     }
 }

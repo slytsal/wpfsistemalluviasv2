@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Web.Script.Serialization;
 
@@ -76,7 +75,7 @@ namespace Protell.DAL.Repository.v2
                     {
                         _GetBodyContent = new RequestBodyContent()
                         {
-                            fechaActual = sync.GetCurrentDate(),
+                            fechaActual =(long)res.FechaInicio, //sync.GetCurrentDate(),
                             fechaFin = (long)res.FechaFin,
                             LastModifiedDate = (long)res.LastModifiedDate,
                             ServerLastModifiedDate = (long)res.ServerLastModifiedDate
@@ -511,10 +510,10 @@ namespace Protell.DAL.Repository.v2
                     response = js.Deserialize<CiRegistroUploadResponseModel>(jsonResponse);
 
                     if (response != null && response.Upload_CiRegistroResult != null && response.Upload_CiRegistroResult.Count > 0)
-                    {
+                    {                        
                         this.PrepareBulkUpdateConfirmation();
                         this.BulkUpdateConfirmation(response.Upload_CiRegistroResult);
-                        this.CommitBulkUpdateConfirmation();
+                        this.CommitBulkUpdateConfirmation();                                              
                     }
                 }//endif
                 else
@@ -851,9 +850,9 @@ namespace Protell.DAL.Repository.v2
                      x = true;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                
             }
 
             return x;

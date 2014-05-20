@@ -114,7 +114,8 @@ namespace Protell.DAL.Repository.v2
                                     ServerLastModifiedDate = row.ServerLastModifiedDate,
                                     vAccion = row.vAccion,
                                     vCondicion = row.vCondicion,
-                                    Visibility = row.Visibility
+                                    Visibility = row.Visibility,
+                                    IdAccionActual = row.IdAccionActual
                                 });
                         }
                         if (result != null && result.LastModifiedDate < row.LastModifiedDate)
@@ -133,6 +134,7 @@ namespace Protell.DAL.Repository.v2
                             result.vAccion = row.vAccion;
                             result.vCondicion = row.vCondicion;
                             result.Visibility = row.Visibility;
+                            result.IdAccionActual = row.IdAccionActual;
                         }
                     }
                     entity.SaveChanges();

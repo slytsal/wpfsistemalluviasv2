@@ -423,8 +423,8 @@ namespace Protell.ViewModel.v2
                 }
                 PrepareSaved();
 
-                if (this.Valor >= model.Max ||
-                    this.Valor <= model.Min)
+                if (this.Valor > model.Max ||
+                    this.Valor < model.Min)
                 {
                     x = (DialogService.ShowResult("La medición de captura es : " + this.RegistroItem.Valor + "\n La Medición comun esta entre " + model.Min + " y " + model.Max + "\n¿Esta seguro que la medición es correcta?", "") == MessageBoxResult.OK) ? true : false;
                     if (x)

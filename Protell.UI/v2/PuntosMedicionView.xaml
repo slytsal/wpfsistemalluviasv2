@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"                        
              xmlns:local="clr-namespace:Protell.UI.v2"
+             xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="700">
     <UserControl.Resources>
@@ -17,6 +18,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="AUTO"/>                        
             <RowDefinition Height="*"/>
+            <RowDefinition Height="AUTO"/>
             <RowDefinition Height="AUTO"/>
         </Grid.RowDefinitions>                                
         <!--Titulo-->
@@ -67,6 +69,8 @@
                 <DataGridTextColumn Header="Acción Actual" Binding="{Binding AccionActual}"/>
             </DataGrid.Columns>
         </DataGrid >
-        <Button Content="Ver Mas..." Grid.Row="2" Name="btnVermas" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{Binding VerMasCommand}"/>
+        <controls:MetroProgressBar IsIndeterminate="True" 
+                                   Grid.Row="2" Height="2" Visibility="Collapsed" />
+        <Button Content="Ver Mas..." Grid.Row="3" Name="btnVermas" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{Binding VerMasCommand}"/>
     </Grid>
 </UserControl>

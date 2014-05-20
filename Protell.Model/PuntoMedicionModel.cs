@@ -342,6 +342,22 @@ namespace Protell.Model
         private bool _Visibility;
         public const string VisibilityPropertyName = "Visibility";
 
+        public long IdAccionActual
+        {
+            get { return _IdAccionActual; }
+            set
+            {
+                if (_IdAccionActual != value)
+                {
+                    _IdAccionActual = value;
+                    OnPropertyChanged(IdAccionActualPropertyName);
+                }
+            }
+        }
+        private long _IdAccionActual;
+        public const string IdAccionActualPropertyName = "IdAccionActual";
+
+
         public string UIVisible
         {
             get { return _UIVisible; }

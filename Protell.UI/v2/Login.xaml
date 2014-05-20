@@ -87,7 +87,7 @@
                      FontFamily="Calibri" FontSize="20" 
                      HorizontalAlignment="Left" VerticalAlignment="Center" TabIndex="1"
                      FocusVisualStyle="{DynamicResource MyFocusVisual}"
-                        Text="{Binding UserName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+                     Text="{Binding UserName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
 
                 <Label Grid.Column="0" Grid.Row="1"
                        Margin="5"                       

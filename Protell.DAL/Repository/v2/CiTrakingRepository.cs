@@ -150,7 +150,6 @@ namespace Protell.DAL.Repository.v2
 
             string jsonResponse = "";
             string webMethodName = "Upload_CiTracking";
-
             CiTrackingUploadResponseModel response = new CiTrackingUploadResponseModel();
 
             //Obtener datos
@@ -158,11 +157,7 @@ namespace Protell.DAL.Repository.v2
             if (registros != null && registros.Count > 0)
             {
                 CiTrackingUploadModel crum = new CiTrackingUploadModel();
-                crum.Items = registros;
-                //crum.UserData = new UserDataSync();
-
-                //crum.CiRegistro = null;
-                //crum.UserData = null;
+                crum.Items = registros;             
 
                 CiTrackingUploadServiceInputWrapper wrapperServiceParameter = new CiTrackingUploadServiceInputWrapper();
                 wrapperServiceParameter.param = crum;

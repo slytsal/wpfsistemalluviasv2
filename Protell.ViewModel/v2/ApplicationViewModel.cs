@@ -63,18 +63,23 @@ namespace Protell.ViewModel.v2
             using (var repository = new ApplicationRepository())
             {
                 this.IsFirstApp = repository.ValidationDataBase();
-                //this.AppPath = repository.GetAppPath();
+                this.AppPath = repository.GetAppPath();
             }            
         }
              
-        public void CreateDataBase()
+        public bool CreateDataBase()
         {
+            bool x = false;
+            
             using (var repository = new ApplicationRepository())
             {
-                this.Messaje = "Creando Base";
-                this.Messaje= repository.CreateDataBase();
+                
+                this.Messaje = "Creando Base";                
+                this.Messaje= repository.CreateDataBase();                
                 this.Messaje = "fin";
+                x = true;
             }
+            return x;
         }
     }
 }

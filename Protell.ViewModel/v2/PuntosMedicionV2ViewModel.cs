@@ -33,7 +33,7 @@ namespace Protell.ViewModel.v2
         public PuntosMedicionV2ViewModel()
         {
             this.Registros = new ObservableCollection<RegistroModel>();
-            //SyncRecurrentSingleton.Instance.DidCiRegistroDataChangedEvent += Instance_DidCiRegistroDataChangedEvent;
+            SyncRecurrentSingleton.Instance.DidCiRegistroDataChangedEvent += Instance_DidCiRegistroDataChangedEvent;
         }
 
         void Instance_DidCiRegistroDataChangedEvent(object o, DidCiRegistroDataChangedArgs e)
@@ -196,8 +196,7 @@ namespace Protell.ViewModel.v2
         {
             Thread hilo = new Thread(AttpVerMas);
             hilo.IsBackground = true;
-            hilo.Start();
-            hilo.Join();
+            hilo.Start();            
         }
     }
 }

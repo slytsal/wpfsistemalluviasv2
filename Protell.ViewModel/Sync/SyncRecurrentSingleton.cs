@@ -21,7 +21,7 @@ namespace Protell.ViewModel.Sync
     }
 
     //Proceso de sincronización continua de todas las tablas
-    public sealed class SyncRecurrentSingleton
+    public sealed class SyncRecurrentSingleton:ViewModelBase
     {
         #region Eventos
         public event DidCiRegistroDataChangedDelegate DidCiRegistroDataChangedEvent;
@@ -58,6 +58,21 @@ namespace Protell.ViewModel.Sync
         //Propiedades
         private Thread syncThread;
 
+        public bool IsRun
+        {
+            get { return _IsRun; }
+            set
+            {
+                if (_IsRun != value)
+                {
+                    _IsRun = value;
+                    OnPropertyChanged(IsRunPropertyName);
+                }
+            }
+        }
+        private bool _IsRun;
+        public const string IsRunPropertyName = "IsRun";
+
         private bool _isRuning;
         public bool IsRuning
         {
@@ -70,8 +85,7 @@ namespace Protell.ViewModel.Sync
         //Métodos
         private void DoWork()
         {
-            //Levantar evento de inicio
-
+            
             //operacion de sincronizacion
             try
             {
@@ -83,18 +97,14 @@ namespace Protell.ViewModel.Sync
 
                 //TEST: Solo tomar la de CI_REGISTRO
                 foreach (ModifiedDataModel item in tablesName)
-                {
-                    
-
+                {                    
                     //TEST: Solo tomar la de CI_REGISTRO
                     IServiceFactory factory = ServiceFactory.Instance.getClass(item.SYNCTABLE.SyncTableName);
                     if (item.SYNCTABLE.SyncTableName.ToUpper() == "CI_REGISTRO")
                     {
                         //Escuchar evento
                         ((Protell.DAL.Repository.v2.CiRegistroRepository)factory).DidCiRegistroRecurrentDataChangedHandler += SyncRecurrentSingleton_DidCiRegistroRecurrentDataChangedHandler;
-
-                        //TODO: Cuando se haya probado la descarga de información de los catálogos pasar estas lineas fuera del if
-                        
+                        //TODO: Cuando se haya probado la descarga de información de los catálogos pasar estas lineas fuera del if                        
                     }
                     status = factory.Download();
                     downloadStatus = (downloadStatus == false || status == false) ? false : status;
@@ -104,20 +114,22 @@ namespace Protell.ViewModel.Sync
                     }
                 }//foreach
 
-                UploadData();
+                //UploadData();
                 //Subir datos
-                //if (downloadStatus)
-                //{
-                //    Protell.DAL.Repository.v2.CiRegistroRepository crr = new DAL.Repository.v2.CiRegistroRepository();
-                //    crr.Upload();
-                //}
+                if (downloadStatus)
+                {
+                    Protell.DAL.Repository.v2.CiRegistroRepository crr = new DAL.Repository.v2.CiRegistroRepository();
+                    crr.Upload();
+                    Protell.DAL.Repository.v2.CiTrakingRepository traking = new Protell.DAL.Repository.v2.CiTrakingRepository();
+                    traking.Upload();
+                }
             }
             catch (Exception ex)
             {
-                this._isRuning = false;
+                this.IsRun = false;
             }
             
-            this._isRuning = false;
+            this.IsRun = false;
             //Levantar evento de fin
         }
 
@@ -142,7 +154,7 @@ namespace Protell.ViewModel.Sync
                             //TODO: Cuando se haya probado la descarga de información de los catálogos pasar estas lineas fuera del if
                             if (((Protell.DAL.Repository.v2.CiTrakingRepository)factory).Upload())
                             {
-                                //modifiedDataRepository.UpdateServerModifiedDate(item);
+                                modifiedDataRepository.UpdateServerModifiedDate(item);
                             }
                         }//endif
                         if (item.SYNCTABLE.SyncTableName.ToUpper() == "CI_REGISTRO")
@@ -179,12 +191,19 @@ namespace Protell.ViewModel.Sync
 
         public void StartThread()
         {
-            if (!this._isRuning)
+            if (!this.IsRun)
             {
                 this.CreateThread();
-                this._isRuning = true;
+                this.IsRun = true;
                 this.syncThread.Start();
+                
             }
+            //if (!this._isRuning)
+            //{
+            //    this.CreateThread();
+            //    this._isRuning = true;
+            //    this.syncThread.Start();
+            //}
         }
     }
 }

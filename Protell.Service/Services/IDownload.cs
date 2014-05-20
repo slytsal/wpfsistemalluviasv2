@@ -2,6 +2,7 @@
 using System.ServiceModel.Web;
 using Protell.Model;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 
 namespace Protell.Service.Services
@@ -109,6 +110,10 @@ namespace Protell.Service.Services
 
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
-        ObservableCollection<CatPuntosMedicionShortNameModel> Download_CatPuntoMedicionShortName(long LastModifiedDate, long ServerLastModifiedDate);                
+        ObservableCollection<CatPuntosMedicionShortNameModel> Download_CatPuntoMedicionShortName(long LastModifiedDate, long ServerLastModifiedDate);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
+        List<Protell.Server.DAL.POCOS.sp_ConsultaDemand_Result> Download_ConsultaDemmand(long fecha);                
     }
 }

@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace Protell.UI.v2
 {
@@ -25,6 +26,13 @@ namespace Protell.UI.v2
         private const string PUNTOSMEDICION = "PUNTOSMEDICION";
         private const string ESTPLUVIOGRAFICAS = "ESTPLUVIOGRAFICAS";
 
+        DispatcherTimer dTimerUploadProcess;
+        public DispatcherTimer DTimerUploadProcess
+        {
+            get { return dTimerUploadProcess; }
+            set { dTimerUploadProcess = value; }
+        }
+
         public Main(UsuarioModel usuarioModel)
         {
             InitializeComponent();
@@ -33,7 +41,14 @@ namespace Protell.UI.v2
             vmMain.Usuario = usuarioModel;
             vmMain.GetSync();
             vmMain.PropertyChanged += vmMain_PropertyChanged;
+            SyncRecurrentSingleton.Instance.PropertyChanged += Instance_PropertyChanged;
             this.DataContext = vmMain;
+            vmMain.GetSync();
+
+            DTimerUploadProcess = new DispatcherTimer();
+            DTimerUploadProcess.Tick += new EventHandler(DTimerUploadProcess_Tick);
+            DTimerUploadProcess.Interval = new TimeSpan(0, 0, 60);
+            DTimerUploadProcess.Start();
         }
 
         void vmMain_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -87,15 +102,33 @@ namespace Protell.UI.v2
             //Condicionar catsync
             try
             {
-                SyncRecurrentSingleton.Instance.StartThread();
-                vmMain.GetSync();                
-                
+                SyncRecurrentSingleton.Instance.StartThread();              
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
 
+        }
+
+        void Instance_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            try
+            {
+                if(e.PropertyName=="IsRun")
+                {
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        grdProgress.Visibility = (SyncRecurrentSingleton.Instance.IsRun) ? Visibility.Visible : Visibility.Collapsed;
+                    }));
+                    vmMain.GetSync();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
         }
        
         private void tcTablero_SelectionChanged(object sender, SelectionChangedEventArgs e)

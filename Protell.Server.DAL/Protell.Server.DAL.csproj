@@ -173,6 +173,9 @@
     <Compile Include="POCOS\spSelectLastCI_Registro_Result.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
+    <Compile Include="POCOS\sp_ConsultaDemand_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
     <Compile Include="POCOS\SYNCTABLE.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>

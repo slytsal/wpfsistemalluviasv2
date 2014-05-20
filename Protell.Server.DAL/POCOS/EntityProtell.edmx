@@ -601,6 +601,9 @@ warning 6002: The table/view 'qaDevinmr3.dbo._CAT_PUNTO_MEDICION' does not have 
         <Function Name="GD_GET_DATOSESTRUCTURAS_2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GD_GET_DATOSESTRUCTURAS_OLD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="LoadCnfHora" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_ConsultaDemand" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Fecha" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="spCommitBulkUpsertCiRegistroUploaded" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="session" Type="bigint" Mode="In" />
         </Function>
@@ -888,6 +891,9 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
             <End Role="APP_USUARIO" EntitySet="APP_USUARIO" />
             <End Role="CI_TRACKING" EntitySet="CI_TRACKING" />
           </AssociationSet>
+          <FunctionImport Name="sp_ConsultaDemand" ReturnType="Collection(devinmr3Model.sp_ConsultaDemand_Result)">
+            <Parameter Name="Fecha" Mode="In" Type="Int64" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="C_CAT_PUNTO_MEDICION">
           <Key>
@@ -1610,6 +1616,17 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="sp_ConsultaDemand_Result">
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="true" />
+          <Property Type="Double" Name="latiitud" Nullable="true" />
+          <Property Type="Double" Name="longitud" Nullable="true" />
+          <Property Type="String" Name="PuntoMedicionName" Nullable="true" MaxLength="250" />
+          <Property Type="Double" Name="Valor" Nullable="false" />
+          <Property Type="String" Name="UnidadMedidaShort" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="AccionActual" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="CondicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Int64" Name="FechaNumerica" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2105,6 +2122,21 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_ConsultaDemand" FunctionName="devinmr3Model.Store.sp_ConsultaDemand">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="devinmr3Model.sp_ConsultaDemand_Result">
+                <ScalarProperty Name="IdPuntoMedicion" ColumnName="IdPuntoMedicion" />
+                <ScalarProperty Name="latiitud" ColumnName="latiitud" />
+                <ScalarProperty Name="longitud" ColumnName="longitud" />
+                <ScalarProperty Name="PuntoMedicionName" ColumnName="PuntoMedicionName" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="UnidadMedidaShort" ColumnName="UnidadMedidaShort" />
+                <ScalarProperty Name="AccionActual" ColumnName="AccionActual" />
+                <ScalarProperty Name="CondicionName" ColumnName="CondicionName" />
+                <ScalarProperty Name="FechaNumerica" ColumnName="FechaNumerica" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2134,7 +2166,7 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
         <EntityTypeShape EntityType="devinmr3Model.CAT_CONDPRO" Width="1.5" PointX="6" PointY="3.125" Height="2.7494921874999996" IsExpanded="true" />
         <EntityTypeShape EntityType="devinmr3Model.CAT_DEPENDENCIA" Width="1.5" PointX="6" PointY="20.375" Height="2.172587890624996" IsExpanded="true" />
         <EntityTypeShape EntityType="devinmr3Model.CAT_ESTRUCTURA" Width="1.5" PointX="3" PointY="14" Height="2.9417936197916674" IsExpanded="true" />
-        <EntityTypeShape EntityType="devinmr3Model.CAT_PUNTO_MEDICION_MAX_MIN" Width="1.5" PointX="5.25" PointY="6.75" Height="1.9802864583333308" IsExpanded="true" />
+        <EntityTypeShape EntityType="devinmr3Model.CAT_PUNTO_MEDICION_MAX_MIN" Width="2.625" PointX="5.25" PointY="6.75" Height="1.9802864583333308" IsExpanded="true" />
         <EntityTypeShape EntityType="devinmr3Model.CAT_SERVER_LASTDATA" Width="1.5" PointX="12.75" PointY="15" Height="1.4033821614583388" IsExpanded="true" />
         <EntityTypeShape EntityType="devinmr3Model.CAT_SISTEMA" Width="1.5" PointX="0.75" PointY="14.375" Height="2.1725878906250031" IsExpanded="true" />
         <EntityTypeShape EntityType="devinmr3Model.CAT_SYNC" Width="1.5" PointX="14.75" PointY="15" Height="1.4033821614583388" IsExpanded="true" />
@@ -2198,7 +2230,7 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
         </AssociationConnector>
         <EntityTypeShape EntityType="devinmr3Model.APP_SETTINGS" Width="1.5" PointX="8.375" PointY="0.75" />
         <EntityTypeShape EntityType="devinmr3Model.CAT_PROTOCOLO" Width="1.5" PointX="5.25" PointY="13.875" />
-        <EntityTypeShape EntityType="devinmr3Model.CAT_PUNTO_MEDICION" Width="1.5" PointX="3" PointY="6" />
+        <EntityTypeShape EntityType="devinmr3Model.CAT_PUNTO_MEDICION" Width="2.5" PointX="3" PointY="6" />
         <AssociationConnector Association="devinmr3Model.FK__CAT_PROTO__IdPun__3552E9B6" />
         <AssociationConnector Association="devinmr3Model.CAT_PUNTO_MEDICION_CI_REGISTRO_FK1" />
         <AssociationConnector Association="devinmr3Model.CAT_PUNTO_MEDICION_REL_EST_PUNTOMED_FK1" />

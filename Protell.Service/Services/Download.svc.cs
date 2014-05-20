@@ -424,5 +424,21 @@ namespace Protell.Service.Services
             }
             return result;
         }
+
+
+        public System.Collections.Generic.List<Server.DAL.POCOS.sp_ConsultaDemand_Result> Download_ConsultaDemmand(long fecha)
+        {
+            System.Collections.Generic.List<Server.DAL.POCOS.sp_ConsultaDemand_Result> items = new System.Collections.Generic.List<Server.DAL.POCOS.sp_ConsultaDemand_Result>();
+            try
+            {
+                CiRegistroRepository repository = new CiRegistroRepository();
+                items = repository.GetConsultaDemmand(fecha);                  
+            }
+            catch (Exception)
+            {
+                                
+            }
+            return items;
+        }
     }
 }

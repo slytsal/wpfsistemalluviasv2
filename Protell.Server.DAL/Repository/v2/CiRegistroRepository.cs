@@ -73,7 +73,6 @@ namespace Protell.Server.DAL.Repository.v2
                         workerThreads.Add(new Thread(CiRegistroRepository.ExecuteSqlString));
                         workerThreads.Last().IsBackground = true;
                         workerThreads.Last().Start(sqlStatement);
-
                         sqlStatement = _base;
                     }
                     else
@@ -157,6 +156,23 @@ namespace Protell.Server.DAL.Repository.v2
             }//endIfElse
 
             return confirmation;
+        }
+
+
+        public List<sp_ConsultaDemand_Result> GetConsultaDemmand(long Fecha)
+        {
+            List<sp_ConsultaDemand_Result> items = new List<sp_ConsultaDemand_Result>();
+            try
+            {                
+                using (var entity=new db_SeguimientoProtocolo_r2Entities())
+                {
+                    items = entity.sp_ConsultaDemand((long)Fecha).ToList();
+                }
+            }
+            catch (Exception)
+            {                                
+            }
+            return items;
         }
     }
 }

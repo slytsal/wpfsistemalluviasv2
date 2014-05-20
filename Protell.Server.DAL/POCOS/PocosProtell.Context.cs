@@ -395,6 +395,21 @@ namespace Protell.Server.DAL.POCOS
             }
             return base.ExecuteFunction<spLogin_Result>("spLogin", usuarioParameter, passParameter);
         }
+        public ObjectResult<sp_ConsultaDemand_Result> sp_ConsultaDemand(Nullable<long> fecha)
+        {
+    
+            ObjectParameter fechaParameter;
+    
+            if (fecha.HasValue)
+            {
+                fechaParameter = new ObjectParameter("Fecha", fecha);
+            }
+            else
+            {
+                fechaParameter = new ObjectParameter("Fecha", typeof(long));
+            }
+            return base.ExecuteFunction<sp_ConsultaDemand_Result>("sp_ConsultaDemand", fechaParameter);
+        }
 
         #endregion
 
