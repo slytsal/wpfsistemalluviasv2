@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Security;
 using System.Text;
 
 namespace Protell.Server.DAL.JsonSerializables
 {
     [Serializable]
+    [SecurityCriticalAttribute]
     public class AjaxDictionary<TKey, TValue> : ISerializable
     {
         private Dictionary<TKey, TValue> _Dictionary;
