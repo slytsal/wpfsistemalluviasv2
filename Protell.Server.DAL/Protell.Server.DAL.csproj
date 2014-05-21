@@ -37,8 +37,9 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\..\..\..\..\..\imcprotell\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\DLL inventory\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -55,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="JsonSerializables\AjaxDictionary.cs" />
     <Compile Include="JSON\SerializerJson.cs" />
     <Compile Include="POCOS\APP_ROL.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
@@ -218,6 +220,7 @@
     <Compile Include="Repository\v2\CatSistemaRepository.cs" />
     <Compile Include="Repository\v2\CiRegistroRepository.cs" />
     <Compile Include="Repository\v2\CondicionRepository.cs" />
+    <Compile Include="Repository\v2\HashableDataRepository.cs" />
     <Compile Include="Repository\v2\LinksRepository.cs" />
     <Compile Include="Repository\v2\ModifiedDateRepository.cs" />
     <Compile Include="Repository\v2\PuntoMedicionRepository.cs" />

@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\isaac\Documents\Visual Studio 2013\Projects\wpfsistemalluviasv2\Protell.DAL\Protelldb.edmx'. 
+﻿// T4 code generation is enabled for model 'E:\IMC\CNA - SistemaLluvias2\Protell(2)\Protell.UI\Protell.DAL\Protelldb.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

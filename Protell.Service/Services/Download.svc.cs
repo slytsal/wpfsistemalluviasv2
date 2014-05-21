@@ -4,6 +4,7 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using Protell.Model;
 using Protell.Server.DAL.Repository.v2;
+using Protell.Server.DAL.JsonSerializables;
 
 namespace Protell.Service.Services
 {
@@ -440,5 +441,14 @@ namespace Protell.Service.Services
             }
             return items;
         }
+
+        //Hashable
+        public AjaxDictionary<string, object> Download_HashablePuntosMedicion()
+        {
+            AjaxDictionary<string, object> tipos = (new HashableDataRepository()).GetPuntosMedicion();
+
+            return tipos;
+        }
+
     }
 }
