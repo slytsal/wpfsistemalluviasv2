@@ -52,8 +52,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\Microsoft.SqlServer.SqlEnum.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\..\..\..\..\..\imcprotell\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\DLL inventory\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp">
       <HintPath>DLL\RestSharp.dll</HintPath>
@@ -318,18 +319,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="DLL\Microsoft.SqlServer.ConnectionInfo.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLL\Microsoft.SqlServer.Management.Sdk.Sfc.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLL\Microsoft.SqlServer.Smo.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLL\Microsoft.SqlServer.SqlEnum.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="DLL\Microsoft.SqlServer.ConnectionInfo.dll" />
+    <Content Include="DLL\Microsoft.SqlServer.Management.Sdk.Sfc.dll" />
+    <Content Include="DLL\Microsoft.SqlServer.Smo.dll" />
+    <Content Include="DLL\Microsoft.SqlServer.SqlEnum.dll" />
     <Content Include="DLL\RestSharp.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

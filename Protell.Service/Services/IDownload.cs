@@ -3,6 +3,7 @@ using System.ServiceModel.Web;
 using Protell.Model;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using Protell.Server.DAL.JsonSerializables;
 
 
 namespace Protell.Service.Services
@@ -114,6 +115,10 @@ namespace Protell.Service.Services
 
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
-        List<Protell.Server.DAL.POCOS.sp_ConsultaDemand_Result> Download_ConsultaDemmand(long fecha);                
+        List<Protell.Server.DAL.POCOS.sp_ConsultaDemand_Result> Download_ConsultaDemmand(long fecha);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
+        AjaxDictionary<string, object> Download_HashablePuntosMedicion();          
     }
 }
