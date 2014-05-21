@@ -8,7 +8,6 @@ using System.Text;
 namespace Protell.Server.DAL.JsonSerializables
 {
     [Serializable]
-    [SecurityCriticalAttribute]
     public class AjaxDictionary<TKey, TValue> : ISerializable
     {
         private Dictionary<TKey, TValue> _Dictionary;
@@ -29,6 +28,8 @@ namespace Protell.Server.DAL.JsonSerializables
         {
             _Dictionary.Add(key, value);
         }
+
+        [SecurityCriticalAttribute]
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             foreach (TKey key in _Dictionary.Keys)
