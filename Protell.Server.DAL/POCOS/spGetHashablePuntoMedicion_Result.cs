@@ -54,6 +54,42 @@ namespace Protell.Server.DAL.POCOS
             get;
             set;
         }
+    
+        public string dependencias
+        {
+            get;
+            set;
+        }
+    
+        public string UnidadMedidaName
+        {
+            get;
+            set;
+        }
+    
+        public string UnidadMedidaShort
+        {
+            get;
+            set;
+        }
+    
+        public string ParametroMedicion
+        {
+            get;
+            set;
+        }
+    
+        public Nullable<long> ultimaActualización
+        {
+            get;
+            set;
+        }
+    
+        public string UltimaCondicion
+        {
+            get;
+            set;
+        }
 
         #endregion
 

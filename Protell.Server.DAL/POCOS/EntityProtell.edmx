@@ -1642,6 +1642,12 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
           <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
           <Property Type="Double" Name="latiitud" Nullable="true" />
           <Property Type="Double" Name="longitud" Nullable="true" />
+          <Property Type="String" Name="dependencias" Nullable="true" />
+          <Property Type="String" Name="UnidadMedidaName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="UnidadMedidaShort" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ParametroMedicion" Nullable="true" MaxLength="1000" />
+          <Property Type="Int64" Name="ultimaActualización" Nullable="true" />
+          <Property Type="String" Name="UltimaCondicion" Nullable="true" MaxLength="250" />
         </ComplexType>
         <ComplexType Name="spGetHashableUltimaMedicion_Result">
           <Property Type="Int64" Name="IdTipoPuntoMedicion" Nullable="true" />
@@ -2172,6 +2178,12 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
                 <ScalarProperty Name="PuntoMedicionName" ColumnName="PuntoMedicionName" />
                 <ScalarProperty Name="latiitud" ColumnName="latiitud" />
                 <ScalarProperty Name="longitud" ColumnName="longitud" />
+                <ScalarProperty Name="dependencias" ColumnName="dependencias" />
+                <ScalarProperty Name="UnidadMedidaName" ColumnName="UnidadMedidaName" />
+                <ScalarProperty Name="UnidadMedidaShort" ColumnName="UnidadMedidaShort" />
+                <ScalarProperty Name="ParametroMedicion" ColumnName="ParametroMedicion" />
+                <ScalarProperty Name="ultimaActualización" ColumnName="ultimaActualización" />
+                <ScalarProperty Name="UltimaCondicion" ColumnName="UltimaCondicion" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
