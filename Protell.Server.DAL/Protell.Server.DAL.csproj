@@ -167,6 +167,12 @@
     <Compile Include="POCOS\SpGdGetDatosEstructuras2_Result.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
+    <Compile Include="POCOS\spGetHashablePuntoMedicion_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spGetHashableUltimaMedicion_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
     <Compile Include="POCOS\spLogin_Result.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>

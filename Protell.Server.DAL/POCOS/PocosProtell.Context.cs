@@ -410,6 +410,25 @@ namespace Protell.Server.DAL.POCOS
             }
             return base.ExecuteFunction<sp_ConsultaDemand_Result>("sp_ConsultaDemand", fechaParameter);
         }
+        public ObjectResult<spGetHashablePuntoMedicion_Result> spGetHashablePuntoMedicion()
+        {
+            return base.ExecuteFunction<spGetHashablePuntoMedicion_Result>("spGetHashablePuntoMedicion");
+        }
+        public ObjectResult<spGetHashableUltimaMedicion_Result> spGetHashableUltimaMedicion(Nullable<long> fecha)
+        {
+    
+            ObjectParameter fechaParameter;
+    
+            if (fecha.HasValue)
+            {
+                fechaParameter = new ObjectParameter("Fecha", fecha);
+            }
+            else
+            {
+                fechaParameter = new ObjectParameter("Fecha", typeof(long));
+            }
+            return base.ExecuteFunction<spGetHashableUltimaMedicion_Result>("spGetHashableUltimaMedicion", fechaParameter);
+        }
 
         #endregion
 

@@ -617,6 +617,10 @@ warning 6002: The table/view 'qaDevinmr3.dbo._CAT_PUNTO_MEDICION' does not have 
           <Parameter Name="SLMD" Type="bigint" Mode="In" />
           <Parameter Name="LMD" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="spGetHashablePuntoMedicion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spGetHashableUltimaMedicion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Fecha" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="spLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Usuario" Type="nvarchar" Mode="In" />
           <Parameter Name="Pass" Type="varchar" Mode="In" />
@@ -892,6 +896,10 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
             <End Role="CI_TRACKING" EntitySet="CI_TRACKING" />
           </AssociationSet>
           <FunctionImport Name="sp_ConsultaDemand" ReturnType="Collection(devinmr3Model.sp_ConsultaDemand_Result)">
+          <Parameter Name="Fecha" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="spGetHashablePuntoMedicion" ReturnType="Collection(devinmr3Model.spGetHashablePuntoMedicion_Result)" />
+          <FunctionImport Name="spGetHashableUltimaMedicion" ReturnType="Collection(devinmr3Model.spGetHashableUltimaMedicion_Result)">
             <Parameter Name="Fecha" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
@@ -1627,6 +1635,24 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
           <Property Type="String" Name="CondicionName" Nullable="false" MaxLength="250" />
           <Property Type="Int64" Name="FechaNumerica" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="spGetHashablePuntoMedicion_Result">
+          <Property Type="Int64" Name="IdTipoPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="TipoPuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Double" Name="latiitud" Nullable="true" />
+          <Property Type="Double" Name="longitud" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spGetHashableUltimaMedicion_Result">
+          <Property Type="Int64" Name="IdTipoPuntoMedicion" Nullable="true" />
+          <Property Type="String" Name="TipoPuntoMedicionName" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Double" Name="Medicion" Nullable="true" />
+          <Property Type="Int64" Name="IdCondicion" Nullable="true" />
+          <Property Type="String" Name="CondicionName" Nullable="true" MaxLength="250" />
+          <Property Type="Boolean" Name="needsRefresh" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2134,6 +2160,32 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
                 <ScalarProperty Name="AccionActual" ColumnName="AccionActual" />
                 <ScalarProperty Name="CondicionName" ColumnName="CondicionName" />
                 <ScalarProperty Name="FechaNumerica" ColumnName="FechaNumerica" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetHashablePuntoMedicion" FunctionName="devinmr3Model.Store.spGetHashablePuntoMedicion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="devinmr3Model.spGetHashablePuntoMedicion_Result">
+                <ScalarProperty Name="IdTipoPuntoMedicion" ColumnName="IdTipoPuntoMedicion" />
+                <ScalarProperty Name="TipoPuntoMedicionName" ColumnName="TipoPuntoMedicionName" />
+                <ScalarProperty Name="IdPuntoMedicion" ColumnName="IdPuntoMedicion" />
+                <ScalarProperty Name="PuntoMedicionName" ColumnName="PuntoMedicionName" />
+                <ScalarProperty Name="latiitud" ColumnName="latiitud" />
+                <ScalarProperty Name="longitud" ColumnName="longitud" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetHashableUltimaMedicion" FunctionName="devinmr3Model.Store.spGetHashableUltimaMedicion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="devinmr3Model.spGetHashableUltimaMedicion_Result">
+                <ScalarProperty Name="IdTipoPuntoMedicion" ColumnName="IdTipoPuntoMedicion" />
+                <ScalarProperty Name="TipoPuntoMedicionName" ColumnName="TipoPuntoMedicionName" />
+                <ScalarProperty Name="IdPuntoMedicion" ColumnName="IdPuntoMedicion" />
+                <ScalarProperty Name="PuntoMedicionName" ColumnName="PuntoMedicionName" />
+                <ScalarProperty Name="Medicion" ColumnName="Medicion" />
+                <ScalarProperty Name="IdCondicion" ColumnName="IdCondicion" />
+                <ScalarProperty Name="CondicionName" ColumnName="CondicionName" />
+                <ScalarProperty Name="needsRefresh" ColumnName="needsRefresh" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
