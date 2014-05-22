@@ -14,5 +14,11 @@ namespace Protell.Server.DAL.Repository.v2.Tests
         {
             (new HashableDataRepository()).GetPuntosMedicion();
         }
+
+        [TestMethod()]
+        public void GetUltimaMediconTest()
+        {
+            (new HashableDataRepository()).GetUltimaMedicon(0);
+        }
     }
 }

@@ -119,6 +119,11 @@ namespace Protell.Service.Services
 
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
-        AjaxDictionary<string, object> Download_HashablePuntosMedicion();          
+        AjaxDictionary<string, object> Download_HashablePuntosMedicion();      
+    
+        [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
+        AjaxDictionary<string, object> Download_HashableUltimaMedicion( long fecha);
+       
     }
 }

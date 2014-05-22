@@ -19,31 +19,13 @@ namespace Protell.Server.DAL.POCOS
     {
         #region Primitive Properties
     
-        public Nullable<long> IdTipoPuntoMedicion
-        {
-            get;
-            set;
-        }
-    
-        public string TipoPuntoMedicionName
+        public long IdTipoPuntoMedicion
         {
             get;
             set;
         }
     
         public long IdPuntoMedicion
-        {
-            get;
-            set;
-        }
-    
-        public string PuntoMedicionName
-        {
-            get;
-            set;
-        }
-    
-        public Nullable<double> Medicion
         {
             get;
             set;
@@ -61,7 +43,13 @@ namespace Protell.Server.DAL.POCOS
             set;
         }
     
-        public Nullable<bool> needsRefresh
+        public Nullable<long> FechaNumerica
+        {
+            get;
+            set;
+        }
+    
+        public Nullable<double> Valor
         {
             get;
             set;

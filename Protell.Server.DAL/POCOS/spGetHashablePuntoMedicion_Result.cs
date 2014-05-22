@@ -19,13 +19,7 @@ namespace Protell.Server.DAL.POCOS
     {
         #region Primitive Properties
     
-        public long IdTipoPuntoMedicion
-        {
-            get;
-            set;
-        }
-    
-        public string TipoPuntoMedicionName
+        public Nullable<long> IdTipoPuntoMedicion
         {
             get;
             set;
@@ -90,8 +84,14 @@ namespace Protell.Server.DAL.POCOS
             get;
             set;
         }
+    
+        public string SistemaName
+        {
+            get;
+            set;
+        }
 
         #endregion
-        //test
+
     }
 }

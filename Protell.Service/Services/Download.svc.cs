@@ -450,5 +450,12 @@ namespace Protell.Service.Services
             return tipos;
         }
 
+        public AjaxDictionary<string, object> Download_HashableUltimaMedicion( long fecha)
+        {
+            AjaxDictionary<string, object> tipos = (new HashableDataRepository()).GetUltimaMedicon(fecha);
+
+            return tipos;
+        }
+
     }
 }
