@@ -103,7 +103,7 @@ namespace Protell.ViewModel.Sync
         //Métodos
         private void DoWork()
         {
-            
+            SQLLogger.Instance.log("init", "DoWork (0.1)");
             //operacion de sincronizacion
             try
             {
