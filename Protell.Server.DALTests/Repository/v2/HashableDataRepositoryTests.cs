@@ -20,5 +20,13 @@ namespace Protell.Server.DAL.Repository.v2.Tests
         {
             (new HashableDataRepository()).GetUltimaMedicon(0);
         }
+
+        [TestMethod()]
+        public void GetHashableGraficaPuntoMedicionTest()
+        {
+            HashableDataRepository r = new HashableDataRepository();
+            
+            r.GetHashableGraficaPuntoMedicion(1002, 201406111219);
+        }
     }
 }

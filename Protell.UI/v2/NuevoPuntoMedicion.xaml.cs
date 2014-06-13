@@ -26,7 +26,11 @@ namespace Protell.UI.v2
             viewModel = vm;            
             capturaViewModel.InitEdit(registroModel,vm);
             this.DataContext = capturaViewModel;
-            dtpFecha.Focus();            
+
+            //dtpFecha.Focus();            
+            dtpFecha.IsEnabled = false;
+            cbxHora.IsEnabled = false;
+            cbxMinutos.IsEnabled = false;
         }
 
         void capturaViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

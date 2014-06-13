@@ -42,12 +42,6 @@ namespace Protell.Server.DAL.POCOS
     
         #region ObjectSet Properties
     
-        public ObjectSet<C_CAT_PUNTO_MEDICION> C_CAT_PUNTO_MEDICION
-        {
-            get { return _c_CAT_PUNTO_MEDICION  ?? (_c_CAT_PUNTO_MEDICION = CreateObjectSet<C_CAT_PUNTO_MEDICION>("C_CAT_PUNTO_MEDICION")); }
-        }
-        private ObjectSet<C_CAT_PUNTO_MEDICION> _c_CAT_PUNTO_MEDICION;
-    
         public ObjectSet<APP_ROL> APP_ROL
         {
             get { return _aPP_ROL  ?? (_aPP_ROL = CreateObjectSet<APP_ROL>("APP_ROL")); }
@@ -428,6 +422,62 @@ namespace Protell.Server.DAL.POCOS
                 fechaParameter = new ObjectParameter("Fecha", typeof(long));
             }
             return base.ExecuteFunction<spGetHashableUltimaMedicion_Result>("spGetHashableUltimaMedicion", fechaParameter);
+        }
+        public ObjectResult<spGetHashableGraficaPuntoMedicion_Result> spGetHashableGraficaPuntoMedicion(Nullable<long> idPuntoMedicion, Nullable<long> fechaNumerica)
+        {
+    
+            ObjectParameter idPuntoMedicionParameter;
+    
+            if (idPuntoMedicion.HasValue)
+            {
+                idPuntoMedicionParameter = new ObjectParameter("idPuntoMedicion", idPuntoMedicion);
+            }
+            else
+            {
+                idPuntoMedicionParameter = new ObjectParameter("idPuntoMedicion", typeof(long));
+            }
+    
+            ObjectParameter fechaNumericaParameter;
+    
+            if (fechaNumerica.HasValue)
+            {
+                fechaNumericaParameter = new ObjectParameter("fechaNumerica", fechaNumerica);
+            }
+            else
+            {
+                fechaNumericaParameter = new ObjectParameter("fechaNumerica", typeof(long));
+            }
+            return base.ExecuteFunction<spGetHashableGraficaPuntoMedicion_Result>("spGetHashableGraficaPuntoMedicion", idPuntoMedicionParameter, fechaNumericaParameter);
+        }
+        public ObjectResult<spGetHashablePuntoMedicionAttributes_Result> spGetHashablePuntoMedicionAttributes(Nullable<long> idPuntoMedicion)
+        {
+    
+            ObjectParameter idPuntoMedicionParameter;
+    
+            if (idPuntoMedicion.HasValue)
+            {
+                idPuntoMedicionParameter = new ObjectParameter("idPuntoMedicion", idPuntoMedicion);
+            }
+            else
+            {
+                idPuntoMedicionParameter = new ObjectParameter("idPuntoMedicion", typeof(long));
+            }
+            return base.ExecuteFunction<spGetHashablePuntoMedicionAttributes_Result>("spGetHashablePuntoMedicionAttributes", idPuntoMedicionParameter);
+        }
+        public ObjectResult<spGetHashableGraficaLumbreras_Result> spGetHashableGraficaLumbreras(Nullable<long> fechaNumerica)
+        {
+    
+            ObjectParameter fechaNumericaParameter;
+    
+            if (fechaNumerica.HasValue)
+            {
+                fechaNumericaParameter = new ObjectParameter("fechaNumerica", fechaNumerica);
+            }
+            else
+            {
+                fechaNumericaParameter = new ObjectParameter("fechaNumerica", typeof(long));
+            }
+            return base.ExecuteFunction<spGetHashableGraficaLumbreras_Result>("spGetHashableGraficaLumbreras", fechaNumericaParameter);
         }
 
         #endregion

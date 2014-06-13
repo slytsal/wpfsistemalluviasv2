@@ -323,9 +323,7 @@
     <Content Include="DLL\Microsoft.SqlServer.Management.Sdk.Sfc.dll" />
     <Content Include="DLL\Microsoft.SqlServer.Smo.dll" />
     <Content Include="DLL\Microsoft.SqlServer.SqlEnum.dll" />
-    <Content Include="DLL\RestSharp.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="DLL\RestSharp.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

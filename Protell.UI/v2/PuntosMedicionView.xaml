@@ -38,7 +38,7 @@
         </Grid>
         
         <!--Puntos de medición-->
-        <DataGrid Grid.Row="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"                   
+        <DataGrid Grid.Row="1" HorizontalAlignment="Stretch"                   
                  ItemsSource="{Binding Registros, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,NotifyOnSourceUpdated=True}"
                  SelectedItem="{Binding pSelectedItem,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                 
                  Name="ListRegistros"  Margin="5" MouseDoubleClick="ListRegistros_MouseDoubleClick"                                    
@@ -62,11 +62,11 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Fecha Captura" Binding="{Binding FechaCaptura,StringFormat={}{0:dd/MM/yyyy}}"/>
-                <DataGridTextColumn Header="Fecha Numerica" Binding="{Binding FechaNumerica}"/>
+                <DataGridTextColumn Header="Fecha Numerica" Binding="{Binding FechaNumerica}" Visibility="Collapsed"/>
                 <DataGridTextColumn Header="Hora" Binding="{Binding HoraMilitar}"/>
                 <DataGridTextColumn Header="Valor" Binding="{Binding Valor}" Visibility="{Binding Path=PUNTOMEDICION.Visibility, Source={StaticResource proxy}}"/>
                 <DataGridTextColumn Header="Unidad Medida" Binding="{Binding PUNTOMEDICION.UNIDADMEDIDA.UnidadMedidaShort, Mode=TwoWay}"/>
-                <DataGridTextColumn Header="Acción Actual" Binding="{Binding AccionActual}"/>
+                <DataGridTextColumn Header="Acción Actual" Binding="{Binding AccionActual}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid >
         <controls:MetroProgressBar IsIndeterminate="True" 

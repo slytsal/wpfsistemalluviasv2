@@ -1,12 +1,10 @@
-﻿using Protell.Model;
-using Protell.Model.SyncModels;
-using Protell.Server.DAL.JsonSerializables;
+﻿using Protell.Server.DAL.JsonSerializables;
 using Protell.Server.DAL.POCOS;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Threading;
+using System.Web.Script.Serialization;
+using Protell.Model.SyncModels;
 
 namespace Protell.Server.DAL.Repository.v2
 {
@@ -93,19 +91,129 @@ namespace Protell.Server.DAL.Repository.v2
             return tipos;
         }
 
-        private string toStrIdTipoPm(long id)
+        public string toStrIdTipoPm(long id)
         {
             return "t" + id.ToString();
         }
 
-        private string toStrIdPm(long id)
+        public string toStrIdPm(long id)
         {
             return "p" + id.ToString();
         }
 
-        private AjaxDictionary<string, object> toDictio(AjaxDictionary<string,object> dictio, long sentinel)
+        public  AjaxDictionary<string, object> toDictio(AjaxDictionary<string,object> dictio, long sentinel)
         {
             return ((AjaxDictionary<string, object>)dictio[this.toStrIdTipoPm(sentinel)]);
+        }
+
+        public AjaxDictionary<string,object> GetHstTableGraficaPuntoMedicion(long IdPuntoMedicion,long FechaNumerica)
+        {
+            AjaxDictionary<string, object> tipo = new AjaxDictionary<string, object>();
+            AjaxDictionary<string, object> punto = new AjaxDictionary<string, object>();
+            AjaxDictionary<string, object> datos = new AjaxDictionary<string, object>();
+
+            try
+            {
+                using (var entity=new db_SeguimientoProtocolo_r2Entities())
+                {
+                    spGetHashablePuntoMedicionAttributes_Result res = entity.spGetHashablePuntoMedicionAttributes(IdPuntoMedicion).FirstOrDefault();
+                    if (res != null)
+                    {
+                        List<spGetHashableGraficaPuntoMedicion_Result> atributos = entity.spGetHashableGraficaPuntoMedicion(IdPuntoMedicion, FechaNumerica).ToList();                                                                                                
+                        if (atributos != null && atributos.Count > 0)
+                        {
+                            foreach (spGetHashableGraficaPuntoMedicion_Result item in atributos)
+                            {
+                                datos.Add("F" + item.FechaNumerica, item.Valor);
+                            }
+                            punto.Add("p" + IdPuntoMedicion, datos);
+                            tipo.Add("t" + res.IdTipoPuntoMedicion, punto);                            
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                                
+            }
+            return tipo;
+        }
+
+        public AjaxDictionary<string, HashableGraficaPuntoMedicionModel[]> GetHashableGraficaPuntoMedicion(long IdPuntoMedicion, long FechaNumerica)
+        {
+            AjaxDictionary<string, object> tipos = new AjaxDictionary<string,object>();
+            AjaxDictionary<string, List<HashableGraficaPuntoMedicionModel>> atrr = new AjaxDictionary<string, List<HashableGraficaPuntoMedicionModel>>();
+            AjaxDictionary<string, HashableGraficaPuntoMedicionModel[]> array = new AjaxDictionary<string, HashableGraficaPuntoMedicionModel[]>();
+            
+            long tipopmSentinel = -1;
+            string seccion = "";
+            try
+            {
+                using (var entity = new db_SeguimientoProtocolo_r2Entities())
+                {                    
+                    spGetHashablePuntoMedicionAttributes_Result res = entity.spGetHashablePuntoMedicionAttributes(IdPuntoMedicion).FirstOrDefault();                                        
+                    if (res != null)
+                    {
+                        //List<spGetHashableGraficaPuntoMedicion_Result> atributos = entity.spGetHashableGraficaPuntoMedicion(IdPuntoMedicion, FechaNumerica).ToList();                                                
+                        List<HashableGraficaPuntoMedicionModel> atributos = new List<HashableGraficaPuntoMedicionModel>();
+                        entity.spGetHashableGraficaPuntoMedicion(IdPuntoMedicion,FechaNumerica).ToList().ForEach(row => {                            
+                            atributos.Add(new HashableGraficaPuntoMedicionModel()
+                            {
+                                FechaNumerica=row.FechaNumerica,
+                                Valor=row.Valor
+                            });                           
+                        });
+                        if (atributos != null && atributos.Count > 0)
+                        {
+                            tipos = new AjaxDictionary<string, object>();
+                            //string valor = "";
+                           //valor = new JavaScriptSerializer().Serialize(atributos);
+                            array.Add(this.toStrIdPm(IdPuntoMedicion), atributos.ToArray());
+                            //tipos.Add(this.toStrIdTipoPm(res.IdTipoPuntoMedicion), atrr);
+                            //tipos.Add(this.toStrIdTipoPm(res.IdTipoPuntoMedicion), (new AjaxDictionary<string, string>().Add("", "")));
+                            //this.toDictio(tipos, res.IdTipoPuntoMedicion).Add(this.toStrIdPm(IdPuntoMedicion),valor);                            
+                        }
+                    }
+                }//endusing
+            }
+            catch (Exception ex)
+            {
+                tipos.Add(seccion, ex.Message);         
+            }
+            return array;
+
+        }
+
+        public AjaxDictionary<string,object> GetHashableGraficaLumbreras(long FechaNumerica)
+        {
+            AjaxDictionary<string, object> tipo = new AjaxDictionary<string, object>();
+            AjaxDictionary<string, object> punto = new AjaxDictionary<string, object>();
+            AjaxDictionary<string, object> datos = new AjaxDictionary<string, object>();
+            long IdPuntoMedicion = -1;
+            try
+            {
+                using (var entity=new db_SeguimientoProtocolo_r2Entities())
+                {
+                    List<spGetHashableGraficaLumbreras_Result> items = entity.spGetHashableGraficaLumbreras(FechaNumerica).ToList();
+                    if (items!=null&& items.Count>0)
+                    {
+                        foreach (spGetHashableGraficaLumbreras_Result i in items)
+                        {                            
+                            if (IdPuntoMedicion != i.IdPuntoMedicion)
+                            {
+                                punto.Add("p" + i.IdPuntoMedicion, new AjaxDictionary<string, object>());
+                            }
+                 //           datos.Add("F" + item.FechaNumerica, item.Valor);
+
+                        }
+                    }                    
+                }
+            }
+            catch (Exception)
+            { 
+                               
+            }
+            return tipo;
         }
     }
 }

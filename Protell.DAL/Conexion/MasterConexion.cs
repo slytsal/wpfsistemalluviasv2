@@ -25,23 +25,22 @@ namespace Protell.DAL.Conexion
         /// </summary>
         /// <param name="Query">Sentencia o query</param>
         /// <returns></returns>
-        public bool ExecuteScriptGO(string Query)
+        public bool ExecuteScriptGO(string Query,int position)
         {
             bool x = false;
             SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["masterEntities"].ToString());
-            //try
-            //{
+            try
+            {
                 con.Open();
                 Server server = new Server(new ServerConnection(con));
                 server.ConnectionContext.ExecuteNonQuery(Query);
-                x = true;
-                //MessageBox.Show(Query);
-           // }
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //    AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });
-            //}
+                x = true;                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Position:"+position+ "\n Ex:"+ ex.Message);
+                AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });
+            }
             con.Close();
 
             return x;

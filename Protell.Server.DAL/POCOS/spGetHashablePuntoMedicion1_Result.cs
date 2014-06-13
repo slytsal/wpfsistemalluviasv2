@@ -15,11 +15,11 @@ using System.Collections.Specialized;
 
 namespace Protell.Server.DAL.POCOS
 {
-    public partial class spDownloadCiRegistroOnDemand_Result
+    public partial class spGetHashablePuntoMedicion1_Result
     {
         #region Primitive Properties
     
-        public long IdRegistro
+        public Nullable<long> IdTipoPuntoMedicion
         {
             get;
             set;
@@ -31,85 +31,25 @@ namespace Protell.Server.DAL.POCOS
             set;
         }
     
-        public System.DateTime FechaCaptura
-        {
-            get;
-            set;
-        }
-    
-        public int HoraRegistro
-        {
-            get;
-            set;
-        }
-    
-        public int DiaRegistro
-        {
-            get;
-            set;
-        }
-    
-        public double Valor
-        {
-            get;
-            set;
-        }
-    
-        public string AccionActual
-        {
-            get;
-            set;
-        }
-    
-        public long LastModifiedDate
-        {
-            get;
-            set;
-        }
-    
-        public long IdCondicion
-        {
-            get;
-            set;
-        }
-    
-        public Nullable<long> ServerLastModifiedDate
-        {
-            get;
-            set;
-        }
-    
-        public Nullable<long> FechaNumerica
-        {
-            get;
-            set;
-        }
-    
         public string PuntoMedicionName
         {
             get;
             set;
         }
     
-        public Nullable<bool> vAccion
+        public Nullable<double> latiitud
         {
             get;
             set;
         }
     
-        public Nullable<bool> vCondicion
+        public Nullable<double> longitud
         {
             get;
             set;
         }
     
-        public Nullable<bool> Visibility
-        {
-            get;
-            set;
-        }
-    
-        public long IdUnidadMedida
+        public string dependencias
         {
             get;
             set;
@@ -127,19 +67,25 @@ namespace Protell.Server.DAL.POCOS
             set;
         }
     
-        public string CondicionName
+        public string ParametroMedicion
         {
             get;
             set;
         }
     
-        public string PathCodicion
+        public Nullable<long> ultimaActualización
         {
             get;
             set;
         }
     
-        public bool IsActive
+        public string UltimaCondicion
+        {
+            get;
+            set;
+        }
+    
+        public string SistemaName
         {
             get;
             set;

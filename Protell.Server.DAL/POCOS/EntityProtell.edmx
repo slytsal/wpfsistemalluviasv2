@@ -5,31 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="devinmr3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'qaDevinmr3.dbo._CAT_PUNTO_MEDICION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="_CAT_PUNTO_MEDICION">
-          <Key>
-            <PropertyRef Name="IdPuntoMedicion" />
-            <PropertyRef Name="PuntoMedicionName" />
-            <PropertyRef Name="IdUnidadMedida" />
-            <PropertyRef Name="IdTipoPuntoMedicion" />
-            <PropertyRef Name="IsActive" />
-            <PropertyRef Name="IsModified" />
-            <PropertyRef Name="LastModifiedDate" />
-            <PropertyRef Name="Visibility" />
-          </Key>
-          <Property Name="IdPuntoMedicion" Type="bigint" Nullable="false" />
-          <Property Name="PuntoMedicionName" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="IdUnidadMedida" Type="bigint" Nullable="false" />
-          <Property Name="IdTipoPuntoMedicion" Type="bigint" Nullable="false" />
-          <Property Name="ValorReferencia" Type="float" />
-          <Property Name="ParametroReferencia" Type="nvarchar" MaxLength="250" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="IsModified" Type="bit" Nullable="false" />
-          <Property Name="LastModifiedDate" Type="bigint" Nullable="false" />
-          <Property Name="Visibility" Type="bit" Nullable="false" />
-          <Property Name="ServerLastModifiedDate" Type="bigint" />
-        </EntityType>
         <EntityType Name="APP_ROL">
           <Key>
             <PropertyRef Name="IdRol" />
@@ -617,7 +592,17 @@ warning 6002: The table/view 'qaDevinmr3.dbo._CAT_PUNTO_MEDICION' does not have 
           <Parameter Name="SLMD" Type="bigint" Mode="In" />
           <Parameter Name="LMD" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="spGetHashableGraficaLumbreras" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fechaNumerica" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="spGetHashableGraficaPuntoMedicion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idPuntoMedicion" Type="bigint" Mode="In" />
+          <Parameter Name="fechaNumerica" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="spGetHashablePuntoMedicion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spGetHashablePuntoMedicionAttributes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idPuntoMedicion" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="spGetHashableUltimaMedicion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Fecha" Type="bigint" Mode="In" />
         </Function>
@@ -660,21 +645,6 @@ warning 6002: The table/view 'qaDevinmr3.dbo._CAT_PUNTO_MEDICION' does not have 
           <EntitySet Name="REL_EST_PUNTOMED" EntityType="Self.REL_EST_PUNTOMED" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="REL_ESTRUCTURA_DEPENDENCIA" EntityType="Self.REL_ESTRUCTURA_DEPENDENCIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYNCTABLE" EntityType="Self.SYNCTABLE" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="_CAT_PUNTO_MEDICION" EntityType="Self._CAT_PUNTO_MEDICION" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[_CAT_PUNTO_MEDICION].[IdPuntoMedicion] AS [IdPuntoMedicion], 
-[_CAT_PUNTO_MEDICION].[PuntoMedicionName] AS [PuntoMedicionName], 
-[_CAT_PUNTO_MEDICION].[IdUnidadMedida] AS [IdUnidadMedida], 
-[_CAT_PUNTO_MEDICION].[IdTipoPuntoMedicion] AS [IdTipoPuntoMedicion], 
-[_CAT_PUNTO_MEDICION].[ValorReferencia] AS [ValorReferencia], 
-[_CAT_PUNTO_MEDICION].[ParametroReferencia] AS [ParametroReferencia], 
-[_CAT_PUNTO_MEDICION].[IsActive] AS [IsActive], 
-[_CAT_PUNTO_MEDICION].[IsModified] AS [IsModified], 
-[_CAT_PUNTO_MEDICION].[LastModifiedDate] AS [LastModifiedDate], 
-[_CAT_PUNTO_MEDICION].[Visibility] AS [Visibility], 
-[_CAT_PUNTO_MEDICION].[ServerLastModifiedDate] AS [ServerLastModifiedDate]
-FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="APP_ROL_APP_USUARIO_ROL_FK1" Association="Self.APP_ROL_APP_USUARIO_ROL_FK1">
             <End Role="APP_ROL" EntitySet="APP_ROL" />
             <End Role="APP_USUARIO_ROL" EntitySet="APP_USUARIO_ROL" />
@@ -761,7 +731,6 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
     <edmx:ConceptualModels>
       <Schema Namespace="devinmr3Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="db_SeguimientoProtocolo_r2Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="C_CAT_PUNTO_MEDICION" EntityType="devinmr3Model.C_CAT_PUNTO_MEDICION" />
           <EntitySet Name="APP_ROL" EntityType="devinmr3Model.APP_ROL" />
           <EntitySet Name="APP_USUARIO_ROL" EntityType="devinmr3Model.APP_USUARIO_ROL" />
           <EntitySet Name="CAT_CONDPRO" EntityType="devinmr3Model.CAT_CONDPRO" />
@@ -902,30 +871,17 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
           <FunctionImport Name="spGetHashableUltimaMedicion" ReturnType="Collection(devinmr3Model.spGetHashableUltimaMedicion_Result)">
           <Parameter Name="Fecha" Mode="In" Type="Int64" />
           </FunctionImport>
+          <FunctionImport Name="spGetHashableGraficaPuntoMedicion" ReturnType="Collection(devinmr3Model.spGetHashableGraficaPuntoMedicion_Result)">
+            <Parameter Name="idPuntoMedicion" Mode="In" Type="Int64" />
+            <Parameter Name="fechaNumerica" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="spGetHashablePuntoMedicionAttributes" ReturnType="Collection(devinmr3Model.spGetHashablePuntoMedicionAttributes_Result)">
+          <Parameter Name="idPuntoMedicion" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="spGetHashableGraficaLumbreras" ReturnType="Collection(devinmr3Model.spGetHashableGraficaLumbreras_Result)">
+            <Parameter Name="fechaNumerica" Mode="In" Type="Int64" />
+          </FunctionImport>
         </EntityContainer>
-        <EntityType Name="C_CAT_PUNTO_MEDICION">
-          <Key>
-            <PropertyRef Name="IdPuntoMedicion" />
-            <PropertyRef Name="PuntoMedicionName" />
-            <PropertyRef Name="IdUnidadMedida" />
-            <PropertyRef Name="IdTipoPuntoMedicion" />
-            <PropertyRef Name="IsActive" />
-            <PropertyRef Name="IsModified" />
-            <PropertyRef Name="LastModifiedDate" />
-            <PropertyRef Name="Visibility" />
-          </Key>
-          <Property Name="IdPuntoMedicion" Type="Int64" Nullable="false" />
-          <Property Name="PuntoMedicionName" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
-          <Property Name="IdUnidadMedida" Type="Int64" Nullable="false" />
-          <Property Name="IdTipoPuntoMedicion" Type="Int64" Nullable="false" />
-          <Property Name="ValorReferencia" Type="Double" />
-          <Property Name="ParametroReferencia" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="IsModified" Type="Boolean" Nullable="false" />
-          <Property Name="LastModifiedDate" Type="Int64" Nullable="false" />
-          <Property Name="Visibility" Type="Boolean" Nullable="false" />
-          <Property Type="Int64" Name="ServerLastModifiedDate" />
-        </EntityType>
         <EntityType Name="APP_ROL">
           <Key>
             <PropertyRef Name="IdRol" />
@@ -1342,6 +1298,7 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
           <Property Type="String" Name="UnidadMedidaShort" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="CondicionName" Nullable="false" MaxLength="250" />
           <Property Type="String" Name="PathCodicion" Nullable="false" MaxLength="500" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
         </ComplexType>
         <ComplexType Name="spDownloadCiRegistroRecurrent_Result">
           <Property Type="Int64" Name="IdRegistro" Nullable="false" />
@@ -1657,29 +1614,50 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
           <Property Type="Int64" Name="FechaNumerica" Nullable="true" />
           <Property Type="Double" Name="Valor" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="spGetHashableGraficaPuntoMedicion_Result">
+          <Property Type="Int64" Name="FechaNumerica" Nullable="true" />
+          <Property Type="Double" Name="Valor" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spGetHashablePuntoMedicionAttributes_Result">
+          <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Int64" Name="IdTipoPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="TipoPuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Int64" Name="IdUnidadMedida" Nullable="false" />
+          <Property Type="String" Name="UnidadMedidaName" Nullable="false" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="spGetHashablePuntoMedicion1_Result">
+          <Property Type="Int64" Name="IdTipoPuntoMedicion" Nullable="true" />
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Double" Name="latiitud" Nullable="true" />
+          <Property Type="Double" Name="longitud" Nullable="true" />
+          <Property Type="String" Name="dependencias" Nullable="true" />
+          <Property Type="String" Name="UnidadMedidaName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="UnidadMedidaShort" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ParametroMedicion" Nullable="true" />
+          <Property Type="Int64" Name="ultimaActualización" Nullable="true" />
+          <Property Type="String" Name="UltimaCondicion" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="SistemaName" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="spGetHashableUltimaMedicion1_Result">
+          <Property Type="Int64" Name="IdTipoPuntoMedicion" Nullable="false" />
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="Int64" Name="FechaNumerica" Nullable="true" />
+          <Property Type="Int64" Name="IdCondicion" Nullable="true" />
+          <Property Type="String" Name="CondicionName" Nullable="true" MaxLength="250" />
+          <Property Type="Double" Name="Valor" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spGetHashableGraficaLumbreras_Result">
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="Int64" Name="FechaNumerica" Nullable="true" />
+          <Property Type="Double" Name="Valor" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="devinmr3ModelStoreContainer" CdmEntityContainer="db_SeguimientoProtocolo_r2Entities">
-          <EntitySetMapping Name="C_CAT_PUNTO_MEDICION">
-            <EntityTypeMapping TypeName="devinmr3Model.C_CAT_PUNTO_MEDICION">
-              <MappingFragment StoreEntitySet="_CAT_PUNTO_MEDICION">
-                <ScalarProperty Name="ServerLastModifiedDate" ColumnName="ServerLastModifiedDate" />
-                <ScalarProperty Name="IdPuntoMedicion" ColumnName="IdPuntoMedicion" />
-                <ScalarProperty Name="PuntoMedicionName" ColumnName="PuntoMedicionName" />
-                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
-                <ScalarProperty Name="IdTipoPuntoMedicion" ColumnName="IdTipoPuntoMedicion" />
-                <ScalarProperty Name="ValorReferencia" ColumnName="ValorReferencia" />
-                <ScalarProperty Name="ParametroReferencia" ColumnName="ParametroReferencia" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="IsModified" ColumnName="IsModified" />
-                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
-                <ScalarProperty Name="Visibility" ColumnName="Visibility" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="APP_ROL">
             <EntityTypeMapping TypeName="devinmr3Model.APP_ROL">
               <MappingFragment StoreEntitySet="APP_ROL">
@@ -1996,6 +1974,7 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
                 <ScalarProperty Name="UnidadMedidaShort" ColumnName="UnidadMedidaShort" />
                 <ScalarProperty Name="CondicionName" ColumnName="CondicionName" />
                 <ScalarProperty Name="PathCodicion" ColumnName="PathCodicion" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -2167,6 +2146,37 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetHashableGraficaPuntoMedicion" FunctionName="devinmr3Model.Store.spGetHashableGraficaPuntoMedicion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="devinmr3Model.spGetHashableGraficaPuntoMedicion_Result">
+                <ScalarProperty Name="FechaNumerica" ColumnName="FechaNumerica" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetHashablePuntoMedicionAttributes" FunctionName="devinmr3Model.Store.spGetHashablePuntoMedicionAttributes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="devinmr3Model.spGetHashablePuntoMedicionAttributes_Result">
+                <ScalarProperty Name="PuntoMedicionName" ColumnName="PuntoMedicionName" />
+                <ScalarProperty Name="IdTipoPuntoMedicion" ColumnName="IdTipoPuntoMedicion" />
+                <ScalarProperty Name="TipoPuntoMedicionName" ColumnName="TipoPuntoMedicionName" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="UnidadMedidaName" ColumnName="UnidadMedidaName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetHashableUltimaMedicion" FunctionName="devinmr3Model.Store.spGetHashableUltimaMedicion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="devinmr3Model.spGetHashableUltimaMedicion_Result">
+                <ScalarProperty Name="IdTipoPuntoMedicion" ColumnName="IdTipoPuntoMedicion" />
+                <ScalarProperty Name="IdPuntoMedicion" ColumnName="IdPuntoMedicion" />
+                <ScalarProperty Name="IdCondicion" ColumnName="IdCondicion" />
+                <ScalarProperty Name="CondicionName" ColumnName="CondicionName" />
+                <ScalarProperty Name="FechaNumerica" ColumnName="FechaNumerica" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spGetHashablePuntoMedicion" FunctionName="devinmr3Model.Store.spGetHashablePuntoMedicion">
             <ResultMapping>
               <ComplexTypeMapping TypeName="devinmr3Model.spGetHashablePuntoMedicion_Result">
@@ -2185,13 +2195,10 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="spGetHashableUltimaMedicion" FunctionName="devinmr3Model.Store.spGetHashableUltimaMedicion">
+          <FunctionImportMapping FunctionImportName="spGetHashableGraficaLumbreras" FunctionName="devinmr3Model.Store.spGetHashableGraficaLumbreras">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="devinmr3Model.spGetHashableUltimaMedicion_Result">
-                <ScalarProperty Name="IdTipoPuntoMedicion" ColumnName="IdTipoPuntoMedicion" />
+              <ComplexTypeMapping TypeName="devinmr3Model.spGetHashableGraficaLumbreras_Result">
                 <ScalarProperty Name="IdPuntoMedicion" ColumnName="IdPuntoMedicion" />
-                <ScalarProperty Name="IdCondicion" ColumnName="IdCondicion" />
-                <ScalarProperty Name="CondicionName" ColumnName="CondicionName" />
                 <ScalarProperty Name="FechaNumerica" ColumnName="FechaNumerica" />
                 <ScalarProperty Name="Valor" ColumnName="Valor" />
               </ComplexTypeMapping>
@@ -2220,7 +2227,6 @@ FROM [dbo].[_CAT_PUNTO_MEDICION] AS [_CAT_PUNTO_MEDICION]</DefiningQuery>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="EntityProtell" ZoomLevel="82">
-        <EntityTypeShape EntityType="devinmr3Model.C_CAT_PUNTO_MEDICION" Width="1.5" PointX="2.75" PointY="2" Height="2.9417936197916665" IsExpanded="true" />
         <EntityTypeShape EntityType="devinmr3Model.APP_ROL" Width="1.5" PointX="10.75" PointY="6.625" Height="2.5571907552083326" IsExpanded="true" />
         <EntityTypeShape EntityType="devinmr3Model.APP_USUARIO_ROL" Width="1.5" PointX="16" PointY="6.75" Height="2.3648893229166674" IsExpanded="true" />
         <EntityTypeShape EntityType="devinmr3Model.CAT_CONDPRO" Width="1.5" PointX="6" PointY="3.125" Height="2.7494921874999996" IsExpanded="true" />
