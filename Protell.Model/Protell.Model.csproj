@@ -171,6 +171,7 @@
     <Compile Include="SyncModels\AppUsuarioRolResultModel.cs" />
     <Compile Include="SyncModels\CiRegistroRecurrentResultModel.cs" />
     <Compile Include="SyncModels\CiRegistroResultModel.cs" />
+    <Compile Include="SyncModels\HashableGraficaPuntoMedicionModel.cs" />
     <Compile Include="SyncModels\ModifiedDataResultModel.cs" />
     <Compile Include="SyncModels\PingServerResultModel.cs" />
     <Compile Include="SyncModels\RelEstPuntoMedResultModel.cs" />

@@ -15,7 +15,7 @@ using System.Collections.Specialized;
 
 namespace Protell.Server.DAL.POCOS
 {
-    public partial class spGetHashableUltimaMedicion_Result
+    public partial class spGetHashableUltimaMedicion1_Result
     {
         #region Primitive Properties
     
@@ -31,6 +31,12 @@ namespace Protell.Server.DAL.POCOS
             set;
         }
     
+        public Nullable<long> FechaNumerica
+        {
+            get;
+            set;
+        }
+    
         public Nullable<long> IdCondicion
         {
             get;
@@ -38,12 +44,6 @@ namespace Protell.Server.DAL.POCOS
         }
     
         public string CondicionName
-        {
-            get;
-            set;
-        }
-    
-        public Nullable<long> FechaNumerica
         {
             get;
             set;

@@ -15,11 +15,11 @@ using System.Collections.Specialized;
 
 namespace Protell.Server.DAL.POCOS
 {
-    public partial class spGetHashableUltimaMedicion_Result
+    public partial class spGetHashablePuntoMedicion1_Result
     {
         #region Primitive Properties
     
-        public long IdTipoPuntoMedicion
+        public Nullable<long> IdTipoPuntoMedicion
         {
             get;
             set;
@@ -31,25 +31,61 @@ namespace Protell.Server.DAL.POCOS
             set;
         }
     
-        public Nullable<long> IdCondicion
+        public string PuntoMedicionName
         {
             get;
             set;
         }
     
-        public string CondicionName
+        public Nullable<double> latiitud
         {
             get;
             set;
         }
     
-        public Nullable<long> FechaNumerica
+        public Nullable<double> longitud
         {
             get;
             set;
         }
     
-        public Nullable<double> Valor
+        public string dependencias
+        {
+            get;
+            set;
+        }
+    
+        public string UnidadMedidaName
+        {
+            get;
+            set;
+        }
+    
+        public string UnidadMedidaShort
+        {
+            get;
+            set;
+        }
+    
+        public string ParametroMedicion
+        {
+            get;
+            set;
+        }
+    
+        public Nullable<long> ultimaActualización
+        {
+            get;
+            set;
+        }
+    
+        public string UltimaCondicion
+        {
+            get;
+            set;
+        }
+    
+        public string SistemaName
         {
             get;
             set;

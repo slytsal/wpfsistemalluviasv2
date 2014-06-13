@@ -15,33 +15,9 @@ using System.Collections.Specialized;
 
 namespace Protell.Server.DAL.POCOS
 {
-    public partial class spGetHashableUltimaMedicion_Result
+    public partial class spGetHashableGraficaPuntoMedicion_Result
     {
         #region Primitive Properties
-    
-        public long IdTipoPuntoMedicion
-        {
-            get;
-            set;
-        }
-    
-        public long IdPuntoMedicion
-        {
-            get;
-            set;
-        }
-    
-        public Nullable<long> IdCondicion
-        {
-            get;
-            set;
-        }
-    
-        public string CondicionName
-        {
-            get;
-            set;
-        }
     
         public Nullable<long> FechaNumerica
         {

@@ -138,6 +138,12 @@ namespace Protell.Server.DAL.POCOS
             get;
             set;
         }
+    
+        public bool IsActive
+        {
+            get;
+            set;
+        }
 
         #endregion
 

@@ -15,71 +15,35 @@ using System.Collections.Specialized;
 
 namespace Protell.Server.DAL.POCOS
 {
-    public partial class C_CAT_PUNTO_MEDICION
+    public partial class spGetHashablePuntoMedicionAttributes_Result
     {
         #region Primitive Properties
     
-        public virtual long IdPuntoMedicion
+        public string PuntoMedicionName
         {
             get;
             set;
         }
     
-        public virtual string PuntoMedicionName
+        public long IdTipoPuntoMedicion
         {
             get;
             set;
         }
     
-        public virtual long IdUnidadMedida
+        public string TipoPuntoMedicionName
         {
             get;
             set;
         }
     
-        public virtual long IdTipoPuntoMedicion
+        public long IdUnidadMedida
         {
             get;
             set;
         }
     
-        public virtual Nullable<double> ValorReferencia
-        {
-            get;
-            set;
-        }
-    
-        public virtual string ParametroReferencia
-        {
-            get;
-            set;
-        }
-    
-        public virtual bool IsActive
-        {
-            get;
-            set;
-        }
-    
-        public virtual bool IsModified
-        {
-            get;
-            set;
-        }
-    
-        public virtual long LastModifiedDate
-        {
-            get;
-            set;
-        }
-    
-        public virtual bool Visibility
-        {
-            get;
-            set;
-        }
-    
-        public virtual Nullable<long> ServerLastModifiedDate
+        public string UnidadMedidaName
         {
             get;
             set;

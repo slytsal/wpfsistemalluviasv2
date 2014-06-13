@@ -5,6 +5,8 @@ using System.ServiceModel.Activation;
 using Protell.Model;
 using Protell.Server.DAL.Repository.v2;
 using Protell.Server.DAL.JsonSerializables;
+using Protell.Model.SyncModels;
+using System.Collections.Generic;
 
 namespace Protell.Service.Services
 {
@@ -450,5 +452,42 @@ namespace Protell.Service.Services
             return tipos;
         }
 
+        public AjaxDictionary<string, object> Download_HashableUltimaMedicion( long fecha)
+        {
+            AjaxDictionary<string, object> tipos = (new HashableDataRepository()).GetUltimaMedicon(fecha);
+
+            return tipos;
+        }
+
+        //AjaxDictionary<string, List<HashableGraficaPuntoMedicionModel>>
+        public AjaxDictionary<string, object> Download_GetHashableGraficaPuntoMedicion(long IdPuntoMedicion, long FechaNumerica)
+        {
+            AjaxDictionary<string, object> tipos = new AjaxDictionary<string, object>();
+            AjaxDictionary<string, List<HashableGraficaPuntoMedicionModel>> res = new AjaxDictionary<string, List<HashableGraficaPuntoMedicionModel>>();
+            AjaxDictionary<string, HashableGraficaPuntoMedicionModel[]> array = new AjaxDictionary<string, HashableGraficaPuntoMedicionModel[]>();
+            //try
+            //{
+                
+            //    HashableDataRepository repository = new HashableDataRepository();
+            //    //tipos.Add(IdPuntoMedicion.ToString(), FechaNumerica);
+            //    array = repository.GetHashableGraficaPuntoMedicion(IdPuntoMedicion, FechaNumerica);//(new HashableDataRepository()).GetHashableGraficaPuntoMedicion((long)IdPuntoMedicion, (long)FechaNumerica);
+            //}
+            //catch (Exception ex)
+            //{
+            //    tipos.Add("Download", ex.Message);
+            //}
+            try
+            {
+                //array.Add("res", new HashableGraficaPuntoMedicionModel[] { new HashableGraficaPuntoMedicionModel() { FechaNumerica = 1, Valor = 1 } });
+                HashableDataRepository repository = new HashableDataRepository();
+                tipos = repository.GetHstTableGraficaPuntoMedicion(IdPuntoMedicion, FechaNumerica);
+            }
+            catch (Exception ex)
+            {
+                tipos.Add("Download", ex.Message);
+            }
+            
+            return tipos;
+        }
     }
 }

@@ -40,6 +40,8 @@ namespace Protell.ViewModel.Sync
 
         public static SyncRecurrentSingleton Instance { get { return lazy.Value; } }
 
+        //public static bool IsRestart=false;
+
         //Constructor
         private SyncRecurrentSingleton()
         {
@@ -73,6 +75,21 @@ namespace Protell.ViewModel.Sync
         private bool _IsRun;
         public const string IsRunPropertyName = "IsRun";
 
+        public bool IsRestart
+        {
+            get { return _IsRestart; }
+            set
+            {
+                if (_IsRestart != value)
+                {
+                    _IsRestart = value;
+                    OnPropertyChanged(IsRestartPropertyName);
+                }
+            }
+        }
+        private bool _IsRestart;
+        public const string IsRestartPropertyName = "IsRestart";
+
         private bool _isRuning;
         public bool IsRuning
         {
@@ -94,6 +111,7 @@ namespace Protell.ViewModel.Sync
 
                 bool status = true;
                 bool downloadStatus = true;
+                IsRestart = false;
 
                 //TEST: Solo tomar la de CI_REGISTRO
                 foreach (ModifiedDataModel item in tablesName)
@@ -111,7 +129,7 @@ namespace Protell.ViewModel.Sync
                     if (status)
                     {
                         modifiedDataRepository.UpdateServerModifiedDate(item);
-                    }
+                    }                    
                 }//foreach
 
                 //UploadData();
@@ -122,6 +140,17 @@ namespace Protell.ViewModel.Sync
                     crr.Upload();
                     Protell.DAL.Repository.v2.CiTrakingRepository traking = new Protell.DAL.Repository.v2.CiTrakingRepository();
                     traking.Upload();
+                }
+
+                foreach (ModifiedDataModel item in tablesName)
+                {
+                    //Valida los catalogos
+                    string cat = item.SYNCTABLE.SyncTableName.ToUpper().Substring(0,3);                    
+                    if(cat=="CAT")
+                    {
+                        this.IsRestart = true;
+                        break;
+                    }                    
                 }
             }
             catch (Exception ex)

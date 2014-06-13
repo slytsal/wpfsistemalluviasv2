@@ -71,11 +71,13 @@ namespace Protell.UI.v2
 
         private void ListRegistros_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
-            NuevoPuntoMedicion npmv = new NuevoPuntoMedicion(pmViewModel.pSelectedItem,vm);
-            npmv.txbTitulo.Text = "Modificación de Captura";
-            npmv.Owner = parent;
-            npmv.ShowDialog(); 
+            if (pmViewModel.pSelectedItem != null)
+            {
+                NuevoPuntoMedicion npmv = new NuevoPuntoMedicion(pmViewModel.pSelectedItem, vm);
+                npmv.txbTitulo.Text = "Modificación de Captura";
+                npmv.Owner = parent;
+                npmv.ShowDialog();
+            }
         }
 
         private void ListRegistros_KeyDown(object sender, KeyEventArgs e)

@@ -456,6 +456,7 @@ namespace Protell.ViewModel.v2
             this.RegistroItem.FechaCaptura = this.FechaCaptura;
             this.RegistroItem.HoraRegistro = int.Parse(this.SelectedHora + this.SelectedMinuto);
             this.RegistroItem.Condicion = this.SelectedItemCondicion;
+            this.RegistroItem.DiaRegistro = int.Parse(String.Format("{0:dd}", this.FechaCaptura));
         }
 
         private bool ValidateFechaCaptura()

@@ -4,6 +4,7 @@ using Protell.Model;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using Protell.Server.DAL.JsonSerializables;
+using Protell.Model.SyncModels;
 
 
 namespace Protell.Service.Services
@@ -119,6 +120,15 @@ namespace Protell.Service.Services
 
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
-        AjaxDictionary<string, object> Download_HashablePuntosMedicion();          
+        AjaxDictionary<string, object> Download_HashablePuntosMedicion();      
+    
+        [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
+        AjaxDictionary<string, object> Download_HashableUltimaMedicion( long fecha);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
+        AjaxDictionary<string, object> Download_GetHashableGraficaPuntoMedicion(long IdPuntoMedicion, long FechaNumerica);
+
     }
 }

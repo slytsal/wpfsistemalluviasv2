@@ -102,7 +102,7 @@ namespace Protell.UI.v2
             //Condicionar catsync
             try
             {
-                SyncRecurrentSingleton.Instance.StartThread();              
+                SyncRecurrentSingleton.Instance.StartThread();                
             }
             catch (Exception ex)
             {
@@ -123,6 +123,18 @@ namespace Protell.UI.v2
                     }));
                     vmMain.GetSync();
                 }
+                if (e.PropertyName == "IsRestart")
+                {
+                    if (SyncRecurrentSingleton.Instance.IsRestart)
+                    {
+                        Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            MessageBox.Show("Se detecto una actualizacion en los catalogos. La aplicacion se cerrara automaticamente al presionar el boton OK.", "Informacion", MessageBoxButton.OK, MessageBoxImage.Exclamation, MessageBoxResult.OK);
+                            Process.GetCurrentProcess().Kill();
+                        }));
+                    }
+                }
+
             }
             catch (Exception ex)
             {

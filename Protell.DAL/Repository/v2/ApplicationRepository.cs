@@ -94,11 +94,13 @@ namespace Protell.DAL.Repository.v2
             try
             {
                 MasterConexion master = new MasterConexion();
+                int i = 1;
                 foreach (var item in GetFiles())
                 {
                     Msj += item;                    
                     string query = GetContentFile(item);
-                    master.ExecuteScriptGO(query);
+                    master.ExecuteScriptGO(query, i);
+                    i++;
                 }
                 DeleteFiles();
 

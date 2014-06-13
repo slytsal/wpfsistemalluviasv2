@@ -127,9 +127,6 @@
     <Compile Include="POCOS\CI_TRACKING.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
-    <Compile Include="POCOS\C_CAT_PUNTO_MEDICION.cs">
-      <DependentUpon>PocosProtell.tt</DependentUpon>
-    </Compile>
     <Compile Include="POCOS\EntityProtell.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -169,7 +166,22 @@
     <Compile Include="POCOS\SpGdGetDatosEstructuras2_Result.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
+    <Compile Include="POCOS\spGetHashableGraficaLumbreras_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spGetHashableGraficaPuntoMedicion_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spGetHashablePuntoMedicion1_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spGetHashablePuntoMedicionAttributes_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
     <Compile Include="POCOS\spGetHashablePuntoMedicion_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spGetHashableUltimaMedicion1_Result.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
     <Compile Include="POCOS\spGetHashableUltimaMedicion_Result.cs">
