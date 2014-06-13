@@ -244,6 +244,7 @@
     <Compile Include="Repository\v2\CatSistemaRepository.cs" />
     <Compile Include="Repository\v2\CatTipoPuntoMedicionRepository.cs" />
     <Compile Include="Repository\v2\CatUnidadMedidaRepository.cs" />
+    <Compile Include="Repository\v2\SQLLogger.cs" />
     <Compile Include="Repository\v2\UploadRepository.cs" />
     <Compile Include="spAutoLogin_Result.cs">
       <DependentUpon>Protelldb.tt</DependentUpon>
