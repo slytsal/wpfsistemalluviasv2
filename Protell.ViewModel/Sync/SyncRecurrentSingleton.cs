@@ -4,6 +4,7 @@ using Protell.Model;
 using System.Threading;
 using Protell.DAL.Factory;
 using System.Collections.Generic;
+using Protell.DAL.Repository.v2;
 
 namespace Protell.ViewModel.Sync
 {
@@ -137,9 +138,12 @@ namespace Protell.ViewModel.Sync
                 if (downloadStatus)
                 {
                     Protell.DAL.Repository.v2.CiRegistroRepository crr = new DAL.Repository.v2.CiRegistroRepository();
+                    SQLLogger.Instance.log("init", "DoWork (1)");
                     crr.Upload();
+                    SQLLogger.Instance.log("end upload ci registro", "DoWork (2)");
                     Protell.DAL.Repository.v2.CiTrakingRepository traking = new Protell.DAL.Repository.v2.CiTrakingRepository();
                     traking.Upload();
+                    SQLLogger.Instance.log("end upload ci registro tracking", "DoWork (3)");
                 }
 
                 foreach (ModifiedDataModel item in tablesName)

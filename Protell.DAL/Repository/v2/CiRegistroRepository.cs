@@ -481,6 +481,7 @@ namespace Protell.DAL.Repository.v2
         /// <returns></returns>
         public bool Upload()
         {
+            SQLLogger.Instance.log("", "CiRegistroRepository.Upload (1)");
             bool responseService = false;
 
             string jsonResponse = "";
@@ -490,30 +491,38 @@ namespace Protell.DAL.Repository.v2
 
             //Obtener datos
             List<CiRegistroPOCO> registros = this.GetIsModified();
+            SQLLogger.Instance.log("", "CiRegistroRepository.Upload (2)");
             if (registros != null && registros.Count > 0)
             {
+                SQLLogger.Instance.log("", "CiRegistroRepository.Upload (3)");
                 CiRegistroUploadModel crum = new CiRegistroUploadModel();
                 crum.CiRegistro = registros;
                 //crum.UserData = new UserDataSync();
 
                 //crum.CiRegistro = null;
                 //crum.UserData = null;
-
+                SQLLogger.Instance.log("", "CiRegistroRepository.Upload (4)");
                 CiRegistroUploadServiceInputWrapper wrapperServiceParameter = new CiRegistroUploadServiceInputWrapper();
                 wrapperServiceParameter.param = crum;
 
+                SQLLogger.Instance.log("", "CiRegistroRepository.Upload (5)");
                 jsonResponse = DownloadFactory.Instance.CallUploadWebService(webMethodName, wrapperServiceParameter);
+                SQLLogger.Instance.log("", "CiRegistroRepository.Upload (6)");
                 if (!String.IsNullOrEmpty(jsonResponse))
                 {
+                    SQLLogger.Instance.log("", "CiRegistroRepository.Upload (7)");
                     JavaScriptSerializer js = new JavaScriptSerializer();
                     js.MaxJsonLength = Int32.MaxValue;
                     response = js.Deserialize<CiRegistroUploadResponseModel>(jsonResponse);
 
+                    SQLLogger.Instance.log("", "CiRegistroRepository.Upload (8)");
                     if (response != null && response.Upload_CiRegistroResult != null && response.Upload_CiRegistroResult.Count > 0)
-                    {                        
+                    {
+                        SQLLogger.Instance.log("", "CiRegistroRepository.Upload (9)");
                         this.PrepareBulkUpdateConfirmation();
                         this.BulkUpdateConfirmation(response.Upload_CiRegistroResult);
-                        this.CommitBulkUpdateConfirmation();                                              
+                        this.CommitBulkUpdateConfirmation();
+                        SQLLogger.Instance.log("", "CiRegistroRepository.Upload (10)");
                     }
                 }//endif
                 else
@@ -524,10 +533,11 @@ namespace Protell.DAL.Repository.v2
             }//endif
             else
             {
+                SQLLogger.Instance.log("", "CiRegistroRepository.Upload (2.1)");
                 //no hay registros para subir al servidor
                 responseService = true;
             }
-
+            SQLLogger.Instance.log("", "CiRegistroRepository.Upload (1.1)");
             return responseService;
         }//endUpload()
 

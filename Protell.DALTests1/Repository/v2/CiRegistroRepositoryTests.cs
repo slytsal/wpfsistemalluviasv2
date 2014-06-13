@@ -87,6 +87,7 @@ namespace Protell.DAL.Repository.v2.Tests
         [TestMethod()]
         public void UploadTest()
         {
+            SQLLogger.Instance.log("test", "teste");
             CiRegistroRepository ci = new CiRegistroRepository();
             ci.Upload();
         }

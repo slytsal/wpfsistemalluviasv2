@@ -16,6 +16,8 @@ namespace Protell.DAL.Factory
 
         public string CallWebService(string url, string webMethodName, object bodyContent)
         {
+            string logMsg = "url=" + url + "_____ webMethodName=" + webMethodName;
+            SQLLogger.Instance.log(logMsg, "CallWebService (1)");
             string res="";
             var client = new RestClient(url);
             var request = new RestRequest(Method.POST);
@@ -27,6 +29,9 @@ namespace Protell.DAL.Factory
             request.AddBody(bodyContent);
             
             IRestResponse response = client.Execute(request);
+            
+            SQLLogger.Instance.log(response.Content.ToString(), "CallWebService (2)");
+            SQLLogger.Instance.log(response.ErrorException, "CallWebService (2.1)");
             res = response.Content;
             return res;
         }

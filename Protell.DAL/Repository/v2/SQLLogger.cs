@@ -13,11 +13,19 @@ namespace Protell.DAL.Repository.v2
         //Constructor
         private SQLLogger()
         {
-            string tmp = ConfigurationManager.AppSettings["SqlLogEnabled"].ToString();
-            this.enabled = false;
-            if (tmp == "1" || tmp == "true")
+            this.enabled = true;
+
+            try
             {
-                this.enabled = true;
+                string tmp = ConfigurationManager.AppSettings["SqlLogEnabled"].ToString();
+                if (tmp == "0" || tmp == "false")
+                {
+                    this.enabled = false;
+                }
+            }
+            catch (Exception)
+            {
+                ;
             }
         }
 
@@ -30,13 +38,20 @@ namespace Protell.DAL.Repository.v2
 
         public void log(string msg, string where)
         {
-            using (var entity = new db_SeguimientoProtocolo_r2Entities())
+            try
             {
-                string sqlExists = " if object_id('templog','u') is null begin create table templog (id int identity(1,1) , msg nvarchar(max), t datetime) end";
-                entity.ExecuteStoreCommand(sqlExists);
+                using (var entity = new db_SeguimientoProtocolo_r2Entities())
+                {
+                    string sqlExists = " if object_id('templog','u') is null begin create table templog (id int identity(1,1) , msg nvarchar(max), t datetime) end";
+                    entity.ExecuteStoreCommand(sqlExists);
 
-                string sqlInsert = "insert into templog(msg) select '" + where + " _ [" + msg + "]',getdate()";
-                entity.ExecuteStoreCommand(sqlInsert);
+                    string sqlInsert = "insert into templog(msg,t) select '" + where + " _ [" + msg + "]',getdate()";
+                    entity.ExecuteStoreCommand(sqlInsert);
+                }
+            }
+            catch (Exception)
+            {
+                ;
             }
         }
 
