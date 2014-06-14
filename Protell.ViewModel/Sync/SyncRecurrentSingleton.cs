@@ -127,6 +127,7 @@ namespace Protell.ViewModel.Sync
                     }
                     status = factory.Download();
                     downloadStatus = (downloadStatus == false || status == false) ? false : status;
+                    SQLLogger.Instance.log("status", downloadStatus.ToString());
                     if (status)
                     {
                         modifiedDataRepository.UpdateServerModifiedDate(item);

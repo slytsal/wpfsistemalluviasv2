@@ -387,33 +387,36 @@ namespace Protell.DAL.Repository.v2
             {
                 //Obtener parámetros que se pasarán al servicio
                 RequestBodyContent bodyContent = this.GetBodyContent();
+                SQLLogger.Instance.log("BodyContent",bodyContent.ToString() );
                 requestedFechaFin = bodyContent.fechaFin;
                 minFechaNumerica = requestedFechaFin;
 
                 //Preparacion para bulk upsert
                 this.PrepareRecurrentBulkUpsert();
-
+                SQLLogger.Instance.log("PrepareBulk","Paso" );
                 while (requestedFechaFin <= minFechaNumerica)
                 {
                     //Desearilizar la respuestas
                     string jsonResponse = DownloadFactory.Instance.CallWebService(webMethodName, bodyContent);
+                    SQLLogger.Instance.log("JsonResponse", jsonResponse);
                     JavaScriptSerializer js = new JavaScriptSerializer();
                     js.MaxJsonLength = Int32.MaxValue;
                     list = js.Deserialize<CiRegistroRecurrentResultModel>(jsonResponse);
-
+                    SQLLogger.Instance.log("DeserealizaJson","Paso" );
                     //Obtener la fecha mas antigua de los datos recibidos
                     if (list.Download_CIRegistroRecurrentResult != null && list.Download_CIRegistroRecurrentResult.Count > 0)
                     {
                         //Insertar datos del servidor
                         this.BulkUpsertRecurrent(list.Download_CIRegistroRecurrentResult);
-
+                        SQLLogger.Instance.log("BulkUpsert", "Paso");
                         minFechaNumerica = Int64.Parse(list.Download_CIRegistroRecurrentResult.Min(p => p.FechaNumerica).ToString().Substring(0, 8));
-
+                        SQLLogger.Instance.log("FechaNuericaActual", "Paso");
                         //Restar un día a la fecha minima
                         if (minFechaNumerica.ToString().Length == 8)
                         {
                             DateTime dt = new DateTime(Int32.Parse(minFechaNumerica.ToString().Substring(0, 4)), Int32.Parse(minFechaNumerica.ToString().Substring(4, 2)), Int32.Parse(minFechaNumerica.ToString().Substring(6, 2)));
                             dt = dt.AddDays(-1);
+                            SQLLogger.Instance.log("RestarDia", "Paso");
                             minFechaNumerica = Int64.Parse(String.Format("{0:yyyyMMdd}", dt));
                             bodyContent = this.GetBodyContent();
                             bodyContent.fechaActual = minFechaNumerica;
@@ -430,6 +433,7 @@ namespace Protell.DAL.Repository.v2
                 }
 
                 bool DataChanged = this.CommitBulkUpsertRecurrent();
+                SQLLogger.Instance.log("Commit", DataChanged.ToString());
                 if (DataChanged)
                 {
                     this.RaiseDidCiRegistroRecurrentDataChanged(DataChanged);
@@ -441,7 +445,8 @@ namespace Protell.DAL.Repository.v2
             {
                 //InsertLog(ex.Source.ToString(), ex.Message);
                 //Implementar bitácora
-                throw ex;
+                //throw ex;
+                SQLLogger.Instance.log("TryDownload", ex.Message);
             }
 
             return responseService;
@@ -587,7 +592,7 @@ namespace Protell.DAL.Repository.v2
                                 FechaNumerica = row.FechaNumerica
                             });
                         });
-                    }
+                    };
                 }
             }
             catch (Exception ex)

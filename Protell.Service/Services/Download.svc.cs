@@ -489,5 +489,37 @@ namespace Protell.Service.Services
             
             return tipos;
         }
+
+
+        public AjaxDictionary<string, object> Download_GetHashableGraficaLumbreras(long FechaNumerica)
+        {
+            AjaxDictionary<string, object> tipos = new AjaxDictionary<string, object>();
+            try
+            {
+                HashableDataRepository repository = new HashableDataRepository();
+                tipos = repository.GetHashableGraficaLumbreras(FechaNumerica);
+            }
+            catch (Exception)
+            {
+                ;                
+            }
+            return tipos;
+        }
+
+
+        public AjaxDictionary<string, object> Download_GetHashableGraficaPromedio(long FechaNumerica)
+        {
+            AjaxDictionary<string, object> tipos = new AjaxDictionary<string, object>();
+            try
+            {
+                HashableDataRepository repository = new HashableDataRepository();
+                tipos = repository.GetHstTableGraficaPromedio(FechaNumerica);
+            }
+            catch (Exception)
+            {
+                ;
+            }
+            return tipos;
+        }
     }
 }

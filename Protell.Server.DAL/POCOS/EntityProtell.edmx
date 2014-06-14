@@ -595,6 +595,9 @@
         <Function Name="spGetHashableGraficaLumbreras" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="fechaNumerica" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="spGetHashableGraficaPromedio" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fechaNumerica" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="spGetHashableGraficaPuntoMedicion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idPuntoMedicion" Type="bigint" Mode="In" />
           <Parameter Name="fechaNumerica" Type="bigint" Mode="In" />
@@ -879,6 +882,9 @@
           <Parameter Name="idPuntoMedicion" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="spGetHashableGraficaLumbreras" ReturnType="Collection(devinmr3Model.spGetHashableGraficaLumbreras_Result)">
+          <Parameter Name="fechaNumerica" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="spGetHashableGraficaPromedio" ReturnType="Collection(devinmr3Model.spGetHashableGraficaPromedio_Result)">
             <Parameter Name="fechaNumerica" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
@@ -1652,6 +1658,10 @@
           <Property Type="Int64" Name="FechaNumerica" Nullable="true" />
           <Property Type="Double" Name="Valor" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="spGetHashableGraficaPromedio_Result">
+          <Property Type="Int64" Name="FechaNumerica" Nullable="true" />
+          <Property Type="Double" Name="Valor" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2199,6 +2209,14 @@
             <ResultMapping>
               <ComplexTypeMapping TypeName="devinmr3Model.spGetHashableGraficaLumbreras_Result">
                 <ScalarProperty Name="IdPuntoMedicion" ColumnName="IdPuntoMedicion" />
+                <ScalarProperty Name="FechaNumerica" ColumnName="FechaNumerica" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetHashableGraficaPromedio" FunctionName="devinmr3Model.Store.spGetHashableGraficaPromedio">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="devinmr3Model.spGetHashableGraficaPromedio_Result">
                 <ScalarProperty Name="FechaNumerica" ColumnName="FechaNumerica" />
                 <ScalarProperty Name="Valor" ColumnName="Valor" />
               </ComplexTypeMapping>

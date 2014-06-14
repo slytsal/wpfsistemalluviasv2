@@ -195,18 +195,33 @@ namespace Protell.Server.DAL.Repository.v2
                 using (var entity=new db_SeguimientoProtocolo_r2Entities())
                 {
                     List<spGetHashableGraficaLumbreras_Result> items = entity.spGetHashableGraficaLumbreras(FechaNumerica).ToList();
-                    if (items!=null&& items.Count>0)
+                    try
                     {
-                        foreach (spGetHashableGraficaLumbreras_Result i in items)
-                        {                            
-                            if (IdPuntoMedicion != i.IdPuntoMedicion)
+                        if (items != null && items.Count > 0)
+                        {
+                            foreach (spGetHashableGraficaLumbreras_Result i in items)
                             {
-                                punto.Add("p" + i.IdPuntoMedicion, new AjaxDictionary<string, object>());
+                                bool x = false;
+                                if (IdPuntoMedicion != i.IdPuntoMedicion)
+                                {
+                                    IdPuntoMedicion = i.IdPuntoMedicion;
+                                    punto.Add(toStrIdPm(i.IdPuntoMedicion), new AjaxDictionary<string, object>());
+                                    x = true;
+                                }
+                                if (x)
+                                {                                    
+                                    datos = new AjaxDictionary<string, object>();
+                                }                                
+                                datos.Add("F" + i.FechaNumerica, i.Valor);
+                                punto[toStrIdPm(i.IdPuntoMedicion)] = datos;
                             }
-                 //           datos.Add("F" + item.FechaNumerica, item.Valor);
-
+                            tipo.Add("t1", punto);
                         }
-                    }                    
+                    }
+                    catch (Exception)
+                    {
+                        ;
+                    }                  
                 }
             }
             catch (Exception)
@@ -214,6 +229,38 @@ namespace Protell.Server.DAL.Repository.v2
                                
             }
             return tipo;
+        }
+
+
+        public AjaxDictionary<string, object> GetHstTableGraficaPromedio( long FechaNumerica)
+        {
+            AjaxDictionary<string, object> tipo = new AjaxDictionary<string, object>();
+            AjaxDictionary<string, object> punto = new AjaxDictionary<string, object>();
+            AjaxDictionary<string, object> datos = new AjaxDictionary<string, object>();
+            try
+            {
+                using (var entity = new db_SeguimientoProtocolo_r2Entities())
+                {
+                    
+                    
+                        List<spGetHashableGraficaPromedio_Result> atributos = entity.spGetHashableGraficaPromedio(FechaNumerica).ToList();
+                        if (atributos != null && atributos.Count > 0)
+                        {
+                            foreach (spGetHashableGraficaPromedio_Result item in atributos)
+                            {
+                                datos.Add("F" + item.FechaNumerica, item.Valor);
+                            }
+                            punto.Add("promedio", datos);
+                            
+                        }
+                    
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            return punto;
         }
     }
 }
