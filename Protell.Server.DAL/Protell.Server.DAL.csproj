@@ -242,6 +242,7 @@
     <Compile Include="Repository\v2\RegistroRepository.cs" />
     <Compile Include="Repository\v2\RelEstPuntoMedRepository.cs" />
     <Compile Include="Repository\v2\RelEstructuraDependenciaRepository.cs" />
+    <Compile Include="Repository\v2\ServerSQLLogger.cs" />
     <Compile Include="Repository\v2\SyncRepository.cs" />
     <Compile Include="Repository\v2\TipoPuntoMedicionRepository.cs" />
     <Compile Include="Repository\v2\TrakingRepository.cs" />

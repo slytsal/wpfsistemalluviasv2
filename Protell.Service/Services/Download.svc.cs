@@ -521,5 +521,40 @@ namespace Protell.Service.Services
             }
             return tipos;
         }
+
+
+        public AjaxDictionary<string, object> Download_IsopFiles(long FechaNumerica)
+        {
+            AjaxDictionary<string, object> dictioFiles = new AjaxDictionary<string, object>();
+            try
+            {
+                string rootDirectory = this.GetHostedRootDirectory();
+                HashableDataRepository repo = new HashableDataRepository();
+                dictioFiles = repo.GetIsopFileList(FechaNumerica, rootDirectory);
+            }
+            catch (Exception ex)
+            {
+                ServerSQLLogger.Instance.log(ex, "Download_IsopFiles (c1)");
+                throw ex;
+            }
+
+            return dictioFiles;
+        }
+
+        private string GetHostedRootDirectory()
+        {
+            string path="";
+            try
+            {
+                path = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath;
+                ServerSQLLogger.Instance.log("valor de path = " + path, "Download_IsopFiles");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("IMC_ERR_MSG: No se pudo obtener el ApplicationPhysicalPath; InnerException para más información", ex);
+            }
+
+            return path;
+        }
     }
 }
