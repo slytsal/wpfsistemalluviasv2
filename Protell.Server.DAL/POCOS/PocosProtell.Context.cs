@@ -494,6 +494,10 @@ namespace Protell.Server.DAL.POCOS
             }
             return base.ExecuteFunction<spGetHashableGraficaPromedio_Result>("spGetHashableGraficaPromedio", fechaNumericaParameter);
         }
+        public ObjectResult<spGetHashableIsoyetaRangosLabels_Result> spGetHashableIsoyetaRangosLabels()
+        {
+            return base.ExecuteFunction<spGetHashableIsoyetaRangosLabels_Result>("spGetHashableIsoyetaRangosLabels");
+        }
 
         #endregion
 

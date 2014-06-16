@@ -148,6 +148,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
+    <Compile Include="POCOS\PocosProtell1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
     <Compile Include="POCOS\REL_ESTRUCTURA_DEPENDENCIA.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
@@ -173,6 +178,9 @@
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
     <Compile Include="POCOS\spGetHashableGraficaPuntoMedicion_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spGetHashableIsoyetaRangosLabels_Result.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
     <Compile Include="POCOS\spGetHashablePuntoMedicion1_Result.cs">
@@ -264,6 +272,7 @@
     </None>
     <None Include="POCOS\PocosProtell.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PocosProtell1.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

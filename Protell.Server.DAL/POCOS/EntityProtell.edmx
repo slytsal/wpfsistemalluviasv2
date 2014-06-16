@@ -602,6 +602,7 @@
           <Parameter Name="idPuntoMedicion" Type="bigint" Mode="In" />
           <Parameter Name="fechaNumerica" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="spGetHashableIsoyetaRangosLabels" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spGetHashablePuntoMedicion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spGetHashablePuntoMedicionAttributes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idPuntoMedicion" Type="bigint" Mode="In" />
@@ -885,8 +886,9 @@
           <Parameter Name="fechaNumerica" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="spGetHashableGraficaPromedio" ReturnType="Collection(devinmr3Model.spGetHashableGraficaPromedio_Result)">
-            <Parameter Name="fechaNumerica" Mode="In" Type="Int64" />
+          <Parameter Name="fechaNumerica" Mode="In" Type="Int64" />
           </FunctionImport>
+          <FunctionImport Name="spGetHashableIsoyetaRangosLabels" ReturnType="Collection(devinmr3Model.spGetHashableIsoyetaRangosLabels_Result)" />
         </EntityContainer>
         <EntityType Name="APP_ROL">
           <Key>
@@ -1662,6 +1664,11 @@
           <Property Type="Int64" Name="FechaNumerica" Nullable="true" />
           <Property Type="Double" Name="Valor" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="spGetHashableIsoyetaRangosLabels_Result">
+          <Property Type="Int32" Name="Nivel" Nullable="true" />
+          <Property Type="String" Name="Etiqueta" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="ColorHex" Nullable="true" MaxLength="250" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2219,6 +2226,15 @@
               <ComplexTypeMapping TypeName="devinmr3Model.spGetHashableGraficaPromedio_Result">
                 <ScalarProperty Name="FechaNumerica" ColumnName="FechaNumerica" />
                 <ScalarProperty Name="Valor" ColumnName="Valor" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetHashableIsoyetaRangosLabels" FunctionName="devinmr3Model.Store.spGetHashableIsoyetaRangosLabels">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="devinmr3Model.spGetHashableIsoyetaRangosLabels_Result">
+                <ScalarProperty Name="Nivel" ColumnName="Nivel" />
+                <ScalarProperty Name="Etiqueta" ColumnName="Etiqueta" />
+                <ScalarProperty Name="ColorHex" ColumnName="ColorHex" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
