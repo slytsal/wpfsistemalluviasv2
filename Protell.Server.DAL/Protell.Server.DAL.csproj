@@ -148,11 +148,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
-    <Compile Include="POCOS\PocosProtell1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PocosProtell.tt</DependentUpon>
-    </Compile>
     <Compile Include="POCOS\REL_ESTRUCTURA_DEPENDENCIA.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>

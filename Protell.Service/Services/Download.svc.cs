@@ -556,5 +556,23 @@ namespace Protell.Service.Services
 
             return path;
         }
+
+
+        public AjaxDictionary<string, object> Download_IsoyetaRango()
+        {
+            AjaxDictionary<string, object> isoyetaRango = new AjaxDictionary<string, object>();
+
+            try
+            {
+                HashableDataRepository repository = new HashableDataRepository();
+                isoyetaRango = repository.GetIsoyetaRange();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("IMC_ERR_MSG: No se pudieron obtener los rangos de isoyetas", ex);
+            }
+
+            return isoyetaRango;
+        }
     }
 }

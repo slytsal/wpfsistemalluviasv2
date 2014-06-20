@@ -460,5 +460,29 @@ namespace Protell.Server.DAL.Repository.v2
             }
             return level;
         }//endfunc
+
+        public AjaxDictionary<string, object> GetIsoyetaRange()
+        {
+            AjaxDictionary<string, object> isoyetaRango = new AjaxDictionary<string, object>();
+            isoyetaRango.Add("nodata", "0");
+
+            using (var entity = new db_SeguimientoProtocolo_r2Entities())
+            {
+                List<spGetHashableIsoyetaRangosLabels_Result> res = entity.spGetHashableIsoyetaRangosLabels().ToList<spGetHashableIsoyetaRangosLabels_Result>();
+
+                if(res!= null && res.Count>0)
+                {
+                    foreach(spGetHashableIsoyetaRangosLabels_Result item in res)
+                    {
+                        AjaxDictionary<string, object> temp =  new AjaxDictionary<string, object>();
+                        temp.Add("etiqueta",item.Etiqueta);
+                        temp.Add("colorHex",item.ColorHex);
+                        isoyetaRango.Add("l" + item.Nivel.ToString(), temp);
+                    }   
+                }
+            }
+            return isoyetaRango;
+        }
+
     }
 }
