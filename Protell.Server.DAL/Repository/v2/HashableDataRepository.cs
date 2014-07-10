@@ -36,6 +36,11 @@ namespace Protell.Server.DAL.Repository.v2
 
                         //Llenar atributos
                         AjaxDictionary<string,object> attrs = new AjaxDictionary<string, object>();
+                        string ultAct=r.﻿ultimaActualización.ToString();
+                        if(ultAct.Length>=12){
+                            ultAct=ultAct.Substring(0,12);
+                        }
+
                         attrs.Add("puntoMedicionName", r.PuntoMedicionName);
                          attrs.Add("lat", r.latiitud);
                          attrs.Add("long", r.longitud);
@@ -46,6 +51,9 @@ namespace Protell.Server.DAL.Repository.v2
                          attrs.Add("unidadMedida", r.UnidadMedidaName);
                          attrs.Add("unidadMedidaShort", r.UnidadMedidaShort);
                          attrs.Add("sistema", r.﻿SistemaName);
+                         attrs.Add("ultimaActualizacion", ultAct);
+                         attrs.Add("ultimaCond", r.UltimaCondicion);
+
 
                         this.toDictio(tipos, tipopmSentinel).Add(toStrIdPm(r.IdPuntoMedicion), attrs);
 
@@ -302,7 +310,7 @@ namespace Protell.Server.DAL.Repository.v2
             return settingValue;
         }//finfunc
 
-        public AjaxDictionary<string, object> GetIsopFileList(long FechaNumerica, string rootDirectory)
+        public AjaxDictionary<string, object> GetIsopFileListV1(long FechaNumerica, string rootDirectory)
         {
             DateTime fecha=this.ConvertFechaNumericaToDatetime(FechaNumerica); //convertir la fecha numerica a dateitme
             int minutesThreshold=this.GetIsopMinutesThresholdSetting(); //obtener el setting 
@@ -484,5 +492,179 @@ namespace Protell.Server.DAL.Repository.v2
             return isoyetaRango;
         }
 
-    }
-}
+        //Esta es la version 2
+        public AjaxDictionary<string, object> GetIsopFileList(long FechaNumerica, string rootDirectory)
+        {
+            //Control de tiempo
+            DateTime iniDate = DateTime.Now;
+            DateTime endDate = DateTime.Now;
+            TimeSpan diff = endDate - iniDate;
+
+            int minutesThreshold = this.GetIsopMinutesThresholdSetting(); //obtener el setting 
+
+            DateTime fecha = this.ConvertFechaNumericaToDatetime(FechaNumerica); //convertir la fecha numerica a dateitme
+            DateTime fechaMin = fecha.AddMinutes(-1 * minutesThreshold); //En base al setting generar la fecha minima (restando minutos
+
+            AjaxDictionary<string, object> levelByFn = new AjaxDictionary<string, object>(); //valor de retorno
+
+            if (!String.IsNullOrEmpty(rootDirectory))//Si existe el folder...
+            {
+                long longFechaMin = this.ConvertDatetimeToFechaNumerica(fechaMin);
+
+                ServerSQLLogger.Instance.log("Rango de tiempo : " + longFechaMin.ToString(), "GetIsopFileList(0)");
+                ServerSQLLogger.Instance.log("Isoyetas path : " + Path.Combine(rootDirectory, ISOP_DIRECTORY).ToString(), "GetIsopFileList(1)");
+
+                //TODO: Optimizar para que solo se obtengan los archivos que estén en el rango de fechas
+                List<string> isopFiles = Directory.GetFiles(Path.Combine(rootDirectory, ISOP_DIRECTORY), "isop*.kml").ToList<string>();
+
+                ServerSQLLogger.Instance.log("Archivos en directory " + isopFiles.Count().ToString(), "GetIsopFileList(2)");
+
+                AjaxDictionary<string, object> isopFileByLevel = new AjaxDictionary<string, object>();
+                Dictionary<string, string[]> arraysByLevel = new Dictionary<string, string[]>();
+
+                List<string> ranges = new List<string>() { "8", "15", "30", "1000" };
+
+                //Llenar subarrays por nivel 
+                string strFechaNumericaNew = String.Format("{0:yyyyMMddHHmm}", fecha);
+                string strFechaNumericaOld = String.Format("{0:yyyyMMddHHmm}", fechaMin);
+                string[] tmpStrArray;
+                foreach (string range in ranges)
+                {
+                    this.GetLastIsopFile(
+                        strFechaNumericaNew
+                        , strFechaNumericaOld
+                        , range
+                        , isopFiles
+                        , out tmpStrArray
+                    );
+
+                    arraysByLevel.Add(range, tmpStrArray); //agregar al diccionario
+                }//endFech
+
+                //Iniciar ciclo para cada uno de los minutos entre los rangos
+                DateTime loopDate = fechaMin;
+                while (loopDate <= fecha)
+                {
+                    isopFileByLevel = new AjaxDictionary<string, object>();
+                    foreach (string range in ranges)//para cada uno de los rangos
+                    {
+                        string[] tmp = arraysByLevel[range];
+                        if (tmp != null)
+                        {
+                            string tmpIsopLastFile = this.GetLastIsopFile(String.Format("{0:yyyyMMddHHmm}", loopDate), range, arraysByLevel[range].ToList<string>());
+                            if (!String.IsNullOrEmpty(tmpIsopLastFile))
+                            {
+                                isopFileByLevel.Add("l" + range, tmpIsopLastFile.Split('\\').Last());
+                            }
+                            else
+                            {
+                                isopFileByLevel.Add("l" + range, "");
+                            }
+                            
+                        }
+                        else
+                        {
+                            isopFileByLevel.Add("l"+range, "");
+                        }
+                    }//endFech
+
+                    levelByFn.Add("t"+String.Format("{0:yyyyMMddHHmm}", loopDate), isopFileByLevel);
+
+                    loopDate = loopDate.AddMinutes(1);
+                }//endWhile
+
+                endDate = DateTime.Now;
+                diff = endDate - iniDate;
+                System.Diagnostics.Debug.Write("Subarrays method resList : " + diff.Minutes.ToString() + "." + diff.Seconds.ToString());
+            }//endIf
+            else
+            {
+                throw new Exception("IMC_ERROR: [GetIsopFileList] La ruta rootDirectory no puede estar vacia");
+            }//endElse
+
+            return levelByFn;
+        }//endFunc
+
+        /// <summary>
+        /// El array de isop deberá tener el formaty isop_yyyyMMddHHmm_8.kml; donde el 8 significa el nivel.
+        /// </summary>
+        /// <param name="fechaNumerica">Fecha numérica hasta minuto = YYYYMMDDHHMM</param>
+        /// <param name="level"></param>
+        /// <param name="isopFiles">Lista de strings de archvios de isoyetas con solo el nombre sin extensión;Puede ser que sea la lista completa de todos los niveles</param>
+        /// <returns></returns>
+        public string GetLastIsopFile(string fechaNumerica,string level,List<string>isopFiles)
+        {
+            string lastIsopFile = "";
+            string searchString= "_"+level+".";
+            long longFecha= Int64.Parse(fechaNumerica);
+
+            var res = (from r in isopFiles
+                       where r.Contains(searchString) &&
+                           Int64.Parse(r.Split('_')[1]) <= longFecha
+                       select r).ToArray<string>();
+
+            if (res != null && res.Count() > 0)
+            {
+                Array.Sort(res);
+                lastIsopFile = res.Last();
+            }
+            
+
+            return lastIsopFile;
+        }
+
+        public void GetLastIsopFile(string fechaNumericaNew, string fechaNumericaOld, string level, List<string> isopFiles, out string[] subFilesList)
+        {
+            string searchString = "_" + level + "."; //Cadena de busqueda para el nivel
+            string tmpStr = "";
+            long longFechaNew = Int64.Parse(fechaNumericaNew);
+            long longFechaNumericaOld = Int64.Parse(fechaNumericaOld);
+
+            subFilesList = null;
+
+            //TODO: Poner código de ajuste de fechas
+
+            //Obtener el primer subarray respecto a la fecha new (fecha más reciente)
+            string[] listFromNewFn = (from r in isopFiles
+                                      where r.Contains(searchString) &&
+                                          Int64.Parse(r.Split('_')[1]) <= longFechaNew
+                                      select r).ToArray<string>();
+
+
+            if (listFromNewFn != null && listFromNewFn.Count() > 0)
+            {
+                Array.Sort(listFromNewFn);
+                tmpStr = listFromNewFn.Last(); //Archivo correspondiente a la fecha new
+
+                //Buscar en base al sub array la fecha old
+                string[] tmpList = (from r in listFromNewFn
+                                    where
+                                        Int64.Parse(r.Split('_')[1]) <= longFechaNumericaOld
+                                    select r).ToArray<string>();
+
+                //Si hay elementos en la subbusqueda
+                if (tmpList != null && tmpList.Count() > 0)
+                {
+                    Array.Sort(tmpList); //Ordenar
+                    tmpStr = tmpList.Last(); //De la fecha minima se obtine el archivo
+
+                    //Obtener el subarray respecto a la fecha minima.
+                    long tmpFechaNumerica = Int64.Parse(tmpStr.Split('_')[1]);
+                    string[] listFromOldFn = (from r in listFromNewFn
+                                              where r.Contains(searchString) &&
+                                                  Int64.Parse(r.Split('_')[1]) >= tmpFechaNumerica
+                                              select r).ToArray<string>();
+
+                    if (listFromOldFn != null && listFromOldFn.Count() > 0)
+                    {
+                        subFilesList = listFromOldFn;
+                    }//endIf
+                }//endIf
+                else //no hubo elementos en la subbusqueda
+                {
+                    subFilesList = listFromNewFn;
+                }
+            }//endIf
+        }//endFunc
+    }//endClass
+}//endNamespace

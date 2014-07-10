@@ -28,6 +28,11 @@ namespace Protell.Server.DAL.JsonSerializables
         {
             _Dictionary.Add(key, value);
         }
+        public bool TryGetValue(TKey key)
+        {
+            TValue value;
+            return this._Dictionary.TryGetValue(key, out value);
+        }
 
         [SecurityCriticalAttribute]
         public void GetObjectData(SerializationInfo info, StreamingContext context)
