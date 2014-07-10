@@ -203,6 +203,24 @@ namespace Protell.Server.DAL.POCOS
             get { return _cI_TRACKING  ?? (_cI_TRACKING = CreateObjectSet<CI_TRACKING>("CI_TRACKING")); }
         }
         private ObjectSet<CI_TRACKING> _cI_TRACKING;
+    
+        public ObjectSet<REL_ROL_PUNTOMEDICION> REL_ROL_PUNTOMEDICION
+        {
+            get { return _rEL_ROL_PUNTOMEDICION  ?? (_rEL_ROL_PUNTOMEDICION = CreateObjectSet<REL_ROL_PUNTOMEDICION>("REL_ROL_PUNTOMEDICION")); }
+        }
+        private ObjectSet<REL_ROL_PUNTOMEDICION> _rEL_ROL_PUNTOMEDICION;
+    
+        public ObjectSet<CAT_NIVEL_LLUVIA> CAT_NIVEL_LLUVIA
+        {
+            get { return _cAT_NIVEL_LLUVIA  ?? (_cAT_NIVEL_LLUVIA = CreateObjectSet<CAT_NIVEL_LLUVIA>("CAT_NIVEL_LLUVIA")); }
+        }
+        private ObjectSet<CAT_NIVEL_LLUVIA> _cAT_NIVEL_LLUVIA;
+    
+        public ObjectSet<CAT_REGION> CAT_REGION
+        {
+            get { return _cAT_REGION  ?? (_cAT_REGION = CreateObjectSet<CAT_REGION>("CAT_REGION")); }
+        }
+        private ObjectSet<CAT_REGION> _cAT_REGION;
 
         #endregion
 

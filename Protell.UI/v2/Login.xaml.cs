@@ -28,9 +28,7 @@ namespace Protell.UI.v2
         }
 
         void vm_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            //Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            //{
+        {            
             try
             {
                 if (e.PropertyName == "Usuario")
@@ -47,8 +45,7 @@ namespace Protell.UI.v2
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }               
-            //}));
+            }                           
         }
 
         private void btnCerrar_Click(object sender, RoutedEventArgs e)

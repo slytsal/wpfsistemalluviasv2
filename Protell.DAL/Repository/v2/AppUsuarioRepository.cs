@@ -79,17 +79,20 @@ namespace Protell.DAL.Repository.v2
                 JavaScriptSerializer js = new JavaScriptSerializer();
                 js.MaxJsonLength = Int32.MaxValue;
                 model = js.Deserialize<AppUsuarioResultModel>(jsonResponse);
-                if (model.Download_AppUsuarioResult != null && model.Download_AppUsuarioResult.Nombre != null)
+                if (model!=null&& model.Download_AppUsuarioResult != null && model.Download_AppUsuarioResult.Nombre != null)
                 {
                     if (isSaveSesion)
                         x = Upsert(model.Download_AppUsuarioResult);
                 }
                 else
+                {
+                    model = new AppUsuarioResultModel();
                     model.Download_AppUsuarioResult = null;
-                    
+                }                                        
             }
             catch (Exception ex)
             {
+
                 AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = ex.StackTrace, Mensaje = ex.Message });
             }
 

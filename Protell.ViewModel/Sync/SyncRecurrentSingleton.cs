@@ -5,6 +5,7 @@ using System.Threading;
 using Protell.DAL.Factory;
 using System.Collections.Generic;
 using Protell.DAL.Repository.v2;
+using Protell.DAL.Repository;
 
 namespace Protell.ViewModel.Sync
 {
@@ -107,55 +108,64 @@ namespace Protell.ViewModel.Sync
             //operacion de sincronizacion
             try
             {
-                Protell.DAL.Repository.v2.ModifiedDataRepository modifiedDataRepository = new Protell.DAL.Repository.v2.ModifiedDataRepository();
-                List<ModifiedDataModel> tablesName = modifiedDataRepository.DownloadModifiedData();
+                //Agregar Validacion con el server
+                SyncLogRepository syncLogRepository = new SyncLogRepository();
+                if (syncLogRepository.PingServer())
+                {
+                    Protell.DAL.Repository.v2.ModifiedDataRepository modifiedDataRepository = new Protell.DAL.Repository.v2.ModifiedDataRepository();
+                    List<ModifiedDataModel> tablesName = modifiedDataRepository.DownloadModifiedData();
 
-                bool status = true;
-                bool downloadStatus = true;
-                IsRestart = false;
+                    bool status = true;
+                    bool downloadStatus = true;
+                    IsRestart = false;
 
-                //TEST: Solo tomar la de CI_REGISTRO
-                foreach (ModifiedDataModel item in tablesName)
-                {                    
                     //TEST: Solo tomar la de CI_REGISTRO
-                    IServiceFactory factory = ServiceFactory.Instance.getClass(item.SYNCTABLE.SyncTableName);
-                    if (item.SYNCTABLE.SyncTableName.ToUpper() == "CI_REGISTRO")
+                    foreach (ModifiedDataModel item in tablesName)
                     {
-                        //Escuchar evento
-                        ((Protell.DAL.Repository.v2.CiRegistroRepository)factory).DidCiRegistroRecurrentDataChangedHandler += SyncRecurrentSingleton_DidCiRegistroRecurrentDataChangedHandler;
-                        //TODO: Cuando se haya probado la descarga de información de los catálogos pasar estas lineas fuera del if                        
+                        //TEST: Solo tomar la de CI_REGISTRO
+                        IServiceFactory factory = ServiceFactory.Instance.getClass(item.SYNCTABLE.SyncTableName);
+                        if (item.SYNCTABLE.SyncTableName.ToUpper() == "CI_REGISTRO")
+                        {
+                            //Escuchar evento
+                            ((Protell.DAL.Repository.v2.CiRegistroRepository)factory).DidCiRegistroRecurrentDataChangedHandler += SyncRecurrentSingleton_DidCiRegistroRecurrentDataChangedHandler;
+                            //TODO: Cuando se haya probado la descarga de información de los catálogos pasar estas lineas fuera del if                        
+                        }
+                        status = factory.Download();
+                        downloadStatus = (downloadStatus == false || status == false) ? false : status;
+                        SQLLogger.Instance.log("status", downloadStatus.ToString());
+                        if (status)
+                        {
+                            modifiedDataRepository.UpdateServerModifiedDate(item);
+                        }
+                    }//foreach
+
+                    //UploadData();
+                    //Subir datos
+                    if (downloadStatus)
+                    {
+                        Protell.DAL.Repository.v2.CiRegistroRepository crr = new DAL.Repository.v2.CiRegistroRepository();
+                        SQLLogger.Instance.log("init", "DoWork (1)");
+                        crr.Upload();
+                        SQLLogger.Instance.log("end upload ci registro", "DoWork (2)");
+                        Protell.DAL.Repository.v2.CiTrakingRepository traking = new Protell.DAL.Repository.v2.CiTrakingRepository();
+                        traking.Upload();
+                        SQLLogger.Instance.log("end upload ci registro tracking", "DoWork (3)");
                     }
-                    status = factory.Download();
-                    downloadStatus = (downloadStatus == false || status == false) ? false : status;
-                    SQLLogger.Instance.log("status", downloadStatus.ToString());
-                    if (status)
-                    {
-                        modifiedDataRepository.UpdateServerModifiedDate(item);
-                    }                    
-                }//foreach
 
-                //UploadData();
-                //Subir datos
-                if (downloadStatus)
-                {
-                    Protell.DAL.Repository.v2.CiRegistroRepository crr = new DAL.Repository.v2.CiRegistroRepository();
-                    SQLLogger.Instance.log("init", "DoWork (1)");
-                    crr.Upload();
-                    SQLLogger.Instance.log("end upload ci registro", "DoWork (2)");
-                    Protell.DAL.Repository.v2.CiTrakingRepository traking = new Protell.DAL.Repository.v2.CiTrakingRepository();
-                    traking.Upload();
-                    SQLLogger.Instance.log("end upload ci registro tracking", "DoWork (3)");
+                    foreach (ModifiedDataModel item in tablesName)
+                    {
+                        //Valida los catalogos
+                        string cat = item.SYNCTABLE.SyncTableName.ToUpper().Substring(0, 3);
+                        if (cat == "CAT")
+                        {
+                            this.IsRestart = true;
+                            break;
+                        }
+                    } 
                 }
-
-                foreach (ModifiedDataModel item in tablesName)
+                else
                 {
-                    //Valida los catalogos
-                    string cat = item.SYNCTABLE.SyncTableName.ToUpper().Substring(0,3);                    
-                    if(cat=="CAT")
-                    {
-                        this.IsRestart = true;
-                        break;
-                    }                    
+                    AppBitacoraRepository.Insert(new AppBitacoraModel() { Fecha = DateTime.Now, Metodo = "DoWork()", Mensaje = "No hay Internet" });
                 }
             }
             catch (Exception ex)

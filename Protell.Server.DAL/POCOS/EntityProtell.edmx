@@ -126,6 +126,17 @@
           <Property Name="LastModifiedDate" Type="bigint" Nullable="false" />
           <Property Name="ServerLastModifiedDate" Type="bigint" />
         </EntityType>
+        <EntityType Name="CAT_NIVEL_LLUVIA">
+          <Key>
+            <PropertyRef Name="IdNivelLluvia" />
+          </Key>
+          <Property Name="IdNivelLluvia" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RangoMin" Type="int" />
+          <Property Name="RangMax" Type="int" />
+          <Property Name="IntensidadName" Type="varchar" MaxLength="500" />
+          <Property Name="Imagen" Type="varchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
         <EntityType Name="CAT_OPERACION_ESTRUCTURA">
           <Key>
             <PropertyRef Name="IdOperacionEstructura" />
@@ -191,6 +202,14 @@
           <Property Name="IsModified" Type="bit" Nullable="false" />
           <Property Name="LastModifiedDate" Type="bigint" Nullable="false" />
           <Property Name="ServerLastModifiedDate" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CAT_REGION">
+          <Key>
+            <PropertyRef Name="IdRegion" />
+          </Key>
+          <Property Name="IdRegion" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RegionName" Type="varchar" MaxLength="500" />
+          <Property Name="FileName" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="CAT_SERVER_LASTDATA">
           <Key>
@@ -315,6 +334,17 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="IsModified" Type="bit" Nullable="false" />
           <Property Name="LastModifiedDate" Type="bigint" Nullable="false" />
+          <Property Name="ServerLastModifiedDate" Type="bigint" />
+        </EntityType>
+        <EntityType Name="REL_ROL_PUNTOMEDICION">
+          <Key>
+            <PropertyRef Name="IdRel" />
+          </Key>
+          <Property Name="IdRel" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdRol" Type="bigint" />
+          <Property Name="IdPuntoMedicion" Type="bigint" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="LastModifiedDate" Type="bigint" />
           <Property Name="ServerLastModifiedDate" Type="bigint" />
         </EntityType>
         <EntityType Name="SYNCTABLE">
@@ -529,6 +559,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__REL_ROL_P__IdPun__16CF2DED">
+          <End Role="CAT_PUNTO_MEDICION" Type="Self.CAT_PUNTO_MEDICION" Multiplicity="0..1" />
+          <End Role="REL_ROL_PUNTOMEDICION" Type="Self.REL_ROL_PUNTOMEDICION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_PUNTO_MEDICION">
+              <PropertyRef Name="IdPuntoMedicion" />
+            </Principal>
+            <Dependent Role="REL_ROL_PUNTOMEDICION">
+              <PropertyRef Name="IdPuntoMedicion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__REL_ROL_P__IdRol__15DB09B4">
+          <End Role="APP_ROL" Type="Self.APP_ROL" Multiplicity="0..1" />
+          <End Role="REL_ROL_PUNTOMEDICION" Type="Self.REL_ROL_PUNTOMEDICION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APP_ROL">
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="REL_ROL_PUNTOMEDICION">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CAT_OPERACION_ESTRUCTURA_CAT_CONDPRO">
           <End Role="CAT_CONDPRO" Type="Self.CAT_CONDPRO" Multiplicity="1" />
           <End Role="CAT_OPERACION_ESTRUCTURA" Type="Self.CAT_OPERACION_ESTRUCTURA" Multiplicity="*" />
@@ -632,11 +686,13 @@
           <EntitySet Name="CAT_DEPENDENCIA" EntityType="Self.CAT_DEPENDENCIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_ESTRUCTURA" EntityType="Self.CAT_ESTRUCTURA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_LINKS" EntityType="Self.CAT_LINKS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CAT_NIVEL_LLUVIA" EntityType="Self.CAT_NIVEL_LLUVIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_OPERACION_ESTRUCTURA" EntityType="Self.CAT_OPERACION_ESTRUCTURA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_PROTOCOLO" EntityType="Self.CAT_PROTOCOLO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_PUNTO_MEDICION" EntityType="Self.CAT_PUNTO_MEDICION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_PUNTO_MEDICION_MAX_MIN" EntityType="Self.CAT_PUNTO_MEDICION_MAX_MIN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_PUNTOS_MEDICION_SHORTNAME" EntityType="Self.CAT_PUNTOS_MEDICION_SHORTNAME" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CAT_REGION" EntityType="Self.CAT_REGION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_SERVER_LASTDATA" EntityType="Self.CAT_SERVER_LASTDATA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_SISTEMA" EntityType="Self.CAT_SISTEMA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_SYNC" EntityType="Self.CAT_SYNC" Schema="dbo" store:Type="Tables" />
@@ -648,6 +704,7 @@
           <EntitySet Name="MODIFIEDDATA" EntityType="Self.MODIFIEDDATA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="REL_EST_PUNTOMED" EntityType="Self.REL_EST_PUNTOMED" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="REL_ESTRUCTURA_DEPENDENCIA" EntityType="Self.REL_ESTRUCTURA_DEPENDENCIA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="REL_ROL_PUNTOMEDICION" EntityType="Self.REL_ROL_PUNTOMEDICION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYNCTABLE" EntityType="Self.SYNCTABLE" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="APP_ROL_APP_USUARIO_ROL_FK1" Association="Self.APP_ROL_APP_USUARIO_ROL_FK1">
             <End Role="APP_ROL" EntitySet="APP_ROL" />
@@ -716,6 +773,14 @@
           <AssociationSet Name="FK__MODIFIEDD__IdSyn__7E02B4CC" Association="Self.FK__MODIFIEDD__IdSyn__7E02B4CC">
             <End Role="SYNCTABLE" EntitySet="SYNCTABLE" />
             <End Role="MODIFIEDDATA" EntitySet="MODIFIEDDATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__REL_ROL_P__IdPun__16CF2DED" Association="Self.FK__REL_ROL_P__IdPun__16CF2DED">
+            <End Role="CAT_PUNTO_MEDICION" EntitySet="CAT_PUNTO_MEDICION" />
+            <End Role="REL_ROL_PUNTOMEDICION" EntitySet="REL_ROL_PUNTOMEDICION" />
+          </AssociationSet>
+          <AssociationSet Name="FK__REL_ROL_P__IdRol__15DB09B4" Association="Self.FK__REL_ROL_P__IdRol__15DB09B4">
+            <End Role="APP_ROL" EntitySet="APP_ROL" />
+            <End Role="REL_ROL_PUNTOMEDICION" EntitySet="REL_ROL_PUNTOMEDICION" />
           </AssociationSet>
           <AssociationSet Name="FK_CAT_OPERACION_ESTRUCTURA_CAT_CONDPRO" Association="Self.FK_CAT_OPERACION_ESTRUCTURA_CAT_CONDPRO">
             <End Role="CAT_CONDPRO" EntitySet="CAT_CONDPRO" />
@@ -889,6 +954,17 @@
           <Parameter Name="fechaNumerica" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="spGetHashableIsoyetaRangosLabels" ReturnType="Collection(devinmr3Model.spGetHashableIsoyetaRangosLabels_Result)" />
+          <EntitySet Name="REL_ROL_PUNTOMEDICION" EntityType="devinmr3Model.REL_ROL_PUNTOMEDICION" />
+          <AssociationSet Name="FK__REL_ROL_P__IdRol__15DB09B4" Association="devinmr3Model.FK__REL_ROL_P__IdRol__15DB09B4">
+            <End Role="APP_ROL" EntitySet="APP_ROL" />
+            <End Role="REL_ROL_PUNTOMEDICION" EntitySet="REL_ROL_PUNTOMEDICION" />
+          </AssociationSet>
+          <AssociationSet Name="FK__REL_ROL_P__IdPun__16CF2DED" Association="devinmr3Model.FK__REL_ROL_P__IdPun__16CF2DED">
+            <End Role="CAT_PUNTO_MEDICION" EntitySet="CAT_PUNTO_MEDICION" />
+            <End Role="REL_ROL_PUNTOMEDICION" EntitySet="REL_ROL_PUNTOMEDICION" />
+          </AssociationSet>
+          <EntitySet Name="CAT_NIVEL_LLUVIA" EntityType="devinmr3Model.CAT_NIVEL_LLUVIA" />
+          <EntitySet Name="CAT_REGION" EntityType="devinmr3Model.CAT_REGION" />
         </EntityContainer>
         <EntityType Name="APP_ROL">
           <Key>
@@ -901,6 +977,7 @@
           <Property Name="IsModified" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="APP_USUARIO_ROL" Relationship="devinmr3Model.APP_ROL_APP_USUARIO_ROL_FK1" FromRole="APP_ROL" ToRole="APP_USUARIO_ROL" />
           <Property Type="Int64" Name="ServerLastModifiedDate" />
+          <NavigationProperty Name="REL_ROL_PUNTOMEDICION" Relationship="devinmr3Model.FK__REL_ROL_P__IdRol__15DB09B4" FromRole="APP_ROL" ToRole="REL_ROL_PUNTOMEDICION" />
         </EntityType>
         <EntityType Name="APP_USUARIO_ROL">
           <Key>
@@ -1306,7 +1383,6 @@
           <Property Type="String" Name="UnidadMedidaShort" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="CondicionName" Nullable="false" MaxLength="250" />
           <Property Type="String" Name="PathCodicion" Nullable="false" MaxLength="500" />
-          <Property Type="Boolean" Name="IsActive" Nullable="false" />
         </ComplexType>
         <ComplexType Name="spDownloadCiRegistroRecurrent_Result">
           <Property Type="Int64" Name="IdRegistro" Nullable="false" />
@@ -1377,6 +1453,7 @@
           <Property Name="IdAccionActual" Type="Int64" />
           <NavigationProperty Name="CAT_ACCION_ACTUAL" Relationship="devinmr3Model.FK__CAT_PUNTO__IdAcc__3A179ED3" FromRole="CAT_PUNTO_MEDICION" ToRole="CAT_ACCION_ACTUAL" />
           <NavigationProperty Name="CAT_PUNTOS_MEDICION_SHORTNAME" Relationship="devinmr3Model.FK__CAT_PUNTO__IdPun__4865BE2A" FromRole="CAT_PUNTO_MEDICION" ToRole="CAT_PUNTOS_MEDICION_SHORTNAME" />
+          <NavigationProperty Name="REL_ROL_PUNTOMEDICION" Relationship="devinmr3Model.FK__REL_ROL_P__IdPun__16CF2DED" FromRole="CAT_PUNTO_MEDICION" ToRole="REL_ROL_PUNTOMEDICION" />
         </EntityType>
         <Association Name="FK__CAT_PROTO__IdPun__3552E9B6">
           <End Type="devinmr3Model.CAT_PUNTO_MEDICION" Role="CAT_PUNTO_MEDICION" Multiplicity="0..1" />
@@ -1669,6 +1746,62 @@
           <Property Type="String" Name="Etiqueta" Nullable="true" MaxLength="250" />
           <Property Type="String" Name="ColorHex" Nullable="true" MaxLength="250" />
         </ComplexType>
+        <EntityType Name="REL_ROL_PUNTOMEDICION">
+          <Key>
+            <PropertyRef Name="IdRel" />
+          </Key>
+          <Property Name="IdRel" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdRol" Type="Int64" />
+          <Property Name="IdPuntoMedicion" Type="Int64" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="LastModifiedDate" Type="Int64" />
+          <Property Name="ServerLastModifiedDate" Type="Int64" />
+          <NavigationProperty Name="APP_ROL" Relationship="devinmr3Model.FK__REL_ROL_P__IdRol__15DB09B4" FromRole="REL_ROL_PUNTOMEDICION" ToRole="APP_ROL" />
+          <NavigationProperty Name="CAT_PUNTO_MEDICION" Relationship="devinmr3Model.FK__REL_ROL_P__IdPun__16CF2DED" FromRole="REL_ROL_PUNTOMEDICION" ToRole="CAT_PUNTO_MEDICION" />
+        </EntityType>
+        <Association Name="FK__REL_ROL_P__IdRol__15DB09B4">
+          <End Type="devinmr3Model.APP_ROL" Role="APP_ROL" Multiplicity="0..1" />
+          <End Type="devinmr3Model.REL_ROL_PUNTOMEDICION" Role="REL_ROL_PUNTOMEDICION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APP_ROL">
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="REL_ROL_PUNTOMEDICION">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__REL_ROL_P__IdPun__16CF2DED">
+          <End Type="devinmr3Model.CAT_PUNTO_MEDICION" Role="CAT_PUNTO_MEDICION" Multiplicity="0..1" />
+          <End Type="devinmr3Model.REL_ROL_PUNTOMEDICION" Role="REL_ROL_PUNTOMEDICION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAT_PUNTO_MEDICION">
+              <PropertyRef Name="IdPuntoMedicion" />
+            </Principal>
+            <Dependent Role="REL_ROL_PUNTOMEDICION">
+              <PropertyRef Name="IdPuntoMedicion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CAT_NIVEL_LLUVIA">
+          <Key>
+            <PropertyRef Name="IdNivelLluvia" />
+          </Key>
+          <Property Name="IdNivelLluvia" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RangoMin" Type="Int32" />
+          <Property Name="RangMax" Type="Int32" />
+          <Property Name="IntensidadName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Imagen" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="CAT_REGION">
+          <Key>
+            <PropertyRef Name="IdRegion" />
+          </Key>
+          <Property Name="IdRegion" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RegionName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1991,7 +2124,6 @@
                 <ScalarProperty Name="UnidadMedidaShort" ColumnName="UnidadMedidaShort" />
                 <ScalarProperty Name="CondicionName" ColumnName="CondicionName" />
                 <ScalarProperty Name="PathCodicion" ColumnName="PathCodicion" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -2238,6 +2370,39 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="REL_ROL_PUNTOMEDICION">
+            <EntityTypeMapping TypeName="devinmr3Model.REL_ROL_PUNTOMEDICION">
+              <MappingFragment StoreEntitySet="REL_ROL_PUNTOMEDICION">
+                <ScalarProperty Name="ServerLastModifiedDate" ColumnName="ServerLastModifiedDate" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IdPuntoMedicion" ColumnName="IdPuntoMedicion" />
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="IdRel" ColumnName="IdRel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAT_NIVEL_LLUVIA">
+            <EntityTypeMapping TypeName="devinmr3Model.CAT_NIVEL_LLUVIA">
+              <MappingFragment StoreEntitySet="CAT_NIVEL_LLUVIA">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="IntensidadName" ColumnName="IntensidadName" />
+                <ScalarProperty Name="RangMax" ColumnName="RangMax" />
+                <ScalarProperty Name="RangoMin" ColumnName="RangoMin" />
+                <ScalarProperty Name="IdNivelLluvia" ColumnName="IdNivelLluvia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAT_REGION">
+            <EntityTypeMapping TypeName="devinmr3Model.CAT_REGION">
+              <MappingFragment StoreEntitySet="CAT_REGION">
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="RegionName" ColumnName="RegionName" />
+                <ScalarProperty Name="IdRegion" ColumnName="IdRegion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2346,6 +2511,11 @@
         <AssociationConnector Association="devinmr3Model.FK__CAT_PUNTO__IdPun__4865BE2A" />
         <EntityTypeShape EntityType="devinmr3Model.CI_TRACKING" Width="1.5" PointX="13" PointY="21.75" />
         <AssociationConnector Association="devinmr3Model.FK__CI_TRACKI__IdUsu__7D0E9093" />
+        <EntityTypeShape EntityType="devinmr3Model.REL_ROL_PUNTOMEDICION" Width="1.5" PointX="13" PointY="7.625" />
+        <AssociationConnector Association="devinmr3Model.FK__REL_ROL_P__IdRol__15DB09B4" />
+        <AssociationConnector Association="devinmr3Model.FK__REL_ROL_P__IdPun__16CF2DED" />
+        <EntityTypeShape EntityType="devinmr3Model.CAT_NIVEL_LLUVIA" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="devinmr3Model.CAT_REGION" Width="1.5" PointX="2.75" PointY="0.75" />
       </Diagram>
     </Diagrams>
   </Designer>

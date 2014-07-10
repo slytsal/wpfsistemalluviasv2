@@ -39,11 +39,11 @@ namespace Protell.UI.v2
             InfoLoad();
             vmMain = new MainViewModel();
             vmMain.Usuario = usuarioModel;
-            vmMain.GetSync();
+            vmMain.GetSyncThread();
             vmMain.PropertyChanged += vmMain_PropertyChanged;
             SyncRecurrentSingleton.Instance.PropertyChanged += Instance_PropertyChanged;
             this.DataContext = vmMain;
-            vmMain.GetSync();
+            vmMain.GetSyncThread();
 
             DTimerUploadProcess = new DispatcherTimer();
             DTimerUploadProcess.Tick += new EventHandler(DTimerUploadProcess_Tick);
@@ -117,11 +117,12 @@ namespace Protell.UI.v2
             {
                 if(e.PropertyName=="IsRun")
                 {
+                    vmMain.GetSyncThread();
                     Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                     {
                         grdProgress.Visibility = (SyncRecurrentSingleton.Instance.IsRun) ? Visibility.Visible : Visibility.Collapsed;
                     }));
-                    vmMain.GetSync();
+                    vmMain.GetSyncThread();
                 }
                 if (e.PropertyName == "IsRestart")
                 {
@@ -129,7 +130,7 @@ namespace Protell.UI.v2
                     {
                         Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                         {
-                            MessageBox.Show("Se detecto una actualizacion en los catalogos. La aplicacion se cerrara automaticamente al presionar el boton OK.", "Informacion", MessageBoxButton.OK, MessageBoxImage.Exclamation, MessageBoxResult.OK);
+                            MessageBox.Show("Se detecto una actualización en los catálogos. La aplicación se cerrara automáticamente al presionar el botón Aceptar.", "Información", MessageBoxButton.OK, MessageBoxImage.Exclamation, MessageBoxResult.OK);
                             Process.GetCurrentProcess().Kill();
                         }));
                     }

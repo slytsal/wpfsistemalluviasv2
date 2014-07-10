@@ -53,10 +53,13 @@
     <Compile Include="AppSettingsModel.cs" />
     <Compile Include="AppUsuarioModel.cs" />
     <Compile Include="AppUsuarioRolModel.cs" />
+    <Compile Include="CatNivelLluviaModel.cs" />
     <Compile Include="CatPuntosMedicionShortNameModel.cs" />
+    <Compile Include="CatRegionModel.cs" />
     <Compile Include="CiRegistroPOCO.cs" />
     <Compile Include="CnfSettingModel.cs" />
     <Compile Include="ProtocoloModel.cs" />
+    <Compile Include="RelRolPuntoMedicionModel.cs" />
     <Compile Include="SyncModels\AppSettingsResultModel.cs" />
     <Compile Include="SyncModels\AppUsuarioResultModel.cs" />
     <Compile Include="SyncModels\CatAccionActualResultModel.cs" />

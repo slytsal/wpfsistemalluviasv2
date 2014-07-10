@@ -556,5 +556,23 @@ namespace Protell.Service.Services
 
             return path;
         }
+
+
+        public ObservableCollection<RelRolPuntoMedicionModel> Download_RelRolPuntoMedicion(long LastModifiedDate, long ServerLastModifiedDate)
+        {
+            ObservableCollection<RelRolPuntoMedicionModel> items = new ObservableCollection<RelRolPuntoMedicionModel>();
+            try
+            {
+                using (var repository=new RelRolPuntoMedicionRepository())
+                {
+                    items = repository.GetRelPuntoMedicion(LastModifiedDate, ServerLastModifiedDate);
+                }
+            }
+            catch (Exception)
+            {
+                                
+            }
+            return items;
+        }
     }
 }

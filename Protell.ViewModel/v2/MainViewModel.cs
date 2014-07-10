@@ -7,6 +7,7 @@ using Protell.DAL.Repository.v2;
 using System.Configuration;
 using Protell.DAL.Repository;
 using System.Windows;
+using System.Threading;
 
 
 namespace Protell.ViewModel.v2
@@ -105,10 +106,33 @@ namespace Protell.ViewModel.v2
        private string _LastSync;
        public const string LastSyncPropertyName = "LastSync";
 
+       public string BackgroundConnection
+       {
+           get { return _BackgroundConnection; }
+           set
+           {
+               if (_BackgroundConnection != value)
+               {
+                   _BackgroundConnection = value;
+                   OnPropertyChanged(BackgroundConnectionPropertyName);
+               }
+           }
+       }
+       private string _BackgroundConnection;
+       public const string BackgroundConnectionPropertyName = "BackgroundConnection";
+
        public void GetSync()
        {
            SyncLogRepository sync=new SyncLogRepository();
            this.LastSync = sync.GetLastSync();
+           this.BackgroundConnection = (sync.PingServer()) ? "#57339A1B" : "#57FB0707";           
+       }
+
+       public void GetSyncThread()
+       {
+           Thread hilo = new Thread(GetSync);
+           hilo.IsBackground = true;
+           hilo.Start();
        }
 
        public void AttmpCloseSesion()

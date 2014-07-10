@@ -39,7 +39,7 @@
         
         <!--Puntos de medición-->
         <DataGrid Grid.Row="1" HorizontalAlignment="Stretch"                   
-                 ItemsSource="{Binding Registros, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,NotifyOnSourceUpdated=True}"
+                 ItemsSource="{Binding Registros, Mode=TwoWay, NotifyOnSourceUpdated=False}"
                  SelectedItem="{Binding pSelectedItem,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                 
                  Name="ListRegistros"  Margin="5" MouseDoubleClick="ListRegistros_MouseDoubleClick"                                    
                  AutoGenerateColumns="False" IsReadOnly="True"                  
@@ -64,7 +64,7 @@
                 <DataGridTextColumn Header="Fecha Captura" Binding="{Binding FechaCaptura,StringFormat={}{0:dd/MM/yyyy}}"/>
                 <DataGridTextColumn Header="Fecha Numerica" Binding="{Binding FechaNumerica}" Visibility="Collapsed"/>
                 <DataGridTextColumn Header="Hora" Binding="{Binding HoraMilitar}"/>
-                <DataGridTextColumn Header="Valor" Binding="{Binding Valor}" Visibility="{Binding Path=PUNTOMEDICION.Visibility, Source={StaticResource proxy}}"/>
+                <DataGridTextColumn Header="Valor" Binding="{Binding Valor}"/>
                 <DataGridTextColumn Header="Unidad Medida" Binding="{Binding PUNTOMEDICION.UNIDADMEDIDA.UnidadMedidaShort, Mode=TwoWay}"/>
                 <DataGridTextColumn Header="Acción Actual" Binding="{Binding AccionActual}" Width="*"/>
             </DataGrid.Columns>

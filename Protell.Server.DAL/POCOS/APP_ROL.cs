@@ -90,6 +90,38 @@ namespace Protell.Server.DAL.POCOS
             }
         }
         private ICollection<APP_USUARIO_ROL> _aPP_USUARIO_ROL;
+    
+        public virtual ICollection<REL_ROL_PUNTOMEDICION> REL_ROL_PUNTOMEDICION
+        {
+            get
+            {
+                if (_rEL_ROL_PUNTOMEDICION == null)
+                {
+                    var newCollection = new FixupCollection<REL_ROL_PUNTOMEDICION>();
+                    newCollection.CollectionChanged += FixupREL_ROL_PUNTOMEDICION;
+                    _rEL_ROL_PUNTOMEDICION = newCollection;
+                }
+                return _rEL_ROL_PUNTOMEDICION;
+            }
+            set
+            {
+                if (!ReferenceEquals(_rEL_ROL_PUNTOMEDICION, value))
+                {
+                    var previousValue = _rEL_ROL_PUNTOMEDICION as FixupCollection<REL_ROL_PUNTOMEDICION>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupREL_ROL_PUNTOMEDICION;
+                    }
+                    _rEL_ROL_PUNTOMEDICION = value;
+                    var newValue = value as FixupCollection<REL_ROL_PUNTOMEDICION>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupREL_ROL_PUNTOMEDICION;
+                    }
+                }
+            }
+        }
+        private ICollection<REL_ROL_PUNTOMEDICION> _rEL_ROL_PUNTOMEDICION;
 
         #endregion
 
@@ -108,6 +140,28 @@ namespace Protell.Server.DAL.POCOS
             if (e.OldItems != null)
             {
                 foreach (APP_USUARIO_ROL item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.APP_ROL, this))
+                    {
+                        item.APP_ROL = null;
+                    }
+                }
+            }
+        }
+    
+        private void FixupREL_ROL_PUNTOMEDICION(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach (REL_ROL_PUNTOMEDICION item in e.NewItems)
+                {
+                    item.APP_ROL = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (REL_ROL_PUNTOMEDICION item in e.OldItems)
                 {
                     if (ReferenceEquals(item.APP_ROL, this))
                     {

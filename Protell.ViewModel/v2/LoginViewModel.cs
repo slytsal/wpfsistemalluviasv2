@@ -205,7 +205,11 @@ namespace Protell.ViewModel.v2
                     bool x = false;
                     user = repository.GetCurrentUser();
                     if (user != null)
-                        Usuario = repository.Download(user.UsuarioCorreo, user.UsuarioPwd, IsSaveSesion);
+                    {
+                        UsuarioModel userTmp=repository.Download(user.UsuarioCorreo, user.UsuarioPwd, IsSaveSesion);
+                        Usuario = (userTmp != null) ? userTmp : user;
+                        userTmp = null;
+                    }                        
                 }
                 
             }

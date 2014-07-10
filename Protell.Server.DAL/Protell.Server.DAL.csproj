@@ -148,15 +148,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
-    <Compile Include="POCOS\PocosProtell1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PocosProtell.tt</DependentUpon>
-    </Compile>
     <Compile Include="POCOS\REL_ESTRUCTURA_DEPENDENCIA.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
     <Compile Include="POCOS\REL_EST_PUNTOMED.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\REL_ROL_PUNTOMEDICION.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
     <Compile Include="POCOS\spCommitBulkUpsertCiRegistroUploaded_Result.cs">
@@ -236,6 +234,7 @@
     <Compile Include="Repository\v2\CatAccionActualRepository.cs" />
     <Compile Include="Repository\v2\CatDependenciaRepository.cs" />
     <Compile Include="Repository\v2\CatEstructuraRepository.cs" />
+    <Compile Include="Repository\v2\CatNivelLluviaRepository.cs" />
     <Compile Include="Repository\v2\CatOperacionEstructuraRepository.cs" />
     <Compile Include="Repository\v2\CatProtocoloRepository.cs" />
     <Compile Include="Repository\v2\CatPuntoMedicionMinMaxRepository.cs" />
@@ -250,6 +249,7 @@
     <Compile Include="Repository\v2\RegistroRepository.cs" />
     <Compile Include="Repository\v2\RelEstPuntoMedRepository.cs" />
     <Compile Include="Repository\v2\RelEstructuraDependenciaRepository.cs" />
+    <Compile Include="Repository\v2\RelRolPuntoMedicionRepository.cs" />
     <Compile Include="Repository\v2\ServerSQLLogger.cs" />
     <Compile Include="Repository\v2\SyncRepository.cs" />
     <Compile Include="Repository\v2\TipoPuntoMedicionRepository.cs" />
@@ -269,10 +269,6 @@
     <None Include="POCOS\PocosProtell.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PocosProtell.Context.cs</LastGenOutput>
-    </None>
-    <None Include="POCOS\PocosProtell.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>PocosProtell1.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

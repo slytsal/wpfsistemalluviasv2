@@ -465,12 +465,16 @@ namespace Protell.ViewModel.v2
             TimeZoneInfo mexZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time (Mexico)");
             DateTime utc = DateTime.UtcNow;
             DateTime convertMex = TimeZoneInfo.ConvertTimeFromUtc(utc, mexZone);
-            long actual = long.Parse(String.Format("{0:yyyyMMdd}", convertMex));
-            long selected = long.Parse(String.Format("{0:yyyyMMdd}", this.FechaCaptura));
-            x = (selected <= actual) ? true : false;
+            long actual = long.Parse(String.Format("{0:yyyyMMddHHmm}", convertMex));
+            //long selected = long.Parse(String.Format("{0:yyyyMMdd}", this.FechaCaptura));
+
+            this.RegistroItem.FechaNumerica = long.Parse(String.Format("{0:yyyyMMdd}", this.FechaCaptura) + "" + this.SelectedHora + this.SelectedMinuto);
+
+
+            x = (RegistroItem.FechaNumerica <= actual) ? true : false;
             if (!x)
             {
-                DialogService.Show("No se pueden registrar fechas posteriores a " + convertMex.ToShortDateString());
+                DialogService.Show("No se pueden registrar fechas posteriores a " + convertMex.ToLongDateString());
             }
             return x;
         }

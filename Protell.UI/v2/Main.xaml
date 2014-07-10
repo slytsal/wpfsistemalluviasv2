@@ -49,15 +49,14 @@
                         </Grid.ColumnDefinitions>
                         <Border Grid.Column="1" Margin="5"
                                 BorderBrush="SkyBlue" BorderThickness="1" Cursor="Hand">
-                            <Grid>
+                            <Grid Background="{Binding BackgroundConnection,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.Column="0" 
                                       HorizontalAlignment="Center" 
-                                      VerticalAlignment="Stretch"
-                                      Background="#BB339239">
+                                      VerticalAlignment="Stretch">
                                     <!--<controls:MetroProgressBar IsIndeterminate="True"
                                    Foreground="Gray" Height="25" Width="25"
                                     Visibility="Visible" />-->
@@ -84,7 +83,7 @@
                                         </Image>
                                     </Canvas>
                                 </Grid>
-                                <Grid Grid.Column="1"  Background="#57339A1B" MouseDown="Image_MouseDown">
+                                <Grid Grid.Column="1"  MouseDown="Image_MouseDown">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="AUTO"/>                                        
                                         <RowDefinition Height="*"/>
