@@ -94,13 +94,13 @@ namespace Protell.UI.v2
             string res = "";
         }
 
-        void TimerNuevo_Tick(object sender, EventArgs e)
-        {
-            npmv = new NuevoPuntoMedicion();
-            npmv.txbTitulo.Text = "Nueva Captura";
-            npmv.Owner = this;
-            npmv.ShowDialog();            
-        }        
+        //void TimerNuevo_Tick(object sender, EventArgs e)
+        //{
+        //    npmv = new NuevoPuntoMedicion();
+        //    npmv.txbTitulo.Text = "Nueva Captura";
+        //    npmv.Owner = this;
+        //    npmv.ShowDialog();            
+        //}        
         void vm_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Usuario")

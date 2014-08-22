@@ -57,6 +57,7 @@ namespace Protell.ViewModel.Sync
         {
             //TODO :  Validar inicializacion de hilo para establecerlo como background
             this.syncThread = new Thread(() => DoWork());
+            this.syncThread.IsBackground = true;
         }
 
         //Propiedades

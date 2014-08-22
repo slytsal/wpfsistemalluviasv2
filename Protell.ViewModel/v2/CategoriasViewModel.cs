@@ -21,9 +21,10 @@ namespace Protell.ViewModel.v2
 
 
         #region Constructor
-        public CategoriasViewModel()
+        public CategoriasViewModel( UsuarioModel user)
         {
             this.PuntosMedicion = new ObservableCollection<PuntoMedicionModel>();
+            this.Usuario = user;
         }
         #endregion
 
@@ -33,6 +34,35 @@ namespace Protell.ViewModel.v2
 
         #region Propiedades
 
+        public bool IsSave
+        {
+            get { return _IsSave; }
+            set
+            {
+                if (_IsSave != value)
+                {
+                    _IsSave = value;
+                    OnPropertyChanged(IsSavePropertyName);
+                }
+            }
+        }
+        private bool _IsSave;
+        public const string IsSavePropertyName = "IsSave";
+
+        public UsuarioModel Usuario
+        {
+            get { return _Usuario; }
+            set
+            {
+                if (_Usuario != value)
+                {
+                    _Usuario = value;
+                    OnPropertyChanged(UsuarioPropertyName);
+                }
+            }
+        }
+        private UsuarioModel _Usuario;
+        public const string UsuarioPropertyName = "Usuario";    
         
         public ICollectionView View
         {

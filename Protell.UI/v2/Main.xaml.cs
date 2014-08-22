@@ -155,7 +155,7 @@ namespace Protell.UI.v2
                         CategoriasViewModel vmPuntosMedicion;
                         if (!this.PuntosMedicionCategorias.ContainsKey(PUNTOSMEDICION))
                         {
-                            vmPuntosMedicion = new CategoriasViewModel();
+                            vmPuntosMedicion = new CategoriasViewModel(vmMain.Usuario);
                             vmPuntosMedicion.PropertyChanged += vmPuntosMedicion_PropertyChanged;
                             vmPuntosMedicion.GetPuntosMedicion(PUNTOSMEDICION);
                             PuntosMedicionCategorias.Add(PUNTOSMEDICION, vmPuntosMedicion);
@@ -168,7 +168,7 @@ namespace Protell.UI.v2
                         CategoriasViewModel vmLumbreras;
                         if (!this.PuntosMedicionCategorias.ContainsKey(LUMBRERAS))
                         {
-                            vmLumbreras = new CategoriasViewModel();
+                            vmLumbreras = new CategoriasViewModel(vmMain.Usuario);
                             vmLumbreras.PropertyChanged += vmLumbreras_PropertyChanged;
                             vmLumbreras.GetPuntosMedicion(LUMBRERAS);
                             PuntosMedicionCategorias.Add(LUMBRERAS, vmLumbreras);
@@ -181,7 +181,7 @@ namespace Protell.UI.v2
                         CategoriasViewModel vmEstPluviograficas;
                         if (!this.PuntosMedicionCategorias.ContainsKey(ESTPLUVIOGRAFICAS))
                         {
-                            vmEstPluviograficas = new CategoriasViewModel();
+                            vmEstPluviograficas = new CategoriasViewModel(vmMain.Usuario);
                             vmEstPluviograficas.PropertyChanged += vmEstPluviograficas_PropertyChanged;
                             vmEstPluviograficas.GetPuntosMedicion(ESTPLUVIOGRAFICAS);
                             PuntosMedicionCategorias.Add(ESTPLUVIOGRAFICAS, vmEstPluviograficas);                            
@@ -208,7 +208,8 @@ namespace Protell.UI.v2
                     if(!this.PuntosMedicionRegistros.ContainsKey(vm.SelectedItem.IdPuntoMedicion.ToString()))
                     {
                         pmEstPluviograficas = new PuntosMedicionView();
-                        pmEstPluviograficas.init(this,vmMain, vm.SelectedItem);                        
+                        //pmEstPluviograficas.init(this,vmMain, vm.SelectedItem);                        
+                        pmEstPluviograficas.init(this, vm);
                         this.PuntosMedicionRegistros.Add(vm.SelectedItem.IdPuntoMedicion.ToString(), pmEstPluviograficas);                        
                     }
                     pmEstPluviograficas = PuntosMedicionRegistros[vm.SelectedItem.IdPuntoMedicion.ToString()];                    
@@ -229,7 +230,8 @@ namespace Protell.UI.v2
                     if (!this.PuntosMedicionRegistros.ContainsKey(vm.SelectedItem.IdPuntoMedicion.ToString()))
                     {
                         pmLumbreras = new PuntosMedicionView();
-                        pmLumbreras.init(this,vmMain, vm.SelectedItem);
+                        pmLumbreras.init(this, vm);
+                        //pmLumbreras.init(this,vmMain, vm.SelectedItem);
                         this.PuntosMedicionRegistros.Add(vm.SelectedItem.IdPuntoMedicion.ToString(), pmLumbreras);
                     }
                     pmLumbreras = PuntosMedicionRegistros[vm.SelectedItem.IdPuntoMedicion.ToString()];
@@ -251,7 +253,8 @@ namespace Protell.UI.v2
                     if (!this.PuntosMedicionRegistros.ContainsKey(vm.SelectedItem.IdPuntoMedicion.ToString()))
                     {
                         pmPuntosMedicion = new PuntosMedicionView();
-                        pmPuntosMedicion.init(this,vmMain, vm.SelectedItem);
+                        pmPuntosMedicion.init(this, vm);
+                        //pmPuntosMedicion.init(this,vmMain, vm.SelectedItem);
                         this.PuntosMedicionRegistros.Add(vm.SelectedItem.IdPuntoMedicion.ToString(), pmPuntosMedicion);
                     }
                     pmPuntosMedicion = PuntosMedicionRegistros[vm.SelectedItem.IdPuntoMedicion.ToString()];

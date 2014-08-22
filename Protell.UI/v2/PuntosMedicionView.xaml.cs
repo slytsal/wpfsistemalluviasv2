@@ -15,19 +15,31 @@ namespace Protell.UI.v2
 
         MainViewModel vm;
         Main parent;
+        CategoriasViewModel categoriaViewModel;
+
 
         PuntosMedicionV2ViewModel pmViewModel = new PuntosMedicionV2ViewModel();
 
         public PuntosMedicionView()
         {
-            InitializeComponent();
-            
+            InitializeComponent();            
         }
      
         public void EnRoll()
         {
-            //if(vm!=null)
+            if(vm!=null)
                 vm.PropertyChanged += vm_PropertyChanged;
+            else
+                categoriaViewModel.PropertyChanged += categoriaViewModel_PropertyChanged;
+        }
+
+        void categoriaViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "IsSave")
+            {
+                if (categoriaViewModel.IsSave)
+                    pmViewModel.LoadPuntoMedicion(pmViewModel.SelectetPuntoMedicionItem);
+            }
         }
 
         void vm_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -45,8 +57,8 @@ namespace Protell.UI.v2
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
-            NuevoPuntoMedicion npmv = new NuevoPuntoMedicion(vm);
+
+            NuevoPuntoMedicion npmv = (vm != null) ? new NuevoPuntoMedicion(vm) : new NuevoPuntoMedicion(categoriaViewModel);
             npmv.txbTitulo.Text = "Nueva Captura";
             npmv.Owner = parent;
             npmv.ShowDialog();
@@ -59,21 +71,29 @@ namespace Protell.UI.v2
             EnRoll();
         }
 
+        public void init(Main window,CategoriasViewModel model)
+        {
+            this.parent = window;
+            this.categoriaViewModel = model;
+            pmViewModel.LoadPuntoMedicion(model.SelectedItem);
+            this.DataContext = pmViewModel;
+            EnRoll();
+        }
+
         public void init(Main window,MainViewModel viewModel,PuntoMedicionModel model )
         {
             this.parent = window;
             this.vm = viewModel;            
             pmViewModel.LoadPuntoMedicion(model);
             this.DataContext = pmViewModel;
-            EnRoll();
-            
+            EnRoll();            
         }
 
         private void ListRegistros_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (pmViewModel.pSelectedItem != null)
             {
-                NuevoPuntoMedicion npmv = new NuevoPuntoMedicion(pmViewModel.pSelectedItem, vm);
+                NuevoPuntoMedicion npmv = new NuevoPuntoMedicion(pmViewModel.pSelectedItem,categoriaViewModel);
                 npmv.txbTitulo.Text = "Modificación de Captura";
                 npmv.Owner = parent;
                 npmv.ShowDialog();

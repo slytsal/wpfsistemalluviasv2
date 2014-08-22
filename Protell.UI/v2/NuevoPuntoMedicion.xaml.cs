@@ -16,15 +16,16 @@ namespace Protell.UI.v2
         MainViewModel viewModel;
 
         CapturaViewModel capturaViewModel;//= new CapturaViewModel();
+        CategoriasViewModel categoriaViewModel;
         
         //Editar registro existente
-        public NuevoPuntoMedicion(RegistroModel registroModel,MainViewModel vm)
+        public NuevoPuntoMedicion(RegistroModel registroModel, CategoriasViewModel vm)
         {
             InitializeComponent();
             capturaViewModel = new CapturaViewModel();
             capturaViewModel.PropertyChanged += capturaViewModel_PropertyChanged;
-            viewModel = vm;            
-            capturaViewModel.InitEdit(registroModel,vm);
+            categoriaViewModel = vm;
+            capturaViewModel.InitEdit(registroModel, categoriaViewModel);
             this.DataContext = capturaViewModel;
 
             //dtpFecha.Focus();            
@@ -39,8 +40,10 @@ namespace Protell.UI.v2
             {
                 if (capturaViewModel.IsSave)
                 {
-                    viewModel.IsSave = true;
-                    viewModel.IsSave = false;
+                    //viewModel.IsSave = true;
+                    //viewModel.IsSave = false;
+                    categoriaViewModel.IsSave = true;
+                    categoriaViewModel.IsSave = false;
                     this.Close();
 
                 }
@@ -48,15 +51,15 @@ namespace Protell.UI.v2
             }
         }
 
-        public NuevoPuntoMedicion()
-        {
-            InitializeComponent();
-            capturaViewModel = new CapturaViewModel();
-            capturaViewModel.PropertyChanged += capturaViewModel_PropertyChanged;
-            capturaViewModel.InitDefault(null);
-            this.DataContext = capturaViewModel;
-            dtpFecha.Focus();            
-        }
+        //public NuevoPuntoMedicion()
+        //{
+        //    InitializeComponent();
+        //    capturaViewModel = new CapturaViewModel();
+        //    capturaViewModel.PropertyChanged += capturaViewModel_PropertyChanged;
+        //    capturaViewModel.InitDefault(null);
+        //    this.DataContext = capturaViewModel;
+        //    dtpFecha.Focus();            
+        //}
         
         public NuevoPuntoMedicion(MainViewModel vm)
         {
@@ -68,6 +71,19 @@ namespace Protell.UI.v2
             dtpFecha.Focus();
             this.DataContext = capturaViewModel;
            
+        }
+
+      
+        public NuevoPuntoMedicion(CategoriasViewModel vm)
+        {
+            InitializeComponent();
+            capturaViewModel = new CapturaViewModel();            
+            capturaViewModel.PropertyChanged += capturaViewModel_PropertyChanged;
+            capturaViewModel.InitDefault(vm);
+            categoriaViewModel = vm;
+            dtpFecha.Focus();
+            this.DataContext = capturaViewModel;
+
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)

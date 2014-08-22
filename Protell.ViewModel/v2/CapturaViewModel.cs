@@ -20,6 +20,7 @@ namespace Protell.ViewModel.v2
         CiRegistroRepository registroRepository = new CiRegistroRepository();      
         
         MainViewModel  vm;
+        CategoriasViewModel categoriasViewModel;
 
         /// <summary>
         /// Constructor
@@ -32,7 +33,7 @@ namespace Protell.ViewModel.v2
         }
        
         //editar registro existente
-        public void InitEdit(RegistroModel registro, MainViewModel vmodel)
+        public void InitEdit(RegistroModel registro, CategoriasViewModel vmodel)
         {
             this.RegistroItem = registro;
             this.FechaCaptura = RegistroItem.FechaCaptura;
@@ -40,7 +41,7 @@ namespace Protell.ViewModel.v2
             this.Valor = RegistroItem.Valor;
             this.AccionActual = RegistroItem.AccionActual;
             this.SelectedItemCondicion = RegistroItem.Condicion;
-            vm = vmodel;
+            categoriasViewModel = vmodel;
 
         }
 
@@ -51,6 +52,11 @@ namespace Protell.ViewModel.v2
             DefaultValues();
         }
 
+        public void InitDefault(CategoriasViewModel vmodel)
+        {
+            categoriasViewModel = vmodel;
+            DefaultValues();
+        }
 
         //----------Propiedades de Captura--------------------------------------------------------
         public DateTime FechaCaptura
@@ -311,11 +317,11 @@ namespace Protell.ViewModel.v2
 
             this.RegistroItem = new RegistroModel();
             this.RegistroItem.IdRegistro = long.Parse(Unid);
-            this.RegistroItem.IdPuntoMedicion = vm.SelectedCategoria.IdPuntoMedicion;
+            this.RegistroItem.IdPuntoMedicion = (vm != null) ? vm.SelectedCategoria.IdPuntoMedicion : categoriasViewModel.SelectedItem.IdPuntoMedicion;
             this.FechaCaptura = DateTime.Parse(string.Format("{0:dd/MM/yyyy}", dt));
             
             this.Valor = 0;
-            this.RegistroItem.PUNTOMEDICION = vm.SelectedCategoria;
+            this.RegistroItem.PUNTOMEDICION = (vm != null) ? vm.SelectedCategoria : categoriasViewModel.SelectedItem;
             this.AccionActual = accionRepository.GetAccionActual(RegistroItem.IdPuntoMedicion);
             SetFechaNumerica();
             
@@ -403,7 +409,7 @@ namespace Protell.ViewModel.v2
         public bool CanSave()
         {
             bool x = false;
-            if(this.RegistroItem!=null && this.vm.Usuario!=null)
+            if(this.RegistroItem!=null) //&& this.vm.Usuario!=null)
             {
                 x = true;
             }
@@ -430,13 +436,13 @@ namespace Protell.ViewModel.v2
                     if (x)
                     {
 
-                        registroRepository.Insert(this.RegistroItem, vm.Usuario);
+                        registroRepository.Insert(this.RegistroItem, categoriasViewModel.Usuario);
                         IsSave = true;
                     }
                 }
                 else
                 {
-                    registroRepository.Insert(this.RegistroItem, vm.Usuario);
+                    registroRepository.Insert(this.RegistroItem, categoriasViewModel.Usuario);
                     IsSave = true;
                 }
             }

@@ -51,7 +51,9 @@ namespace Protell.UI.v2
             //{
             //    //vm.SelectedItemTabControl = (vm.cEstPluviograficas.SelectedItem != null) ? vm.cEstPluviograficas.SelectedItem : vm.cPuntosMedicion.SelectedItemAux;
             //}
-            NuevoPuntoMedicion npmv = new NuevoPuntoMedicion(vm);
+            var item=ListPuntoMedicion.DataContext as CategoriasViewModel;
+            
+            NuevoPuntoMedicion npmv = new NuevoPuntoMedicion(item);
             npmv.txbTitulo.Text = "Nueva Captura";
             npmv.Owner = parent;
             npmv.ShowDialog();

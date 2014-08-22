@@ -146,6 +146,16 @@ namespace Protell.Service.Services
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
         ObservableCollection<RelRolPuntoMedicionModel> Download_RelRolPuntoMedicion(long LastModifiedDate, long ServerLastModifiedDate);
 
+        [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
+        AjaxDictionary<string, object> Download_IsoyetaRango();
 
+        [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
+        AjaxDictionary<string, object> Download_CatNivelLluvia();
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
+        AjaxDictionary<string, object> Download_CatRegion();
     }
 }

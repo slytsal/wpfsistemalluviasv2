@@ -76,13 +76,13 @@ namespace Protell.ViewModel.v2
             this._Confirmation = con;
             this.usuarioRepository = new UsuarioRepository();
             //Categorias
-            cPuntosMedicion = new CategoriasViewModel();
-            cPuntosMedicion.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(cPuntosMedicion_PropertyChanged);            
+            cPuntosMedicion = new CategoriasViewModel(this.Usuario);
+            cPuntosMedicion.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(cPuntosMedicion_PropertyChanged);
 
-            cLumbreras = new CategoriasViewModel();
+            cLumbreras = new CategoriasViewModel(this.Usuario);
             cLumbreras.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(cLumbreras_PropertyChanged);
 
-            cEstPluviograficas = new CategoriasViewModel();
+            cEstPluviograficas = new CategoriasViewModel(this.Usuario);
             cEstPluviograficas.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(cEstPluviograficas_PropertyChanged);
 
             //PuntosMedicion

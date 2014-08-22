@@ -71,6 +71,7 @@ namespace Protell.ViewModel.Sync
         {
             foreach (Thread item in listSyncThread)
             {
+                item.IsBackground = true;
                 item.Start();                
             }
         }

@@ -88,6 +88,9 @@
     <Compile Include="POCOS\CAT_LINKS.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
+    <Compile Include="POCOS\CAT_NIVEL_LLUVIA.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
     <Compile Include="POCOS\CAT_OPERACION_ESTRUCTURA.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
@@ -101,6 +104,9 @@
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
     <Compile Include="POCOS\CAT_PUNTO_MEDICION_MAX_MIN.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\CAT_REGION.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
     <Compile Include="POCOS\CAT_SERVER_LASTDATA.cs">
@@ -239,6 +245,7 @@
     <Compile Include="Repository\v2\CatProtocoloRepository.cs" />
     <Compile Include="Repository\v2\CatPuntoMedicionMinMaxRepository.cs" />
     <Compile Include="Repository\v2\CatPuntosMedicionShortNameRepository.cs" />
+    <Compile Include="Repository\v2\CatRegionRepository.cs" />
     <Compile Include="Repository\v2\CatSistemaRepository.cs" />
     <Compile Include="Repository\v2\CiRegistroRepository.cs" />
     <Compile Include="Repository\v2\CondicionRepository.cs" />

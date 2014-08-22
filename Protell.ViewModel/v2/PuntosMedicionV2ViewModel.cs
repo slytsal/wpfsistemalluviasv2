@@ -90,6 +90,7 @@ namespace Protell.ViewModel.v2
             }
         }
 
+
         public RelayCommand VerMasCommand
         {
             get 

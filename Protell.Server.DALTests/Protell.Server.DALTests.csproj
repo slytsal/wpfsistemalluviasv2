@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\v2\AppUsuarioRepositoryTests.cs" />
+    <Compile Include="Repository\v2\CatNivelLluviaRepositoryTests.cs" />
     <Compile Include="Repository\v2\CiRegistroRepositoryTests.cs" />
     <Compile Include="Repository\v2\HashableDataRepositoryTests.cs" />
     <Compile Include="Repository\v2\RegistroRepositoryTests.cs" />

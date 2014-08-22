@@ -574,5 +574,58 @@ namespace Protell.Service.Services
             }
             return items;
         }
+
+        public AjaxDictionary<string, object> Download_IsoyetaRango()
+        {
+            AjaxDictionary<string, object> isoyetaRango = new AjaxDictionary<string, object>();
+
+            try
+            {
+                HashableDataRepository repository = new HashableDataRepository();
+                isoyetaRango = repository.GetIsoyetaRange();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("IMC_ERR_MSG: No se pudieron obtener los rangos de isoyetas", ex);
+            }
+
+            return isoyetaRango;
+        }
+
+
+        public AjaxDictionary<string, object> Download_CatNivelLluvia()
+        {
+            AjaxDictionary<string, object> res = new AjaxDictionary<string, object>();
+            try
+            {
+                using (var repository=new CatNivelLluviaRepository())
+                {
+                    res = repository.GetNivelLluvia();
+                }
+            }
+            catch (Exception ex)
+            {
+                ;
+            }
+            return res;
+        }
+
+
+        public AjaxDictionary<string, object> Download_CatRegion()
+        {
+            AjaxDictionary<string, object> res = new AjaxDictionary<string, object>();
+            try
+            {
+                using (var repository=new CatRegionRepository())
+                {
+                    res = repository.GetCatRegion();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("IMC_ERR_MSG:", ex);
+            }
+            return res;
+        }
     }
 }
