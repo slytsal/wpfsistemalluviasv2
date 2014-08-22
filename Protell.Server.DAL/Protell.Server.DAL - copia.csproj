@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8D302A8D-50A9-488B-812D-77C96073EFC3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Protell.Server.DAL</RootNamespace>
+    <AssemblyName>Protell.Server.DAL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\DLL inventory\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="JsonSerializables\AjaxDictionary.cs" />
+    <Compile Include="JSON\SerializerJson.cs" />
+    <Compile Include="POCOS\APP_ROL.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\APP_SETTINGS.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\APP_USUARIO.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\APP_USUARIO_ROL.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\CAT_ACCION_ACTUAL.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\CAT_AGRUPADOR_ISOYETA.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\CAT_CONDPRO.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\CAT_DEPENDENCIA.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\CAT_ESTRUCTURA.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\CAT_LINKS.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\CAT_OPERACION_ESTRUCTURA.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\CAT_PROTOCOLO.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\CAT_PUNTOS_MEDICION_SHORTNAME.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\CAT_PUNTO_MEDICION.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\CAT_PUNTO_MEDICION_MAX_MIN.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\CAT_SERVER_LASTDATA.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\CAT_SISTEMA.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\CAT_SYNC.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\CAT_TIPO_PUNTO_MEDICION.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\CAT_UNIDAD_MEDIDA.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\CAT_UPLOAD_LOG.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\CI_REGISTRO.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\CI_TRACKING.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\EntityProtell.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityProtell.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\GdGetDatosEstructuras_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\MODIFIEDDATA.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\PocosProtell.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PocosProtell.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\PocosProtell.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\REL_ESTRUCTURA_DEPENDENCIA.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\REL_EST_PUNTOMED.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\REL_ROL_PUNTOMEDICION.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spCommitBulkUpsertCiRegistroUploaded_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spDownloadCiRegistroOnDemand_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spDownloadCiRegistroRecurrent_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\SpGdGetDatosEstructuras2_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spGetHashableGraficaLumbreras_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spGetHashableGraficaPromedio_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spGetHashableGraficaPuntoMedicion_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spGetHashableIsoyetaRangosLabels_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spGetHashablePuntoMedicion1_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spGetHashablePuntoMedicionAttributes_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spGetHashablePuntoMedicion_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spGetHashableUltimaMedicion1_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spGetHashableUltimaMedicion_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spLogin_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spSelectLastCI_Registro_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\sp_ConsultaDemand_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\SYNCTABLE.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\CondProRepository.cs" />
+    <Compile Include="Repository\DependenciaRepository.cs" />
+    <Compile Include="Repository\EstPuntoMedRepository.cs" />
+    <Compile Include="Repository\EstructuraDependenciaRepository.cs" />
+    <Compile Include="Repository\EstructuraRepository.cs" />
+    <Compile Include="Repository\EvidenceSyncRepository.cs" />
+    <Compile Include="Repository\GdDatosEstructurasRepository.cs" />
+    <Compile Include="Repository\ListUnidsRepository.cs" />
+    <Compile Include="Repository\PuntoMedicionRepository.cs" />
+    <Compile Include="Repository\RegistroRepository.cs" />
+    <Compile Include="Repository\ServerLastDataRepository.cs" />
+    <Compile Include="Repository\SettingRepository.cs" />
+    <Compile Include="Repository\SistemaRepository.cs" />
+    <Compile Include="Repository\SyncRepository.cs" />
+    <Compile Include="Repository\TipoPuntoMedicionRepository.cs" />
+    <Compile Include="Repository\UnidadMedidaRepository.cs" />
+    <Compile Include="Repository\UploadLogRepository.cs" />
+    <Compile Include="Repository\v2\AgrupadorIsoyetasRepository.cs" />
+    <Compile Include="Repository\v2\AppRolRepository.cs" />
+    <Compile Include="Repository\v2\AppSettingsRepository.cs" />
+    <Compile Include="Repository\v2\AppUsuarioRepository.cs" />
+    <Compile Include="Repository\v2\AppUsuarioRolRepository.cs" />
+    <Compile Include="Repository\v2\CatAccionActualRepository.cs" />
+    <Compile Include="Repository\v2\CatDependenciaRepository.cs" />
+    <Compile Include="Repository\v2\CatEstructuraRepository.cs" />
+    <Compile Include="Repository\v2\CatNivelLluviaRepository.cs" />
+    <Compile Include="Repository\v2\CatOperacionEstructuraRepository.cs" />
+    <Compile Include="Repository\v2\CatProtocoloRepository.cs" />
+    <Compile Include="Repository\v2\CatPuntoMedicionMinMaxRepository.cs" />
+    <Compile Include="Repository\v2\CatPuntosMedicionShortNameRepository.cs" />
+    <Compile Include="Repository\v2\CatSistemaRepository.cs" />
+    <Compile Include="Repository\v2\CiRegistroRepository.cs" />
+    <Compile Include="Repository\v2\CondicionRepository.cs" />
+    <Compile Include="Repository\v2\HashableDataRepository.cs" />
+    <Compile Include="Repository\v2\LinksRepository.cs" />
+    <Compile Include="Repository\v2\ModifiedDateRepository.cs" />
+    <Compile Include="Repository\v2\PuntoMedicionRepository.cs" />
+    <Compile Include="Repository\v2\RegistroRepository.cs" />
+    <Compile Include="Repository\v2\RelEstPuntoMedRepository.cs" />
+    <Compile Include="Repository\v2\RelEstructuraDependenciaRepository.cs" />
+    <Compile Include="Repository\v2\RelRolPuntoMedicionRepository.cs" />
+    <Compile Include="Repository\v2\ServerSQLLogger.cs" />
+    <Compile Include="Repository\v2\SyncRepository.cs" />
+    <Compile Include="Repository\v2\TipoPuntoMedicionRepository.cs" />
+    <Compile Include="Repository\v2\TrakingRepository.cs" />
+    <Compile Include="Repository\v2\UnidadMedidaRepository.cs" />
+    <Compile Include="UNID.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="POCOS\EntityProtell.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EntityProtell.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="packages.config" />
+    <None Include="POCOS\PocosProtell.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PocosProtell.Context.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Protell.Model\Protell.Model.csproj">
+      <Project>{AB66EDF0-BC58-42A8-9ABB-35BEFD6318B6}</Project>
+      <Name>Protell.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
