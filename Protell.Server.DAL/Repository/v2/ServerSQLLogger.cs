@@ -39,20 +39,24 @@ namespace Protell.Server.DAL.Repository.v2
 
             public void log(string msg, string where)
             {
-                try
+                if (this.enabled)
                 {
-                    using (var entity = new db_SeguimientoProtocolo_r2Entities())
+                    try
                     {
-                        string sqlExists = " if object_id('templog','u') is null begin create table templog (id int identity(1,1) , msg nvarchar(max), t datetime) end";
-                        entity.ExecuteStoreCommand(sqlExists);
+                        msg = msg.Replace("'", "@");
+                        using (var entity = new db_SeguimientoProtocolo_r2Entities())
+                        {
+                            string sqlExists = " if object_id('templog','u') is null begin create table templog (id int identity(1,1) , msg nvarchar(max), t datetime) end";
+                            entity.ExecuteStoreCommand(sqlExists);
 
-                        string sqlInsert = "insert into templog(msg,t) select '" + where + " _ [" + msg + "]',getdate()";
-                        entity.ExecuteStoreCommand(sqlInsert);
+                            string sqlInsert = "insert into templog(msg,t) select '" + where + " _ [" + msg + "]',getdate()";
+                            entity.ExecuteStoreCommand(sqlInsert);
+                        }
                     }
-                }
-                catch (Exception)
-                {
-                    ;
+                    catch (Exception)
+                    {
+                        ;
+                    } 
                 }
             }
 
@@ -72,9 +76,9 @@ namespace Protell.Server.DAL.Repository.v2
                 return msgs;
             }
 
-            private string SafeSqlString(string str)
+            public string SafeSqlString(string str)
             {
-                return str.Replace('\'', 'D');
+                return str.Replace("'", "").Replace(";","").Replace("--","");
             }
         }//ServerSQLLogger
 }

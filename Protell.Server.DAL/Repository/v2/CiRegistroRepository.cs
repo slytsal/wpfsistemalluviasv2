@@ -25,7 +25,7 @@ namespace Protell.Server.DAL.Repository.v2
             sql += r.HoraRegistro.ToString() + ",";
             sql += r.DiaRegistro.ToString() + ",";
             sql += r.Valor.ToString() + ",";
-            sql += "'"+r.AccionActual.ToString() + "',";
+            sql += "'"+ ServerSQLLogger.Instance.SafeSqlString(r.AccionActual.ToString()) + "',";
             sql += (r.IsActive ? 1 : 0).ToString() + ",";
             sql += (r.IsModified ? 1 : 0).ToString() + ",";
             sql += r.LastModifiedDate.ToString() + ",";
@@ -60,7 +60,7 @@ namespace Protell.Server.DAL.Repository.v2
 
             int maxReg = 0;
             int i = 0;
-            int batch = 1000;
+            int batch = 250;
 
             if (registros != null && registros.Count > 0)
             {
@@ -102,7 +102,15 @@ namespace Protell.Server.DAL.Repository.v2
             string sSqlStmt = (string)sqlStmt;
             using (var entity = new db_SeguimientoProtocolo_r2Entities())
             {
-                entity.ExecuteStoreCommand(sSqlStmt);
+                try
+                {
+                    ServerSQLLogger.Instance.log(sSqlStmt, "CiRegistroRepository.ExecuteSqlString");
+                    entity.ExecuteStoreCommand(sSqlStmt);
+                }
+                catch (Exception ex)
+                {
+                    ServerSQLLogger.Instance.log(ex, "CiRegistroRepository.ExecuteSqlString");
+                }
             }
         }
 
@@ -143,21 +151,33 @@ namespace Protell.Server.DAL.Repository.v2
         /// </summary>
         public List<CiRegistroUploadConfirmationModel> UpsertUploaded(List<CiRegistroPOCO> registros)
         {
+            
+            ServerSQLLogger.Instance.log("Init func", "CiRegistroRepository.UpsertUploaded");
             List<CiRegistroUploadConfirmationModel> confirmation=null;
             if (registros != null && registros.Count > 0)
             {
-                long session = this.PrepareBulkUpsertUploaded();
-                this.BulkUpsertUploaded(registros, session);
-                confirmation=this.CommitBulkUpsertUploaded(session);
+                int num = registros.Count;
+                try
+                {
+                    long session = this.PrepareBulkUpsertUploaded();
+                    ServerSQLLogger.Instance.log("Prepare done; "+num.ToString(), "CiRegistroRepository.UpsertUploaded");
+                    this.BulkUpsertUploaded(registros, session);
+                    ServerSQLLogger.Instance.log("BulkUpsertUploaded done; " + num, "CiRegistroRepository.UpsertUploaded");
+                    confirmation = this.CommitBulkUpsertUploaded(session);
+                    ServerSQLLogger.Instance.log("CommitBulkUpsertUploaded done; " + num, "CiRegistroRepository.UpsertUploaded");
+                }
+                catch (Exception ex)
+                {
+                    ServerSQLLogger.Instance.log(ex, "CiRegistroRepository.UpsertUploaded");
+                }
             }
             else
             {
                 confirmation = null;
             }//endIfElse
-
+            ServerSQLLogger.Instance.log("End func", "CiRegistroRepository.UpsertUploaded");
             return confirmation;
-        }
-
+        }   
 
         public List<sp_ConsultaDemand_Result> GetConsultaDemmand(long Fecha)
         {
