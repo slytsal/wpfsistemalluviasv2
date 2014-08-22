@@ -154,5 +154,11 @@ namespace Protell.Server.DAL.Repository.v2.Tests
             
 
         }
+
+        [TestMethod()]
+        public void TestLog()
+        {
+            ServerSQLLogger.Instance.log("test", "CiRegistroRepository.UpsertUploaded");
+        }
     }
 }
