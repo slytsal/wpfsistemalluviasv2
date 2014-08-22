@@ -4,8 +4,12 @@ namespace Protell.Model
 {
     public class AccionActualModel:ModelBase
     {
+        /// <summary>
+        /// Comentario de carlos
+        /// </summary>
         public long IdAccionActual
         {
+            
             get { return _IdAccionActual; }
             set
             {
