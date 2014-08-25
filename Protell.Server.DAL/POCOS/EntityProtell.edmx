@@ -2450,7 +2450,7 @@
       <Diagram Name="EntityProtell" ZoomLevel="82">
         <EntityTypeShape EntityType="devinmr3Model.APP_ROL" Width="1.5" PointX="10.75" PointY="6.625" Height="2.5571907552083326" IsExpanded="true" />
         <EntityTypeShape EntityType="devinmr3Model.APP_USUARIO_ROL" Width="1.5" PointX="16" PointY="6.75" Height="2.3648893229166674" IsExpanded="true" />
-        <EntityTypeShape EntityType="devinmr3Model.CAT_CONDPRO" Width="1.5" PointX="6" PointY="3.125" Height="2.7494921874999996" IsExpanded="true" />
+        <EntityTypeShape EntityType="devinmr3Model.CAT_CONDPRO" Width="1.5" PointX="6.125" PointY="3.25" Height="2.7494921874999996" IsExpanded="true" />
         <EntityTypeShape EntityType="devinmr3Model.CAT_DEPENDENCIA" Width="1.5" PointX="6" PointY="20.375" Height="2.172587890624996" IsExpanded="true" />
         <EntityTypeShape EntityType="devinmr3Model.CAT_ESTRUCTURA" Width="1.5" PointX="3" PointY="14" Height="2.9417936197916674" IsExpanded="true" />
         <EntityTypeShape EntityType="devinmr3Model.CAT_PUNTO_MEDICION_MAX_MIN" Width="2.625" PointX="5.25" PointY="6.75" Height="1.9802864583333308" IsExpanded="true" />

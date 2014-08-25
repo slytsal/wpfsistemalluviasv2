@@ -6,7 +6,7 @@ using System.Collections.Specialized;
 
 namespace Protell.Server.DAL.POCOS
 {
-    public class spGetHashableGraficaPromedioPesado_Result
+    public partial class spGetHashableGraficaPromedioPesado_Result
     {
         #region Primitive Properties
 
