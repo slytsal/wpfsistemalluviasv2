@@ -968,7 +968,7 @@
           </AssociationSet>
           <EntitySet Name="CAT_NIVEL_LLUVIA" EntityType="devinmr3Model.CAT_NIVEL_LLUVIA" />
           <EntitySet Name="CAT_REGION" EntityType="devinmr3Model.CAT_REGION" />
-          <FunctionImport Name="spGetHashableGraficaPromedioPesadoS" ReturnType="Collection(devinmr3Model.spGetHashableGraficaPromedioPesado_Result)">
+          <FunctionImport Name="spGetHashableGraficaPromedioPesado" ReturnType="Collection(devinmr3Model.spGetHashableGraficaPromedioPesado_Result)">
             <Parameter Name="fechaNumerica" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
@@ -1816,6 +1816,10 @@
           <Property Type="Int64" Name="FechaNumerica" Nullable="true" />
           <Property Type="Double" Name="Valor" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="spGetHashableGraficaPromedioPesadoS_Result">
+          <Property Type="Int64" Name="FechaNumerica" Nullable="true" />
+          <Property Type="Double" Name="Valor" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2417,8 +2421,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="spGetHashableGraficaPromedioPesadoS" FunctionName="devinmr3Model.Store.spGetHashableGraficaPromedioPesado">
-            <ResultMapping>
+          <FunctionImportMapping FunctionImportName="spGetHashableGraficaPromedioPesado" FunctionName="devinmr3Model.Store.spGetHashableGraficaPromedioPesado">
+          <ResultMapping>
               <ComplexTypeMapping TypeName="devinmr3Model.spGetHashableGraficaPromedioPesado_Result">
                 <ScalarProperty Name="FechaNumerica" ColumnName="FechaNumerica" />
                 <ScalarProperty Name="Valor" ColumnName="Valor" />

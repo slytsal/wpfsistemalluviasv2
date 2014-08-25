@@ -635,7 +635,7 @@ namespace Protell.Service.Services
             try
             {
                 HashableDataRepository repository = new HashableDataRepository();
-                tipos = repository.GetHashableGraficaPromedioPesado(FechaNumerica);
+                tipos = repository.GetHshableGraficaPromedioPesado(FechaNumerica);
             }
             catch (Exception ex)
             {

@@ -516,7 +516,7 @@ namespace Protell.Server.DAL.POCOS
         {
             return base.ExecuteFunction<spGetHashableIsoyetaRangosLabels_Result>("spGetHashableIsoyetaRangosLabels");
         }
-        public ObjectResult<spGetHashableGraficaPromedioPesado_Result> spGetHashableGraficaPromedioPesadoS(Nullable<long> fechaNumerica)
+        public ObjectResult<spGetHashableGraficaPromedioPesado_Result> spGetHashableGraficaPromedioPesado(Nullable<long> fechaNumerica)
         {
     
             ObjectParameter fechaNumericaParameter;
@@ -529,7 +529,7 @@ namespace Protell.Server.DAL.POCOS
             {
                 fechaNumericaParameter = new ObjectParameter("fechaNumerica", typeof(long));
             }
-            return base.ExecuteFunction<spGetHashableGraficaPromedioPesado_Result>("spGetHashableGraficaPromedioPesadoS", fechaNumericaParameter);
+            return base.ExecuteFunction<spGetHashableGraficaPromedioPesado_Result>("spGetHashableGraficaPromedioPesado", fechaNumericaParameter);
         }
 
         #endregion

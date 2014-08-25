@@ -668,7 +668,7 @@ namespace Protell.Server.DAL.Repository.v2
         }//endFunc
 
 
-        public AjaxDictionary<string, object> GetHashableGraficaPromedioPesado(long FechaNumerica)
+        public AjaxDictionary<string, object> GetHshableGraficaPromedioPesado(long FechaNumerica)
         {
             AjaxDictionary<string, object> tipo = new AjaxDictionary<string, object>();
             AjaxDictionary<string, object> punto = new AjaxDictionary<string, object>();
@@ -677,7 +677,7 @@ namespace Protell.Server.DAL.Repository.v2
             {
                 using (var entity = new db_SeguimientoProtocolo_r2Entities())
                 {
-                    List<spGetHashableGraficaPromedioPesado_Result> atributos = entity.spGetHashableGraficaPromedioPesadoS(FechaNumerica).ToList();
+                    List<spGetHashableGraficaPromedioPesado_Result> atributos = entity.spGetHashableGraficaPromedioPesado(FechaNumerica).ToList();
                     if(atributos != null && atributos.Count > 0){
                         foreach (spGetHashableGraficaPromedioPesado_Result item in atributos)
                         {
