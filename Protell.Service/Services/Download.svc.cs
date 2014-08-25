@@ -627,5 +627,21 @@ namespace Protell.Service.Services
             }
             return res;
         }
+
+
+        public AjaxDictionary<string, object> Download_GetHashableGraficaPromedioPesado(long FechaNumerica) 
+        {
+            AjaxDictionary<string, object> tipos = new AjaxDictionary<string, object>();
+            try
+            {
+                HashableDataRepository repository = new HashableDataRepository();
+                tipos = repository.GetHashableGraficaPromedioPesado(FechaNumerica);
+            }
+            catch (Exception ex)
+            {
+                var error = ex.Message;
+            }
+            return tipos;
+        }
     }
 }

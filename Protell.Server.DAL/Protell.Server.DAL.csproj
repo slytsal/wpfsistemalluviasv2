@@ -178,6 +178,7 @@
     <Compile Include="POCOS\spGetHashableGraficaLumbreras_Result.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
+    <Compile Include="POCOS\spGetHashableGraficaPromedioPesado_Result.cs" />
     <Compile Include="POCOS\spGetHashableGraficaPromedio_Result.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>

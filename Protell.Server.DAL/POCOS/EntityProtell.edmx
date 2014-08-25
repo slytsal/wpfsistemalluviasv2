@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="devinmr3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="devinmr3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityType Name="APP_ROL">
           <Key>
             <PropertyRef Name="IdRol" />
@@ -652,6 +652,9 @@
         <Function Name="spGetHashableGraficaPromedio" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="fechaNumerica" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="spGetHashableGraficaPromedioPesado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fechaNumerica" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="spGetHashableGraficaPuntoMedicion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idPuntoMedicion" Type="bigint" Mode="In" />
           <Parameter Name="fechaNumerica" Type="bigint" Mode="In" />
@@ -965,6 +968,9 @@
           </AssociationSet>
           <EntitySet Name="CAT_NIVEL_LLUVIA" EntityType="devinmr3Model.CAT_NIVEL_LLUVIA" />
           <EntitySet Name="CAT_REGION" EntityType="devinmr3Model.CAT_REGION" />
+          <FunctionImport Name="spGetHashableGraficaPromedioPesadoS" ReturnType="Collection(devinmr3Model.spGetHashableGraficaPromedioPesado_Result)">
+            <Parameter Name="fechaNumerica" Mode="In" Type="Int64" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="APP_ROL">
           <Key>
@@ -1802,6 +1808,14 @@
           <Property Name="RegionName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="FileName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="spGetHashableGraficaPromedioPesado_Result">
+          <Property Type="Int64" Name="FechaNumerica" Nullable="true" />
+          <Property Type="Double" Name="Valor" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spGetHashableGraficaPromedioPesado_Result1">
+          <Property Type="Int64" Name="FechaNumerica" Nullable="true" />
+          <Property Type="Double" Name="Valor" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2403,6 +2417,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spGetHashableGraficaPromedioPesadoS" FunctionName="devinmr3Model.Store.spGetHashableGraficaPromedioPesado">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="devinmr3Model.spGetHashableGraficaPromedioPesado_Result">
+                <ScalarProperty Name="FechaNumerica" ColumnName="FechaNumerica" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

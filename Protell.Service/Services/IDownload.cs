@@ -157,5 +157,9 @@ namespace Protell.Service.Services
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
         AjaxDictionary<string, object> Download_CatRegion();
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
+        AjaxDictionary<string, object> Download_GetHashableGraficaPromedioPesado(long FechaNumerica);
     }
 }

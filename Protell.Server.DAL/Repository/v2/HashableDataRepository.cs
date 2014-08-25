@@ -666,5 +666,33 @@ namespace Protell.Server.DAL.Repository.v2
                 }
             }//endIf
         }//endFunc
+
+
+        public AjaxDictionary<string, object> GetHashableGraficaPromedioPesado(long FechaNumerica)
+        {
+            AjaxDictionary<string, object> tipo = new AjaxDictionary<string, object>();
+            AjaxDictionary<string, object> punto = new AjaxDictionary<string, object>();
+            AjaxDictionary<string, object> datos = new AjaxDictionary<string, object>();
+            try
+            {
+                using (var entity = new db_SeguimientoProtocolo_r2Entities())
+                {
+                    List<spGetHashableGraficaPromedioPesado_Result> atributos = entity.spGetHashableGraficaPromedioPesadoS(FechaNumerica).ToList();
+                    if(atributos != null && atributos.Count > 0){
+                        foreach (spGetHashableGraficaPromedioPesado_Result item in atributos)
+                        {
+                            datos.Add("F" + item.FechaNumerica, item.Valor);
+                        }
+                        punto.Add("promedioPesado", datos);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var err = ex.Message;
+            }
+            return punto;
+        }
+
     }//endClass
 }//endNamespace
