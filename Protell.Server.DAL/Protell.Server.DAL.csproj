@@ -175,6 +175,7 @@
     <Compile Include="POCOS\SpGdGetDatosEstructuras2_Result.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
+    <Compile Include="POCOS\spGetHashableAccionesActuales_Result.cs" />
     <Compile Include="POCOS\spGetHashableGraficaLumbreras_Result.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
@@ -194,6 +195,7 @@
     <Compile Include="POCOS\spGetHashablePuntoMedicionAttributes_Result.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
+    <Compile Include="POCOS\spGetHashablePuntoMedicionOrderZonaTipo_Result.cs" />
     <Compile Include="POCOS\spGetHashablePuntoMedicion_Result.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>

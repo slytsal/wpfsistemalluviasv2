@@ -13,6 +13,7 @@ namespace Protell.Server.DAL.Repository.v2
     {
         private const string ISOP_MINUTES_THRESHOLD_SETTING_NAME = "IsopThreshold";
         private const string ISOP_DIRECTORY = "Isoyetas";
+        private const string ISOP_DIRECTORY_5min = "Isoyetas_5min";
 
         public AjaxDictionary<string, object> GetPuntosMedicion()
         {
@@ -692,6 +693,178 @@ namespace Protell.Server.DAL.Repository.v2
                 var err = ex.Message;
             }
             return punto;
+        }
+
+        public AjaxDictionary<string, object> GetPuntosMedicionOrdenZona()
+        {
+            AjaxDictionary<string, object> tipos = null;
+            long tipopmSentinel = -1;
+
+            using (var entity = new db_SeguimientoProtocolo_r2Entities())
+            {
+                List<spGetHashablePuntoMedicionOrderZonaTipo_Result1> res = entity.spGetHashablePuntoMedicionOrderZonaTipoS().ToList();
+
+                if (res != null && res.Count > 0)
+                {
+                    tipos = new AjaxDictionary<string, object>();
+                    foreach (spGetHashablePuntoMedicionOrderZonaTipo_Result1 r in res)
+                    {
+                        if (tipopmSentinel != r.IdTipoPuntoMedicion)
+                        {
+                            tipopmSentinel = (long)r.IdTipoPuntoMedicion;
+                            tipos.Add(this.toStrIdTipoPm(tipopmSentinel), new AjaxDictionary<string, object>());
+                        }
+
+                        AjaxDictionary<string, object> attrs = new AjaxDictionary<string, object>();
+                        string ultAct = r.﻿ultimaActualización.ToString();
+                        if (ultAct.Length >= 12)
+                        {
+                            ultAct = ultAct.Substring(0, 12);
+                        }
+
+                        attrs.Add("puntoMedicionName", r.PuntoMedicionName);
+                        attrs.Add("lat", r.latiitud);
+                        attrs.Add("long", r.longitud);
+                        attrs.Add("idTipoPm", r.IdTipoPuntoMedicion);
+                        attrs.Add("idPm", r.IdPuntoMedicion);
+                        attrs.Add("dependencias", r.dependencias);
+                        attrs.Add("parametroMed", r.ParametroMedicion);
+                        attrs.Add("unidadMedida", r.UnidadMedidaName);
+                        attrs.Add("unidadMedidaShort", r.UnidadMedidaShort);
+                        attrs.Add("sistema", r.﻿SistemaName);
+                        attrs.Add("ultimaActualizacion", ultAct);
+                        attrs.Add("ultimaCond", r.UltimaCondicion);
+                        attrs.Add("IdZona", r.IdZona);
+                        
+                        this.toDictio(tipos, tipopmSentinel).Add(toStrIdPm(r.IdPuntoMedicion), attrs);
+
+                    }//endforeach
+                }//endif
+            }//endusing
+
+            return tipos;
+        }
+        //endfunc
+        
+        public List<spGetHashableAccionesActuales_Result>GetHshableAccionesActual(long FechaNumerica,long IdPuntoMedicion)
+        {
+            List<spGetHashableAccionesActuales_Result> lst = new List<spGetHashableAccionesActuales_Result>();
+            string AccionActual;
+            long IdTipoPuntoMedicion;
+            
+            using (var entity = new db_SeguimientoProtocolo_r2Entities())
+            {
+                try
+                {
+                    entity.spGetHashableAccionesActuales(FechaNumerica, IdPuntoMedicion).ToList().ForEach(row =>
+                    {
+                        lst.Add(new spGetHashableAccionesActuales_Result()
+                        {
+                            IdPuntoMedicion = row.IdPuntoMedicion,
+                            FechaNumerica = row.FechaNumerica,
+                            AccionActual = row.AccionActual,
+                            IdTipoPuntoMedicion = row.IdTipoPuntoMedicion
+                        });
+                    });
+                }
+                catch (Exception ex)
+                {
+                    var Error = ex.Message;
+                }                
+            }
+            return lst;
+        }
+
+        public AjaxDictionary<string, object> GetIsopFileList_5min(long FechaNumerica, string rootDirectory)
+        {
+            //Control de tiempo
+            DateTime iniDate = DateTime.Now;
+            DateTime endDate = DateTime.Now;
+            TimeSpan diff = endDate - iniDate;
+
+            int minutesThreshold = this.GetIsopMinutesThresholdSetting(); //obtener el setting 
+
+            DateTime fecha = this.ConvertFechaNumericaToDatetime(FechaNumerica); //convertir la fecha numerica a dateitme
+            DateTime fechaMin = fecha.AddMinutes(-1 * minutesThreshold); //En base al setting generar la fecha minima (restando minutos
+
+            AjaxDictionary<string, object> levelByFn = new AjaxDictionary<string, object>(); //valor de retorno
+
+            if (!String.IsNullOrEmpty(rootDirectory))//Si existe el folder...
+            {
+                long longFechaMin = this.ConvertDatetimeToFechaNumerica(fechaMin);
+
+                ServerSQLLogger.Instance.log("Rango de tiempo : " + longFechaMin.ToString(), "GetIsopFileList_5min(0)");
+                ServerSQLLogger.Instance.log("Isoyetas_5min path : " + Path.Combine(rootDirectory, ISOP_DIRECTORY_5min).ToString(), "GetIsopFileList_5min(1)");
+
+                //TODO: Optimizar para que solo se obtengan los archivos que estén en el rango de fechas
+                List<string> isopFiles = Directory.GetFiles(Path.Combine(rootDirectory, ISOP_DIRECTORY_5min), "iso5*.kml").ToList<string>();
+
+                ServerSQLLogger.Instance.log("Archivos en directory " + isopFiles.Count().ToString(), "GetIsopFileList_5min(2)");
+
+                AjaxDictionary<string, object> isopFileByLevel = new AjaxDictionary<string, object>();
+                Dictionary<string, string[]> arraysByLevel = new Dictionary<string, string[]>();
+
+                List<string> ranges = new List<string>() { "8", "15", "30", "1000" };
+
+                //Llenar subarrays por nivel 
+                string strFechaNumericaNew = String.Format("{0:yyyyMMddHHmm}", fecha);
+                string strFechaNumericaOld = String.Format("{0:yyyyMMddHHmm}", fechaMin);
+                string[] tmpStrArray;
+                foreach (string range in ranges)
+                {
+                    this.GetLastIsopFile(
+                        strFechaNumericaNew
+                        , strFechaNumericaOld
+                        , range
+                        , isopFiles
+                        , out tmpStrArray
+                    );
+
+                    arraysByLevel.Add(range, tmpStrArray); //agregar al diccionario
+                }//endFech
+
+                //Iniciar ciclo para cada uno de los minutos entre los rangos
+                DateTime loopDate = fechaMin;
+                while (loopDate <= fecha)
+                {
+                    isopFileByLevel = new AjaxDictionary<string, object>();
+                    foreach (string range in ranges)//para cada uno de los rangos
+                    {
+                        string[] tmp = arraysByLevel[range];
+                        if (tmp != null)
+                        {
+                            string tmpIsopLastFile = this.GetLastIsopFile(String.Format("{0:yyyyMMddHHmm}", loopDate), range, arraysByLevel[range].ToList<string>());
+                            if (!String.IsNullOrEmpty(tmpIsopLastFile))
+                            {
+                                isopFileByLevel.Add("l" + range, tmpIsopLastFile.Split('\\').Last());
+                            }
+                            else
+                            {
+                                isopFileByLevel.Add("l" + range, "");
+                            }
+
+                        }
+                        else
+                        {
+                            isopFileByLevel.Add("l" + range, "");
+                        }
+                    }//endFech
+
+                    levelByFn.Add("t" + String.Format("{0:yyyyMMddHHmm}", loopDate), isopFileByLevel);
+
+                    loopDate = loopDate.AddMinutes(1);
+                }//endWhile
+
+                endDate = DateTime.Now;
+                diff = endDate - iniDate;
+                System.Diagnostics.Debug.Write("Subarrays method resList : " + diff.Minutes.ToString() + "." + diff.Seconds.ToString());
+            }//endIf
+            else
+            {
+                throw new Exception("IMC_ERROR: [GetIsopFileList] La ruta rootDirectory no puede estar vacia");
+            }//endElse
+
+            return levelByFn;
         }
 
     }//endClass

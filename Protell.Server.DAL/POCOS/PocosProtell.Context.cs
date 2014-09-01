@@ -531,6 +531,36 @@ namespace Protell.Server.DAL.POCOS
             }
             return base.ExecuteFunction<spGetHashableGraficaPromedioPesado_Result>("spGetHashableGraficaPromedioPesado", fechaNumericaParameter);
         }
+        public ObjectResult<spGetHashablePuntoMedicionOrderZonaTipo_Result1> spGetHashablePuntoMedicionOrderZonaTipoS()
+        {
+            return base.ExecuteFunction<spGetHashablePuntoMedicionOrderZonaTipo_Result1>("spGetHashablePuntoMedicionOrderZonaTipoS");
+        }
+        public ObjectResult<spGetHashableAccionesActuales_Result> spGetHashableAccionesActuales(Nullable<long> fechaNumerica, Nullable<long> idPuntoMedicion)
+        {
+    
+            ObjectParameter fechaNumericaParameter;
+    
+            if (fechaNumerica.HasValue)
+            {
+                fechaNumericaParameter = new ObjectParameter("fechaNumerica", fechaNumerica);
+            }
+            else
+            {
+                fechaNumericaParameter = new ObjectParameter("fechaNumerica", typeof(long));
+            }
+    
+            ObjectParameter idPuntoMedicionParameter;
+    
+            if (idPuntoMedicion.HasValue)
+            {
+                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", idPuntoMedicion);
+            }
+            else
+            {
+                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", typeof(long));
+            }
+            return base.ExecuteFunction<spGetHashableAccionesActuales_Result>("spGetHashableAccionesActuales", fechaNumericaParameter, idPuntoMedicionParameter);
+        }
 
         #endregion
 

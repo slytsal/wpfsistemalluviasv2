@@ -646,6 +646,10 @@
           <Parameter Name="SLMD" Type="bigint" Mode="In" />
           <Parameter Name="LMD" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="spGetHashableAccionesActuales" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fechaNumerica" Type="bigint" Mode="In" />
+          <Parameter Name="IdPuntoMedicion" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="spGetHashableGraficaLumbreras" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="fechaNumerica" Type="bigint" Mode="In" />
         </Function>
@@ -664,6 +668,7 @@
         <Function Name="spGetHashablePuntoMedicionAttributes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idPuntoMedicion" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="spGetHashablePuntoMedicionOrderZonaTipo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spGetHashableUltimaMedicion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Fecha" Type="bigint" Mode="In" />
         </Function>
@@ -969,7 +974,12 @@
           <EntitySet Name="CAT_NIVEL_LLUVIA" EntityType="devinmr3Model.CAT_NIVEL_LLUVIA" />
           <EntitySet Name="CAT_REGION" EntityType="devinmr3Model.CAT_REGION" />
           <FunctionImport Name="spGetHashableGraficaPromedioPesado" ReturnType="Collection(devinmr3Model.spGetHashableGraficaPromedioPesado_Result)">
+          <Parameter Name="fechaNumerica" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="spGetHashablePuntoMedicionOrderZonaTipoS" ReturnType="Collection(devinmr3Model.spGetHashablePuntoMedicionOrderZonaTipo_Result1)" />
+          <FunctionImport Name="spGetHashableAccionesActuales" ReturnType="Collection(devinmr3Model.spGetHashableAccionesActuales_Result)">
             <Parameter Name="fechaNumerica" Mode="In" Type="Int64" />
+            <Parameter Name="IdPuntoMedicion" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="APP_ROL">
@@ -1820,6 +1830,92 @@
           <Property Type="Int64" Name="FechaNumerica" Nullable="true" />
           <Property Type="Double" Name="Valor" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="spGetHashablePuntoMedicionOrderZonaTipo3_Result">
+          <Property Type="Int64" Name="IdTipoPuntoMedicion" Nullable="true" />
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="Int64" Name="IdZona" Nullable="true" />
+          <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Double" Name="latiitud" Nullable="true" />
+          <Property Type="Double" Name="longitud" Nullable="true" />
+          <Property Type="String" Name="dependencias" Nullable="true" />
+          <Property Type="String" Name="UnidadMedidaName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="UnidadMedidaShort" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ParametroMedicion" Nullable="true" />
+          <Property Type="Int64" Name="ultimaActualización" Nullable="true" />
+          <Property Type="String" Name="UltimaCondicion" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="SistemaName" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="spGetHashablePuntoMedicionOrderZonaTipo3_Result1">
+          <Property Type="Int64" Name="IdTipoPuntoMedicion" Nullable="true" />
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="Int64" Name="IdZona" Nullable="true" />
+          <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Double" Name="latiitud" Nullable="true" />
+          <Property Type="Double" Name="longitud" Nullable="true" />
+          <Property Type="String" Name="dependencias" Nullable="true" />
+          <Property Type="String" Name="UnidadMedidaName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="UnidadMedidaShort" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ParametroMedicion" Nullable="true" />
+          <Property Type="Int64" Name="ultimaActualización" Nullable="true" />
+          <Property Type="String" Name="UltimaCondicion" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="SistemaName" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="spGetHashablePuntoMedicionOrderZonaTipo3_Result2">
+          <Property Type="Int64" Name="IdTipoPuntoMedicion" Nullable="true" />
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="Int64" Name="IdZona" Nullable="true" />
+          <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Double" Name="latiitud" Nullable="true" />
+          <Property Type="Double" Name="longitud" Nullable="true" />
+          <Property Type="String" Name="dependencias" Nullable="true" />
+          <Property Type="String" Name="UnidadMedidaName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="UnidadMedidaShort" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ParametroMedicion" Nullable="true" />
+          <Property Type="Int64" Name="ultimaActualización" Nullable="true" />
+          <Property Type="String" Name="UltimaCondicion" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="SistemaName" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="spGetHashablePuntoMedicionOrderZonaTipo_Result">
+          <Property Type="Int64" Name="IdTipoPuntoMedicion" Nullable="true" />
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="Int64" Name="IdZona" Nullable="true" />
+          <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Double" Name="latiitud" Nullable="true" />
+          <Property Type="Double" Name="longitud" Nullable="true" />
+          <Property Type="String" Name="dependencias" Nullable="true" />
+          <Property Type="String" Name="UnidadMedidaName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="UnidadMedidaShort" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ParametroMedicion" Nullable="true" />
+          <Property Type="Int64" Name="ultimaActualización" Nullable="true" />
+          <Property Type="String" Name="UltimaCondicion" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="SistemaName" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="spGetHashablePuntoMedicionOrderZonaTipo_Result1">
+          <Property Type="Int64" Name="IdTipoPuntoMedicion" Nullable="true" />
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="Int64" Name="IdZona" Nullable="true" />
+          <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Double" Name="latiitud" Nullable="true" />
+          <Property Type="Double" Name="longitud" Nullable="true" />
+          <Property Type="String" Name="dependencias" Nullable="true" />
+          <Property Type="String" Name="UnidadMedidaName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="UnidadMedidaShort" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ParametroMedicion" Nullable="true" />
+          <Property Type="Int64" Name="ultimaActualización" Nullable="true" />
+          <Property Type="String" Name="UltimaCondicion" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="SistemaName" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="spGetHashableAccionesActuales_Result">
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="AccionActual" Nullable="true" MaxLength="1000" />
+          <Property Type="Int64" Name="FechaNumerica" Nullable="true" />
+          <Property Type="Int64" Name="IdTipoPuntoMedicion" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="spGetHashableAccionesActuales_Result1">
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="AccionActual" Nullable="true" MaxLength="1000" />
+          <Property Type="Int64" Name="FechaNumerica" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2426,6 +2522,35 @@
               <ComplexTypeMapping TypeName="devinmr3Model.spGetHashableGraficaPromedioPesado_Result">
                 <ScalarProperty Name="FechaNumerica" ColumnName="FechaNumerica" />
                 <ScalarProperty Name="Valor" ColumnName="Valor" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetHashablePuntoMedicionOrderZonaTipoS" FunctionName="devinmr3Model.Store.spGetHashablePuntoMedicionOrderZonaTipo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="devinmr3Model.spGetHashablePuntoMedicionOrderZonaTipo_Result1">
+                <ScalarProperty Name="IdTipoPuntoMedicion" ColumnName="IdTipoPuntoMedicion" />
+                <ScalarProperty Name="IdPuntoMedicion" ColumnName="IdPuntoMedicion" />
+                <ScalarProperty Name="IdZona" ColumnName="IdZona" />
+                <ScalarProperty Name="PuntoMedicionName" ColumnName="PuntoMedicionName" />
+                <ScalarProperty Name="latiitud" ColumnName="latiitud" />
+                <ScalarProperty Name="longitud" ColumnName="longitud" />
+                <ScalarProperty Name="dependencias" ColumnName="dependencias" />
+                <ScalarProperty Name="UnidadMedidaName" ColumnName="UnidadMedidaName" />
+                <ScalarProperty Name="UnidadMedidaShort" ColumnName="UnidadMedidaShort" />
+                <ScalarProperty Name="ParametroMedicion" ColumnName="ParametroMedicion" />
+                <ScalarProperty Name="ultimaActualización" ColumnName="ultimaActualización" />
+                <ScalarProperty Name="UltimaCondicion" ColumnName="UltimaCondicion" />
+                <ScalarProperty Name="SistemaName" ColumnName="SistemaName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetHashableAccionesActuales" FunctionName="devinmr3Model.Store.spGetHashableAccionesActuales">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="devinmr3Model.spGetHashableAccionesActuales_Result">
+                <ScalarProperty Name="IdPuntoMedicion" ColumnName="IdPuntoMedicion" />
+                <ScalarProperty Name="AccionActual" ColumnName="AccionActual" />
+                <ScalarProperty Name="FechaNumerica" ColumnName="FechaNumerica" />
+                <ScalarProperty Name="IdTipoPuntoMedicion" ColumnName="IdTipoPuntoMedicion" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

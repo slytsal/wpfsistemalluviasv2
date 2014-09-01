@@ -7,6 +7,7 @@ using Protell.Server.DAL.Repository.v2;
 using Protell.Server.DAL.JsonSerializables;
 using Protell.Model.SyncModels;
 using System.Collections.Generic;
+using Protell.Server.DAL.POCOS;
 
 namespace Protell.Service.Services
 {
@@ -642,6 +643,62 @@ namespace Protell.Service.Services
                 var error = ex.Message;
             }
             return tipos;
+        }
+
+        public AjaxDictionary<string, object> Download_HashablePuntosMedicionOrderZona()
+        {
+            AjaxDictionary<string, object> tipos = (new HashableDataRepository()).GetPuntosMedicionOrdenZona();
+
+            return tipos;
+        }
+
+        public List<spGetHashableAccionesActuales_Result> Download_HashableAccionesActuales(long FechaNumerica, long IdPuntoMedicion)
+        {
+            List<spGetHashableAccionesActuales_Result> lst = null;
+            HashableDataRepository _Acciones = new HashableDataRepository();
+            try
+            {
+                lst = _Acciones.GetHshableAccionesActual(FechaNumerica, IdPuntoMedicion);
+            }
+            catch (Exception ex)
+            {
+                var Error = ex.Message;
+            }
+            return lst;
+        }
+
+        public AjaxDictionary<string, object> Download_IsopFiles_5min(long FechaNumerica)
+        {
+            AjaxDictionary<string, object> dictionaryFiles = new AjaxDictionary<string, object>();
+            try
+            {
+                string rootDirectory = this.GetHostedRootDirectory5min();
+                HashableDataRepository repository = new HashableDataRepository();
+                dictionaryFiles = repository.GetIsopFileList_5min(FechaNumerica, rootDirectory);
+            }
+            catch (Exception ex)
+            {
+                ServerSQLLogger.Instance.log(ex, "Download_IsopFiles_5min (c1)");
+                //throw ex;
+            }
+
+            return dictionaryFiles;
+        }
+
+        private string GetHostedRootDirectory5min()
+        {
+            string path = "";
+            try
+            {
+                path = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath;
+                ServerSQLLogger.Instance.log("valor de path = " + path, "Download_IsopFiles_5min");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("IMC_ERR_MSG: No se pudo obtener el ApplicationPhysicalPath; InnerException para más información", ex);
+            }
+
+            return path;
         }
     }
 }
