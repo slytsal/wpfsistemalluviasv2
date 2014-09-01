@@ -684,7 +684,10 @@ namespace Protell.Service.Services
 
             return dictionaryFiles;
         }
-
+        /// <summary>
+        /// Isoyetas 5min
+        /// </summary>
+        /// <returns></returns>
         private string GetHostedRootDirectory5min()
         {
             string path = "";
