@@ -725,18 +725,42 @@ namespace Protell.DAL.Repository.v2
                             }
                             else
                             {
-
-                                result.IdPuntoMedicion = item.PUNTOMEDICION.IdPuntoMedicion;
-                                result.FechaCaptura = item.FechaCaptura;
-                                result.HoraRegistro = item.HoraRegistro;
-                                result.DiaRegistro = item.DiaRegistro;
-                                result.Valor = item.Valor;
-                                result.AccionActual = item.AccionActual;
-                                result.IsModified = true;
-                                result.LastModifiedDate = new UNID().getNewUNID();
-                                result.IdCondicion = item.Condicion.IdCondicion;
-                                result.FechaNumerica = item.FechaNumerica;
-                                entity.SaveChanges();
+                                string query =
+                                             "DECLARE @FechaNumerica bigint=" + item.FechaNumerica + ";"
+                                            + " DECLARE @IdPuntoMedicion bigint=" + item.PUNTOMEDICION.IdPuntoMedicion + ";"
+                                            + " DECLARE @Valor float={0};"
+                                            + " DECLARE @AccionActual nvarchar(1000)='" + item.AccionActual + "';"
+                                            + " DECLARE @IdCondicion bigint=" + item.Condicion.IdCondicion+";"
+                                            +"\n"
+                                            +" update CI_REGISTRO"
+                                            +"	set "
+                                            +"		Valor=@Valor,"
+                                            +"		AccionActual=@AccionActual,"
+                                            +"		IdCondicion=@IdCondicion,"
+                                            +"		IsModified=1,"
+                                            +"		LastModifiedDate=dbo.UDF_NewUnid() "
+                                            +"	where IdPuntoMedicion=@IdPuntoMedicion "
+                                            +"	and FechaNumerica=@FechaNumerica ;" 
+                                            +"SELECT 1";
+                                
+                                //result.IdPuntoMedicion = item.PUNTOMEDICION.IdPuntoMedicion;
+                                //result.FechaCaptura = item.FechaCaptura;
+                                //result.HoraRegistro = item.HoraRegistro;
+                                //result.DiaRegistro = item.DiaRegistro;
+                                //result.Valor = item.Valor;
+                                //result.AccionActual = item.AccionActual;
+                                //result.IsModified = true;
+                                //result.LastModifiedDate = new UNID().getNewUNID();
+                                //result.IdCondicion = item.Condicion.IdCondicion;
+                                //result.FechaNumerica = item.FechaNumerica;
+                                object[] parametros=new object[5];
+                                parametros[0] = item.FechaNumerica;
+                                parametros[1] = item.PUNTOMEDICION.IdPuntoMedicion;
+                                parametros[2] = item.Valor;
+                                parametros[3] = item.AccionActual;
+                                parametros[4] = item.Condicion.IdCondicion;
+                                entity.ExecuteStoreQuery<int?>(query, item.Valor);
+                                //entity.SaveChanges();
                                 _SyncRepository.UpdateIsModifiedData(ID_SYNCTABLE);
                                 trackRepository.InsertTracking(trackRepository.createTracking(item, user, "Update"));
                             }
