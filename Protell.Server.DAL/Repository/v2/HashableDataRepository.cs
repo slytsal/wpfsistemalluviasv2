@@ -13,7 +13,7 @@ namespace Protell.Server.DAL.Repository.v2
     {
         private const string ISOP_MINUTES_THRESHOLD_SETTING_NAME = "IsopThreshold";
         private const string ISOP_DIRECTORY = "Isoyetas";
-        private const string ISOP_DIRECTORY_5min = "Isoyetas_5min";
+        private const string ISOP_DIRECTORY5min = "Isoyetas";
 
         public AjaxDictionary<string, object> GetPuntosMedicion()
         {
@@ -782,7 +782,7 @@ namespace Protell.Server.DAL.Repository.v2
             DateTime endDate = DateTime.Now;
             TimeSpan diff = endDate - iniDate;
 
-            int minutesThreshold = this.GetIsopMinutesThresholdSetting(); //obtener el setting 
+            int minutesThreshold = this.GetIsopMinutesThresholdSetting5min(); //obtener el setting 
 
             DateTime fecha = this.ConvertFechaNumericaToDatetime(FechaNumerica); //convertir la fecha numerica a dateitme
             DateTime fechaMin = fecha.AddMinutes(-1 * minutesThreshold); //En base al setting generar la fecha minima (restando minutos
@@ -794,10 +794,10 @@ namespace Protell.Server.DAL.Repository.v2
                 long longFechaMin = this.ConvertDatetimeToFechaNumerica(fechaMin);
 
                 ServerSQLLogger.Instance.log("Rango de tiempo : " + longFechaMin.ToString(), "GetIsopFileList_5min(0)");
-                ServerSQLLogger.Instance.log("Isoyetas_5min path : " + Path.Combine(rootDirectory, ISOP_DIRECTORY_5min).ToString(), "GetIsopFileList_5min(1)");
+                ServerSQLLogger.Instance.log("Isoyetas path : " + Path.Combine(rootDirectory, ISOP_DIRECTORY5min).ToString(), "GetIsopFileList_5min(1)");
 
                 //TODO: Optimizar para que solo se obtengan los archivos que estén en el rango de fechas
-                List<string> isopFiles = Directory.GetFiles(Path.Combine(rootDirectory, ISOP_DIRECTORY_5min), "iso5*.kml").ToList<string>();
+                List<string> isopFiles = Directory.GetFiles(Path.Combine(rootDirectory, ISOP_DIRECTORY5min), "iso5*.kml").ToList<string>();
 
                 ServerSQLLogger.Instance.log("Archivos en directory " + isopFiles.Count().ToString(), "GetIsopFileList_5min(2)");
 
@@ -866,6 +866,37 @@ namespace Protell.Server.DAL.Repository.v2
 
             return levelByFn;
         }
+
+        public int GetIsopMinutesThresholdSetting5min()
+        {
+            int settingValue = 5; //valor por default del setting
+            using (var entity = new db_SeguimientoProtocolo_r2Entities())
+            {
+                try
+                {
+                    string dbSettingValue = (from o in entity.APP_SETTINGS
+                                             where o.SettingName == ISOP_MINUTES_THRESHOLD_SETTING_NAME
+                                             select o.Value).FirstOrDefault<string>();
+
+                    if (!String.IsNullOrEmpty(dbSettingValue))
+                    {
+                        int tmpIntSettingValue = 0;
+                        bool tryParseResult = Int32.TryParse(dbSettingValue, out tmpIntSettingValue);
+                        if (tryParseResult) //Se pudo convertir el vaor que viene desde la base de datos
+                        {
+                            settingValue = tmpIntSettingValue;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Manejar erroe de la base de datos
+                    //Si entra al catch pude ser por que no hay conectividad a la base de datos o un problema con las tablas.
+                }
+            }
+
+            return settingValue;
+        }//finfunc
 
     }//endClass
 }//endNamespace

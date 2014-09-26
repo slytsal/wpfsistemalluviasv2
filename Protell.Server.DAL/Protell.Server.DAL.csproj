@@ -94,6 +94,7 @@
     <Compile Include="POCOS\CAT_OPERACION_ESTRUCTURA.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
+    <Compile Include="POCOS\CAT_OPERACION_ESTRUCTURA_V2.cs" />
     <Compile Include="POCOS\CAT_PROTOCOLO.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
@@ -127,6 +128,7 @@
     <Compile Include="POCOS\CAT_UPLOAD_LOG.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
+    <Compile Include="POCOS\CAT_URL_LLUVIAS.cs" />
     <Compile Include="POCOS\CI_REGISTRO.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
@@ -245,11 +247,13 @@
     <Compile Include="Repository\v2\CatEstructuraRepository.cs" />
     <Compile Include="Repository\v2\CatNivelLluviaRepository.cs" />
     <Compile Include="Repository\v2\CatOperacionEstructuraRepository.cs" />
+    <Compile Include="Repository\v2\CatOperacionEstructuraV2Repository.cs" />
     <Compile Include="Repository\v2\CatProtocoloRepository.cs" />
     <Compile Include="Repository\v2\CatPuntoMedicionMinMaxRepository.cs" />
     <Compile Include="Repository\v2\CatPuntosMedicionShortNameRepository.cs" />
     <Compile Include="Repository\v2\CatRegionRepository.cs" />
     <Compile Include="Repository\v2\CatSistemaRepository.cs" />
+    <Compile Include="Repository\v2\CatUrlRepository.cs" />
     <Compile Include="Repository\v2\CiRegistroRepository.cs" />
     <Compile Include="Repository\v2\CondicionRepository.cs" />
     <Compile Include="Repository\v2\HashableDataRepository.cs" />

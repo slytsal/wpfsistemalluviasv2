@@ -150,6 +150,19 @@
           <Property Name="LastModifiedDate" Type="bigint" Nullable="false" />
           <Property Name="ServerLastModifiedDate" Type="bigint" />
         </EntityType>
+        <EntityType Name="CAT_OPERACION_ESTRUCTURA_V2">
+          <Key>
+            <PropertyRef Name="IdOperacionEstructura" />
+          </Key>
+          <Property Name="IdOperacionEstructura" Type="bigint" Nullable="false" />
+          <Property Name="IdCondicion" Type="bigint" Nullable="false" />
+          <Property Name="IdEstructura" Type="bigint" Nullable="false" />
+          <Property Name="OperacionEstrucuturaName" Type="nvarchar" MaxLength="1500" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsModified" Type="bit" Nullable="false" />
+          <Property Name="LastModifiedDate" Type="bigint" Nullable="false" />
+          <Property Name="ServerLastModifiedDate" Type="bigint" />
+        </EntityType>
         <EntityType Name="CAT_PROTOCOLO">
           <Key>
             <PropertyRef Name="IdProtocolo" />
@@ -268,6 +281,14 @@
           <Property Name="IpDir" Type="nvarchar" MaxLength="512" Nullable="false" />
           <Property Name="PcName" Type="nvarchar" MaxLength="512" Nullable="false" />
           <Property Name="IdUsuario" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CAT_URL_LLUVIAS">
+          <Key>
+            <PropertyRef Name="IdUrl" />
+          </Key>
+          <Property Name="IdUrl" Type="bigint" Nullable="false" />
+          <Property Name="Url" Type="nvarchar" MaxLength="250" />
+          <Property Name="IsActive" Type="bit" />
         </EntityType>
         <EntityType Name="CI_REGISTRO">
           <Key>
@@ -633,6 +654,8 @@
         <Function Name="sp_ConsultaDemand" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Fecha" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="SP_Get_Cat_Url" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_Get_Operacion_Estructura" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spCommitBulkUpsertCiRegistroUploaded" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="session" Type="bigint" Mode="In" />
         </Function>
@@ -696,6 +719,7 @@
           <EntitySet Name="CAT_LINKS" EntityType="Self.CAT_LINKS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_NIVEL_LLUVIA" EntityType="Self.CAT_NIVEL_LLUVIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_OPERACION_ESTRUCTURA" EntityType="Self.CAT_OPERACION_ESTRUCTURA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CAT_OPERACION_ESTRUCTURA_V2" EntityType="Self.CAT_OPERACION_ESTRUCTURA_V2" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_PROTOCOLO" EntityType="Self.CAT_PROTOCOLO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_PUNTO_MEDICION" EntityType="Self.CAT_PUNTO_MEDICION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_PUNTO_MEDICION_MAX_MIN" EntityType="Self.CAT_PUNTO_MEDICION_MAX_MIN" Schema="dbo" store:Type="Tables" />
@@ -707,6 +731,7 @@
           <EntitySet Name="CAT_TIPO_PUNTO_MEDICION" EntityType="Self.CAT_TIPO_PUNTO_MEDICION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_UNIDAD_MEDIDA" EntityType="Self.CAT_UNIDAD_MEDIDA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_UPLOAD_LOG" EntityType="Self.CAT_UPLOAD_LOG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CAT_URL_LLUVIAS" EntityType="Self.CAT_URL_LLUVIAS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CI_REGISTRO" EntityType="Self.CI_REGISTRO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CI_TRACKING" EntityType="Self.CI_TRACKING" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MODIFIEDDATA" EntityType="Self.MODIFIEDDATA" Schema="dbo" store:Type="Tables" />
@@ -981,6 +1006,11 @@
             <Parameter Name="fechaNumerica" Mode="In" Type="Int64" />
             <Parameter Name="IdPuntoMedicion" Mode="In" Type="Int64" />
           </FunctionImport>
+          <EntitySet Name="CAT_URL_LLUVIAS" EntityType="devinmr3Model.CAT_URL_LLUVIAS" />
+          <FunctionImport Name="SP_Get_Cat_Url" ReturnType="Collection(devinmr3Model.SP_Get_Cat_Url_Result1)" />
+          <FunctionImport Name="SP_Get_Cat_Url_Result" ReturnType="Collection(devinmr3Model.SP_Get_Cat_Url_Result)" />
+          <EntitySet Name="CAT_OPERACION_ESTRUCTURA_V2" EntityType="devinmr3Model.CAT_OPERACION_ESTRUCTURA_V2" />
+          <FunctionImport Name="SP_Get_Operacions_Estructura" ReturnType="Collection(devinmr3Model.SP_Get_Operacion_Estructura_Result)" />
         </EntityContainer>
         <EntityType Name="APP_ROL">
           <Key>
@@ -1916,6 +1946,42 @@
           <Property Type="String" Name="AccionActual" Nullable="true" MaxLength="1000" />
           <Property Type="Int64" Name="FechaNumerica" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="SP_Get_Cat_Url_Result">
+          <Property Type="Int64" Name="IdUrl" Nullable="false" />
+          <Property Type="String" Name="Url" Nullable="true" MaxLength="250" />
+          <Property Type="Boolean" Name="IsActive" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="CAT_URL_LLUVIAS">
+          <Key>
+            <PropertyRef Name="IdUrl" />
+          </Key>
+          <Property Name="IdUrl" Type="Int64" Nullable="false" />
+          <Property Name="Url" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <ComplexType Name="SP_Get_Cat_Url_Result1">
+          <Property Type="Int64" Name="IdUrl" Nullable="false" />
+          <Property Type="String" Name="Url" Nullable="true" MaxLength="250" />
+          <Property Type="Boolean" Name="IsActive" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="CAT_OPERACION_ESTRUCTURA_V2">
+          <Key>
+            <PropertyRef Name="IdOperacionEstructura" />
+          </Key>
+          <Property Name="IdOperacionEstructura" Type="Int64" Nullable="false" />
+          <Property Name="IdCondicion" Type="Int64" Nullable="false" />
+          <Property Name="IdEstructura" Type="Int64" Nullable="false" />
+          <Property Name="OperacionEstrucuturaName" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsModified" Type="Boolean" Nullable="false" />
+          <Property Name="LastModifiedDate" Type="Int64" Nullable="false" />
+          <Property Name="ServerLastModifiedDate" Type="Int64" />
+        </EntityType>
+        <ComplexType Name="SP_Get_Operacion_Estructura_Result">
+          <Property Type="Int64" Name="IdCondicion" Nullable="false" />
+          <Property Type="Int64" Name="IdEstructura" Nullable="false" />
+          <Property Type="String" Name="OperacionEstrucuturaName" Nullable="true" MaxLength="1500" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2554,6 +2620,56 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="CAT_URL_LLUVIAS">
+            <EntityTypeMapping TypeName="devinmr3Model.CAT_URL_LLUVIAS">
+              <MappingFragment StoreEntitySet="CAT_URL_LLUVIAS">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="IdUrl" ColumnName="IdUrl" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_Get_Cat_Url" FunctionName="devinmr3Model.Store.SP_Get_Cat_Url">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="devinmr3Model.SP_Get_Cat_Url_Result1">
+                <ScalarProperty Name="IdUrl" ColumnName="IdUrl" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Get_Cat_Url_Result" FunctionName="devinmr3Model.Store.SP_Get_Cat_Url">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="devinmr3Model.SP_Get_Cat_Url_Result">
+                <ScalarProperty Name="IdUrl" ColumnName="IdUrl" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="CAT_OPERACION_ESTRUCTURA_V2">
+            <EntityTypeMapping TypeName="devinmr3Model.CAT_OPERACION_ESTRUCTURA_V2">
+              <MappingFragment StoreEntitySet="CAT_OPERACION_ESTRUCTURA_V2">
+                <ScalarProperty Name="ServerLastModifiedDate" ColumnName="ServerLastModifiedDate" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="IsModified" ColumnName="IsModified" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="OperacionEstrucuturaName" ColumnName="OperacionEstrucuturaName" />
+                <ScalarProperty Name="IdEstructura" ColumnName="IdEstructura" />
+                <ScalarProperty Name="IdCondicion" ColumnName="IdCondicion" />
+                <ScalarProperty Name="IdOperacionEstructura" ColumnName="IdOperacionEstructura" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_Get_Operacions_Estructura" FunctionName="devinmr3Model.Store.SP_Get_Operacion_Estructura">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="devinmr3Model.SP_Get_Operacion_Estructura_Result">
+                <ScalarProperty Name="IdCondicion" ColumnName="IdCondicion" />
+                <ScalarProperty Name="IdEstructura" ColumnName="IdEstructura" />
+                <ScalarProperty Name="OperacionEstrucuturaName" ColumnName="OperacionEstrucuturaName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2667,6 +2783,8 @@
         <AssociationConnector Association="devinmr3Model.FK__REL_ROL_P__IdPun__16CF2DED" />
         <EntityTypeShape EntityType="devinmr3Model.CAT_NIVEL_LLUVIA" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="devinmr3Model.CAT_REGION" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="devinmr3Model.CAT_URL_LLUVIAS" Width="1.5" PointX="12.375" PointY="0.75" />
+        <EntityTypeShape EntityType="devinmr3Model.CAT_OPERACION_ESTRUCTURA_V2" Width="1.5" PointX="14.375" PointY="0.75" IsExpanded="true" />
       </Diagram>
     </Diagrams>
   </Designer>

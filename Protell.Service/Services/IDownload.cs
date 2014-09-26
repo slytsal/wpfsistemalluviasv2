@@ -173,5 +173,13 @@ namespace Protell.Service.Services
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
         AjaxDictionary<string, object> Download_IsopFiles_5min(long FechaNumerica);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
+        AjaxDictionary<string, object> Download_Get_CatUrls();
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
+        ObservableCollection<CAT_OPERACION_ESTRUCTURA_V2_Model> Download_GetOperacionEstructuraV2();
     }
 }

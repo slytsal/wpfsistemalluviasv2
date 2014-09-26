@@ -593,7 +593,6 @@ namespace Protell.Service.Services
             return isoyetaRango;
         }
 
-
         public AjaxDictionary<string, object> Download_CatNivelLluvia()
         {
             AjaxDictionary<string, object> res = new AjaxDictionary<string, object>();
@@ -610,7 +609,6 @@ namespace Protell.Service.Services
             }
             return res;
         }
-
 
         public AjaxDictionary<string, object> Download_CatRegion()
         {
@@ -629,7 +627,6 @@ namespace Protell.Service.Services
             return res;
         }
 
-
         public AjaxDictionary<string, object> Download_GetHashableGraficaPromedioPesado(long FechaNumerica) 
         {
             AjaxDictionary<string, object> tipos = new AjaxDictionary<string, object>();
@@ -647,8 +644,18 @@ namespace Protell.Service.Services
 
         public AjaxDictionary<string, object> Download_HashablePuntosMedicionOrderZona()
         {
-            AjaxDictionary<string, object> tipos = (new HashableDataRepository()).GetPuntosMedicionOrdenZona();
-
+            AjaxDictionary<string, object> tipos = null;
+            try
+            {
+                tipos = (new HashableDataRepository()).GetPuntosMedicionOrdenZona();
+            }
+            catch (Exception ex)
+            {
+                
+                tipos = new AjaxDictionary<string,object>();
+                tipos.Add("Error", (object)ex.Message);
+            }
+            
             return tipos;
         }
 
@@ -700,8 +707,41 @@ namespace Protell.Service.Services
             {
                 throw new Exception("IMC_ERR_MSG: No se pudo obtener el ApplicationPhysicalPath; InnerException para más información", ex);
             }
-
             return path;
+        }
+
+        public AjaxDictionary<string, object> Download_Get_CatUrls()
+        {
+            AjaxDictionary<string, object> res = new AjaxDictionary<string, object>();
+            try
+            {
+                using (var repository = new CatUrlRepository())
+                {
+                    res = repository.Get_CatUrl();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("IMC_ERR_MSG:", ex);
+            }
+            return res;
+        }
+
+        public ObservableCollection<CAT_OPERACION_ESTRUCTURA_V2_Model> Download_GetOperacionEstructuraV2()
+        {
+            ObservableCollection<CAT_OPERACION_ESTRUCTURA_V2_Model> result = new ObservableCollection<CAT_OPERACION_ESTRUCTURA_V2_Model>();
+            try
+            {
+                using (var repository = new CatOperacionEstructuraV2Repository())
+                {
+                    result = repository.Get_CatOperacionSobreEstructuras();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("IMC_ERR_MSG:", ex);
+            }
+            return result;
         }
     }
 }
