@@ -15,6 +15,7 @@ namespace Protell.Server.DAL.Repository.v2
             {
                 using (var entity = new db_SeguimientoProtocolo_r2Entities())
                 {
+                    int i = 0;
                     (from s in entity.CAT_URL_LLUVIAS
                      select s).ToList().ForEach(row =>
                      {
@@ -22,7 +23,8 @@ namespace Protell.Server.DAL.Repository.v2
                          item.Add("idUrl", row.IdUrl);
                          item.Add("Url", row.Url);
                          item.Add("IsActive", row.IsActive);
-                         result.Add("Result",item);
+                         result.Add("Result" + i.ToString(),item);
+                         i++;
                      });
                 }
             }
