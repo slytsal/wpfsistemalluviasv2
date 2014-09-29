@@ -289,6 +289,7 @@
           <Property Name="IdUrl" Type="bigint" Nullable="false" />
           <Property Name="Url" Type="nvarchar" MaxLength="250" />
           <Property Name="IsActive" Type="bit" />
+          <Property Name="DescriptionUrl" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="CI_REGISTRO">
           <Key>
@@ -1958,6 +1959,7 @@
           <Property Name="IdUrl" Type="Int64" Nullable="false" />
           <Property Name="Url" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" />
+          <Property Name="DescriptionUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         <ComplexType Name="SP_Get_Cat_Url_Result1">
           <Property Type="Int64" Name="IdUrl" Nullable="false" />
@@ -2623,6 +2625,7 @@
           <EntitySetMapping Name="CAT_URL_LLUVIAS">
             <EntityTypeMapping TypeName="devinmr3Model.CAT_URL_LLUVIAS">
               <MappingFragment StoreEntitySet="CAT_URL_LLUVIAS">
+                <ScalarProperty Name="DescriptionUrl" ColumnName="DescriptionUrl" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Url" ColumnName="Url" />
                 <ScalarProperty Name="IdUrl" ColumnName="IdUrl" />
@@ -2783,7 +2786,7 @@
         <AssociationConnector Association="devinmr3Model.FK__REL_ROL_P__IdPun__16CF2DED" />
         <EntityTypeShape EntityType="devinmr3Model.CAT_NIVEL_LLUVIA" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="devinmr3Model.CAT_REGION" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="devinmr3Model.CAT_URL_LLUVIAS" Width="1.5" PointX="12.375" PointY="0.75" />
+        <EntityTypeShape EntityType="devinmr3Model.CAT_URL_LLUVIAS" PointX="0.75" PointY="3.75" Width="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="devinmr3Model.CAT_OPERACION_ESTRUCTURA_V2" Width="1.5" PointX="14.375" PointY="0.75" IsExpanded="true" />
       </Diagram>
     </Diagrams>

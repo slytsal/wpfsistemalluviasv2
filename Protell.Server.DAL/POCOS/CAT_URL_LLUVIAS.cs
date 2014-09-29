@@ -37,6 +37,12 @@ namespace Protell.Server.DAL.POCOS
             set;
         }
 
+        public virtual string DescriptionUrl
+        {
+            get;
+            set;
+        }
+
         #endregion
     }
 }

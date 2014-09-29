@@ -33,6 +33,7 @@ namespace Protell.Server.DAL.Repository.v2
                          item.Add("idUrl", row.IdUrl);
                          item.Add("Url", row.Url);
                          item.Add("IsActive", row.IsActive);
+                         item.Add("DescriptionUrl", row.DescriptionUrl);
                          result.Add("Result" + i.ToString(),item);
                          i++;
                      });
