@@ -4,6 +4,11 @@ namespace Protell.Model
 {
     public class UsuarioModel:ModelBase
     {
+        public string IdUsuario_
+        {
+            get;
+            set;
+        }
         public long IdUsuario
         {
             get { return _IdUsuario; }

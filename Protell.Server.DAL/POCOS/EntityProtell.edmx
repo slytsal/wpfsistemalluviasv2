@@ -114,6 +114,24 @@
           <Property Name="IdSistema" Type="bigint" Nullable="false" />
           <Property Name="ServerLastModifiedDate" Type="bigint" />
         </EntityType>
+        <EntityType Name="CAT_FACTOR">
+          <Key>
+            <PropertyRef Name="IdPuntoMedicion" />
+          </Key>
+          <Property Name="IdPuntoMedicion" Type="bigint" Nullable="false" />
+          <Property Name="ValorFactor" Type="float" />
+          <Property Name="IdZona" Type="bigint" />
+          <Property Name="Zona" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="CAT_ISOYETA_RANGOS_LABELS">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nivel" Type="int" />
+          <Property Name="Etiqueta" Type="nvarchar" MaxLength="250" />
+          <Property Name="ColorHex" Type="nvarchar" MaxLength="250" />
+        </EntityType>
         <EntityType Name="CAT_LINKS">
           <Key>
             <PropertyRef Name="IdLink" />
@@ -325,6 +343,13 @@
           <Property Name="IdPuntoMedicion" Type="bigint" Nullable="false" />
           <Property Name="FechaNumerica" Type="bigint" Nullable="false" />
         </EntityType>
+        <EntityType Name="EXT_PUNTO_MEDICION_PARAMETRO_MEDICION">
+          <Key>
+            <PropertyRef Name="IdPuntoMedicion" />
+          </Key>
+          <Property Name="IdPuntoMedicion" Type="bigint" Nullable="false" />
+          <Property Name="ParametroMedicion" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
         <EntityType Name="MODIFIEDDATA">
           <Key>
             <PropertyRef Name="IdModifiedData" />
@@ -376,6 +401,26 @@
           <Property Name="IdSyncTable" Type="bigint" Nullable="false" />
           <Property Name="SyncTableName" Type="nvarchar(max)" />
           <Property Name="OrderTable" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'uatlluvias.dbo.WAPP_RECOVERY_PASS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="WAPP_RECOVERY_PASS">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdSesion" />
+          </Key>
+          <Property Name="IdUsuario" Type="bigint" Nullable="false" />
+          <Property Name="IdSesion" Type="nvarchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'uatlluvias.dbo.WAPP_USUARIO_SESION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="WAPP_USUARIO_SESION">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdSesion" />
+          </Key>
+          <Property Name="IdUsuario" Type="bigint" Nullable="false" />
+          <Property Name="IdSesion" Type="nvarchar" MaxLength="250" Nullable="false" />
         </EntityType>
         <Association Name="APP_ROL_APP_USUARIO_ROL_FK1">
           <End Role="APP_ROL" Type="Self.APP_ROL" Multiplicity="1" />
@@ -652,11 +697,180 @@
         <Function Name="GD_GET_DATOSESTRUCTURAS_2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GD_GET_DATOSESTRUCTURAS_OLD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="LoadCnfHora" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_AppUsuario_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUsuario" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="SP_AppUsuario_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUsuario" Type="nvarchar" Mode="In" />
+          <Parameter Name="UsuarioPwd" Type="varchar" Mode="In" />
+          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="Apellido" Type="nvarchar" Mode="In" />
+          <Parameter Name="Area" Type="nvarchar" Mode="In" />
+          <Parameter Name="Puesto" Type="nvarchar" Mode="In" />
+          <Parameter Name="IdRol" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="SP_AppUsuarioInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UsuarioCorreo" Type="nvarchar" Mode="In" />
+          <Parameter Name="UsuarioPwd" Type="varchar" Mode="In" />
+          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="Apellido" Type="nvarchar" Mode="In" />
+          <Parameter Name="Area" Type="nvarchar" Mode="In" />
+          <Parameter Name="Puesto" Type="nvarchar" Mode="In" />
+          <Parameter Name="IdRol" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="SP_Cat_SistemaDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdSistema" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="SP_Cat_SistemaInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SistemaName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_Cat_SistemaUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdSistema" Type="bigint" Mode="In" />
+          <Parameter Name="SistemaName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_CatPuntoMedicionDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdPuntoMedicion" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="SP_CatPuntoMedicionInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PuntoMedicionName" Type="nvarchar" Mode="In" />
+          <Parameter Name="IdUnidadMedida" Type="bigint" Mode="In" />
+          <Parameter Name="IdTipoPuntoMedicion" Type="bigint" Mode="In" />
+          <Parameter Name="ValorReferencia" Type="nvarchar" Mode="In" />
+          <Parameter Name="ParametroReferencia" Type="nvarchar" Mode="In" />
+          <Parameter Name="latiitud" Type="nvarchar" Mode="In" />
+          <Parameter Name="longitud" Type="nvarchar" Mode="In" />
+          <Parameter Name="IdAccionActual" Type="bigint" Mode="In" />
+          <Parameter Name="IdRol" Type="bigint" Mode="In" />
+          <Parameter Name="IdDependencia" Type="bigint" Mode="In" />
+          <Parameter Name="IdZona" Type="bigint" Mode="In" />
+          <Parameter Name="Zona" Type="nvarchar" Mode="In" />
+          <Parameter Name="ValorFactor" Type="float" Mode="In" />
+          <Parameter Name="Max" Type="float" Mode="In" />
+          <Parameter Name="Min" Type="float" Mode="In" />
+          <Parameter Name="IdSistema" Type="bigint" Mode="In" />
+          <Parameter Name="ParametroMedicion" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_CatPuntoMedicionSelect" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_CatPuntoMedicionUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdPuntoMedicion" Type="bigint" Mode="In" />
+          <Parameter Name="PuntoMedicionName" Type="nvarchar" Mode="In" />
+          <Parameter Name="IdUnidadMedida" Type="bigint" Mode="In" />
+          <Parameter Name="IdTipoPuntoMedicion" Type="bigint" Mode="In" />
+          <Parameter Name="ValorReferencia" Type="float" Mode="In" />
+          <Parameter Name="ParametroReferencia" Type="nvarchar" Mode="In" />
+          <Parameter Name="latiitud" Type="float" Mode="In" />
+          <Parameter Name="longitud" Type="float" Mode="In" />
+          <Parameter Name="IdAccionActual" Type="bigint" Mode="In" />
+          <Parameter Name="IdRol" Type="bigint" Mode="In" />
+          <Parameter Name="IdDependencia" Type="bigint" Mode="In" />
+          <Parameter Name="IdZona" Type="bigint" Mode="In" />
+          <Parameter Name="Zona" Type="nvarchar" Mode="In" />
+          <Parameter Name="ValorFactor" Type="float" Mode="In" />
+          <Parameter Name="Max" Type="float" Mode="In" />
+          <Parameter Name="Min" Type="float" Mode="In" />
+          <Parameter Name="IdSistema" Type="bigint" Mode="In" />
+          <Parameter Name="ParametroMedicion" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="sp_ConsultaDemand" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Fecha" Type="bigint" Mode="In" />
         </Function>
-        <Function Name="SP_Get_Cat_Url" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="SP_Get_Operacion_Estructura" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_DependenciaDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdDependencia" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="SP_DependenciaInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DependenciaName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_DependenciaUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdDependencia" Type="bigint" Mode="In" />
+          <Parameter Name="DependenciaName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_EtiquetasIsopInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nivel" Type="int" Mode="In" />
+          <Parameter Name="Etiqueta" Type="nvarchar" Mode="In" />
+          <Parameter Name="ColorHex" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_LabelsIsopUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+          <Parameter Name="Nivel" Type="int" Mode="In" />
+          <Parameter Name="Etiqueta" Type="nvarchar" Mode="In" />
+          <Parameter Name="ColorHex" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="SP_LablesIsopDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Links_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LinkUrl" Type="nvarchar" Mode="In" />
+          <Parameter Name="LinkName" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="SP_LinksDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdLink" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_LinksUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdLink" Type="nvarchar" Mode="In" />
+          <Parameter Name="LinkUrl" Type="nvarchar" Mode="In" />
+          <Parameter Name="LinkName" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="SP_OperacionEstructuraSelect" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_OperEstructurasDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdOperacionEstructura" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_OperEstructurasInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdCondicion" Type="bigint" Mode="In" />
+          <Parameter Name="IdEstructura" Type="bigint" Mode="In" />
+          <Parameter Name="OperacionEstrucuturaName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_OperEstructurasUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdOperacionEstructura" Type="nvarchar" Mode="In" />
+          <Parameter Name="IdCondicion" Type="bigint" Mode="In" />
+          <Parameter Name="IdEstructura" Type="bigint" Mode="In" />
+          <Parameter Name="OperacionEstrucuturaName" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="SP_ParameterMedicionDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdPuntoMedicion" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="SP_ParameterMedicionInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdPuntoMedicion" Type="bigint" Mode="In" />
+          <Parameter Name="ParametroMedicion" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ParameterMedicionUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdPuntoMedicion" Type="bigint" Mode="In" />
+          <Parameter Name="ParametroMedicion" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ParametersSelect" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_RegionDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdRegion" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="SP_RegionInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RegionName" Type="nvarchar" Mode="In" />
+          <Parameter Name="FileName" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="SP_RegionUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdRegion" Type="bigint" Mode="In" />
+          <Parameter Name="RegionName" Type="nvarchar" Mode="In" />
+          <Parameter Name="FileName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_TipoPuntoMedicionDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdTipoPuntoMedicion" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="SP_TipoPuntoMedicionInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TipoPuntoMedicionName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_TipoPuntoMedicionUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdTipoPuntoMedicion" Type="bigint" Mode="In" />
+          <Parameter Name="TipoPuntoMedicionName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_UnidadMedidaDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUnidadMedida" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="SP_UnidadMedidaInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UnidadMedidaName" Type="nvarchar" Mode="In" />
+          <Parameter Name="UnidadMedidaShort" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SP_UnidadMedidaUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUnidadMedida" Type="bigint" Mode="In" />
+          <Parameter Name="UnidadMedidaName" Type="nvarchar" Mode="In" />
+          <Parameter Name="UnidadMedidaShort" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="spCommitBulkUpsertCiRegistroUploaded" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="session" Type="bigint" Mode="In" />
         </Function>
@@ -707,6 +921,24 @@
           <Parameter Name="SLMD" Type="bigint" Mode="In" />
           <Parameter Name="Dias" Type="int" Mode="In" />
         </Function>
+        <Function Name="wappSpAttemptLogUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userMail" Type="nvarchar" Mode="In" />
+          <Parameter Name="userPwd" Type="nvarchar" Mode="In" />
+          <Parameter Name="saveSession" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="wappSpGetUserInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="sessionId" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="wappSpLogOut" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUsuario" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="wappSpRecoveryPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userId" Type="bigint" Mode="In" />
+          <Parameter Name="userPwd" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="wappSpValidateMail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userMail" Type="nvarchar" Mode="In" />
+        </Function>
         <EntityContainer Name="devinmr3ModelStoreContainer">
           <EntitySet Name="APP_ROL" EntityType="Self.APP_ROL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="APP_SETTINGS" EntityType="Self.APP_SETTINGS" Schema="dbo" store:Type="Tables" />
@@ -717,6 +949,8 @@
           <EntitySet Name="CAT_CONDPRO" EntityType="Self.CAT_CONDPRO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_DEPENDENCIA" EntityType="Self.CAT_DEPENDENCIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_ESTRUCTURA" EntityType="Self.CAT_ESTRUCTURA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CAT_FACTOR" EntityType="Self.CAT_FACTOR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CAT_ISOYETA_RANGOS_LABELS" EntityType="Self.CAT_ISOYETA_RANGOS_LABELS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_LINKS" EntityType="Self.CAT_LINKS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_NIVEL_LLUVIA" EntityType="Self.CAT_NIVEL_LLUVIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAT_OPERACION_ESTRUCTURA" EntityType="Self.CAT_OPERACION_ESTRUCTURA" Schema="dbo" store:Type="Tables" />
@@ -735,11 +969,24 @@
           <EntitySet Name="CAT_URL_LLUVIAS" EntityType="Self.CAT_URL_LLUVIAS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CI_REGISTRO" EntityType="Self.CI_REGISTRO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CI_TRACKING" EntityType="Self.CI_TRACKING" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EXT_PUNTO_MEDICION_PARAMETRO_MEDICION" EntityType="Self.EXT_PUNTO_MEDICION_PARAMETRO_MEDICION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MODIFIEDDATA" EntityType="Self.MODIFIEDDATA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="REL_EST_PUNTOMED" EntityType="Self.REL_EST_PUNTOMED" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="REL_ESTRUCTURA_DEPENDENCIA" EntityType="Self.REL_ESTRUCTURA_DEPENDENCIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="REL_ROL_PUNTOMEDICION" EntityType="Self.REL_ROL_PUNTOMEDICION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYNCTABLE" EntityType="Self.SYNCTABLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WAPP_RECOVERY_PASS" EntityType="Self.WAPP_RECOVERY_PASS" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[WAPP_RECOVERY_PASS].[IdUsuario] AS [IdUsuario], 
+[WAPP_RECOVERY_PASS].[IdSesion] AS [IdSesion]
+FROM [dbo].[WAPP_RECOVERY_PASS] AS [WAPP_RECOVERY_PASS]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="WAPP_USUARIO_SESION" EntityType="Self.WAPP_USUARIO_SESION" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[WAPP_USUARIO_SESION].[IdUsuario] AS [IdUsuario], 
+[WAPP_USUARIO_SESION].[IdSesion] AS [IdSesion]
+FROM [dbo].[WAPP_USUARIO_SESION] AS [WAPP_USUARIO_SESION]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="APP_ROL_APP_USUARIO_ROL_FK1" Association="Self.APP_ROL_APP_USUARIO_ROL_FK1">
             <End Role="APP_ROL" EntitySet="APP_ROL" />
             <End Role="APP_USUARIO_ROL" EntitySet="APP_USUARIO_ROL" />
@@ -1008,10 +1255,201 @@
             <Parameter Name="IdPuntoMedicion" Mode="In" Type="Int64" />
           </FunctionImport>
           <EntitySet Name="CAT_URL_LLUVIAS" EntityType="devinmr3Model.CAT_URL_LLUVIAS" />
-          <FunctionImport Name="SP_Get_Cat_Url" ReturnType="Collection(devinmr3Model.SP_Get_Cat_Url_Result1)" />
-          <FunctionImport Name="SP_Get_Cat_Url_Result" ReturnType="Collection(devinmr3Model.SP_Get_Cat_Url_Result)" />
           <EntitySet Name="CAT_OPERACION_ESTRUCTURA_V2" EntityType="devinmr3Model.CAT_OPERACION_ESTRUCTURA_V2" />
-          <FunctionImport Name="SP_Get_Operacions_Estructura" ReturnType="Collection(devinmr3Model.SP_Get_Operacion_Estructura_Result)" />
+          <FunctionImport Name="wappSpGetUserInfo" ReturnType="Collection(devinmr3Model.wappSpGetUserInfo_Result)">
+          <Parameter Name="sessionId" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="WAPP_RECOVERY_PASS" EntityType="devinmr3Model.WAPP_RECOVERY_PASS" />
+          <FunctionImport Name="wappSpRecoveryPassword" ReturnType="Collection(String)">
+            <Parameter Name="userId" Mode="In" Type="Int64" />
+            <Parameter Name="userPwd" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="WAPP_USUARIO_SESION" EntityType="devinmr3Model.WAPP_USUARIO_SESION" />
+          <FunctionImport Name="SP_AppUsuarioInsert" ReturnType="Collection(Boolean)">
+            <Parameter Name="UsuarioCorreo" Mode="In" Type="String" />
+            <Parameter Name="UsuarioPwd" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Apellido" Mode="In" Type="String" />
+            <Parameter Name="Area" Mode="In" Type="String" />
+            <Parameter Name="Puesto" Mode="In" Type="String" />
+            <Parameter Name="IdRol" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_AppUsuario_Delete" ReturnType="Collection(Boolean)">
+          <Parameter Name="IdUsuario" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_LinksDelete" ReturnType="Collection(Boolean)">
+          <Parameter Name="IdLink" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Links_Insert" ReturnType="Collection(Boolean)">
+            <Parameter Name="LinkUrl" Mode="In" Type="String" />
+            <Parameter Name="LinkName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_AppUsuario_Update" ReturnType="Collection(Boolean)">
+            <Parameter Name="IdUsuario" Mode="In" Type="String" />
+            <Parameter Name="UsuarioPwd" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Apellido" Mode="In" Type="String" />
+            <Parameter Name="Area" Mode="In" Type="String" />
+            <Parameter Name="Puesto" Mode="In" Type="String" />
+            <Parameter Name="IdRol" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_LinksUpdate" ReturnType="Collection(Boolean)">
+            <Parameter Name="IdLink" Mode="In" Type="String" />
+            <Parameter Name="LinkUrl" Mode="In" Type="String" />
+            <Parameter Name="LinkName" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="CAT_ISOYETA_RANGOS_LABELS" EntityType="devinmr3Model.CAT_ISOYETA_RANGOS_LABELS" />
+          <FunctionImport Name="SP_EtiquetasIsopInsert" ReturnType="Collection(Boolean)">
+            <Parameter Name="Nivel" Mode="In" Type="Int32" />
+            <Parameter Name="Etiqueta" Mode="In" Type="String" />
+            <Parameter Name="ColorHex" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_LablesIsopDelete" ReturnType="Collection(Boolean)">
+          <Parameter Name="Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_LabelsIsopUpdate" ReturnType="Collection(Boolean)">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="Nivel" Mode="In" Type="Int32" />
+            <Parameter Name="Etiqueta" Mode="In" Type="String" />
+            <Parameter Name="ColorHex" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_RegionInsert" ReturnType="Collection(Boolean)">
+            <Parameter Name="RegionName" Mode="In" Type="String" />
+            <Parameter Name="FileName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_RegionUpdate" ReturnType="Collection(Boolean)">
+            <Parameter Name="IdRegion" Mode="In" Type="Int64" />
+            <Parameter Name="RegionName" Mode="In" Type="String" />
+            <Parameter Name="FileName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_RegionDelete" ReturnType="Collection(Boolean)">
+          <Parameter Name="IdRegion" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_OperEstructurasInsert" ReturnType="Collection(Boolean)">
+            <Parameter Name="IdCondicion" Mode="In" Type="Int64" />
+            <Parameter Name="IdEstructura" Mode="In" Type="Int64" />
+            <Parameter Name="OperacionEstrucuturaName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_OperEstructurasUpdate" ReturnType="Collection(Boolean)">
+            <Parameter Name="IdOperacionEstructura" Mode="In" Type="String" />
+            <Parameter Name="IdCondicion" Mode="In" Type="Int64" />
+            <Parameter Name="IdEstructura" Mode="In" Type="Int64" />
+            <Parameter Name="OperacionEstrucuturaName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_OperacionEstructuraSelect" ReturnType="Collection(devinmr3Model.SP_OperacionEstructuraSelect_Result1)" />
+          <FunctionImport Name="SP_OperEstructurasDelete" ReturnType="Collection(Boolean)">
+          <Parameter Name="IdOperacionEstructura" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="EXT_PUNTO_MEDICION_PARAMETRO_MEDICION" EntityType="devinmr3Model.EXT_PUNTO_MEDICION_PARAMETRO_MEDICION" />
+          <FunctionImport Name="SP_ParametersSelect" ReturnType="Collection(devinmr3Model.SP_ParametersSelect_Result)" />
+          <FunctionImport Name="SP_ParameterMedicionInsert" ReturnType="Collection(Boolean)">
+            <Parameter Name="IdPuntoMedicion" Mode="In" Type="Int64" />
+            <Parameter Name="ParametroMedicion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ParameterMedicionUpdate" ReturnType="Collection(Boolean)">
+            <Parameter Name="IdPuntoMedicion" Mode="In" Type="Int64" />
+            <Parameter Name="ParametroMedicion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ParameterMedicionDelete" ReturnType="Collection(Boolean)">
+          <Parameter Name="IdPuntoMedicion" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <EntitySet Name="CAT_FACTOR" EntityType="devinmr3Model.CAT_FACTOR" />
+          <FunctionImport Name="SP_DependenciaInsert" ReturnType="Collection(Boolean)">
+          <Parameter Name="DependenciaName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_DependenciaUpdate" ReturnType="Collection(Boolean)">
+            <Parameter Name="IdDependencia" Mode="In" Type="Int64" />
+            <Parameter Name="DependenciaName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_DependenciaDelete" ReturnType="Collection(Boolean)">
+          <Parameter Name="IdDependencia" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_UnidadMedidaInsert" ReturnType="Collection(Boolean)">
+            <Parameter Name="UnidadMedidaName" Mode="In" Type="String" />
+            <Parameter Name="UnidadMedidaShort" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_UnidadMedidaUpdate" ReturnType="Collection(Boolean)">
+            <Parameter Name="IdUnidadMedida" Mode="In" Type="Int64" />
+            <Parameter Name="UnidadMedidaName" Mode="In" Type="String" />
+            <Parameter Name="UnidadMedidaShort" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_UnidadMedidaDelete" ReturnType="Collection(Boolean)">
+          <Parameter Name="IdUnidadMedida" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_TipoPuntoMedicionInsert" ReturnType="Collection(Boolean)">
+          <Parameter Name="TipoPuntoMedicionName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_TipoPuntoMedicionUpdate" ReturnType="Collection(Boolean)">
+            <Parameter Name="IdTipoPuntoMedicion" Mode="In" Type="Int64" />
+            <Parameter Name="TipoPuntoMedicionName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_TipoPuntoMedicionDelete" ReturnType="Collection(Boolean)">
+          <Parameter Name="IdTipoPuntoMedicion" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Cat_SistemaInsert" ReturnType="Collection(Boolean)">
+          <Parameter Name="SistemaName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Cat_SistemaDelete" ReturnType="Collection(Boolean)">
+          <Parameter Name="IdSistema" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Cat_SistemaUpdate" ReturnType="Collection(Boolean)">
+            <Parameter Name="IdSistema" Mode="In" Type="Int64" />
+            <Parameter Name="SistemaName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_CatPuntoMedicionDelete" ReturnType="Collection(Boolean)">
+          <Parameter Name="IdPuntoMedicion" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_CatPuntoMedicionSelect" ReturnType="Collection(devinmr3Model.SP_CatPuntoMedicionSelect_Result9)" />
+          <FunctionImport Name="SP_CatPuntoMedicionInsert" ReturnType="Collection(Boolean)">
+            <Parameter Name="PuntoMedicionName" Mode="In" Type="String" />
+            <Parameter Name="IdUnidadMedida" Mode="In" Type="Int64" />
+            <Parameter Name="IdTipoPuntoMedicion" Mode="In" Type="Int64" />
+            <Parameter Name="ValorReferencia" Mode="In" Type="String" />
+            <Parameter Name="ParametroReferencia" Mode="In" Type="String" />
+            <Parameter Name="latiitud" Mode="In" Type="String" />
+            <Parameter Name="longitud" Mode="In" Type="String" />
+            <Parameter Name="IdAccionActual" Mode="In" Type="Int64" />
+            <Parameter Name="IdRol" Mode="In" Type="Int64" />
+            <Parameter Name="IdDependencia" Mode="In" Type="Int64" />
+            <Parameter Name="IdZona" Mode="In" Type="Int64" />
+            <Parameter Name="Zona" Mode="In" Type="String" />
+            <Parameter Name="ValorFactor" Mode="In" Type="Double" />
+            <Parameter Name="Max" Mode="In" Type="Double" />
+            <Parameter Name="Min" Mode="In" Type="Double" />
+            <Parameter Name="IdSistema" Mode="In" Type="Int64" />
+            <Parameter Name="ParametroMedicion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_CatPuntoMedicionUpdate" ReturnType="Collection(Boolean)">
+            <Parameter Name="IdPuntoMedicion" Mode="In" Type="Int64" />
+            <Parameter Name="PuntoMedicionName" Mode="In" Type="String" />
+            <Parameter Name="IdUnidadMedida" Mode="In" Type="Int64" />
+            <Parameter Name="IdTipoPuntoMedicion" Mode="In" Type="Int64" />
+            <Parameter Name="ValorReferencia" Mode="In" Type="Double" />
+            <Parameter Name="ParametroReferencia" Mode="In" Type="String" />
+            <Parameter Name="latiitud" Mode="In" Type="Double" />
+            <Parameter Name="longitud" Mode="In" Type="Double" />
+            <Parameter Name="IdAccionActual" Mode="In" Type="Int64" />
+            <Parameter Name="IdRol" Mode="In" Type="Int64" />
+            <Parameter Name="IdDependencia" Mode="In" Type="Int64" />
+            <Parameter Name="IdZona" Mode="In" Type="Int64" />
+            <Parameter Name="Zona" Mode="In" Type="String" />
+            <Parameter Name="ValorFactor" Mode="In" Type="Double" />
+            <Parameter Name="Max" Mode="In" Type="Double" />
+            <Parameter Name="Min" Mode="In" Type="Double" />
+            <Parameter Name="IdSistema" Mode="In" Type="Int64" />
+            <Parameter Name="ParametroMedicion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="wappSpLogOut" ReturnType="Collection(Boolean)">
+          <Parameter Name="IdUsuario" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="wappSpAttemptLogUser" ReturnType="Collection(devinmr3Model.wappSpAttemptLogUser_Result5)">
+            <Parameter Name="userMail" Mode="In" Type="String" />
+            <Parameter Name="userPwd" Mode="In" Type="String" />
+            <Parameter Name="saveSession" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="wappSpValidateMail" ReturnType="Collection(devinmr3Model.wappSpValidateMail_Result3)">
+            <Parameter Name="userMail" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="APP_ROL">
           <Key>
@@ -1984,6 +2422,336 @@
           <Property Type="Int64" Name="IdEstructura" Nullable="false" />
           <Property Type="String" Name="OperacionEstrucuturaName" Nullable="true" MaxLength="1500" />
         </ComplexType>
+        <ComplexType Name="wappSpAttemptLogUser_Result">
+          <Property Type="Int64" Name="IdUsuario" Nullable="true" />
+          <Property Type="String" Name="IdSesion" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="wappSpAttemptLogUser_Result1">
+          <Property Type="Int64" Name="IdUsuario" Nullable="true" />
+          <Property Type="String" Name="IdSesion" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="wappSpAttemptLogUser_Result2">
+          <Property Type="Int64" Name="IdUsuario" Nullable="true" />
+          <Property Type="String" Name="IdSesion" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="wappSpAttemptLogUser_Result3">
+          <Property Type="Int64" Name="IdUsuario" Nullable="true" />
+          <Property Type="String" Name="IdSesion" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="wappSpAttemptLogUser_Result4">
+          <Property Type="Int64" Name="IdUsuario" Nullable="true" />
+          <Property Type="String" Name="IdSesion" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="wappSpGetUserInfo_Result">
+          <Property Type="Int64" Name="IdUser" Nullable="true" />
+          <Property Type="String" Name="UserMail" Nullable="true" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="wappSpValidateMail_Result">
+          <Property Type="Int64" Name="IdUsuario" Nullable="true" />
+          <Property Type="String" Name="IdSesion" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <EntityType Name="WAPP_RECOVERY_PASS">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdSesion" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int64" Nullable="false" />
+          <Property Name="IdSesion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="wappSpRecoveryPassword_Result">
+          <Property Type="Boolean" Name="Column1" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="WAPP_USUARIO_SESION">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdSesion" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int64" Nullable="false" />
+          <Property Name="IdSesion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CAT_ISOYETA_RANGOS_LABELS">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nivel" Type="Int32" />
+          <Property Name="Etiqueta" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ColorHex" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="SP_OperacionEstructuraSelect_Result">
+          <Property Type="Int64" Name="IdOperacionEstructura" Nullable="false" />
+          <Property Type="Int64" Name="IdCondicion" Nullable="false" />
+          <Property Type="String" Name="CondicionName" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="IdEstructura" Nullable="false" />
+          <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="OperacionEstrucuturaName" Nullable="true" MaxLength="1500" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="Boolean" Name="IsModified" Nullable="false" />
+          <Property Type="Int64" Name="LastModifiedDate" Nullable="false" />
+          <Property Type="Int64" Name="ServerLastModifiedDate" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_OperacionEstructuraSelect_Result1">
+          <Property Type="Int64" Name="IdOperacionEstructura" Nullable="false" />
+          <Property Type="Int64" Name="IdCondicion" Nullable="false" />
+          <Property Type="String" Name="CondicionName" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="IdEstructura" Nullable="false" />
+          <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="OperacionEstrucuturaName" Nullable="true" MaxLength="1500" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="Boolean" Name="IsModified" Nullable="false" />
+          <Property Type="Int64" Name="LastModifiedDate" Nullable="false" />
+          <Property Type="Int64" Name="ServerLastModifiedDate" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="EXT_PUNTO_MEDICION_PARAMETRO_MEDICION">
+          <Key>
+            <PropertyRef Name="IdPuntoMedicion" />
+          </Key>
+          <Property Name="IdPuntoMedicion" Type="Int64" Nullable="false" />
+          <Property Name="ParametroMedicion" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="SP_ParametersSelect_Result">
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="ParametroMedicion" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
+        </ComplexType>
+        <EntityType Name="CAT_FACTOR">
+          <Key>
+            <PropertyRef Name="IdPuntoMedicion" />
+          </Key>
+          <Property Name="IdPuntoMedicion" Type="Int64" Nullable="false" />
+          <Property Name="ValorFactor" Type="Double" />
+          <Property Name="IdZona" Type="Int64" />
+          <Property Name="Zona" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="wappSpValidateMail_Result1">
+          <Property Type="Int64" Name="IdUsuario" Nullable="true" />
+          <Property Type="String" Name="IdSesion" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="wappSpValidateMail_Result2">
+          <Property Type="Int64" Name="IdUsuario" Nullable="true" />
+          <Property Type="String" Name="IdSesion" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="SP_CatPuntoMedicionSelect_Result">
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Int64" Name="IdUnidadMedida" Nullable="true" />
+          <Property Type="String" Name="UnidadMedidaName" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="IdTipoPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="TipoPuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Int64" Name="IdDependencia" Nullable="true" />
+          <Property Type="String" Name="DependenciaName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Zona" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="IdAccionActual" Nullable="true" />
+          <Property Type="String" Name="AccionAcualName" Nullable="true" MaxLength="255" />
+          <Property Type="Double" Name="Max" Nullable="true" />
+          <Property Type="Double" Name="Min" Nullable="true" />
+          <Property Type="Int64" Name="IdRol" Nullable="true" />
+          <Property Type="String" Name="RolName" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="SP_CatPuntoMedicionSelect_Result1">
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Int64" Name="IdUnidadMedida" Nullable="true" />
+          <Property Type="String" Name="UnidadMedidaName" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="IdTipoPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="TipoPuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Int64" Name="IdDependencia" Nullable="true" />
+          <Property Type="String" Name="DependenciaName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Zona" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="IdAccionActual" Nullable="true" />
+          <Property Type="String" Name="AccionAcualName" Nullable="true" MaxLength="255" />
+          <Property Type="Double" Name="Max" Nullable="true" />
+          <Property Type="Double" Name="Min" Nullable="true" />
+          <Property Type="Int64" Name="IdRol" Nullable="true" />
+          <Property Type="String" Name="RolName" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="SP_CatPuntoMedicionSelect_Result2">
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Int64" Name="IdUnidadMedida" Nullable="true" />
+          <Property Type="String" Name="UnidadMedidaName" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="IdTipoPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="TipoPuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Int64" Name="IdDependencia" Nullable="true" />
+          <Property Type="String" Name="DependenciaName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Zona" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="IdAccionActual" Nullable="true" />
+          <Property Type="String" Name="AccionAcualName" Nullable="true" MaxLength="255" />
+          <Property Type="Double" Name="Max" Nullable="true" />
+          <Property Type="Double" Name="Min" Nullable="true" />
+          <Property Type="Int64" Name="IdRol" Nullable="true" />
+          <Property Type="String" Name="RolName" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="SP_CatPuntoMedicionSelect_Result3">
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Int64" Name="IdUnidadMedida" Nullable="true" />
+          <Property Type="String" Name="UnidadMedidaName" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="IdTipoPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="TipoPuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Double" Name="ValorReferencia" Nullable="true" />
+          <Property Type="Int32" Name="ParametroReferencia" Nullable="true" />
+          <Property Type="Double" Name="latiitud" Nullable="true" />
+          <Property Type="Double" Name="longitud" Nullable="true" />
+          <Property Type="Int64" Name="IdDependencia" Nullable="true" />
+          <Property Type="String" Name="DependenciaName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Zona" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="IdAccionActual" Nullable="true" />
+          <Property Type="String" Name="AccionAcualName" Nullable="true" MaxLength="255" />
+          <Property Type="Double" Name="Max" Nullable="true" />
+          <Property Type="Double" Name="Min" Nullable="true" />
+          <Property Type="Int64" Name="IdRol" Nullable="true" />
+          <Property Type="String" Name="RolName" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="SP_CatPuntoMedicionSelect_Result4">
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Int64" Name="IdUnidadMedida" Nullable="true" />
+          <Property Type="String" Name="UnidadMedidaName" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="IdTipoPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="TipoPuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Double" Name="ValorReferencia" Nullable="true" />
+          <Property Type="Int32" Name="ParametroReferencia" Nullable="true" />
+          <Property Type="Double" Name="latiitud" Nullable="true" />
+          <Property Type="Double" Name="longitud" Nullable="true" />
+          <Property Type="Int64" Name="IdDependencia" Nullable="true" />
+          <Property Type="String" Name="DependenciaName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Zona" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="IdAccionActual" Nullable="true" />
+          <Property Type="String" Name="AccionAcualName" Nullable="true" MaxLength="255" />
+          <Property Type="Double" Name="Max" Nullable="true" />
+          <Property Type="Double" Name="Min" Nullable="true" />
+          <Property Type="Int64" Name="IdRol" Nullable="true" />
+          <Property Type="String" Name="RolName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="SistemaName" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="SP_CatPuntoMedicionSelect_Result5">
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Int64" Name="IdUnidadMedida" Nullable="true" />
+          <Property Type="String" Name="UnidadMedidaName" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="IdTipoPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="TipoPuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Double" Name="ValorReferencia" Nullable="true" />
+          <Property Type="Int32" Name="ParametroReferencia" Nullable="true" />
+          <Property Type="Double" Name="latiitud" Nullable="true" />
+          <Property Type="Double" Name="longitud" Nullable="true" />
+          <Property Type="Int64" Name="IdDependencia" Nullable="true" />
+          <Property Type="String" Name="DependenciaName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Zona" Nullable="true" MaxLength="250" />
+          <Property Type="Double" Name="ValorFactor" Nullable="true" />
+          <Property Type="Int64" Name="IdAccionActual" Nullable="true" />
+          <Property Type="String" Name="AccionAcualName" Nullable="true" MaxLength="255" />
+          <Property Type="Double" Name="Max" Nullable="true" />
+          <Property Type="Double" Name="Min" Nullable="true" />
+          <Property Type="Int64" Name="IdRol" Nullable="true" />
+          <Property Type="String" Name="RolName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="SistemaName" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="SP_CatPuntoMedicionSelect_Result6">
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Int64" Name="IdUnidadMedida" Nullable="true" />
+          <Property Type="String" Name="UnidadMedidaName" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="IdTipoPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="TipoPuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Double" Name="ValorReferencia" Nullable="true" />
+          <Property Type="Int32" Name="ParametroReferencia" Nullable="true" />
+          <Property Type="Double" Name="latiitud" Nullable="true" />
+          <Property Type="Double" Name="longitud" Nullable="true" />
+          <Property Type="Int64" Name="IdDependencia" Nullable="true" />
+          <Property Type="String" Name="DependenciaName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Zona" Nullable="true" MaxLength="250" />
+          <Property Type="Double" Name="ValorFactor" Nullable="true" />
+          <Property Type="Int64" Name="IdAccionActual" Nullable="true" />
+          <Property Type="String" Name="AccionAcualName" Nullable="true" MaxLength="255" />
+          <Property Type="Double" Name="Max" Nullable="true" />
+          <Property Type="Double" Name="Min" Nullable="true" />
+          <Property Type="Int64" Name="IdRol" Nullable="true" />
+          <Property Type="String" Name="RolName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="SistemaName" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="SP_CatPuntoMedicionSelect_Result7">
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Int64" Name="IdUnidadMedida" Nullable="true" />
+          <Property Type="String" Name="UnidadMedidaName" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="IdTipoPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="TipoPuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Double" Name="ValorReferencia" Nullable="true" />
+          <Property Type="Int32" Name="ParametroReferencia" Nullable="true" />
+          <Property Type="Double" Name="latiitud" Nullable="true" />
+          <Property Type="Double" Name="longitud" Nullable="true" />
+          <Property Type="Int64" Name="IdDependencia" Nullable="true" />
+          <Property Type="String" Name="DependenciaName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="IdZona" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Zona" Nullable="true" MaxLength="250" />
+          <Property Type="Double" Name="ValorFactor" Nullable="true" />
+          <Property Type="Int64" Name="IdAccionActual" Nullable="true" />
+          <Property Type="String" Name="AccionAcualName" Nullable="true" MaxLength="255" />
+          <Property Type="Double" Name="Max" Nullable="true" />
+          <Property Type="Double" Name="Min" Nullable="true" />
+          <Property Type="Int64" Name="IdRol" Nullable="true" />
+          <Property Type="String" Name="RolName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="SistemaName" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="SP_CatPuntoMedicionSelect_Result8">
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Int64" Name="IdUnidadMedida" Nullable="true" />
+          <Property Type="String" Name="UnidadMedidaName" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="IdTipoPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="TipoPuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Double" Name="ValorReferencia" Nullable="true" />
+          <Property Type="String" Name="ParametroReferencia" Nullable="true" MaxLength="250" />
+          <Property Type="Double" Name="latiitud" Nullable="true" />
+          <Property Type="Double" Name="longitud" Nullable="true" />
+          <Property Type="Int64" Name="IdDependencia" Nullable="true" />
+          <Property Type="String" Name="DependenciaName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="IdZona" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Zona" Nullable="true" MaxLength="250" />
+          <Property Type="Double" Name="ValorFactor" Nullable="true" />
+          <Property Type="Int64" Name="IdAccionActual" Nullable="true" />
+          <Property Type="String" Name="AccionAcualName" Nullable="true" MaxLength="255" />
+          <Property Type="Double" Name="Max" Nullable="true" />
+          <Property Type="Double" Name="Min" Nullable="true" />
+          <Property Type="Int64" Name="IdRol" Nullable="true" />
+          <Property Type="String" Name="RolName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="SistemaName" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="SP_CatPuntoMedicionSelect_Result9">
+          <Property Type="Int64" Name="IdPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="PuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Int64" Name="IdUnidadMedida" Nullable="true" />
+          <Property Type="String" Name="UnidadMedidaName" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="IdTipoPuntoMedicion" Nullable="false" />
+          <Property Type="String" Name="TipoPuntoMedicionName" Nullable="false" MaxLength="250" />
+          <Property Type="Double" Name="ValorReferencia" Nullable="true" />
+          <Property Type="String" Name="ParametroReferencia" Nullable="true" MaxLength="250" />
+          <Property Type="Double" Name="latiitud" Nullable="true" />
+          <Property Type="Double" Name="longitud" Nullable="true" />
+          <Property Type="Int64" Name="IdDependencia" Nullable="true" />
+          <Property Type="String" Name="DependenciaName" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="IdZona" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Zona" Nullable="true" MaxLength="250" />
+          <Property Type="Double" Name="ValorFactor" Nullable="true" />
+          <Property Type="Int64" Name="IdAccionActual" Nullable="true" />
+          <Property Type="String" Name="AccionAcualName" Nullable="true" MaxLength="255" />
+          <Property Type="Double" Name="Max" Nullable="true" />
+          <Property Type="Double" Name="Min" Nullable="true" />
+          <Property Type="Int64" Name="IdRol" Nullable="true" />
+          <Property Type="String" Name="RolName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="SistemaName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="ParametroMedicion" Nullable="true" MaxLength="1000" />
+        </ComplexType>
+        <ComplexType Name="wappSpAttemptLogUser_Result5">
+          <Property Type="Int64" Name="IdUsuario" Nullable="true" />
+          <Property Type="String" Name="IdSesion" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="wappSpValidateMail_Result3">
+          <Property Type="Int64" Name="IdUsuario" Nullable="true" />
+          <Property Type="String" Name="IdSesion" Nullable="true" MaxLength="250" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2632,24 +3400,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SP_Get_Cat_Url" FunctionName="devinmr3Model.Store.SP_Get_Cat_Url">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="devinmr3Model.SP_Get_Cat_Url_Result1">
-                <ScalarProperty Name="IdUrl" ColumnName="IdUrl" />
-                <ScalarProperty Name="Url" ColumnName="Url" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_Get_Cat_Url_Result" FunctionName="devinmr3Model.Store.SP_Get_Cat_Url">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="devinmr3Model.SP_Get_Cat_Url_Result">
-                <ScalarProperty Name="IdUrl" ColumnName="IdUrl" />
-                <ScalarProperty Name="Url" ColumnName="Url" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="CAT_OPERACION_ESTRUCTURA_V2">
             <EntityTypeMapping TypeName="devinmr3Model.CAT_OPERACION_ESTRUCTURA_V2">
               <MappingFragment StoreEntitySet="CAT_OPERACION_ESTRUCTURA_V2">
@@ -2664,12 +3414,160 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SP_Get_Operacions_Estructura" FunctionName="devinmr3Model.Store.SP_Get_Operacion_Estructura">
+          <FunctionImportMapping FunctionImportName="wappSpGetUserInfo" FunctionName="devinmr3Model.Store.wappSpGetUserInfo">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="devinmr3Model.SP_Get_Operacion_Estructura_Result">
+              <ComplexTypeMapping TypeName="devinmr3Model.wappSpGetUserInfo_Result">
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="UserMail" ColumnName="UserMail" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="WAPP_RECOVERY_PASS">
+            <EntityTypeMapping TypeName="devinmr3Model.WAPP_RECOVERY_PASS">
+              <MappingFragment StoreEntitySet="WAPP_RECOVERY_PASS">
+                <ScalarProperty Name="IdSesion" ColumnName="IdSesion" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="wappSpRecoveryPassword" FunctionName="devinmr3Model.Store.wappSpRecoveryPassword" />
+          <EntitySetMapping Name="WAPP_USUARIO_SESION">
+            <EntityTypeMapping TypeName="devinmr3Model.WAPP_USUARIO_SESION">
+              <MappingFragment StoreEntitySet="WAPP_USUARIO_SESION">
+                <ScalarProperty Name="IdSesion" ColumnName="IdSesion" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_AppUsuarioInsert" FunctionName="devinmr3Model.Store.SP_AppUsuarioInsert" />
+          <FunctionImportMapping FunctionImportName="SP_AppUsuario_Delete" FunctionName="devinmr3Model.Store.SP_AppUsuario_Delete" />
+          <FunctionImportMapping FunctionImportName="SP_LinksDelete" FunctionName="devinmr3Model.Store.SP_LinksDelete" />
+          <FunctionImportMapping FunctionImportName="SP_Links_Insert" FunctionName="devinmr3Model.Store.SP_Links_Insert" />
+          <FunctionImportMapping FunctionImportName="SP_AppUsuario_Update" FunctionName="devinmr3Model.Store.SP_AppUsuario_Update" />
+          <FunctionImportMapping FunctionImportName="SP_LinksUpdate" FunctionName="devinmr3Model.Store.SP_LinksUpdate" />
+          <EntitySetMapping Name="CAT_ISOYETA_RANGOS_LABELS">
+            <EntityTypeMapping TypeName="devinmr3Model.CAT_ISOYETA_RANGOS_LABELS">
+              <MappingFragment StoreEntitySet="CAT_ISOYETA_RANGOS_LABELS">
+                <ScalarProperty Name="ColorHex" ColumnName="ColorHex" />
+                <ScalarProperty Name="Etiqueta" ColumnName="Etiqueta" />
+                <ScalarProperty Name="Nivel" ColumnName="Nivel" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_EtiquetasIsopInsert" FunctionName="devinmr3Model.Store.SP_EtiquetasIsopInsert" />
+          <FunctionImportMapping FunctionImportName="SP_LablesIsopDelete" FunctionName="devinmr3Model.Store.SP_LablesIsopDelete" />
+          <FunctionImportMapping FunctionImportName="SP_LabelsIsopUpdate" FunctionName="devinmr3Model.Store.SP_LabelsIsopUpdate" />
+          <FunctionImportMapping FunctionImportName="SP_RegionInsert" FunctionName="devinmr3Model.Store.SP_RegionInsert" />
+          <FunctionImportMapping FunctionImportName="SP_RegionUpdate" FunctionName="devinmr3Model.Store.SP_RegionUpdate" />
+          <FunctionImportMapping FunctionImportName="SP_RegionDelete" FunctionName="devinmr3Model.Store.SP_RegionDelete" />
+          <FunctionImportMapping FunctionImportName="SP_OperEstructurasInsert" FunctionName="devinmr3Model.Store.SP_OperEstructurasInsert" />
+          <FunctionImportMapping FunctionImportName="SP_OperEstructurasUpdate" FunctionName="devinmr3Model.Store.SP_OperEstructurasUpdate" />
+          <FunctionImportMapping FunctionImportName="SP_OperacionEstructuraSelect" FunctionName="devinmr3Model.Store.SP_OperacionEstructuraSelect">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="devinmr3Model.SP_OperacionEstructuraSelect_Result1">
+                <ScalarProperty Name="IdOperacionEstructura" ColumnName="IdOperacionEstructura" />
                 <ScalarProperty Name="IdCondicion" ColumnName="IdCondicion" />
+                <ScalarProperty Name="CondicionName" ColumnName="CondicionName" />
                 <ScalarProperty Name="IdEstructura" ColumnName="IdEstructura" />
+                <ScalarProperty Name="PuntoMedicionName" ColumnName="PuntoMedicionName" />
                 <ScalarProperty Name="OperacionEstrucuturaName" ColumnName="OperacionEstrucuturaName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsModified" ColumnName="IsModified" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="ServerLastModifiedDate" ColumnName="ServerLastModifiedDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_OperEstructurasDelete" FunctionName="devinmr3Model.Store.SP_OperEstructurasDelete" />
+          <EntitySetMapping Name="EXT_PUNTO_MEDICION_PARAMETRO_MEDICION">
+            <EntityTypeMapping TypeName="devinmr3Model.EXT_PUNTO_MEDICION_PARAMETRO_MEDICION">
+              <MappingFragment StoreEntitySet="EXT_PUNTO_MEDICION_PARAMETRO_MEDICION">
+                <ScalarProperty Name="ParametroMedicion" ColumnName="ParametroMedicion" />
+                <ScalarProperty Name="IdPuntoMedicion" ColumnName="IdPuntoMedicion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_ParametersSelect" FunctionName="devinmr3Model.Store.SP_ParametersSelect">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="devinmr3Model.SP_ParametersSelect_Result">
+                <ScalarProperty Name="IdPuntoMedicion" ColumnName="IdPuntoMedicion" />
+                <ScalarProperty Name="ParametroMedicion" ColumnName="ParametroMedicion" />
+                <ScalarProperty Name="PuntoMedicionName" ColumnName="PuntoMedicionName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ParameterMedicionInsert" FunctionName="devinmr3Model.Store.SP_ParameterMedicionInsert" />
+          <FunctionImportMapping FunctionImportName="SP_ParameterMedicionUpdate" FunctionName="devinmr3Model.Store.SP_ParameterMedicionUpdate" />
+          <FunctionImportMapping FunctionImportName="SP_ParameterMedicionDelete" FunctionName="devinmr3Model.Store.SP_ParameterMedicionDelete" />
+          <EntitySetMapping Name="CAT_FACTOR">
+            <EntityTypeMapping TypeName="devinmr3Model.CAT_FACTOR">
+              <MappingFragment StoreEntitySet="CAT_FACTOR">
+                <ScalarProperty Name="Zona" ColumnName="Zona" />
+                <ScalarProperty Name="IdZona" ColumnName="IdZona" />
+                <ScalarProperty Name="ValorFactor" ColumnName="ValorFactor" />
+                <ScalarProperty Name="IdPuntoMedicion" ColumnName="IdPuntoMedicion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_DependenciaInsert" FunctionName="devinmr3Model.Store.SP_DependenciaInsert" />
+          <FunctionImportMapping FunctionImportName="SP_DependenciaUpdate" FunctionName="devinmr3Model.Store.SP_DependenciaUpdate" />
+          <FunctionImportMapping FunctionImportName="SP_DependenciaDelete" FunctionName="devinmr3Model.Store.SP_DependenciaDelete" />
+          <FunctionImportMapping FunctionImportName="SP_UnidadMedidaInsert" FunctionName="devinmr3Model.Store.SP_UnidadMedidaInsert" />
+          <FunctionImportMapping FunctionImportName="SP_UnidadMedidaUpdate" FunctionName="devinmr3Model.Store.SP_UnidadMedidaUpdate" />
+          <FunctionImportMapping FunctionImportName="SP_UnidadMedidaDelete" FunctionName="devinmr3Model.Store.SP_UnidadMedidaDelete" />
+          <FunctionImportMapping FunctionImportName="SP_TipoPuntoMedicionInsert" FunctionName="devinmr3Model.Store.SP_TipoPuntoMedicionInsert" />
+          <FunctionImportMapping FunctionImportName="SP_TipoPuntoMedicionUpdate" FunctionName="devinmr3Model.Store.SP_TipoPuntoMedicionUpdate" />
+          <FunctionImportMapping FunctionImportName="SP_TipoPuntoMedicionDelete" FunctionName="devinmr3Model.Store.SP_TipoPuntoMedicionDelete" />
+          <FunctionImportMapping FunctionImportName="SP_Cat_SistemaInsert" FunctionName="devinmr3Model.Store.SP_Cat_SistemaInsert" />
+          <FunctionImportMapping FunctionImportName="SP_Cat_SistemaDelete" FunctionName="devinmr3Model.Store.SP_Cat_SistemaDelete" />
+          <FunctionImportMapping FunctionImportName="SP_Cat_SistemaUpdate" FunctionName="devinmr3Model.Store.SP_Cat_SistemaUpdate" />
+          <FunctionImportMapping FunctionImportName="SP_CatPuntoMedicionDelete" FunctionName="devinmr3Model.Store.SP_CatPuntoMedicionDelete" />
+          <FunctionImportMapping FunctionImportName="SP_CatPuntoMedicionSelect" FunctionName="devinmr3Model.Store.SP_CatPuntoMedicionSelect">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="devinmr3Model.SP_CatPuntoMedicionSelect_Result9">
+                <ScalarProperty Name="IdPuntoMedicion" ColumnName="IdPuntoMedicion" />
+                <ScalarProperty Name="PuntoMedicionName" ColumnName="PuntoMedicionName" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="UnidadMedidaName" ColumnName="UnidadMedidaName" />
+                <ScalarProperty Name="IdTipoPuntoMedicion" ColumnName="IdTipoPuntoMedicion" />
+                <ScalarProperty Name="TipoPuntoMedicionName" ColumnName="TipoPuntoMedicionName" />
+                <ScalarProperty Name="ValorReferencia" ColumnName="ValorReferencia" />
+                <ScalarProperty Name="ParametroReferencia" ColumnName="ParametroReferencia" />
+                <ScalarProperty Name="latiitud" ColumnName="latiitud" />
+                <ScalarProperty Name="longitud" ColumnName="longitud" />
+                <ScalarProperty Name="IdDependencia" ColumnName="IdDependencia" />
+                <ScalarProperty Name="DependenciaName" ColumnName="DependenciaName" />
+                <ScalarProperty Name="IdZona" ColumnName="IdZona" />
+                <ScalarProperty Name="Zona" ColumnName="Zona" />
+                <ScalarProperty Name="ValorFactor" ColumnName="ValorFactor" />
+                <ScalarProperty Name="IdAccionActual" ColumnName="IdAccionActual" />
+                <ScalarProperty Name="AccionAcualName" ColumnName="AccionAcualName" />
+                <ScalarProperty Name="Max" ColumnName="Max" />
+                <ScalarProperty Name="Min" ColumnName="Min" />
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="RolName" ColumnName="RolName" />
+                <ScalarProperty Name="SistemaName" ColumnName="SistemaName" />
+                <ScalarProperty Name="ParametroMedicion" ColumnName="ParametroMedicion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_CatPuntoMedicionInsert" FunctionName="devinmr3Model.Store.SP_CatPuntoMedicionInsert" />
+          <FunctionImportMapping FunctionImportName="SP_CatPuntoMedicionUpdate" FunctionName="devinmr3Model.Store.SP_CatPuntoMedicionUpdate" />
+          <FunctionImportMapping FunctionImportName="wappSpLogOut" FunctionName="devinmr3Model.Store.wappSpLogOut" />
+          <FunctionImportMapping FunctionImportName="wappSpAttemptLogUser" FunctionName="devinmr3Model.Store.wappSpAttemptLogUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="devinmr3Model.wappSpAttemptLogUser_Result5">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdSesion" ColumnName="IdSesion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="wappSpValidateMail" FunctionName="devinmr3Model.Store.wappSpValidateMail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="devinmr3Model.wappSpValidateMail_Result3">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdSesion" ColumnName="IdSesion" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -2695,7 +3593,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="EntityProtell" ZoomLevel="82">
+      <Diagram Name="EntityProtell" ZoomLevel="66">
         <EntityTypeShape EntityType="devinmr3Model.APP_ROL" Width="1.5" PointX="10.75" PointY="6.625" Height="2.5571907552083326" IsExpanded="true" />
         <EntityTypeShape EntityType="devinmr3Model.APP_USUARIO_ROL" Width="1.5" PointX="16" PointY="6.75" Height="2.3648893229166674" IsExpanded="true" />
         <EntityTypeShape EntityType="devinmr3Model.CAT_CONDPRO" Width="1.5" PointX="6.125" PointY="3.25" Height="2.7494921874999996" IsExpanded="true" />
@@ -2765,7 +3663,7 @@
         </AssociationConnector>
         <EntityTypeShape EntityType="devinmr3Model.APP_SETTINGS" Width="1.5" PointX="8.375" PointY="0.75" />
         <EntityTypeShape EntityType="devinmr3Model.CAT_PROTOCOLO" Width="1.5" PointX="5.25" PointY="13.875" />
-        <EntityTypeShape EntityType="devinmr3Model.CAT_PUNTO_MEDICION" Width="2.5" PointX="3" PointY="6" />
+        <EntityTypeShape EntityType="devinmr3Model.CAT_PUNTO_MEDICION" Width="2.5" PointX="3" PointY="6" IsExpanded="true" />
         <AssociationConnector Association="devinmr3Model.FK__CAT_PROTO__IdPun__3552E9B6" />
         <AssociationConnector Association="devinmr3Model.CAT_PUNTO_MEDICION_CI_REGISTRO_FK1" />
         <AssociationConnector Association="devinmr3Model.CAT_PUNTO_MEDICION_REL_EST_PUNTOMED_FK1" />
@@ -2788,6 +3686,11 @@
         <EntityTypeShape EntityType="devinmr3Model.CAT_REGION" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="devinmr3Model.CAT_URL_LLUVIAS" PointX="0.75" PointY="3.75" Width="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="devinmr3Model.CAT_OPERACION_ESTRUCTURA_V2" Width="1.5" PointX="14.375" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="devinmr3Model.WAPP_RECOVERY_PASS" Width="1.5" PointX="15.375" PointY="10.75" />
+        <EntityTypeShape EntityType="devinmr3Model.WAPP_USUARIO_SESION" Width="1.5" PointX="5.375" PointY="16.75" />
+        <EntityTypeShape EntityType="devinmr3Model.CAT_ISOYETA_RANGOS_LABELS" Width="1.5" PointX="7.375" PointY="17.75" />
+        <EntityTypeShape EntityType="devinmr3Model.EXT_PUNTO_MEDICION_PARAMETRO_MEDICION" Width="1.5" PointX="17.375" PointY="10.75" />
+        <EntityTypeShape EntityType="devinmr3Model.CAT_FACTOR" Width="1.5" PointX="17.375" PointY="13.75" />
       </Diagram>
     </Diagrams>
   </Designer>

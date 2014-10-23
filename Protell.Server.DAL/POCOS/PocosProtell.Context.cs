@@ -233,6 +233,36 @@ namespace Protell.Server.DAL.POCOS
             get { return _cAT_OPERACION_ESTRUCTURA_V2  ?? (_cAT_OPERACION_ESTRUCTURA_V2 = CreateObjectSet<CAT_OPERACION_ESTRUCTURA_V2>("CAT_OPERACION_ESTRUCTURA_V2")); }
         }
         private ObjectSet<CAT_OPERACION_ESTRUCTURA_V2> _cAT_OPERACION_ESTRUCTURA_V2;
+    
+        public ObjectSet<WAPP_RECOVERY_PASS> WAPP_RECOVERY_PASS
+        {
+            get { return _wAPP_RECOVERY_PASS  ?? (_wAPP_RECOVERY_PASS = CreateObjectSet<WAPP_RECOVERY_PASS>("WAPP_RECOVERY_PASS")); }
+        }
+        private ObjectSet<WAPP_RECOVERY_PASS> _wAPP_RECOVERY_PASS;
+    
+        public ObjectSet<WAPP_USUARIO_SESION> WAPP_USUARIO_SESION
+        {
+            get { return _wAPP_USUARIO_SESION  ?? (_wAPP_USUARIO_SESION = CreateObjectSet<WAPP_USUARIO_SESION>("WAPP_USUARIO_SESION")); }
+        }
+        private ObjectSet<WAPP_USUARIO_SESION> _wAPP_USUARIO_SESION;
+    
+        public ObjectSet<CAT_ISOYETA_RANGOS_LABELS> CAT_ISOYETA_RANGOS_LABELS
+        {
+            get { return _cAT_ISOYETA_RANGOS_LABELS  ?? (_cAT_ISOYETA_RANGOS_LABELS = CreateObjectSet<CAT_ISOYETA_RANGOS_LABELS>("CAT_ISOYETA_RANGOS_LABELS")); }
+        }
+        private ObjectSet<CAT_ISOYETA_RANGOS_LABELS> _cAT_ISOYETA_RANGOS_LABELS;
+    
+        public ObjectSet<EXT_PUNTO_MEDICION_PARAMETRO_MEDICION> EXT_PUNTO_MEDICION_PARAMETRO_MEDICION
+        {
+            get { return _eXT_PUNTO_MEDICION_PARAMETRO_MEDICION  ?? (_eXT_PUNTO_MEDICION_PARAMETRO_MEDICION = CreateObjectSet<EXT_PUNTO_MEDICION_PARAMETRO_MEDICION>("EXT_PUNTO_MEDICION_PARAMETRO_MEDICION")); }
+        }
+        private ObjectSet<EXT_PUNTO_MEDICION_PARAMETRO_MEDICION> _eXT_PUNTO_MEDICION_PARAMETRO_MEDICION;
+    
+        public ObjectSet<CAT_FACTOR> CAT_FACTOR
+        {
+            get { return _cAT_FACTOR  ?? (_cAT_FACTOR = CreateObjectSet<CAT_FACTOR>("CAT_FACTOR")); }
+        }
+        private ObjectSet<CAT_FACTOR> _cAT_FACTOR;
 
         #endregion
 
@@ -573,7 +603,1380 @@ namespace Protell.Server.DAL.POCOS
             }
             return base.ExecuteFunction<spGetHashableAccionesActuales_Result>("spGetHashableAccionesActuales", fechaNumericaParameter, idPuntoMedicionParameter);
         }
-       
+        public ObjectResult<wappSpGetUserInfo_Result> wappSpGetUserInfo(string sessionId)
+        {
+    
+            ObjectParameter sessionIdParameter;
+    
+            if (sessionId != null)
+            {
+                sessionIdParameter = new ObjectParameter("sessionId", sessionId);
+            }
+            else
+            {
+                sessionIdParameter = new ObjectParameter("sessionId", typeof(string));
+            }
+            return base.ExecuteFunction<wappSpGetUserInfo_Result>("wappSpGetUserInfo", sessionIdParameter);
+        }
+        public ObjectResult<string> wappSpRecoveryPassword(Nullable<long> userId, string userPwd)
+        {
+    
+            ObjectParameter userIdParameter;
+    
+            if (userId.HasValue)
+            {
+                userIdParameter = new ObjectParameter("userId", userId);
+            }
+            else
+            {
+                userIdParameter = new ObjectParameter("userId", typeof(long));
+            }
+    
+            ObjectParameter userPwdParameter;
+    
+            if (userPwd != null)
+            {
+                userPwdParameter = new ObjectParameter("userPwd", userPwd);
+            }
+            else
+            {
+                userPwdParameter = new ObjectParameter("userPwd", typeof(string));
+            }
+            return base.ExecuteFunction<string>("wappSpRecoveryPassword", userIdParameter, userPwdParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_AppUsuarioInsert(string usuarioCorreo, string usuarioPwd, string nombre, string apellido, string area, string puesto, Nullable<long> idRol)
+        {
+    
+            ObjectParameter usuarioCorreoParameter;
+    
+            if (usuarioCorreo != null)
+            {
+                usuarioCorreoParameter = new ObjectParameter("UsuarioCorreo", usuarioCorreo);
+            }
+            else
+            {
+                usuarioCorreoParameter = new ObjectParameter("UsuarioCorreo", typeof(string));
+            }
+    
+            ObjectParameter usuarioPwdParameter;
+    
+            if (usuarioPwd != null)
+            {
+                usuarioPwdParameter = new ObjectParameter("UsuarioPwd", usuarioPwd);
+            }
+            else
+            {
+                usuarioPwdParameter = new ObjectParameter("UsuarioPwd", typeof(string));
+            }
+    
+            ObjectParameter nombreParameter;
+    
+            if (nombre != null)
+            {
+                nombreParameter = new ObjectParameter("Nombre", nombre);
+            }
+            else
+            {
+                nombreParameter = new ObjectParameter("Nombre", typeof(string));
+            }
+    
+            ObjectParameter apellidoParameter;
+    
+            if (apellido != null)
+            {
+                apellidoParameter = new ObjectParameter("Apellido", apellido);
+            }
+            else
+            {
+                apellidoParameter = new ObjectParameter("Apellido", typeof(string));
+            }
+    
+            ObjectParameter areaParameter;
+    
+            if (area != null)
+            {
+                areaParameter = new ObjectParameter("Area", area);
+            }
+            else
+            {
+                areaParameter = new ObjectParameter("Area", typeof(string));
+            }
+    
+            ObjectParameter puestoParameter;
+    
+            if (puesto != null)
+            {
+                puestoParameter = new ObjectParameter("Puesto", puesto);
+            }
+            else
+            {
+                puestoParameter = new ObjectParameter("Puesto", typeof(string));
+            }
+    
+            ObjectParameter idRolParameter;
+    
+            if (idRol.HasValue)
+            {
+                idRolParameter = new ObjectParameter("IdRol", idRol);
+            }
+            else
+            {
+                idRolParameter = new ObjectParameter("IdRol", typeof(long));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_AppUsuarioInsert", usuarioCorreoParameter, usuarioPwdParameter, nombreParameter, apellidoParameter, areaParameter, puestoParameter, idRolParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_AppUsuario_Delete(Nullable<long> idUsuario)
+        {
+    
+            ObjectParameter idUsuarioParameter;
+    
+            if (idUsuario.HasValue)
+            {
+                idUsuarioParameter = new ObjectParameter("IdUsuario", idUsuario);
+            }
+            else
+            {
+                idUsuarioParameter = new ObjectParameter("IdUsuario", typeof(long));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_AppUsuario_Delete", idUsuarioParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_LinksDelete(string idLink)
+        {
+    
+            ObjectParameter idLinkParameter;
+    
+            if (idLink != null)
+            {
+                idLinkParameter = new ObjectParameter("IdLink", idLink);
+            }
+            else
+            {
+                idLinkParameter = new ObjectParameter("IdLink", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_LinksDelete", idLinkParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_Links_Insert(string linkUrl, string linkName)
+        {
+    
+            ObjectParameter linkUrlParameter;
+    
+            if (linkUrl != null)
+            {
+                linkUrlParameter = new ObjectParameter("LinkUrl", linkUrl);
+            }
+            else
+            {
+                linkUrlParameter = new ObjectParameter("LinkUrl", typeof(string));
+            }
+    
+            ObjectParameter linkNameParameter;
+    
+            if (linkName != null)
+            {
+                linkNameParameter = new ObjectParameter("LinkName", linkName);
+            }
+            else
+            {
+                linkNameParameter = new ObjectParameter("LinkName", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_Links_Insert", linkUrlParameter, linkNameParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_AppUsuario_Update(string idUsuario, string usuarioPwd, string nombre, string apellido, string area, string puesto, Nullable<long> idRol)
+        {
+    
+            ObjectParameter idUsuarioParameter;
+    
+            if (idUsuario != null)
+            {
+                idUsuarioParameter = new ObjectParameter("IdUsuario", idUsuario);
+            }
+            else
+            {
+                idUsuarioParameter = new ObjectParameter("IdUsuario", typeof(string));
+            }
+    
+            ObjectParameter usuarioPwdParameter;
+    
+            if (usuarioPwd != null)
+            {
+                usuarioPwdParameter = new ObjectParameter("UsuarioPwd", usuarioPwd);
+            }
+            else
+            {
+                usuarioPwdParameter = new ObjectParameter("UsuarioPwd", typeof(string));
+            }
+    
+            ObjectParameter nombreParameter;
+    
+            if (nombre != null)
+            {
+                nombreParameter = new ObjectParameter("Nombre", nombre);
+            }
+            else
+            {
+                nombreParameter = new ObjectParameter("Nombre", typeof(string));
+            }
+    
+            ObjectParameter apellidoParameter;
+    
+            if (apellido != null)
+            {
+                apellidoParameter = new ObjectParameter("Apellido", apellido);
+            }
+            else
+            {
+                apellidoParameter = new ObjectParameter("Apellido", typeof(string));
+            }
+    
+            ObjectParameter areaParameter;
+    
+            if (area != null)
+            {
+                areaParameter = new ObjectParameter("Area", area);
+            }
+            else
+            {
+                areaParameter = new ObjectParameter("Area", typeof(string));
+            }
+    
+            ObjectParameter puestoParameter;
+    
+            if (puesto != null)
+            {
+                puestoParameter = new ObjectParameter("Puesto", puesto);
+            }
+            else
+            {
+                puestoParameter = new ObjectParameter("Puesto", typeof(string));
+            }
+    
+            ObjectParameter idRolParameter;
+    
+            if (idRol.HasValue)
+            {
+                idRolParameter = new ObjectParameter("IdRol", idRol);
+            }
+            else
+            {
+                idRolParameter = new ObjectParameter("IdRol", typeof(long));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_AppUsuario_Update", idUsuarioParameter, usuarioPwdParameter, nombreParameter, apellidoParameter, areaParameter, puestoParameter, idRolParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_LinksUpdate(string idLink, string linkUrl, string linkName)
+        {
+    
+            ObjectParameter idLinkParameter;
+    
+            if (idLink != null)
+            {
+                idLinkParameter = new ObjectParameter("IdLink", idLink);
+            }
+            else
+            {
+                idLinkParameter = new ObjectParameter("IdLink", typeof(string));
+            }
+    
+            ObjectParameter linkUrlParameter;
+    
+            if (linkUrl != null)
+            {
+                linkUrlParameter = new ObjectParameter("LinkUrl", linkUrl);
+            }
+            else
+            {
+                linkUrlParameter = new ObjectParameter("LinkUrl", typeof(string));
+            }
+    
+            ObjectParameter linkNameParameter;
+    
+            if (linkName != null)
+            {
+                linkNameParameter = new ObjectParameter("LinkName", linkName);
+            }
+            else
+            {
+                linkNameParameter = new ObjectParameter("LinkName", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_LinksUpdate", idLinkParameter, linkUrlParameter, linkNameParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_EtiquetasIsopInsert(Nullable<int> nivel, string etiqueta, string colorHex)
+        {
+    
+            ObjectParameter nivelParameter;
+    
+            if (nivel.HasValue)
+            {
+                nivelParameter = new ObjectParameter("Nivel", nivel);
+            }
+            else
+            {
+                nivelParameter = new ObjectParameter("Nivel", typeof(int));
+            }
+    
+            ObjectParameter etiquetaParameter;
+    
+            if (etiqueta != null)
+            {
+                etiquetaParameter = new ObjectParameter("Etiqueta", etiqueta);
+            }
+            else
+            {
+                etiquetaParameter = new ObjectParameter("Etiqueta", typeof(string));
+            }
+    
+            ObjectParameter colorHexParameter;
+    
+            if (colorHex != null)
+            {
+                colorHexParameter = new ObjectParameter("ColorHex", colorHex);
+            }
+            else
+            {
+                colorHexParameter = new ObjectParameter("ColorHex", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_EtiquetasIsopInsert", nivelParameter, etiquetaParameter, colorHexParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_LablesIsopDelete(Nullable<int> id)
+        {
+    
+            ObjectParameter idParameter;
+    
+            if (id.HasValue)
+            {
+                idParameter = new ObjectParameter("Id", id);
+            }
+            else
+            {
+                idParameter = new ObjectParameter("Id", typeof(int));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_LablesIsopDelete", idParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_LabelsIsopUpdate(Nullable<int> id, Nullable<int> nivel, string etiqueta, string colorHex)
+        {
+    
+            ObjectParameter idParameter;
+    
+            if (id.HasValue)
+            {
+                idParameter = new ObjectParameter("Id", id);
+            }
+            else
+            {
+                idParameter = new ObjectParameter("Id", typeof(int));
+            }
+    
+            ObjectParameter nivelParameter;
+    
+            if (nivel.HasValue)
+            {
+                nivelParameter = new ObjectParameter("Nivel", nivel);
+            }
+            else
+            {
+                nivelParameter = new ObjectParameter("Nivel", typeof(int));
+            }
+    
+            ObjectParameter etiquetaParameter;
+    
+            if (etiqueta != null)
+            {
+                etiquetaParameter = new ObjectParameter("Etiqueta", etiqueta);
+            }
+            else
+            {
+                etiquetaParameter = new ObjectParameter("Etiqueta", typeof(string));
+            }
+    
+            ObjectParameter colorHexParameter;
+    
+            if (colorHex != null)
+            {
+                colorHexParameter = new ObjectParameter("ColorHex", colorHex);
+            }
+            else
+            {
+                colorHexParameter = new ObjectParameter("ColorHex", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_LabelsIsopUpdate", idParameter, nivelParameter, etiquetaParameter, colorHexParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_RegionInsert(string regionName, string fileName)
+        {
+    
+            ObjectParameter regionNameParameter;
+    
+            if (regionName != null)
+            {
+                regionNameParameter = new ObjectParameter("RegionName", regionName);
+            }
+            else
+            {
+                regionNameParameter = new ObjectParameter("RegionName", typeof(string));
+            }
+    
+            ObjectParameter fileNameParameter;
+    
+            if (fileName != null)
+            {
+                fileNameParameter = new ObjectParameter("FileName", fileName);
+            }
+            else
+            {
+                fileNameParameter = new ObjectParameter("FileName", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_RegionInsert", regionNameParameter, fileNameParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_RegionUpdate(Nullable<long> idRegion, string regionName, string fileName)
+        {
+    
+            ObjectParameter idRegionParameter;
+    
+            if (idRegion.HasValue)
+            {
+                idRegionParameter = new ObjectParameter("IdRegion", idRegion);
+            }
+            else
+            {
+                idRegionParameter = new ObjectParameter("IdRegion", typeof(long));
+            }
+    
+            ObjectParameter regionNameParameter;
+    
+            if (regionName != null)
+            {
+                regionNameParameter = new ObjectParameter("RegionName", regionName);
+            }
+            else
+            {
+                regionNameParameter = new ObjectParameter("RegionName", typeof(string));
+            }
+    
+            ObjectParameter fileNameParameter;
+    
+            if (fileName != null)
+            {
+                fileNameParameter = new ObjectParameter("FileName", fileName);
+            }
+            else
+            {
+                fileNameParameter = new ObjectParameter("FileName", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_RegionUpdate", idRegionParameter, regionNameParameter, fileNameParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_RegionDelete(Nullable<long> idRegion)
+        {
+    
+            ObjectParameter idRegionParameter;
+    
+            if (idRegion.HasValue)
+            {
+                idRegionParameter = new ObjectParameter("IdRegion", idRegion);
+            }
+            else
+            {
+                idRegionParameter = new ObjectParameter("IdRegion", typeof(long));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_RegionDelete", idRegionParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_OperEstructurasInsert(Nullable<long> idCondicion, Nullable<long> idEstructura, string operacionEstrucuturaName)
+        {
+    
+            ObjectParameter idCondicionParameter;
+    
+            if (idCondicion.HasValue)
+            {
+                idCondicionParameter = new ObjectParameter("IdCondicion", idCondicion);
+            }
+            else
+            {
+                idCondicionParameter = new ObjectParameter("IdCondicion", typeof(long));
+            }
+    
+            ObjectParameter idEstructuraParameter;
+    
+            if (idEstructura.HasValue)
+            {
+                idEstructuraParameter = new ObjectParameter("IdEstructura", idEstructura);
+            }
+            else
+            {
+                idEstructuraParameter = new ObjectParameter("IdEstructura", typeof(long));
+            }
+    
+            ObjectParameter operacionEstrucuturaNameParameter;
+    
+            if (operacionEstrucuturaName != null)
+            {
+                operacionEstrucuturaNameParameter = new ObjectParameter("OperacionEstrucuturaName", operacionEstrucuturaName);
+            }
+            else
+            {
+                operacionEstrucuturaNameParameter = new ObjectParameter("OperacionEstrucuturaName", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_OperEstructurasInsert", idCondicionParameter, idEstructuraParameter, operacionEstrucuturaNameParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_OperEstructurasUpdate(string idOperacionEstructura, Nullable<long> idCondicion, Nullable<long> idEstructura, string operacionEstrucuturaName)
+        {
+    
+            ObjectParameter idOperacionEstructuraParameter;
+    
+            if (idOperacionEstructura != null)
+            {
+                idOperacionEstructuraParameter = new ObjectParameter("IdOperacionEstructura", idOperacionEstructura);
+            }
+            else
+            {
+                idOperacionEstructuraParameter = new ObjectParameter("IdOperacionEstructura", typeof(string));
+            }
+    
+            ObjectParameter idCondicionParameter;
+    
+            if (idCondicion.HasValue)
+            {
+                idCondicionParameter = new ObjectParameter("IdCondicion", idCondicion);
+            }
+            else
+            {
+                idCondicionParameter = new ObjectParameter("IdCondicion", typeof(long));
+            }
+    
+            ObjectParameter idEstructuraParameter;
+    
+            if (idEstructura.HasValue)
+            {
+                idEstructuraParameter = new ObjectParameter("IdEstructura", idEstructura);
+            }
+            else
+            {
+                idEstructuraParameter = new ObjectParameter("IdEstructura", typeof(long));
+            }
+    
+            ObjectParameter operacionEstrucuturaNameParameter;
+    
+            if (operacionEstrucuturaName != null)
+            {
+                operacionEstrucuturaNameParameter = new ObjectParameter("OperacionEstrucuturaName", operacionEstrucuturaName);
+            }
+            else
+            {
+                operacionEstrucuturaNameParameter = new ObjectParameter("OperacionEstrucuturaName", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_OperEstructurasUpdate", idOperacionEstructuraParameter, idCondicionParameter, idEstructuraParameter, operacionEstrucuturaNameParameter);
+        }
+        public ObjectResult<SP_OperacionEstructuraSelect_Result1> SP_OperacionEstructuraSelect()
+        {
+            return base.ExecuteFunction<SP_OperacionEstructuraSelect_Result1>("SP_OperacionEstructuraSelect");
+        }
+        public ObjectResult<Nullable<bool>> SP_OperEstructurasDelete(string idOperacionEstructura)
+        {
+    
+            ObjectParameter idOperacionEstructuraParameter;
+    
+            if (idOperacionEstructura != null)
+            {
+                idOperacionEstructuraParameter = new ObjectParameter("IdOperacionEstructura", idOperacionEstructura);
+            }
+            else
+            {
+                idOperacionEstructuraParameter = new ObjectParameter("IdOperacionEstructura", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_OperEstructurasDelete", idOperacionEstructuraParameter);
+        }
+        public ObjectResult<SP_ParametersSelect_Result> SP_ParametersSelect()
+        {
+            return base.ExecuteFunction<SP_ParametersSelect_Result>("SP_ParametersSelect");
+        }
+        public ObjectResult<Nullable<bool>> SP_ParameterMedicionInsert(Nullable<long> idPuntoMedicion, string parametroMedicion)
+        {
+    
+            ObjectParameter idPuntoMedicionParameter;
+    
+            if (idPuntoMedicion.HasValue)
+            {
+                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", idPuntoMedicion);
+            }
+            else
+            {
+                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", typeof(long));
+            }
+    
+            ObjectParameter parametroMedicionParameter;
+    
+            if (parametroMedicion != null)
+            {
+                parametroMedicionParameter = new ObjectParameter("ParametroMedicion", parametroMedicion);
+            }
+            else
+            {
+                parametroMedicionParameter = new ObjectParameter("ParametroMedicion", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_ParameterMedicionInsert", idPuntoMedicionParameter, parametroMedicionParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_ParameterMedicionUpdate(Nullable<long> idPuntoMedicion, string parametroMedicion)
+        {
+    
+            ObjectParameter idPuntoMedicionParameter;
+    
+            if (idPuntoMedicion.HasValue)
+            {
+                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", idPuntoMedicion);
+            }
+            else
+            {
+                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", typeof(long));
+            }
+    
+            ObjectParameter parametroMedicionParameter;
+    
+            if (parametroMedicion != null)
+            {
+                parametroMedicionParameter = new ObjectParameter("ParametroMedicion", parametroMedicion);
+            }
+            else
+            {
+                parametroMedicionParameter = new ObjectParameter("ParametroMedicion", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_ParameterMedicionUpdate", idPuntoMedicionParameter, parametroMedicionParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_ParameterMedicionDelete(Nullable<long> idPuntoMedicion)
+        {
+    
+            ObjectParameter idPuntoMedicionParameter;
+    
+            if (idPuntoMedicion.HasValue)
+            {
+                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", idPuntoMedicion);
+            }
+            else
+            {
+                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", typeof(long));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_ParameterMedicionDelete", idPuntoMedicionParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_DependenciaInsert(string dependenciaName)
+        {
+    
+            ObjectParameter dependenciaNameParameter;
+    
+            if (dependenciaName != null)
+            {
+                dependenciaNameParameter = new ObjectParameter("DependenciaName", dependenciaName);
+            }
+            else
+            {
+                dependenciaNameParameter = new ObjectParameter("DependenciaName", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_DependenciaInsert", dependenciaNameParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_DependenciaUpdate(Nullable<long> idDependencia, string dependenciaName)
+        {
+    
+            ObjectParameter idDependenciaParameter;
+    
+            if (idDependencia.HasValue)
+            {
+                idDependenciaParameter = new ObjectParameter("IdDependencia", idDependencia);
+            }
+            else
+            {
+                idDependenciaParameter = new ObjectParameter("IdDependencia", typeof(long));
+            }
+    
+            ObjectParameter dependenciaNameParameter;
+    
+            if (dependenciaName != null)
+            {
+                dependenciaNameParameter = new ObjectParameter("DependenciaName", dependenciaName);
+            }
+            else
+            {
+                dependenciaNameParameter = new ObjectParameter("DependenciaName", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_DependenciaUpdate", idDependenciaParameter, dependenciaNameParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_DependenciaDelete(Nullable<long> idDependencia)
+        {
+    
+            ObjectParameter idDependenciaParameter;
+    
+            if (idDependencia.HasValue)
+            {
+                idDependenciaParameter = new ObjectParameter("IdDependencia", idDependencia);
+            }
+            else
+            {
+                idDependenciaParameter = new ObjectParameter("IdDependencia", typeof(long));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_DependenciaDelete", idDependenciaParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_UnidadMedidaInsert(string unidadMedidaName, string unidadMedidaShort)
+        {
+    
+            ObjectParameter unidadMedidaNameParameter;
+    
+            if (unidadMedidaName != null)
+            {
+                unidadMedidaNameParameter = new ObjectParameter("UnidadMedidaName", unidadMedidaName);
+            }
+            else
+            {
+                unidadMedidaNameParameter = new ObjectParameter("UnidadMedidaName", typeof(string));
+            }
+    
+            ObjectParameter unidadMedidaShortParameter;
+    
+            if (unidadMedidaShort != null)
+            {
+                unidadMedidaShortParameter = new ObjectParameter("UnidadMedidaShort", unidadMedidaShort);
+            }
+            else
+            {
+                unidadMedidaShortParameter = new ObjectParameter("UnidadMedidaShort", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_UnidadMedidaInsert", unidadMedidaNameParameter, unidadMedidaShortParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_UnidadMedidaUpdate(Nullable<long> idUnidadMedida, string unidadMedidaName, string unidadMedidaShort)
+        {
+    
+            ObjectParameter idUnidadMedidaParameter;
+    
+            if (idUnidadMedida.HasValue)
+            {
+                idUnidadMedidaParameter = new ObjectParameter("IdUnidadMedida", idUnidadMedida);
+            }
+            else
+            {
+                idUnidadMedidaParameter = new ObjectParameter("IdUnidadMedida", typeof(long));
+            }
+    
+            ObjectParameter unidadMedidaNameParameter;
+    
+            if (unidadMedidaName != null)
+            {
+                unidadMedidaNameParameter = new ObjectParameter("UnidadMedidaName", unidadMedidaName);
+            }
+            else
+            {
+                unidadMedidaNameParameter = new ObjectParameter("UnidadMedidaName", typeof(string));
+            }
+    
+            ObjectParameter unidadMedidaShortParameter;
+    
+            if (unidadMedidaShort != null)
+            {
+                unidadMedidaShortParameter = new ObjectParameter("UnidadMedidaShort", unidadMedidaShort);
+            }
+            else
+            {
+                unidadMedidaShortParameter = new ObjectParameter("UnidadMedidaShort", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_UnidadMedidaUpdate", idUnidadMedidaParameter, unidadMedidaNameParameter, unidadMedidaShortParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_UnidadMedidaDelete(Nullable<long> idUnidadMedida)
+        {
+    
+            ObjectParameter idUnidadMedidaParameter;
+    
+            if (idUnidadMedida.HasValue)
+            {
+                idUnidadMedidaParameter = new ObjectParameter("IdUnidadMedida", idUnidadMedida);
+            }
+            else
+            {
+                idUnidadMedidaParameter = new ObjectParameter("IdUnidadMedida", typeof(long));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_UnidadMedidaDelete", idUnidadMedidaParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_TipoPuntoMedicionInsert(string tipoPuntoMedicionName)
+        {
+    
+            ObjectParameter tipoPuntoMedicionNameParameter;
+    
+            if (tipoPuntoMedicionName != null)
+            {
+                tipoPuntoMedicionNameParameter = new ObjectParameter("TipoPuntoMedicionName", tipoPuntoMedicionName);
+            }
+            else
+            {
+                tipoPuntoMedicionNameParameter = new ObjectParameter("TipoPuntoMedicionName", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_TipoPuntoMedicionInsert", tipoPuntoMedicionNameParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_TipoPuntoMedicionUpdate(Nullable<long> idTipoPuntoMedicion, string tipoPuntoMedicionName)
+        {
+    
+            ObjectParameter idTipoPuntoMedicionParameter;
+    
+            if (idTipoPuntoMedicion.HasValue)
+            {
+                idTipoPuntoMedicionParameter = new ObjectParameter("IdTipoPuntoMedicion", idTipoPuntoMedicion);
+            }
+            else
+            {
+                idTipoPuntoMedicionParameter = new ObjectParameter("IdTipoPuntoMedicion", typeof(long));
+            }
+    
+            ObjectParameter tipoPuntoMedicionNameParameter;
+    
+            if (tipoPuntoMedicionName != null)
+            {
+                tipoPuntoMedicionNameParameter = new ObjectParameter("TipoPuntoMedicionName", tipoPuntoMedicionName);
+            }
+            else
+            {
+                tipoPuntoMedicionNameParameter = new ObjectParameter("TipoPuntoMedicionName", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_TipoPuntoMedicionUpdate", idTipoPuntoMedicionParameter, tipoPuntoMedicionNameParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_TipoPuntoMedicionDelete(Nullable<long> idTipoPuntoMedicion)
+        {
+    
+            ObjectParameter idTipoPuntoMedicionParameter;
+    
+            if (idTipoPuntoMedicion.HasValue)
+            {
+                idTipoPuntoMedicionParameter = new ObjectParameter("IdTipoPuntoMedicion", idTipoPuntoMedicion);
+            }
+            else
+            {
+                idTipoPuntoMedicionParameter = new ObjectParameter("IdTipoPuntoMedicion", typeof(long));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_TipoPuntoMedicionDelete", idTipoPuntoMedicionParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_Cat_SistemaInsert(string sistemaName)
+        {
+    
+            ObjectParameter sistemaNameParameter;
+    
+            if (sistemaName != null)
+            {
+                sistemaNameParameter = new ObjectParameter("SistemaName", sistemaName);
+            }
+            else
+            {
+                sistemaNameParameter = new ObjectParameter("SistemaName", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_Cat_SistemaInsert", sistemaNameParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_Cat_SistemaDelete(Nullable<long> idSistema)
+        {
+    
+            ObjectParameter idSistemaParameter;
+    
+            if (idSistema.HasValue)
+            {
+                idSistemaParameter = new ObjectParameter("IdSistema", idSistema);
+            }
+            else
+            {
+                idSistemaParameter = new ObjectParameter("IdSistema", typeof(long));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_Cat_SistemaDelete", idSistemaParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_Cat_SistemaUpdate(Nullable<long> idSistema, string sistemaName)
+        {
+    
+            ObjectParameter idSistemaParameter;
+    
+            if (idSistema.HasValue)
+            {
+                idSistemaParameter = new ObjectParameter("IdSistema", idSistema);
+            }
+            else
+            {
+                idSistemaParameter = new ObjectParameter("IdSistema", typeof(long));
+            }
+    
+            ObjectParameter sistemaNameParameter;
+    
+            if (sistemaName != null)
+            {
+                sistemaNameParameter = new ObjectParameter("SistemaName", sistemaName);
+            }
+            else
+            {
+                sistemaNameParameter = new ObjectParameter("SistemaName", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_Cat_SistemaUpdate", idSistemaParameter, sistemaNameParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_CatPuntoMedicionDelete(Nullable<long> idPuntoMedicion)
+        {
+    
+            ObjectParameter idPuntoMedicionParameter;
+    
+            if (idPuntoMedicion.HasValue)
+            {
+                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", idPuntoMedicion);
+            }
+            else
+            {
+                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", typeof(long));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_CatPuntoMedicionDelete", idPuntoMedicionParameter);
+        }
+        public ObjectResult<SP_CatPuntoMedicionSelect_Result9> SP_CatPuntoMedicionSelect()
+        {
+            return base.ExecuteFunction<SP_CatPuntoMedicionSelect_Result9>("SP_CatPuntoMedicionSelect");
+        }
+        public ObjectResult<Nullable<bool>> SP_CatPuntoMedicionInsert(string puntoMedicionName, Nullable<long> idUnidadMedida, Nullable<long> idTipoPuntoMedicion, string valorReferencia, string parametroReferencia, string latiitud, string longitud, Nullable<long> idAccionActual, Nullable<long> idRol, Nullable<long> idDependencia, Nullable<long> idZona, string zona, Nullable<double> valorFactor, Nullable<double> max, Nullable<double> min, Nullable<long> idSistema, string parametroMedicion)
+        {
+    
+            ObjectParameter puntoMedicionNameParameter;
+    
+            if (puntoMedicionName != null)
+            {
+                puntoMedicionNameParameter = new ObjectParameter("PuntoMedicionName", puntoMedicionName);
+            }
+            else
+            {
+                puntoMedicionNameParameter = new ObjectParameter("PuntoMedicionName", typeof(string));
+            }
+    
+            ObjectParameter idUnidadMedidaParameter;
+    
+            if (idUnidadMedida.HasValue)
+            {
+                idUnidadMedidaParameter = new ObjectParameter("IdUnidadMedida", idUnidadMedida);
+            }
+            else
+            {
+                idUnidadMedidaParameter = new ObjectParameter("IdUnidadMedida", typeof(long));
+            }
+    
+            ObjectParameter idTipoPuntoMedicionParameter;
+    
+            if (idTipoPuntoMedicion.HasValue)
+            {
+                idTipoPuntoMedicionParameter = new ObjectParameter("IdTipoPuntoMedicion", idTipoPuntoMedicion);
+            }
+            else
+            {
+                idTipoPuntoMedicionParameter = new ObjectParameter("IdTipoPuntoMedicion", typeof(long));
+            }
+    
+            ObjectParameter valorReferenciaParameter;
+    
+            if (valorReferencia != null)
+            {
+                valorReferenciaParameter = new ObjectParameter("ValorReferencia", valorReferencia);
+            }
+            else
+            {
+                valorReferenciaParameter = new ObjectParameter("ValorReferencia", typeof(string));
+            }
+    
+            ObjectParameter parametroReferenciaParameter;
+    
+            if (parametroReferencia != null)
+            {
+                parametroReferenciaParameter = new ObjectParameter("ParametroReferencia", parametroReferencia);
+            }
+            else
+            {
+                parametroReferenciaParameter = new ObjectParameter("ParametroReferencia", typeof(string));
+            }
+    
+            ObjectParameter latiitudParameter;
+    
+            if (latiitud != null)
+            {
+                latiitudParameter = new ObjectParameter("latiitud", latiitud);
+            }
+            else
+            {
+                latiitudParameter = new ObjectParameter("latiitud", typeof(string));
+            }
+    
+            ObjectParameter longitudParameter;
+    
+            if (longitud != null)
+            {
+                longitudParameter = new ObjectParameter("longitud", longitud);
+            }
+            else
+            {
+                longitudParameter = new ObjectParameter("longitud", typeof(string));
+            }
+    
+            ObjectParameter idAccionActualParameter;
+    
+            if (idAccionActual.HasValue)
+            {
+                idAccionActualParameter = new ObjectParameter("IdAccionActual", idAccionActual);
+            }
+            else
+            {
+                idAccionActualParameter = new ObjectParameter("IdAccionActual", typeof(long));
+            }
+    
+            ObjectParameter idRolParameter;
+    
+            if (idRol.HasValue)
+            {
+                idRolParameter = new ObjectParameter("IdRol", idRol);
+            }
+            else
+            {
+                idRolParameter = new ObjectParameter("IdRol", typeof(long));
+            }
+    
+            ObjectParameter idDependenciaParameter;
+    
+            if (idDependencia.HasValue)
+            {
+                idDependenciaParameter = new ObjectParameter("IdDependencia", idDependencia);
+            }
+            else
+            {
+                idDependenciaParameter = new ObjectParameter("IdDependencia", typeof(long));
+            }
+    
+            ObjectParameter idZonaParameter;
+    
+            if (idZona.HasValue)
+            {
+                idZonaParameter = new ObjectParameter("IdZona", idZona);
+            }
+            else
+            {
+                idZonaParameter = new ObjectParameter("IdZona", typeof(long));
+            }
+    
+            ObjectParameter zonaParameter;
+    
+            if (zona != null)
+            {
+                zonaParameter = new ObjectParameter("Zona", zona);
+            }
+            else
+            {
+                zonaParameter = new ObjectParameter("Zona", typeof(string));
+            }
+    
+            ObjectParameter valorFactorParameter;
+    
+            if (valorFactor.HasValue)
+            {
+                valorFactorParameter = new ObjectParameter("ValorFactor", valorFactor);
+            }
+            else
+            {
+                valorFactorParameter = new ObjectParameter("ValorFactor", typeof(double));
+            }
+    
+            ObjectParameter maxParameter;
+    
+            if (max.HasValue)
+            {
+                maxParameter = new ObjectParameter("Max", max);
+            }
+            else
+            {
+                maxParameter = new ObjectParameter("Max", typeof(double));
+            }
+    
+            ObjectParameter minParameter;
+    
+            if (min.HasValue)
+            {
+                minParameter = new ObjectParameter("Min", min);
+            }
+            else
+            {
+                minParameter = new ObjectParameter("Min", typeof(double));
+            }
+    
+            ObjectParameter idSistemaParameter;
+    
+            if (idSistema.HasValue)
+            {
+                idSistemaParameter = new ObjectParameter("IdSistema", idSistema);
+            }
+            else
+            {
+                idSistemaParameter = new ObjectParameter("IdSistema", typeof(long));
+            }
+    
+            ObjectParameter parametroMedicionParameter;
+    
+            if (parametroMedicion != null)
+            {
+                parametroMedicionParameter = new ObjectParameter("ParametroMedicion", parametroMedicion);
+            }
+            else
+            {
+                parametroMedicionParameter = new ObjectParameter("ParametroMedicion", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_CatPuntoMedicionInsert", puntoMedicionNameParameter, idUnidadMedidaParameter, idTipoPuntoMedicionParameter, valorReferenciaParameter, parametroReferenciaParameter, latiitudParameter, longitudParameter, idAccionActualParameter, idRolParameter, idDependenciaParameter, idZonaParameter, zonaParameter, valorFactorParameter, maxParameter, minParameter, idSistemaParameter, parametroMedicionParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_CatPuntoMedicionUpdate(Nullable<long> idPuntoMedicion, string puntoMedicionName, Nullable<long> idUnidadMedida, Nullable<long> idTipoPuntoMedicion, Nullable<double> valorReferencia, string parametroReferencia, Nullable<double> latiitud, Nullable<double> longitud, Nullable<long> idAccionActual, Nullable<long> idRol, Nullable<long> idDependencia, Nullable<long> idZona, string zona, Nullable<double> valorFactor, Nullable<double> max, Nullable<double> min, Nullable<long> idSistema, string parametroMedicion)
+        {
+    
+            ObjectParameter idPuntoMedicionParameter;
+    
+            if (idPuntoMedicion.HasValue)
+            {
+                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", idPuntoMedicion);
+            }
+            else
+            {
+                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", typeof(long));
+            }
+    
+            ObjectParameter puntoMedicionNameParameter;
+    
+            if (puntoMedicionName != null)
+            {
+                puntoMedicionNameParameter = new ObjectParameter("PuntoMedicionName", puntoMedicionName);
+            }
+            else
+            {
+                puntoMedicionNameParameter = new ObjectParameter("PuntoMedicionName", typeof(string));
+            }
+    
+            ObjectParameter idUnidadMedidaParameter;
+    
+            if (idUnidadMedida.HasValue)
+            {
+                idUnidadMedidaParameter = new ObjectParameter("IdUnidadMedida", idUnidadMedida);
+            }
+            else
+            {
+                idUnidadMedidaParameter = new ObjectParameter("IdUnidadMedida", typeof(long));
+            }
+    
+            ObjectParameter idTipoPuntoMedicionParameter;
+    
+            if (idTipoPuntoMedicion.HasValue)
+            {
+                idTipoPuntoMedicionParameter = new ObjectParameter("IdTipoPuntoMedicion", idTipoPuntoMedicion);
+            }
+            else
+            {
+                idTipoPuntoMedicionParameter = new ObjectParameter("IdTipoPuntoMedicion", typeof(long));
+            }
+    
+            ObjectParameter valorReferenciaParameter;
+    
+            if (valorReferencia.HasValue)
+            {
+                valorReferenciaParameter = new ObjectParameter("ValorReferencia", valorReferencia);
+            }
+            else
+            {
+                valorReferenciaParameter = new ObjectParameter("ValorReferencia", typeof(double));
+            }
+    
+            ObjectParameter parametroReferenciaParameter;
+    
+            if (parametroReferencia != null)
+            {
+                parametroReferenciaParameter = new ObjectParameter("ParametroReferencia", parametroReferencia);
+            }
+            else
+            {
+                parametroReferenciaParameter = new ObjectParameter("ParametroReferencia", typeof(string));
+            }
+    
+            ObjectParameter latiitudParameter;
+    
+            if (latiitud.HasValue)
+            {
+                latiitudParameter = new ObjectParameter("latiitud", latiitud);
+            }
+            else
+            {
+                latiitudParameter = new ObjectParameter("latiitud", typeof(double));
+            }
+    
+            ObjectParameter longitudParameter;
+    
+            if (longitud.HasValue)
+            {
+                longitudParameter = new ObjectParameter("longitud", longitud);
+            }
+            else
+            {
+                longitudParameter = new ObjectParameter("longitud", typeof(double));
+            }
+    
+            ObjectParameter idAccionActualParameter;
+    
+            if (idAccionActual.HasValue)
+            {
+                idAccionActualParameter = new ObjectParameter("IdAccionActual", idAccionActual);
+            }
+            else
+            {
+                idAccionActualParameter = new ObjectParameter("IdAccionActual", typeof(long));
+            }
+    
+            ObjectParameter idRolParameter;
+    
+            if (idRol.HasValue)
+            {
+                idRolParameter = new ObjectParameter("IdRol", idRol);
+            }
+            else
+            {
+                idRolParameter = new ObjectParameter("IdRol", typeof(long));
+            }
+    
+            ObjectParameter idDependenciaParameter;
+    
+            if (idDependencia.HasValue)
+            {
+                idDependenciaParameter = new ObjectParameter("IdDependencia", idDependencia);
+            }
+            else
+            {
+                idDependenciaParameter = new ObjectParameter("IdDependencia", typeof(long));
+            }
+    
+            ObjectParameter idZonaParameter;
+    
+            if (idZona.HasValue)
+            {
+                idZonaParameter = new ObjectParameter("IdZona", idZona);
+            }
+            else
+            {
+                idZonaParameter = new ObjectParameter("IdZona", typeof(long));
+            }
+    
+            ObjectParameter zonaParameter;
+    
+            if (zona != null)
+            {
+                zonaParameter = new ObjectParameter("Zona", zona);
+            }
+            else
+            {
+                zonaParameter = new ObjectParameter("Zona", typeof(string));
+            }
+    
+            ObjectParameter valorFactorParameter;
+    
+            if (valorFactor.HasValue)
+            {
+                valorFactorParameter = new ObjectParameter("ValorFactor", valorFactor);
+            }
+            else
+            {
+                valorFactorParameter = new ObjectParameter("ValorFactor", typeof(double));
+            }
+    
+            ObjectParameter maxParameter;
+    
+            if (max.HasValue)
+            {
+                maxParameter = new ObjectParameter("Max", max);
+            }
+            else
+            {
+                maxParameter = new ObjectParameter("Max", typeof(double));
+            }
+    
+            ObjectParameter minParameter;
+    
+            if (min.HasValue)
+            {
+                minParameter = new ObjectParameter("Min", min);
+            }
+            else
+            {
+                minParameter = new ObjectParameter("Min", typeof(double));
+            }
+    
+            ObjectParameter idSistemaParameter;
+    
+            if (idSistema.HasValue)
+            {
+                idSistemaParameter = new ObjectParameter("IdSistema", idSistema);
+            }
+            else
+            {
+                idSistemaParameter = new ObjectParameter("IdSistema", typeof(long));
+            }
+    
+            ObjectParameter parametroMedicionParameter;
+    
+            if (parametroMedicion != null)
+            {
+                parametroMedicionParameter = new ObjectParameter("ParametroMedicion", parametroMedicion);
+            }
+            else
+            {
+                parametroMedicionParameter = new ObjectParameter("ParametroMedicion", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_CatPuntoMedicionUpdate", idPuntoMedicionParameter, puntoMedicionNameParameter, idUnidadMedidaParameter, idTipoPuntoMedicionParameter, valorReferenciaParameter, parametroReferenciaParameter, latiitudParameter, longitudParameter, idAccionActualParameter, idRolParameter, idDependenciaParameter, idZonaParameter, zonaParameter, valorFactorParameter, maxParameter, minParameter, idSistemaParameter, parametroMedicionParameter);
+        }
+        public ObjectResult<Nullable<bool>> wappSpLogOut(Nullable<long> idUsuario)
+        {
+    
+            ObjectParameter idUsuarioParameter;
+    
+            if (idUsuario.HasValue)
+            {
+                idUsuarioParameter = new ObjectParameter("IdUsuario", idUsuario);
+            }
+            else
+            {
+                idUsuarioParameter = new ObjectParameter("IdUsuario", typeof(long));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("wappSpLogOut", idUsuarioParameter);
+        }
+        public ObjectResult<wappSpAttemptLogUser_Result5> wappSpAttemptLogUser(string userMail, string userPwd, Nullable<bool> saveSession)
+        {
+    
+            ObjectParameter userMailParameter;
+    
+            if (userMail != null)
+            {
+                userMailParameter = new ObjectParameter("userMail", userMail);
+            }
+            else
+            {
+                userMailParameter = new ObjectParameter("userMail", typeof(string));
+            }
+    
+            ObjectParameter userPwdParameter;
+    
+            if (userPwd != null)
+            {
+                userPwdParameter = new ObjectParameter("userPwd", userPwd);
+            }
+            else
+            {
+                userPwdParameter = new ObjectParameter("userPwd", typeof(string));
+            }
+    
+            ObjectParameter saveSessionParameter;
+    
+            if (saveSession.HasValue)
+            {
+                saveSessionParameter = new ObjectParameter("saveSession", saveSession);
+            }
+            else
+            {
+                saveSessionParameter = new ObjectParameter("saveSession", typeof(bool));
+            }
+            return base.ExecuteFunction<wappSpAttemptLogUser_Result5>("wappSpAttemptLogUser", userMailParameter, userPwdParameter, saveSessionParameter);
+        }
+        public ObjectResult<wappSpValidateMail_Result3> wappSpValidateMail(string userMail)
+        {
+    
+            ObjectParameter userMailParameter;
+    
+            if (userMail != null)
+            {
+                userMailParameter = new ObjectParameter("userMail", userMail);
+            }
+            else
+            {
+                userMailParameter = new ObjectParameter("userMail", typeof(string));
+            }
+            return base.ExecuteFunction<wappSpValidateMail_Result3>("wappSpValidateMail", userMailParameter);
+        }
 
         #endregion
 

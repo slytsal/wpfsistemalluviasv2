@@ -85,6 +85,12 @@
     <Compile Include="POCOS\CAT_ESTRUCTURA.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
+    <Compile Include="POCOS\CAT_FACTOR.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\CAT_ISOYETA_RANGOS_LABELS.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
     <Compile Include="POCOS\CAT_LINKS.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
@@ -94,7 +100,9 @@
     <Compile Include="POCOS\CAT_OPERACION_ESTRUCTURA.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
-    <Compile Include="POCOS\CAT_OPERACION_ESTRUCTURA_V2.cs" />
+    <Compile Include="POCOS\CAT_OPERACION_ESTRUCTURA_V2.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
     <Compile Include="POCOS\CAT_PROTOCOLO.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
@@ -128,7 +136,9 @@
     <Compile Include="POCOS\CAT_UPLOAD_LOG.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
-    <Compile Include="POCOS\CAT_URL_LLUVIAS.cs" />
+    <Compile Include="POCOS\CAT_URL_LLUVIAS.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
     <Compile Include="POCOS\CI_REGISTRO.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
@@ -139,6 +149,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EntityProtell.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\EXT_PUNTO_MEDICION_PARAMETRO_MEDICION.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
     <Compile Include="POCOS\GdGetDatosEstructuras_Result.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
@@ -177,11 +190,24 @@
     <Compile Include="POCOS\SpGdGetDatosEstructuras2_Result.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
-    <Compile Include="POCOS\spGetHashableAccionesActuales_Result.cs" />
+    <Compile Include="POCOS\spGetHashableAccionesActuales_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spGetHashableAccionesActuales_Result1.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
     <Compile Include="POCOS\spGetHashableGraficaLumbreras_Result.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
-    <Compile Include="POCOS\spGetHashableGraficaPromedioPesado_Result.cs" />
+    <Compile Include="POCOS\spGetHashableGraficaPromedioPesadoS_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spGetHashableGraficaPromedioPesado_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spGetHashableGraficaPromedioPesado_Result1.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
     <Compile Include="POCOS\spGetHashableGraficaPromedio_Result.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
@@ -197,7 +223,21 @@
     <Compile Include="POCOS\spGetHashablePuntoMedicionAttributes_Result.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
-    <Compile Include="POCOS\spGetHashablePuntoMedicionOrderZonaTipo_Result.cs" />
+    <Compile Include="POCOS\spGetHashablePuntoMedicionOrderZonaTipo3_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spGetHashablePuntoMedicionOrderZonaTipo3_Result1.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spGetHashablePuntoMedicionOrderZonaTipo3_Result2.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spGetHashablePuntoMedicionOrderZonaTipo_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\spGetHashablePuntoMedicionOrderZonaTipo_Result1.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
     <Compile Include="POCOS\spGetHashablePuntoMedicion_Result.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
@@ -213,10 +253,100 @@
     <Compile Include="POCOS\spSelectLastCI_Registro_Result.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
+    <Compile Include="POCOS\SP_CatPuntoMedicionSelect_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\SP_CatPuntoMedicionSelect_Result1.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\SP_CatPuntoMedicionSelect_Result2.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\SP_CatPuntoMedicionSelect_Result3.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\SP_CatPuntoMedicionSelect_Result4.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\SP_CatPuntoMedicionSelect_Result5.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\SP_CatPuntoMedicionSelect_Result6.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\SP_CatPuntoMedicionSelect_Result7.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\SP_CatPuntoMedicionSelect_Result8.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\SP_CatPuntoMedicionSelect_Result9.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
     <Compile Include="POCOS\sp_ConsultaDemand_Result.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
+    <Compile Include="POCOS\SP_Get_Cat_Url_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\SP_Get_Cat_Url_Result1.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\SP_Get_Operacion_Estructura_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\SP_OperacionEstructuraSelect_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\SP_OperacionEstructuraSelect_Result1.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\SP_ParametersSelect_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
     <Compile Include="POCOS\SYNCTABLE.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\wappSpAttemptLogUser_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\wappSpAttemptLogUser_Result1.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\wappSpAttemptLogUser_Result2.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\wappSpAttemptLogUser_Result3.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\wappSpAttemptLogUser_Result4.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\wappSpAttemptLogUser_Result5.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\wappSpGetUserInfo_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\wappSpRecoveryPassword_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\wappSpValidateMail_Result.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\wappSpValidateMail_Result1.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\wappSpValidateMail_Result2.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\wappSpValidateMail_Result3.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\WAPP_RECOVERY_PASS.cs">
+      <DependentUpon>PocosProtell.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POCOS\WAPP_USUARIO_SESION.cs">
       <DependentUpon>PocosProtell.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -228,7 +358,9 @@
     <Compile Include="Repository\EvidenceSyncRepository.cs" />
     <Compile Include="Repository\GdDatosEstructurasRepository.cs" />
     <Compile Include="Repository\ListUnidsRepository.cs" />
+    <Compile Include="Repository\LoginRepository.cs" />
     <Compile Include="Repository\PuntoMedicionRepository.cs" />
+    <Compile Include="Repository\RecoveryPassword_Repository.cs" />
     <Compile Include="Repository\RegistroRepository.cs" />
     <Compile Include="Repository\ServerLastDataRepository.cs" />
     <Compile Include="Repository\SettingRepository.cs" />
@@ -254,12 +386,23 @@
     <Compile Include="Repository\v2\CatRegionRepository.cs" />
     <Compile Include="Repository\v2\CatSistemaRepository.cs" />
     <Compile Include="Repository\v2\CatUrlRepository.cs" />
+    <Compile Include="Repository\v2\Cat_AccionActual_Repository.cs" />
+    <Compile Include="Repository\v2\Cat_Dependencia_Repository.cs" />
+    <Compile Include="Repository\v2\Cat_Isoyetas_Rangos_Labels_Repository.cs" />
+    <Compile Include="Repository\v2\Cat_Operacion_Estructura_Repository.cs" />
+    <Compile Include="Repository\v2\Cat_PuntoMedicion_Repository.cs" />
+    <Compile Include="Repository\v2\Cat_Region_Repository.cs" />
+    <Compile Include="Repository\v2\Cat_Sistema_Repository.cs" />
+    <Compile Include="Repository\v2\Cat_TipoPuntoMedicion_Repository.cs" />
+    <Compile Include="Repository\v2\Cat_UnidadMedida_Repository.cs" />
     <Compile Include="Repository\v2\CiRegistroRepository.cs" />
     <Compile Include="Repository\v2\CondicionRepository.cs" />
+    <Compile Include="Repository\v2\Ext_Punto_Medicion_Parametro_Medicion_Repository.cs" />
     <Compile Include="Repository\v2\HashableDataRepository.cs" />
     <Compile Include="Repository\v2\LinksRepository.cs" />
     <Compile Include="Repository\v2\ModifiedDateRepository.cs" />
     <Compile Include="Repository\v2\PuntoMedicionRepository.cs" />
+    <Compile Include="Repository\v2\RecoveryPassword.cs" />
     <Compile Include="Repository\v2\RegistroRepository.cs" />
     <Compile Include="Repository\v2\RelEstPuntoMedRepository.cs" />
     <Compile Include="Repository\v2\RelEstructuraDependenciaRepository.cs" />
@@ -283,6 +426,10 @@
     <None Include="POCOS\PocosProtell.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PocosProtell.Context.cs</LastGenOutput>
+    </None>
+    <None Include="POCOS\PocosProtell.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PocosProtell.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,7 @@ namespace Protell.Model
     {
         #region Primitive Properties
 
-        public virtual long IdOperacionEstructura
+        public virtual string IdOperacionEstructura
         {
             get;
             set;
@@ -49,6 +49,18 @@ namespace Protell.Model
         }
 
         public virtual long ServerLastModifiedDate
+        {
+            get;
+            set;
+        }
+
+        public virtual string CondicionName
+        {
+            get;
+            set;
+        }
+
+        public virtual string PuntoMedicionName
         {
             get;
             set;

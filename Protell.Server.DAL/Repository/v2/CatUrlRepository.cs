@@ -22,18 +22,19 @@ namespace Protell.Server.DAL.Repository.v2
             {
                 using (var entity = new db_SeguimientoProtocolo_r2Entities())
                 {
+                    //entity.wappSpAttemptLogUser("", "", true).ToList();
                     List<spGetHashablePuntoMedicion_Result> res = entity.spGetHashablePuntoMedicion().ToList();
                     
                     int i = 0;
-                    (from s in entity.CAT_URL_LLUVIAS
+                    (from s in entity.CAT_LINKS
                      where s.IsActive == true 
                      select s).ToList().ForEach(row =>
                      {
                          AjaxDictionary<string, object> item = new AjaxDictionary<string, object>();
-                         item.Add("idUrl", row.IdUrl);
-                         item.Add("Url", row.Url);
+                         item.Add("idUrl", row.IdLink);
+                         item.Add("Url", row.LinkUrl);
                          item.Add("IsActive", row.IsActive);
-                         item.Add("DescriptionUrl", row.DescriptionUrl);
+                         item.Add("DescriptionUrl", row.LinkName);
                          result.Add("Result" + i.ToString(),item);
                          i++;
                      });

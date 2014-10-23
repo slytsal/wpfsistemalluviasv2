@@ -72,6 +72,7 @@
     <Content Include="Services\Broadcast.svc" />
     <Content Include="Services\Download.svc" />
     <Content Include="Services\Receiver.svc" />
+    <Content Include="Services\ServiceLluvias.svc" />
     <Content Include="Services\Upload.svc" />
     <Content Include="test.html" />
     <Content Include="Web.config">
@@ -103,9 +104,13 @@
     <Compile Include="Services\IBroadcast.cs" />
     <Compile Include="Services\IDownload.cs" />
     <Compile Include="Services\IReceiver.cs" />
+    <Compile Include="Services\IServiceLluvias.cs" />
     <Compile Include="Services\IUpload.cs" />
     <Compile Include="Services\Receiver.svc.cs">
       <DependentUpon>Receiver.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\ServiceLluvias.svc.cs">
+      <DependentUpon>ServiceLluvias.svc</DependentUpon>
     </Compile>
     <Compile Include="Services\Upload.svc.cs">
       <DependentUpon>Upload.svc</DependentUpon>

@@ -4,6 +4,12 @@ namespace Protell.Model
 {
     public class LinksModel:ModelBase
     {
+        public string IdLinks
+        {
+            get;
+            set;
+        }
+
         public long IdLink
         {
             get { return _IdLink; }

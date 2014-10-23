@@ -17,7 +17,7 @@ namespace Protell.Server.DAL.Repository.v2
                 using (var entity=new db_SeguimientoProtocolo_r2Entities())
                 {
                     (from res in entity.REL_ROL_PUNTOMEDICION
-                     where res.LastModifiedDate >= LastModifiedDate || res.ServerLastModifiedDate >= ServerLastModifiedDate
+                     where res.LastModifiedDate > LastModifiedDate || res.ServerLastModifiedDate > ServerLastModifiedDate
                      select res).ToList().ForEach(row =>
                          {
                              items.Add(new RelRolPuntoMedicionModel()
