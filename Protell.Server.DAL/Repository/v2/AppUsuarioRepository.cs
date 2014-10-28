@@ -41,9 +41,9 @@ namespace Protell.Server.DAL.Repository.v2
             return;
         }
 
-        public ObservableCollection<UsuarioModel> get_User(string KeySesion)
-        {
-            ObservableCollection<UsuarioModel> appUser = new ObservableCollection<UsuarioModel>();
+        public List<UsuarioModel> get_User(string KeySesion)
+        {            
+            List<UsuarioModel> appUser = new List<UsuarioModel>();
             ObservableCollection<WAPP_USUARIO_SESION> Key = new ObservableCollection<WAPP_USUARIO_SESION>();
             try
             {
@@ -63,20 +63,28 @@ namespace Protell.Server.DAL.Repository.v2
                     {
                         using (var entity = new db_SeguimientoProtocolo_r2Entities())
                         {
-                            (from res in entity.APP_USUARIO
-                             where res.IsActive == true
-                             select res).ToList().ForEach(row =>
-                             {
-                                 appUser.Add(new UsuarioModel()
-                                 {
-                                     IdUsuario_ = row.IdUsuario.ToString(),
-                                     UsuarioCorreo = row.UsuarioCorreo,
-                                     Nombre = row.Nombre,
-                                     Apellido = row.Apellido,
-                                     Area = row.Area,
-                                     Puesto = row.Puesto
-                                 });
-                             });
+                            entity.SP_AppUsuarioSelect().ToList().ForEach(row =>
+                            {
+                                appUser.Add(new UsuarioModel()
+                                {
+                                    IdUsuario= row.IdUsuario,
+                                    UsuarioCorreo = row.UsuarioCorreo,
+                                    Nombre = row.Nombre,
+                                    Apellido = row.Apellido,
+                                    Area = row.Area,
+                                    Puesto = row.Puesto,
+                                    IsActive = row.IsActive,
+                                    IsModified = row.IsModified,
+                                    LastModifiedDate = row.LastModifiedDate,
+                                    IsNewUser = row.IsNewUser,
+                                    IsVerified = row.IsVerified,
+                                    IsMailSent = row.IsMailSent,
+                                    ServerLastModifiedDate = long.Parse(row.ServerLastModifiedDate.ToString()),
+                                    UsuarioPwd = row.UsuarioPwd,
+                                    RolName= row.RolName,
+                                    IdRol= row.IdRol.ToString()                                    
+                                });
+                            });
                         }
                     }                    
                 }                                
@@ -123,7 +131,7 @@ namespace Protell.Server.DAL.Repository.v2
             return res;
         }
 
-        public bool AppUsuario_Update(string KeySesion,string IdUser, string UsuarioPwd, string Nombre, string Apellido, string Area, string Puesto, long IdRol)
+        public bool AppUsuario_Update(string KeySesion,string IdUser, string Nombre, string Apellido, string Area, string Puesto, long IdRol)
         {
             bool res = true;
             ObservableCollection<WAPP_USUARIO_SESION> Key = new ObservableCollection<WAPP_USUARIO_SESION>();
@@ -146,7 +154,42 @@ namespace Protell.Server.DAL.Repository.v2
                     {
                         using (var entity = new db_SeguimientoProtocolo_r2Entities())
                         {
-                            entity.SP_AppUsuario_Update(IdUser.ToString(), UsuarioPwd, Nombre, Apellido, Area, Puesto, long.Parse(IdRol.ToString()));
+                            entity.SP_AppUsuario_Update(IdUser.ToString(), Nombre, Apellido, Area, Puesto, long.Parse(IdRol.ToString()));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var errr = ex.Message;
+            }
+            return res;
+        }
+
+        public bool AppUsuarioPass_Update(string KeySesion, string IdUser, string UsuarioPwd)
+        {
+            bool res = true;
+            ObservableCollection<WAPP_USUARIO_SESION> Key = new ObservableCollection<WAPP_USUARIO_SESION>();
+
+            try
+            {
+                using (var entity_ = new db_SeguimientoProtocolo_r2Entities())
+                {
+                    (from s in entity_.WAPP_USUARIO_SESION
+                     where s.IdSesion == KeySesion
+                     select s).ToList().ForEach(row =>
+                     {
+                         Key.Add(new WAPP_USUARIO_SESION()
+                         {
+                             IdUsuario = row.IdUsuario,
+                             IdSesion = row.IdSesion
+                         });
+                     });
+                    if (Key[0].IdSesion == KeySesion.ToString())
+                    {
+                        using (var entity = new db_SeguimientoProtocolo_r2Entities())
+                        {
+                            entity.SP_AppUsuarioPassword_Update(IdUser.ToString(), UsuarioPwd);
                         }
                     }
                 }

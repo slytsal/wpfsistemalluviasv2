@@ -58,7 +58,7 @@ namespace Protell.Server.DAL.Repository
                         MailMessage mail = new MailMessage();
                         SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
 
-                        mail.From = new MailAddress(mailServer);
+                        mail.From = new MailAddress(mailServer);                        
                         mail.To.Add(usermail);
                         mail.Subject = "RECUPERACIÓN DE CONTRASEÑA";                        
                         mail.IsBodyHtml = true;

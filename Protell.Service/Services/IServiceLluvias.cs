@@ -39,7 +39,7 @@ namespace Protell.Service.Services
 
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
-        ObservableCollection<UsuarioModel>Download_AppUsuarioSelec(string KeySesion);
+        List<UsuarioModel>Download_AppUsuarioSelec(string KeySesion);
 
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
@@ -51,7 +51,11 @@ namespace Protell.Service.Services
 
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
-        string AppUsuarioUpdate(string KeySesion,string IdUser, string UsuarioPwd, string Nombre, string Apellido, string Area, string Puesto, long IdRol);
+        string AppUsuarioUpdate(string KeySesion,string IdUser, string Nombre, string Apellido, string Area, string Puesto, long IdRol);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
+        string AppUsuarioPasswordUpdate(string KeySesion, string IdUser, string UsuarioPwd);
 
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
@@ -119,6 +123,10 @@ namespace Protell.Service.Services
 
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
+        string OperationEstructUpdateInInsert(string KeySesion, long IdCondicion, long IdEstructura, string OperacionEstrucuturaName);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
         string OperationsEstructDelete(string KeySesion, string IdOperacionEstructura);
 
         [OperationContract]
@@ -128,18 +136,6 @@ namespace Protell.Service.Services
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
         ObservableCollection<CatPuntoMedicion_Model> Download_PuntosMedicion(string KeySesion);
-
-        [OperationContract]
-        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
-        bool ParametersInsert(string KeySesion, long IdPuntoMedicion, string ParametroMedicion);
-
-        [OperationContract]
-        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
-        string ParametersUpdate(string KeySesion, long IdPuntoMedicion, string ParametroMedicion);
-
-        [OperationContract]
-        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
-        string ParametersDelete(string KeySesion, long IdPuntoMedicion);
 
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]

@@ -702,7 +702,6 @@ warning 6002: The table/view 'uatlluvias.dbo.WAPP_USUARIO_SESION' does not have 
         </Function>
         <Function Name="SP_AppUsuario_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdUsuario" Type="nvarchar" Mode="In" />
-          <Parameter Name="UsuarioPwd" Type="varchar" Mode="In" />
           <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
           <Parameter Name="Apellido" Type="nvarchar" Mode="In" />
           <Parameter Name="Area" Type="nvarchar" Mode="In" />
@@ -718,6 +717,11 @@ warning 6002: The table/view 'uatlluvias.dbo.WAPP_USUARIO_SESION' does not have 
           <Parameter Name="Puesto" Type="nvarchar" Mode="In" />
           <Parameter Name="IdRol" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="SP_AppUsuarioPassword_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUsuario" Type="nvarchar" Mode="In" />
+          <Parameter Name="UsuarioPwd" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_AppUsuarioSelect" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_Cat_SistemaDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdSistema" Type="bigint" Mode="In" />
         </Function>
@@ -821,6 +825,11 @@ warning 6002: The table/view 'uatlluvias.dbo.WAPP_USUARIO_SESION' does not have 
         </Function>
         <Function Name="SP_OperEstructurasUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdOperacionEstructura" Type="nvarchar" Mode="In" />
+          <Parameter Name="IdCondicion" Type="bigint" Mode="In" />
+          <Parameter Name="IdEstructura" Type="bigint" Mode="In" />
+          <Parameter Name="OperacionEstrucuturaName" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="SP_OperEstructurasUpdateInInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdCondicion" Type="bigint" Mode="In" />
           <Parameter Name="IdEstructura" Type="bigint" Mode="In" />
           <Parameter Name="OperacionEstrucuturaName" Type="nvarchar(max)" Mode="In" />
@@ -1286,7 +1295,6 @@ FROM [dbo].[WAPP_USUARIO_SESION] AS [WAPP_USUARIO_SESION]</DefiningQuery>
           </FunctionImport>
           <FunctionImport Name="SP_AppUsuario_Update" ReturnType="Collection(Boolean)">
             <Parameter Name="IdUsuario" Mode="In" Type="String" />
-            <Parameter Name="UsuarioPwd" Mode="In" Type="String" />
             <Parameter Name="Nombre" Mode="In" Type="String" />
             <Parameter Name="Apellido" Mode="In" Type="String" />
             <Parameter Name="Area" Mode="In" Type="String" />
@@ -1448,7 +1456,17 @@ FROM [dbo].[WAPP_USUARIO_SESION] AS [WAPP_USUARIO_SESION]</DefiningQuery>
             <Parameter Name="saveSession" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="wappSpValidateMail" ReturnType="Collection(devinmr3Model.wappSpValidateMail_Result3)">
-            <Parameter Name="userMail" Mode="In" Type="String" />
+          <Parameter Name="userMail" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_AppUsuarioSelect" ReturnType="Collection(devinmr3Model.SP_AppUsuarioSelect_Result)" />
+          <FunctionImport Name="SP_AppUsuarioPassword_Update" ReturnType="Collection(Boolean)">
+            <Parameter Name="IdUsuario" Mode="In" Type="String" />
+            <Parameter Name="UsuarioPwd" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_OperEstructurasUpdateInInsert" ReturnType="Collection(Boolean)">
+            <Parameter Name="IdCondicion" Mode="In" Type="Int64" />
+            <Parameter Name="IdEstructura" Mode="In" Type="Int64" />
+            <Parameter Name="OperacionEstrucuturaName" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="APP_ROL">
@@ -2752,6 +2770,24 @@ FROM [dbo].[WAPP_USUARIO_SESION] AS [WAPP_USUARIO_SESION]</DefiningQuery>
           <Property Type="Int64" Name="IdUsuario" Nullable="true" />
           <Property Type="String" Name="IdSesion" Nullable="true" MaxLength="250" />
         </ComplexType>
+        <ComplexType Name="SP_AppUsuarioSelect_Result">
+          <Property Type="Int64" Name="IdUsuario" Nullable="false" />
+          <Property Type="String" Name="UsuarioCorreo" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Apellido" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Area" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Puesto" Nullable="true" MaxLength="250" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="Boolean" Name="IsModified" Nullable="false" />
+          <Property Type="Int64" Name="LastModifiedDate" Nullable="false" />
+          <Property Type="Boolean" Name="IsNewUser" Nullable="false" />
+          <Property Type="Boolean" Name="IsVerified" Nullable="false" />
+          <Property Type="Boolean" Name="IsMailSent" Nullable="true" />
+          <Property Type="Int64" Name="ServerLastModifiedDate" Nullable="true" />
+          <Property Type="String" Name="UsuarioPwd" Nullable="true" />
+          <Property Type="String" Name="RolName" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="IdRol" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3571,6 +3607,30 @@ FROM [dbo].[WAPP_USUARIO_SESION] AS [WAPP_USUARIO_SESION]</DefiningQuery>
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_AppUsuarioSelect" FunctionName="devinmr3Model.Store.SP_AppUsuarioSelect">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="devinmr3Model.SP_AppUsuarioSelect_Result">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="UsuarioCorreo" ColumnName="UsuarioCorreo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Puesto" ColumnName="Puesto" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsModified" ColumnName="IsModified" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="IsNewUser" ColumnName="IsNewUser" />
+                <ScalarProperty Name="IsVerified" ColumnName="IsVerified" />
+                <ScalarProperty Name="IsMailSent" ColumnName="IsMailSent" />
+                <ScalarProperty Name="ServerLastModifiedDate" ColumnName="ServerLastModifiedDate" />
+                <ScalarProperty Name="UsuarioPwd" ColumnName="UsuarioPwd" />
+                <ScalarProperty Name="RolName" ColumnName="RolName" />
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_AppUsuarioPassword_Update" FunctionName="devinmr3Model.Store.SP_AppUsuarioPassword_Update" />
+          <FunctionImportMapping FunctionImportName="SP_OperEstructurasUpdateInInsert" FunctionName="devinmr3Model.Store.SP_OperEstructurasUpdateInInsert" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

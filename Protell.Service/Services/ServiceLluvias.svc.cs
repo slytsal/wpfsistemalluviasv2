@@ -85,20 +85,18 @@ namespace Protell.Service.Services
 
         #region USUARIO
 
-        public ObservableCollection<UsuarioModel> Download_AppUsuarioSelec(string KeySesion)
+        public List<UsuarioModel> Download_AppUsuarioSelec(string KeySesion)
         {
-            ObservableCollection<UsuarioModel> result = new ObservableCollection<UsuarioModel>();
+            List<UsuarioModel> result = null;
+            AppUsuarioRepository AppUsuarioSelec = new AppUsuarioRepository();
             try
             {
-                using (var repository = new AppUsuarioRepository())
-                {
-                    result = repository.get_User(KeySesion.ToString());
-                }
+                result = AppUsuarioSelec.get_User(KeySesion);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                ;
-            }
+                var e = ex.Message;
+            }            
             return result;
         }
 
@@ -135,13 +133,28 @@ namespace Protell.Service.Services
             return res;
         }
 
-        public string AppUsuarioUpdate(string KeySesion,string IdUser, string UsuarioPwd, string Nombre, string Apellido, string Area, string Puesto, long IdRol)
+        public string AppUsuarioUpdate(string KeySesion,string IdUser, string Nombre, string Apellido, string Area, string Puesto, long IdRol)
         {
             string res = "";
             AppUsuarioRepository AppUserUpdate = new AppUsuarioRepository();
             try
             {
-                AppUserUpdate.AppUsuario_Update(KeySesion,IdUser.ToString(), UsuarioPwd, Nombre, Apellido, Area, Puesto, long.Parse(IdRol.ToString()));
+                AppUserUpdate.AppUsuario_Update(KeySesion,IdUser.ToString(), Nombre, Apellido, Area, Puesto, long.Parse(IdRol.ToString()));
+            }
+            catch (Exception ex)
+            {
+                var err = ex.Message;
+            }
+            return res;
+        }
+
+        public string AppUsuarioPasswordUpdate(string KeySesion, string IdUser, string UsuarioPwd)
+        {
+            string res = "";
+            AppUsuarioRepository AppUserUpdatePass = new AppUsuarioRepository();
+            try
+            {
+                AppUserUpdatePass.AppUsuarioPass_Update(KeySesion, IdUser.ToString(), UsuarioPwd);
             }
             catch (Exception ex)
             {
@@ -410,6 +423,21 @@ namespace Protell.Service.Services
             return res;
         }
 
+        public string OperationEstructUpdateInInsert(string KeySesion, long IdCondicion, long IdEstructura, string OperacionEstrucuturaName)
+        {
+            string res = "";
+            Cat_Operacion_Estructura_Repository OperationEstructUpdateInInsert = new Cat_Operacion_Estructura_Repository();
+            try
+            {
+                OperationEstructUpdateInInsert.OperationEstruct_UpdateInInsert(KeySesion, IdCondicion, IdEstructura, OperacionEstrucuturaName);
+            }
+            catch (Exception ex)
+            {
+                var err = ex.Message;
+            }
+            return res;
+        }
+
         public string OperationsEstructDelete(string KeySesion, string IdOperacionEstructura)
         {
             string res = "";
@@ -458,50 +486,6 @@ namespace Protell.Service.Services
             return lst;
         }
 
-        public bool ParametersInsert(string KeySesion, long IdPuntoMedicion, string ParametroMedicion)
-        {
-            bool lst = true;
-            Ext_Punto_Medicion_Parametro_Medicion_Repository ParamMedicionInsert = new Ext_Punto_Medicion_Parametro_Medicion_Repository();
-            try
-            {
-                lst = ParamMedicionInsert.ParametrodeMedicion_Insert(KeySesion, IdPuntoMedicion, ParametroMedicion);
-            }
-            catch (Exception ex)
-            {
-                var err = ex.Message;
-            }
-            return lst;
-        }
-
-        public string ParametersUpdate(string KeySesion, long IdPuntoMedicion, string ParametroMedicion)
-        {
-            string res = "";
-            Ext_Punto_Medicion_Parametro_Medicion_Repository ParamMedicionUpdate = new Ext_Punto_Medicion_Parametro_Medicion_Repository();
-            try
-            {
-                ParamMedicionUpdate.ParametroMedicion_Update(KeySesion, IdPuntoMedicion, ParametroMedicion);
-            }
-            catch (Exception ex)
-            {
-                var err = ex.Message;
-            }
-            return res;
-        }
-
-        public string ParametersDelete(string KeySesion, long IdPuntoMedicion)
-        {
-            string res = "";
-            Ext_Punto_Medicion_Parametro_Medicion_Repository ParametersDelete = new Ext_Punto_Medicion_Parametro_Medicion_Repository();
-            try
-            {
-                ParametersDelete.ParametroMedicion_Delete(KeySesion, IdPuntoMedicion);
-            }
-            catch (Exception ex)
-            {
-                var err = ex.Message;
-            }
-            return res;
-        }
         #endregion
 
         #region DEPENDENCIA ENCARGADA

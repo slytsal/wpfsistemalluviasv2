@@ -72,7 +72,7 @@ namespace Protell.Server.DAL.Repository.v2
                              {
                                  appRolSel.Add(new AppRolModel()
                                  {
-                                     IdRol = row.IdRol,
+                                     IdRol_ = row.IdRol.ToString(),
                                      RolName = row.RolName,
                                      IsActive = row.IsActive,
                                      IsModified = row.IsModified,

@@ -781,7 +781,7 @@ namespace Protell.Server.DAL.POCOS
             }
             return base.ExecuteFunction<Nullable<bool>>("SP_Links_Insert", linkUrlParameter, linkNameParameter);
         }
-        public ObjectResult<Nullable<bool>> SP_AppUsuario_Update(string idUsuario, string usuarioPwd, string nombre, string apellido, string area, string puesto, Nullable<long> idRol)
+        public ObjectResult<Nullable<bool>> SP_AppUsuario_Update(string idUsuario, string nombre, string apellido, string area, string puesto, Nullable<long> idRol)
         {
     
             ObjectParameter idUsuarioParameter;
@@ -793,17 +793,6 @@ namespace Protell.Server.DAL.POCOS
             else
             {
                 idUsuarioParameter = new ObjectParameter("IdUsuario", typeof(string));
-            }
-    
-            ObjectParameter usuarioPwdParameter;
-    
-            if (usuarioPwd != null)
-            {
-                usuarioPwdParameter = new ObjectParameter("UsuarioPwd", usuarioPwd);
-            }
-            else
-            {
-                usuarioPwdParameter = new ObjectParameter("UsuarioPwd", typeof(string));
             }
     
             ObjectParameter nombreParameter;
@@ -860,7 +849,7 @@ namespace Protell.Server.DAL.POCOS
             {
                 idRolParameter = new ObjectParameter("IdRol", typeof(long));
             }
-            return base.ExecuteFunction<Nullable<bool>>("SP_AppUsuario_Update", idUsuarioParameter, usuarioPwdParameter, nombreParameter, apellidoParameter, areaParameter, puestoParameter, idRolParameter);
+            return base.ExecuteFunction<Nullable<bool>>("SP_AppUsuario_Update", idUsuarioParameter, nombreParameter, apellidoParameter, areaParameter, puestoParameter, idRolParameter);
         }
         public ObjectResult<Nullable<bool>> SP_LinksUpdate(string idLink, string linkUrl, string linkName)
         {
@@ -1976,6 +1965,73 @@ namespace Protell.Server.DAL.POCOS
                 userMailParameter = new ObjectParameter("userMail", typeof(string));
             }
             return base.ExecuteFunction<wappSpValidateMail_Result3>("wappSpValidateMail", userMailParameter);
+        }
+        public ObjectResult<SP_AppUsuarioSelect_Result> SP_AppUsuarioSelect()
+        {
+            return base.ExecuteFunction<SP_AppUsuarioSelect_Result>("SP_AppUsuarioSelect");
+        }
+        public ObjectResult<Nullable<bool>> SP_AppUsuarioPassword_Update(string idUsuario, string usuarioPwd)
+        {
+    
+            ObjectParameter idUsuarioParameter;
+    
+            if (idUsuario != null)
+            {
+                idUsuarioParameter = new ObjectParameter("IdUsuario", idUsuario);
+            }
+            else
+            {
+                idUsuarioParameter = new ObjectParameter("IdUsuario", typeof(string));
+            }
+    
+            ObjectParameter usuarioPwdParameter;
+    
+            if (usuarioPwd != null)
+            {
+                usuarioPwdParameter = new ObjectParameter("UsuarioPwd", usuarioPwd);
+            }
+            else
+            {
+                usuarioPwdParameter = new ObjectParameter("UsuarioPwd", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_AppUsuarioPassword_Update", idUsuarioParameter, usuarioPwdParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_OperEstructurasUpdateInInsert(Nullable<long> idCondicion, Nullable<long> idEstructura, string operacionEstrucuturaName)
+        {
+    
+            ObjectParameter idCondicionParameter;
+    
+            if (idCondicion.HasValue)
+            {
+                idCondicionParameter = new ObjectParameter("IdCondicion", idCondicion);
+            }
+            else
+            {
+                idCondicionParameter = new ObjectParameter("IdCondicion", typeof(long));
+            }
+    
+            ObjectParameter idEstructuraParameter;
+    
+            if (idEstructura.HasValue)
+            {
+                idEstructuraParameter = new ObjectParameter("IdEstructura", idEstructura);
+            }
+            else
+            {
+                idEstructuraParameter = new ObjectParameter("IdEstructura", typeof(long));
+            }
+    
+            ObjectParameter operacionEstrucuturaNameParameter;
+    
+            if (operacionEstrucuturaName != null)
+            {
+                operacionEstrucuturaNameParameter = new ObjectParameter("OperacionEstrucuturaName", operacionEstrucuturaName);
+            }
+            else
+            {
+                operacionEstrucuturaNameParameter = new ObjectParameter("OperacionEstrucuturaName", typeof(string));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_OperEstructurasUpdateInInsert", idCondicionParameter, idEstructuraParameter, operacionEstrucuturaNameParameter);
         }
 
         #endregion

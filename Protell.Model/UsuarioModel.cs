@@ -307,5 +307,40 @@ namespace Protell.Model
         }
         private Nullable<bool> _IsMailSent;
         public const string IsMailSentPropertyName = "IsMailSent";
+
+
+        // **************************** **************************** ****************************
+
+        public string RolName
+        {
+            get { return _RolName; }
+            set
+            {
+                if (_RolName != value)
+                {
+                    _RolName = value;
+                    OnPropertyChanged(RolNamePropertyName);
+                }
+            }
+        }
+        private string _RolName;
+        public const string RolNamePropertyName = "RolName";
+
+        // **************************** **************************** ****************************
+
+        public string IdRol
+        {
+            get { return _IdRol; }
+            set
+            {
+                if (_IdRol != value)
+                {
+                    _IdRol = value;
+                    OnPropertyChanged(IdRolPropertyName);
+                }
+            }
+        }
+        private string _IdRol;
+        public const string IdRolPropertyName = "IdRol";
     }
 }

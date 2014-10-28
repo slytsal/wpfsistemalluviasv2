@@ -9,6 +9,11 @@ namespace Protell.Model
     {
 
         // **************************** **************************** ****************************
+        public string IdRol_
+        {
+            get;
+            set;
+        }
 
         public long IdRol
         {

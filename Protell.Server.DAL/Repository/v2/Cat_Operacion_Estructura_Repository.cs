@@ -134,6 +134,41 @@ namespace Protell.Server.DAL.Repository.v2
             return res;
         }
 
+        public bool OperationEstruct_UpdateInInsert(string KeySesion, long IdCondicion, long IdEstructura, string OperacionEstrucuturaName)
+        {
+            bool res = true;
+            ObservableCollection<WAPP_USUARIO_SESION> Key = new ObservableCollection<WAPP_USUARIO_SESION>();
+
+            try
+            {
+                using (var entity_ = new db_SeguimientoProtocolo_r2Entities())
+                {
+                    (from s in entity_.WAPP_USUARIO_SESION
+                     where s.IdSesion == KeySesion
+                     select s).ToList().ForEach(row =>
+                     {
+                         Key.Add(new WAPP_USUARIO_SESION()
+                         {
+                             IdUsuario = row.IdUsuario,
+                             IdSesion = row.IdSesion
+                         });
+                     });
+                    if (Key[0].IdSesion == KeySesion.ToString())
+                    {
+                        using (var entity = new db_SeguimientoProtocolo_r2Entities())
+                        {
+                            entity.SP_OperEstructurasUpdateInInsert( IdCondicion, IdEstructura, OperacionEstrucuturaName);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var errr = ex.Message;
+            }
+            return res;
+        }
+
         public bool OperationsEstruct_Delete(string KeySesion, string IdOperacionEstructura)
         {
             bool res = true;
