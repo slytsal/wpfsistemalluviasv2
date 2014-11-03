@@ -85,10 +85,10 @@ namespace Protell.Server.DAL.Repository
                                    +"</td>"
                                    +"<td>"
                                    + "<a href='"
-                                   + "http://localhost:63342/LluviasAppLogin/RecovPass/index.html#/"
+                                   + "http://devinmservices.com/lluviasadmdev/RecovPass/index.html#/"
                                    + "Key:" + list.IdSesion
                                    +"'>"
-                                   + "http://localhost:63342/LluviasAppLogin/RecovPass/index.html#/"
+                                   + "http://devinmservices.com/lluviasadmdev/RecovPass/index.html#/"
                                    + "Key:" + list.IdSesion
                                    +"</a>"
                                    + "</td>"

@@ -222,12 +222,6 @@ namespace Protell.Server.DAL.POCOS
         }
         private ObjectSet<CAT_REGION> _cAT_REGION;
     
-        public ObjectSet<CAT_URL_LLUVIAS> CAT_URL_LLUVIAS
-        {
-            get { return _cAT_URL_LLUVIAS  ?? (_cAT_URL_LLUVIAS = CreateObjectSet<CAT_URL_LLUVIAS>("CAT_URL_LLUVIAS")); }
-        }
-        private ObjectSet<CAT_URL_LLUVIAS> _cAT_URL_LLUVIAS;
-    
         public ObjectSet<CAT_OPERACION_ESTRUCTURA_V2> CAT_OPERACION_ESTRUCTURA_V2
         {
             get { return _cAT_OPERACION_ESTRUCTURA_V2  ?? (_cAT_OPERACION_ESTRUCTURA_V2 = CreateObjectSet<CAT_OPERACION_ESTRUCTURA_V2>("CAT_OPERACION_ESTRUCTURA_V2")); }
