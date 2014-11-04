@@ -25,7 +25,7 @@ namespace Protell.Server.DAL.Repository.v2
                               HoraRegistro = row.HoraRegistro,
                               DiaRegistro = row.DiaRegistro,
                               Valor = row.Valor,
-                              //IsActive=row.IsActive,
+                              IsActive=row.IsActive,
                               AccionActual = row.AccionActual,
                               LastModifiedDate = row.LastModifiedDate,
                               IdCondicion = row.IdCondicion,

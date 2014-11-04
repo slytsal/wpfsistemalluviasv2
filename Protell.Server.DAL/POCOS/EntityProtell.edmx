@@ -1875,6 +1875,7 @@ FROM [dbo].[WAPP_USUARIO_SESION] AS [WAPP_USUARIO_SESION]</DefiningQuery>
           <Property Type="String" Name="UnidadMedidaShort" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="CondicionName" Nullable="false" MaxLength="250" />
           <Property Type="String" Name="PathCodicion" Nullable="false" MaxLength="500" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
         </ComplexType>
         <ComplexType Name="spDownloadCiRegistroRecurrent_Result">
           <Property Type="Int64" Name="IdRegistro" Nullable="false" />
@@ -3090,6 +3091,7 @@ FROM [dbo].[WAPP_USUARIO_SESION] AS [WAPP_USUARIO_SESION]</DefiningQuery>
                 <ScalarProperty Name="UnidadMedidaShort" ColumnName="UnidadMedidaShort" />
                 <ScalarProperty Name="CondicionName" ColumnName="CondicionName" />
                 <ScalarProperty Name="PathCodicion" ColumnName="PathCodicion" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
