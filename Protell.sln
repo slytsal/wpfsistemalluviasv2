@@ -34,6 +34,8 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup1", "Setup1\Setup1.vdp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protell.ServiceTests", "Protell.ServiceTests\Protell.ServiceTests.csproj", "{499C9651-4957-435A-A293-1DC702A19237}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protell.WebReport", "Protell.WebReport\Protell.WebReport.csproj", "{196E9FFC-5293-429A-ADEA-F065C841A092}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CD_ROM|Any CPU = CD_ROM|Any CPU
@@ -338,6 +340,31 @@ Global
 		{499C9651-4957-435A-A293-1DC702A19237}.SingleImage|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{499C9651-4957-435A-A293-1DC702A19237}.SingleImage|Mixed Platforms.Build.0 = Release|Any CPU
 		{499C9651-4957-435A-A293-1DC702A19237}.SingleImage|x86.ActiveCfg = Release|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.CD_ROM|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.CD_ROM|Mixed Platforms.Build.0 = Release|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.CD_ROM|x86.ActiveCfg = Release|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.DVD-5|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.DVD-5|Mixed Platforms.Build.0 = Debug|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.DVD-5|x86.ActiveCfg = Debug|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.Release|Any CPU.Build.0 = Release|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.Release|x86.ActiveCfg = Release|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.SingleImage|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.SingleImage|Mixed Platforms.Build.0 = Release|Any CPU
+		{196E9FFC-5293-429A-ADEA-F065C841A092}.SingleImage|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

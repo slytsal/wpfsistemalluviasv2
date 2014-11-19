@@ -939,6 +939,13 @@ warning 6002: The table/view 'uatlluvias.dbo.WAPP_USUARIO_SESION' does not have 
         <Function Name="wappSpValidateMail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userMail" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="spReporteMediciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="uatlluvias">
+          <Parameter Name="FechaInicio" Type="bigint" Mode="In" />
+          <Parameter Name="FechaFin" Type="bigint" Mode="In" />
+          <Parameter Name="Lumbreras" Type="bit" Mode="In" />
+          <Parameter Name="Estaciones" Type="bit" Mode="In" />
+          <Parameter Name="Estructuras" Type="bit" Mode="In" />
+        </Function>
         <EntityContainer Name="devinmr3ModelStoreContainer">
           <EntitySet Name="APP_ROL" EntityType="Self.APP_ROL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="APP_SETTINGS" EntityType="Self.APP_SETTINGS" Schema="dbo" store:Type="Tables" />
@@ -1456,6 +1463,13 @@ FROM [dbo].[WAPP_USUARIO_SESION] AS [WAPP_USUARIO_SESION]</DefiningQuery>
             <Parameter Name="IdCondicion" Mode="In" Type="Int64" />
             <Parameter Name="IdEstructura" Mode="In" Type="Int64" />
             <Parameter Name="OperacionEstrucuturaName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spReporteMediciones">
+            <Parameter Name="FechaInicio" Mode="In" Type="Int64" />
+            <Parameter Name="FechaFin" Mode="In" Type="Int64" />
+            <Parameter Name="Lumbreras" Mode="In" Type="Boolean" />
+            <Parameter Name="Estaciones" Mode="In" Type="Boolean" />
+            <Parameter Name="Estructuras" Mode="In" Type="Boolean" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="APP_ROL">
@@ -3603,6 +3617,7 @@ FROM [dbo].[WAPP_USUARIO_SESION] AS [WAPP_USUARIO_SESION]</DefiningQuery>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_AppUsuarioPassword_Update" FunctionName="devinmr3Model.Store.SP_AppUsuarioPassword_Update" />
           <FunctionImportMapping FunctionImportName="SP_OperEstructurasUpdateInInsert" FunctionName="devinmr3Model.Store.SP_OperEstructurasUpdateInInsert" />
+          <FunctionImportMapping FunctionImportName="spReporteMediciones" FunctionName="devinmr3Model.Store.spReporteMediciones" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -1,0 +1,92 @@
+﻿#txtDia {
+    display: block;
+    padding: 6px 12px;
+    line-height: 1.42857143;  
+    color: #555;  
+    background-color: #fff;  
+    background-image: none;  
+    border: 1px solid #ccc;  
+    border-radius: 4px;
+}
+
+#dpdlTipo {
+    display: block;
+    padding: 6px 12px;
+    line-height: 1.42857143;  
+    color: #555;  
+    background-color: #fff;  
+    background-image: none;  
+    border: 1px solid #ccc;  
+    border-radius: 4px;
+}
+
+#dvLine {
+   margin-top: 15px;
+   padding: 0px 0px 0px;
+   text-align: right;
+   border-top: 1px solid #e5e5e5;
+}
+#cldrFecha {
+    display: block;
+    padding: 6px 12px;
+    line-height: 1.42857143;  
+    color: #555;  
+    background-color: #fff;  
+    background-image: none;  
+    border: 1px solid #ccc;  
+    border-radius: 4px;
+}
+#cldrFechaIni {
+    display: block;
+    padding: 6px 12px;
+    line-height: 1.42857143;  
+    color: #555;  
+    background-color: #fff;  
+    background-image: none;  
+    border: 1px solid #ccc;  
+    border-radius: 4px;
+}
+#cldrFechaFin {
+    display: block;
+    padding: 6px 12px;
+    line-height: 1.42857143;  
+    color: #555;  
+    background-color: #fff;  
+    background-image: none;  
+    border: 1px solid #ccc;  
+    border-radius: 4px;
+}
+#h1Title{
+    text-align:center;
+   color:rgba(26, 109, 181, 0.91);
+}
+
+#ReportViewer1{
+    width: 100%;
+    height: 100%;
+}
+#imgLogo{
+   width: 250px;
+   height: 80px;
+   position: absolute;
+   top: 35px;
+   left: 10px;   
+}
+
+#tblDefault{
+    width:auto; 
+    margin: 0 auto; 
+    text-align:justify;
+    font-family:Arial;
+    font-size: larger;
+}
+#lnkRpPM{
+    font-family:Arial;
+    font-size:medium;
+    text-decoration:blink;
+}
+#lnkRpEst{
+    font-family:Arial;
+    font-size:medium;
+    text-decoration:blink;
+}

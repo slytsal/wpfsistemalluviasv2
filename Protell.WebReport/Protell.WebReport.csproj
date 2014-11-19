@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -7,33 +7,31 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F406330D-6379-4911-AAA5-44C3ADED34CC}</ProjectGuid>
+    <ProjectGuid>{196E9FFC-5293-429A-ADEA-F065C841A092}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Protell.Service</RootNamespace>
-    <AssemblyName>Protell.Service</AssemblyName>
+    <RootNamespace>Protell.WebReport</RootNamespace>
+    <AssemblyName>Protell.WebReport</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>4.0</OldToolsVersion>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
-    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -42,110 +40,102 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLL\Newtonsoft.Json.dll</HintPath>
-    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.EnterpriseServices" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Global.asax" />
-    <Content Include="Services\Broadcast.svc" />
-    <Content Include="Services\Download.svc" />
-    <Content Include="Services\Receiver.svc" />
-    <Content Include="Services\ServiceLluvias.svc" />
-    <Content Include="Services\Upload.svc" />
-    <Content Include="test.html" />
-    <Content Include="Web.config">
+    <Content Include="Default.aspx" />
+    <Content Include="img\Report_img.png" />
+    <Content Include="ReporteDataSet.xsc">
+      <DependentUpon>ReporteDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="Properties\PublishProfiles\Report.pubxml" />
+    <None Include="ReporteDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ReporteDataSet.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </None>
+    <Content Include="ReporteDataSet.xss">
+      <DependentUpon>ReporteDataSet.xsd</DependentUpon>
     </Content>
-    <Content Include="Web.Debug.config">
+    <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
+    </None>
+    <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ReportEstacion.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="img\unnamed.jpg" />
+    <Content Include="ReportMedicion.aspx" />
+    <Content Include="style\StyleSheet.css" />
+    <Content Include="style\StyleSheetbtn.css" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportEstacion.aspx.cs">
+      <DependentUpon>ReportEstacion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportEstacion.aspx.designer.cs">
+      <DependentUpon>ReportEstacion.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
+    <Compile Include="ReporteDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReporteDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Services\Broadcast.svc.cs">
-      <DependentUpon>Broadcast.svc</DependentUpon>
+    <Compile Include="ReportMedicion.aspx.cs">
+      <DependentUpon>ReportMedicion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Services\Download.svc.cs">
-      <DependentUpon>Download.svc</DependentUpon>
-    </Compile>
-    <Compile Include="Services\IBroadcast.cs" />
-    <Compile Include="Services\IDownload.cs" />
-    <Compile Include="Services\IReceiver.cs" />
-    <Compile Include="Services\IServiceLluvias.cs" />
-    <Compile Include="Services\IUpload.cs" />
-    <Compile Include="Services\Receiver.svc.cs">
-      <DependentUpon>Receiver.svc</DependentUpon>
-    </Compile>
-    <Compile Include="Services\ServiceLluvias.svc.cs">
-      <DependentUpon>ServiceLluvias.svc</DependentUpon>
-    </Compile>
-    <Compile Include="Services\Upload.svc.cs">
-      <DependentUpon>Upload.svc</DependentUpon>
+    <Compile Include="ReportMedicion.aspx.designer.cs">
+      <DependentUpon>ReportMedicion.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="DLL\" />
-    <Folder Include="Fakes\" />
-    <Folder Include="Report\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Protell.Model\Protell.Model.csproj">
-      <Project>{AB66EDF0-BC58-42A8-9ABB-35BEFD6318B6}</Project>
-      <Name>Protell.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Protell.Server.DAL\Protell.Server.DAL.csproj">
-      <Project>{8D302A8D-50A9-488B-812D-77C96073EFC3}</Project>
-      <Name>Protell.Server.DAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Protell.ViewModel\Protell.ViewModel.csproj">
-      <Project>{A294FF79-81CE-4198-BBD8-A299581C0350}</Project>
-      <Name>Protell.ViewModel</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\PublishProfiles\Perfil1.pubxml" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
+    <Content Include="Reportes\ReportEstaciones.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reportes\ReportMediciones.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -158,12 +148,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>61544</DevelopmentServerPort>
+          <DevelopmentServerPort>19050</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost:19046/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
