@@ -869,7 +869,7 @@ namespace Protell.Server.DAL.Repository.v2
 
         public int GetIsopMinutesThresholdSetting5min()
         {
-            int settingValue = 5; //valor por default del setting
+            int settingValue = 120; //valor por default del setting
             using (var entity = new db_SeguimientoProtocolo_r2Entities())
             {
                 try

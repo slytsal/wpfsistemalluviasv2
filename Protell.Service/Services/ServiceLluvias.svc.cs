@@ -831,5 +831,55 @@ namespace Protell.Service.Services
             return lst;
         }
         #endregion
+
+
+        #region ROL-REL_ROL_PUNTOMEDICION
+        public string App_RolInsert(string KeySesion, string RolName, long IdPuntoMedicion)
+        {
+            string res = "";
+            AppRolRepository RolInsert = new AppRolRepository();            
+            try
+            {
+                RolInsert.Rol_Insert(KeySesion, RolName, IdPuntoMedicion);
+            }
+            catch (Exception ex)
+            {
+                var err = ex.Message;
+            }
+            return res;
+        }
+
+
+        public string App_RolUpdate(string KeySesion, long IdRol, string RolName, long IdPuntoMedicion)
+        {
+            string res = "";
+            AppRolRepository RolUpdate = new AppRolRepository();
+            try
+            {
+                RolUpdate.Rol_Update(KeySesion, IdRol, RolName, IdPuntoMedicion);
+            }
+            catch (Exception ex)
+            {
+                var err = ex.Message;                
+            }
+            return res;
+        }
+
+
+        public string App_RolDelete(string keySesion, long IdRol)
+        {
+            string res = "";
+            AppRolRepository RolDelete = new AppRolRepository();
+            try
+            {
+                RolDelete.Rol_Delete(keySesion, IdRol);
+            }
+            catch (Exception ex)
+            {
+                var err = ex.Message;
+            }
+            return res;
+        }
+        #endregion
     }
 }

@@ -2027,6 +2027,84 @@ namespace Protell.Server.DAL.POCOS
             }
             return base.ExecuteFunction<Nullable<bool>>("SP_OperEstructurasUpdateInInsert", idCondicionParameter, idEstructuraParameter, operacionEstrucuturaNameParameter);
         }
+        public ObjectResult<Nullable<bool>> SP_App_RolDelete(Nullable<long> idRol)
+        {
+    
+            ObjectParameter idRolParameter;
+    
+            if (idRol.HasValue)
+            {
+                idRolParameter = new ObjectParameter("IdRol", idRol);
+            }
+            else
+            {
+                idRolParameter = new ObjectParameter("IdRol", typeof(long));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_App_RolDelete", idRolParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_App_RolInsert(string rolName, Nullable<long> idPuntoMedicion)
+        {
+    
+            ObjectParameter rolNameParameter;
+    
+            if (rolName != null)
+            {
+                rolNameParameter = new ObjectParameter("RolName", rolName);
+            }
+            else
+            {
+                rolNameParameter = new ObjectParameter("RolName", typeof(string));
+            }
+    
+            ObjectParameter idPuntoMedicionParameter;
+    
+            if (idPuntoMedicion.HasValue)
+            {
+                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", idPuntoMedicion);
+            }
+            else
+            {
+                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", typeof(long));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_App_RolInsert", rolNameParameter, idPuntoMedicionParameter);
+        }
+        public ObjectResult<Nullable<bool>> SP_App_RolUpdate(Nullable<long> idRol, string rolName, Nullable<long> idPuntoMedicion)
+        {
+    
+            ObjectParameter idRolParameter;
+    
+            if (idRol.HasValue)
+            {
+                idRolParameter = new ObjectParameter("IdRol", idRol);
+            }
+            else
+            {
+                idRolParameter = new ObjectParameter("IdRol", typeof(long));
+            }
+    
+            ObjectParameter rolNameParameter;
+    
+            if (rolName != null)
+            {
+                rolNameParameter = new ObjectParameter("RolName", rolName);
+            }
+            else
+            {
+                rolNameParameter = new ObjectParameter("RolName", typeof(string));
+            }
+    
+            ObjectParameter idPuntoMedicionParameter;
+    
+            if (idPuntoMedicion.HasValue)
+            {
+                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", idPuntoMedicion);
+            }
+            else
+            {
+                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", typeof(long));
+            }
+            return base.ExecuteFunction<Nullable<bool>>("SP_App_RolUpdate", idRolParameter, rolNameParameter, idPuntoMedicionParameter);
+        }
 
         #endregion
 

@@ -688,6 +688,18 @@ warning 6002: The table/view 'uatlluvias.dbo.WAPP_USUARIO_SESION' does not have 
         <Function Name="GD_GET_DATOSESTRUCTURAS_2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GD_GET_DATOSESTRUCTURAS_OLD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="LoadCnfHora" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_App_RolDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdRol" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="SP_App_RolInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RolName" Type="nvarchar" Mode="In" />
+          <Parameter Name="IdPuntoMedicion" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="SP_App_RolUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdRol" Type="bigint" Mode="In" />
+          <Parameter Name="RolName" Type="nvarchar" Mode="In" />
+          <Parameter Name="IdPuntoMedicion" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="SP_AppUsuario_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdUsuario" Type="bigint" Mode="In" />
         </Function>
@@ -1470,6 +1482,18 @@ FROM [dbo].[WAPP_USUARIO_SESION] AS [WAPP_USUARIO_SESION]</DefiningQuery>
             <Parameter Name="Lumbreras" Mode="In" Type="Boolean" />
             <Parameter Name="Estaciones" Mode="In" Type="Boolean" />
             <Parameter Name="Estructuras" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="SP_App_RolDelete" ReturnType="Collection(Boolean)">
+            <Parameter Name="IdRol" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_App_RolInsert" ReturnType="Collection(Boolean)">
+            <Parameter Name="RolName" Mode="In" Type="String" />
+            <Parameter Name="IdPuntoMedicion" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="SP_App_RolUpdate" ReturnType="Collection(Boolean)">
+            <Parameter Name="IdRol" Mode="In" Type="Int64" />
+            <Parameter Name="RolName" Mode="In" Type="String" />
+            <Parameter Name="IdPuntoMedicion" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="APP_ROL">
@@ -3618,6 +3642,9 @@ FROM [dbo].[WAPP_USUARIO_SESION] AS [WAPP_USUARIO_SESION]</DefiningQuery>
           <FunctionImportMapping FunctionImportName="SP_AppUsuarioPassword_Update" FunctionName="devinmr3Model.Store.SP_AppUsuarioPassword_Update" />
           <FunctionImportMapping FunctionImportName="SP_OperEstructurasUpdateInInsert" FunctionName="devinmr3Model.Store.SP_OperEstructurasUpdateInInsert" />
           <FunctionImportMapping FunctionImportName="spReporteMediciones" FunctionName="devinmr3Model.Store.spReporteMediciones" />
+          <FunctionImportMapping FunctionImportName="SP_App_RolDelete" FunctionName="devinmr3Model.Store.SP_App_RolDelete" />
+          <FunctionImportMapping FunctionImportName="SP_App_RolInsert" FunctionName="devinmr3Model.Store.SP_App_RolInsert" />
+          <FunctionImportMapping FunctionImportName="SP_App_RolUpdate" FunctionName="devinmr3Model.Store.SP_App_RolUpdate" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
