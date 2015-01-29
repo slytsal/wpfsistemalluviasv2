@@ -227,11 +227,11 @@ namespace Protell.Service.Services
 
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
-        string App_RolInsert(string KeySesion, string RolName, long IdPuntoMedicion);
+        string App_RolInsert(string KeySesion, string RolName, string IdPuntoMedicion);
 
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
-        string App_RolUpdate(string KeySesion, long IdRol, string RolName, long IdPuntoMedicion);
+        string App_RolUpdate(string KeySesion, long IdRol, string RolName, string IdPuntoMedicion);
 
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]

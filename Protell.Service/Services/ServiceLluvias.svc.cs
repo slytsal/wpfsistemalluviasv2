@@ -834,7 +834,7 @@ namespace Protell.Service.Services
 
 
         #region ROL-REL_ROL_PUNTOMEDICION
-        public string App_RolInsert(string KeySesion, string RolName, long IdPuntoMedicion)
+        public string App_RolInsert(string KeySesion, string RolName, string IdPuntoMedicion)
         {
             string res = "";
             AppRolRepository RolInsert = new AppRolRepository();            
@@ -850,7 +850,7 @@ namespace Protell.Service.Services
         }
 
 
-        public string App_RolUpdate(string KeySesion, long IdRol, string RolName, long IdPuntoMedicion)
+        public string App_RolUpdate(string KeySesion, long IdRol, string RolName, string IdPuntoMedicion)
         {
             string res = "";
             AppRolRepository RolUpdate = new AppRolRepository();

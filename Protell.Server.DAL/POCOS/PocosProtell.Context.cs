@@ -2042,7 +2042,7 @@ namespace Protell.Server.DAL.POCOS
             }
             return base.ExecuteFunction<Nullable<bool>>("SP_App_RolDelete", idRolParameter);
         }
-        public ObjectResult<Nullable<bool>> SP_App_RolInsert(string rolName, Nullable<long> idPuntoMedicion)
+        public ObjectResult<Nullable<bool>> SP_App_RolInsert(string rolName, string idPuntoMedicion)
         {
     
             ObjectParameter rolNameParameter;
@@ -2058,17 +2058,17 @@ namespace Protell.Server.DAL.POCOS
     
             ObjectParameter idPuntoMedicionParameter;
     
-            if (idPuntoMedicion.HasValue)
+            if (idPuntoMedicion != null)
             {
                 idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", idPuntoMedicion);
             }
             else
             {
-                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", typeof(long));
+                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", typeof(string));
             }
             return base.ExecuteFunction<Nullable<bool>>("SP_App_RolInsert", rolNameParameter, idPuntoMedicionParameter);
         }
-        public ObjectResult<Nullable<bool>> SP_App_RolUpdate(Nullable<long> idRol, string rolName, Nullable<long> idPuntoMedicion)
+        public ObjectResult<Nullable<bool>> SP_App_RolUpdate(Nullable<long> idRol, string rolName, string idPuntoMedicion)
         {
     
             ObjectParameter idRolParameter;
@@ -2095,13 +2095,13 @@ namespace Protell.Server.DAL.POCOS
     
             ObjectParameter idPuntoMedicionParameter;
     
-            if (idPuntoMedicion.HasValue)
+            if (idPuntoMedicion != null)
             {
                 idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", idPuntoMedicion);
             }
             else
             {
-                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", typeof(long));
+                idPuntoMedicionParameter = new ObjectParameter("IdPuntoMedicion", typeof(string));
             }
             return base.ExecuteFunction<Nullable<bool>>("SP_App_RolUpdate", idRolParameter, rolNameParameter, idPuntoMedicionParameter);
         }

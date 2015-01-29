@@ -92,7 +92,7 @@ namespace Protell.Server.DAL.Repository.v2
         }
 
 
-        public bool Rol_Insert(string KeySesion, string RolName, long IdPuntoMedicion)
+        public bool Rol_Insert(string KeySesion, string RolName, string IdPuntoMedicion)
         {
             bool res = true;
             ObservableCollection<WAPP_USUARIO_SESION> Key = new ObservableCollection<WAPP_USUARIO_SESION>();
@@ -115,7 +115,7 @@ namespace Protell.Server.DAL.Repository.v2
                     {
                         using (var entity = new db_SeguimientoProtocolo_r2Entities())
                         {
-                            entity.SP_App_RolInsert(RolName, long.Parse(IdPuntoMedicion.ToString()));
+                            entity.SP_App_RolInsert(RolName,IdPuntoMedicion);
                         }
                     }
                 }
@@ -128,7 +128,7 @@ namespace Protell.Server.DAL.Repository.v2
         }
 
 
-        public bool Rol_Update(string KeySesion,long IdRol, string RolName, long IdPuntoMedicion)
+        public bool Rol_Update(string KeySesion,long IdRol, string RolName, string IdPuntoMedicion)
         {
             bool res = true;
             ObservableCollection<WAPP_USUARIO_SESION> Key = new ObservableCollection<WAPP_USUARIO_SESION>();

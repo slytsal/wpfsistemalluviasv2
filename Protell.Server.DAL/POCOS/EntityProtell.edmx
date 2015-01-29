@@ -334,6 +334,8 @@
           <Property Name="IdPuntoMedicion" Type="bigint" Nullable="false" />
           <Property Name="FechaNumerica" Type="bigint" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ppDevinmr3.dbo.EXT_PUNTO_MEDICION_PARAMETRO_MEDICION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="EXT_PUNTO_MEDICION_PARAMETRO_MEDICION">
           <Key>
             <PropertyRef Name="IdPuntoMedicion" />
@@ -394,7 +396,7 @@
           <Property Name="OrderTable" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'uatlluvias.dbo.WAPP_RECOVERY_PASS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'ppDevinmr3.dbo.WAPP_RECOVERY_PASS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="WAPP_RECOVERY_PASS">
           <Key>
             <PropertyRef Name="IdUsuario" />
@@ -404,7 +406,7 @@ warning 6002: The table/view 'uatlluvias.dbo.WAPP_RECOVERY_PASS' does not have a
           <Property Name="IdSesion" Type="nvarchar" MaxLength="250" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'uatlluvias.dbo.WAPP_USUARIO_SESION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'ppDevinmr3.dbo.WAPP_USUARIO_SESION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="WAPP_USUARIO_SESION">
           <Key>
             <PropertyRef Name="IdUsuario" />
@@ -693,12 +695,12 @@ warning 6002: The table/view 'uatlluvias.dbo.WAPP_USUARIO_SESION' does not have 
         </Function>
         <Function Name="SP_App_RolInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="RolName" Type="nvarchar" Mode="In" />
-          <Parameter Name="IdPuntoMedicion" Type="bigint" Mode="In" />
+          <Parameter Name="IdPuntoMedicion" Type="nvarchar(max)" Mode="In" />
         </Function>
         <Function Name="SP_App_RolUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdRol" Type="bigint" Mode="In" />
           <Parameter Name="RolName" Type="nvarchar" Mode="In" />
-          <Parameter Name="IdPuntoMedicion" Type="bigint" Mode="In" />
+          <Parameter Name="IdPuntoMedicion" Type="nvarchar(max)" Mode="In" />
         </Function>
         <Function Name="SP_AppUsuario_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdUsuario" Type="bigint" Mode="In" />
@@ -951,13 +953,6 @@ warning 6002: The table/view 'uatlluvias.dbo.WAPP_USUARIO_SESION' does not have 
         <Function Name="wappSpValidateMail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userMail" Type="nvarchar" Mode="In" />
         </Function>
-        <Function Name="spReporteMediciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="uatlluvias">
-          <Parameter Name="FechaInicio" Type="bigint" Mode="In" />
-          <Parameter Name="FechaFin" Type="bigint" Mode="In" />
-          <Parameter Name="Lumbreras" Type="bit" Mode="In" />
-          <Parameter Name="Estaciones" Type="bit" Mode="In" />
-          <Parameter Name="Estructuras" Type="bit" Mode="In" />
-        </Function>
         <EntityContainer Name="devinmr3ModelStoreContainer">
           <EntitySet Name="APP_ROL" EntityType="Self.APP_ROL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="APP_SETTINGS" EntityType="Self.APP_SETTINGS" Schema="dbo" store:Type="Tables" />
@@ -987,12 +982,17 @@ warning 6002: The table/view 'uatlluvias.dbo.WAPP_USUARIO_SESION' does not have 
           <EntitySet Name="CAT_UPLOAD_LOG" EntityType="Self.CAT_UPLOAD_LOG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CI_REGISTRO" EntityType="Self.CI_REGISTRO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CI_TRACKING" EntityType="Self.CI_TRACKING" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="EXT_PUNTO_MEDICION_PARAMETRO_MEDICION" EntityType="Self.EXT_PUNTO_MEDICION_PARAMETRO_MEDICION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MODIFIEDDATA" EntityType="Self.MODIFIEDDATA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="REL_EST_PUNTOMED" EntityType="Self.REL_EST_PUNTOMED" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="REL_ESTRUCTURA_DEPENDENCIA" EntityType="Self.REL_ESTRUCTURA_DEPENDENCIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="REL_ROL_PUNTOMEDICION" EntityType="Self.REL_ROL_PUNTOMEDICION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYNCTABLE" EntityType="Self.SYNCTABLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EXT_PUNTO_MEDICION_PARAMETRO_MEDICION" EntityType="Self.EXT_PUNTO_MEDICION_PARAMETRO_MEDICION" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[EXT_PUNTO_MEDICION_PARAMETRO_MEDICION].[IdPuntoMedicion] AS [IdPuntoMedicion], 
+[EXT_PUNTO_MEDICION_PARAMETRO_MEDICION].[ParametroMedicion] AS [ParametroMedicion]
+FROM [dbo].[EXT_PUNTO_MEDICION_PARAMETRO_MEDICION] AS [EXT_PUNTO_MEDICION_PARAMETRO_MEDICION]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="WAPP_RECOVERY_PASS" EntityType="Self.WAPP_RECOVERY_PASS" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
 [WAPP_RECOVERY_PASS].[IdUsuario] AS [IdUsuario], 
@@ -1484,16 +1484,16 @@ FROM [dbo].[WAPP_USUARIO_SESION] AS [WAPP_USUARIO_SESION]</DefiningQuery>
             <Parameter Name="Estructuras" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="SP_App_RolDelete" ReturnType="Collection(Boolean)">
-            <Parameter Name="IdRol" Mode="In" Type="Int64" />
+          <Parameter Name="IdRol" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="SP_App_RolInsert" ReturnType="Collection(Boolean)">
             <Parameter Name="RolName" Mode="In" Type="String" />
-            <Parameter Name="IdPuntoMedicion" Mode="In" Type="Int64" />
+            <Parameter Name="IdPuntoMedicion" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_App_RolUpdate" ReturnType="Collection(Boolean)">
             <Parameter Name="IdRol" Mode="In" Type="Int64" />
             <Parameter Name="RolName" Mode="In" Type="String" />
-            <Parameter Name="IdPuntoMedicion" Mode="In" Type="Int64" />
+            <Parameter Name="IdPuntoMedicion" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="APP_ROL">
@@ -3641,7 +3641,6 @@ FROM [dbo].[WAPP_USUARIO_SESION] AS [WAPP_USUARIO_SESION]</DefiningQuery>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_AppUsuarioPassword_Update" FunctionName="devinmr3Model.Store.SP_AppUsuarioPassword_Update" />
           <FunctionImportMapping FunctionImportName="SP_OperEstructurasUpdateInInsert" FunctionName="devinmr3Model.Store.SP_OperEstructurasUpdateInInsert" />
-          <FunctionImportMapping FunctionImportName="spReporteMediciones" FunctionName="devinmr3Model.Store.spReporteMediciones" />
           <FunctionImportMapping FunctionImportName="SP_App_RolDelete" FunctionName="devinmr3Model.Store.SP_App_RolDelete" />
           <FunctionImportMapping FunctionImportName="SP_App_RolInsert" FunctionName="devinmr3Model.Store.SP_App_RolInsert" />
           <FunctionImportMapping FunctionImportName="SP_App_RolUpdate" FunctionName="devinmr3Model.Store.SP_App_RolUpdate" />
